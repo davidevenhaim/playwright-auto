@@ -1166,6 +1166,148 @@ export const exams = {
       { type: "multiple", match: "benefits can be achieved by implementing a Wi-Fi optimisation", answers: ["Seamless roaming for employee devices", "Comprehensive analytics"] }
     ]
   },
+  "quality-control-essentials": {
+    name: "Quality control essentials",
+    questions: [
+      {
+        type: "multiple",
+        match: "ways that a company could benefit from implementing a quality control solution",
+        answers: ["Improved output", "Faster inspections processes"]
+      },
+      {
+        type: "multiple",
+        match: "still rely on manual inspections. Why is this process NOT ideal",
+        answers: ["Low volume of inspections possible", "Inspectors become ineffective and imprecise"]
+      },
+      {
+        type: "multiple",
+        match: "identify opportunities to show how a quality control solution could support their business",
+        answers: [
+          "How often do your employees have to put themselves in potentially dangerous situations",
+          "How would your business benefit from enabling your workers to create custom models",
+          "How often do your employees make preventable errors while conducting quality control inspections?"
+        ]
+      },
+      {
+        type: "multiple",
+        match: "quality control solution designed for Apple devices help",
+        answers: [
+          "Reduce the number of damaged or faulty goods delivered to customers",
+          "Use real-time visibility of inspections to identify manufacturing issues that may affect customers"
+        ]
+      },
+      {
+        type: "single",
+        match: "use AI to develop inspection models without coding expertise",
+        answer: "True"
+      }
+    ]
+  },
+  "stock-management-warehousing-logistics-essentials": {
+    name: "Stock management in warehousing and logistics essentials",
+    questions: [
+      {
+        type: "multiple",
+        match: "benefit from implementing a stock management solution",
+        answers: ["Real-time insights into stock", "Keeping up with increased pace and higher expectations"]
+      },
+      {
+        type: "multiple",
+        match: "still rely on spreadsheets to track stock. Why is this process NOT ideal",
+        answers: ["No central archive", "Information gets out of date", "Difficult to collaborate"]
+      },
+      {
+        type: "multiple",
+        match: "identify opportunities of how a stock management solution could support their business",
+        answers: [
+          "How often do customers complain about receiving the wrong items?",
+          "How often do you have to perform cycle counts or full physical stock counts?"
+        ]
+      },
+      {
+        type: "multiple",
+        match: "stock management solution designed for Apple devices help",
+        answers: ["Integrate with ERP and other operations systems", "Decrease the cost to fulfil orders"]
+      },
+      {
+        type: "single",
+        match: "safe to use Apple devices in rugged and extreme warehouse environments",
+        answer: "True"
+      }
+    ]
+  },
+  "kitchen-display-system-essentials": {
+    name: "Kitchen display system essentials",
+    questions: [
+      {
+        type: "multiple",
+        match: "challenges in restaurant kitchens",
+        answers: ["Workflows", "Staff shortages", "Environmental concerns"]
+      },
+      {
+        type: "multiple",
+        match: "problems with using paper tickets in restaurant kitchens",
+        answers: ["Order errors", "Misplaced tickets", "Wasted paper"]
+      },
+      {
+        type: "multiple",
+        match: "identify an opportunity to recommend a kitchen display system",
+        answers: [
+          "How do the kitchen staff know how long an order has been in the queue?",
+          "How much food is wasted by incorrect order preparation?",
+          "How do you communicate orders from your waiting staff to the kitchen?"
+        ]
+      },
+      {
+        type: "single",
+        match: "Kitchen display systems ensure paper tickets are printed",
+        answer: "False"
+      },
+      {
+        type: "multiple",
+        match: "benefits can be achieved by implementing a kitchen display system",
+        answers: ["Reduction in food waste", "Faster service", "Increased tips"]
+      }
+    ]
+  },
+  "work-order-management-essentials-final": {
+    name: "Work order management essentials",
+    questions: [
+      {
+        type: "single",
+        match: "Work order management solutions increase safety and productivity",
+        answer: "True"
+      },
+      {
+        type: "multiple",
+        match: "identify an opportunity to recommend a work order management solution",
+        answers: [
+          "How much downtime does your business experience as a result of safety incidents?",
+          "What maintenance tasks do your teams use paper forms for?",
+          "How would real-time access to systems and asset information improve your business?"
+        ]
+      },
+      {
+        type: "multiple",
+        match: "disadvantages of using a spreadsheet or other database as a work order management solution",
+        answers: [
+          "These solutions create data that isn’t accessible everywhere.",
+          "Once shared, these solutions require an internet connection to provide access.",
+          "These solutions require data collected in the field to be entered manually later."
+        ]
+      },
+      {
+        type: "single",
+        match: "Paper-based processes often result in poor data quality",
+        answer: "True"
+      },
+      {
+        type: "single",
+        match: "Many work order management solutions can be used offline",
+        answer: "True"
+      }
+    ]
+  },
   "esim-knowledge-check": {
     name: "בדיקת ידע בנושא eSIM",
     questions: [

@@ -119,6 +119,10 @@ const chapterWiseEssentials = new Set([
   ,"skill-and-work-instruction-essentials"
   ,"wealth-financial-review-essentials"
   ,"wifi-optimisation-essentials"
+  ,"quality-control-essentials"
+  ,"stock-management-warehousing-logistics-essentials"
+  ,"kitchen-display-system-essentials"
+  ,"work-order-management-essentials-final"
 ]);
 
 app.get("/api/exams", (_req, res) => {

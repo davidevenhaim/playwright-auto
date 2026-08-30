@@ -638,10 +638,13 @@ export async function processCurrentChapter({ skipCompleted = true, limit = 0, o
         // WISE modules), not on a perfect score. A quiz whose answers were
         // already recorded server-side comes back ungraded, which is not a fail.
         const percentage = graded.total > 0 ? Math.round((graded.correct / graded.total) * 100) : null;
-        const threshold = Number.isFinite(graded.completionScore) ? graded.completionScore : null;
+        // WISE quizzes use an 80% pass threshold. Some packages omit
+        // completionScore from their runtime state even though the results UI
+        // still applies that threshold, so do not incorrectly require 100%.
+        const threshold = Number.isFinite(graded.completionScore) ? graded.completionScore : 80;
         const passed = percentage === null
           ? null
-          : (threshold === null ? graded.correct === graded.total : percentage >= threshold);
+          : percentage >= threshold;
 
         results.push({
           title: detected.name,
@@ -760,7 +763,10 @@ export async function processForYou({ skipCompleted = true, limit = 0, onProgres
 
 export async function captureCurrentExam() {
   const targetPage = await connectedPage();
-  await targetPage.waitForTimeout(500);
+  // Capturing must work for exams that are not in exams.js yet. Wait on the
+  // SEED player's own assessment state instead of trying to identify a known
+  // question or taking a one-time snapshot before a slow quiz has rendered.
+  await waitForModuleReady(targetPage, 60000).catch(() => null);
 
   const capturedFrames = [];
   for (const frame of targetPage.frames()) {
@@ -781,10 +787,15 @@ export async function captureCurrentExam() {
         }
         return tidy(element.getAttribute("aria-label") || element.closest("label")?.innerText || "");
       };
+      const controlVisible = (element) => {
+        if (visible(element)) return true;
+        const labels = element.labels ? Array.from(element.labels) : [];
+        return labels.some(visible) || Boolean(element.closest("label") && visible(element.closest("label")));
+      };
 
       const controls = Array.from(document.querySelectorAll(
         'input[type="radio"], input[type="checkbox"], select, [role="combobox"]'
-      )).filter(visible).map((element, index) => {
+      )).filter(controlVisible).map((element, index) => {
         const tag = element.tagName.toLowerCase();
         const type = tag === "input" ? element.type : (tag === "select" ? "select" : "combobox");
         const options = tag === "select"
