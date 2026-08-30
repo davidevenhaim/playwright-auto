@@ -4,6 +4,7 @@ import { exams } from "./exams.js";
 let context = null;
 let page = null;
 let logs = [];
+const EXAM_LOAD_TIMEOUT_MS = 60000;
 
 function log(message) {
   const line = `[${new Date().toLocaleTimeString()}] ${message}`;
@@ -80,7 +81,7 @@ export async function browserStatus() {
 
 export async function detectCurrentExam() {
   const targetPage = await connectedPage();
-  const deadline = Date.now() + 10000;
+  const deadline = Date.now() + EXAM_LOAD_TIMEOUT_MS;
   let visibleText = "";
 
   while (Date.now() < deadline) {
@@ -88,8 +89,15 @@ export async function detectCurrentExam() {
       frame.locator("body").innerText().catch(() => "")
     ));
     visibleText = clean(frameTexts.join(" ")).toLocaleLowerCase();
-    if (visibleText.length > 100) break;
-    await targetPage.waitForTimeout(200);
+    const questionVisible = Object.values(exams).some((exam) =>
+      exam.questions.some((question) =>
+        visibleText.includes(clean(question.match).toLocaleLowerCase())
+      )
+    );
+    const loadedContentFrame = frameTexts.some((text) => clean(text).length > 500);
+
+    if (questionVisible || (loadedContentFrame && !visibleText.includes(" loading"))) break;
+    await targetPage.waitForTimeout(500);
   }
 
   const pageTitle = clean(await targetPage.title().catch(() => "")).toLocaleLowerCase();
@@ -180,7 +188,7 @@ export async function processCurrentChapter() {
       log(`[${index + 1}/${items.length}] Opening ${item.title || item.url}`);
       itemPage = await context.newPage();
       page = itemPage;
-      await itemPage.goto(item.url, { waitUntil: "domcontentloaded", timeout: 30000 });
+      await itemPage.goto(item.url, { waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS });
       await itemPage.waitForTimeout(1500);
 
       let detected = null;
@@ -286,7 +294,7 @@ async function findQuestionBlock(questionText) {
   const wanted = clean(questionText);
   let questionNode = null;
   let questionFrame = null;
-  const deadline = Date.now() + 10000;
+  const deadline = Date.now() + EXAM_LOAD_TIMEOUT_MS;
 
   // Sales Coach renders quiz content in an iframe. Search every frame in the
   // connected tab and keep polling briefly while a newly navigated exam loads.
