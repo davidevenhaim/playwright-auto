@@ -247,10 +247,6 @@ export async function processCurrentChapter() {
       let moduleFinished = false;
       let pagesRead = 0;
       for (let modulePage = 0; modulePage < 50 && !moduleFinished; modulePage++) {
-        const readingDelay = randomDelay(35, 60);
-        log(`Module page ${modulePage + 1}: reading for ${Math.round(readingDelay / 1000)} seconds.`);
-        await scrollResource(itemPage, readingDelay);
-
         let detected = null;
         try {
           detected = await detectCurrentExam();
@@ -259,12 +255,18 @@ export async function processCurrentChapter() {
         if (detected && detected.matchedQuestions > 0) {
           const run = await runExam(detected.id, false, { preserveLogs: true });
           examsFilled++;
-          await waitRandom(itemPage, 35, 60, "Before submitting the completed exam");
+          if (run.failed > 0) {
+            throw new Error(`Exam was not submitted because ${run.failed} of ${run.total} questions failed to fill.`);
+          }
+          log("Exam filled. Waiting 35 seconds before submission.");
+          await itemPage.waitForTimeout(35000);
           await submitCurrentExam(itemPage);
           examsSubmitted++;
           results.push({ title: detected.name, type: "exam", status: "submitted", ...run });
           moduleFinished = !(await advanceModulePage(itemPage));
         } else {
+          log(`Module page ${modulePage + 1} is reading material. Reading for 20 seconds.`);
+          await scrollResource(itemPage, 20000);
           pagesRead++;
           moduleFinished = !(await advanceModulePage(itemPage));
         }
