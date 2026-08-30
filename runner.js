@@ -166,6 +166,57 @@ async function scrollResource(resourcePage, durationMs = 8000) {
   }
 }
 
+function randomDelay(minSeconds, maxSeconds) {
+  return Math.floor((minSeconds + Math.random() * (maxSeconds - minSeconds + 1)) * 1000);
+}
+
+async function waitRandom(targetPage, minSeconds, maxSeconds, reason) {
+  const delay = randomDelay(minSeconds, maxSeconds);
+  log(`${reason}: waiting ${Math.round(delay / 1000)} seconds.`);
+  await targetPage.waitForTimeout(delay);
+}
+
+async function clickExactAction(targetPage, names, { childFramesOnly = false } = {}) {
+  for (const frame of targetPage.frames()) {
+    if (childFramesOnly && frame === targetPage.mainFrame()) continue;
+    const candidates = frame.locator('button, input[type="button"], input[type="submit"], [role="button"]');
+    const count = await candidates.count().catch(() => 0);
+    for (let index = 0; index < count; index++) {
+      const candidate = candidates.nth(index);
+      if (!(await candidate.isVisible().catch(() => false))) continue;
+      if (!(await candidate.isEnabled().catch(() => false))) continue;
+      const label = clean(
+        await candidate.innerText().catch(() => "") ||
+        await candidate.getAttribute("value").catch(() => "") ||
+        await candidate.getAttribute("aria-label").catch(() => "")
+      );
+      if (!names.some((name) => label.toLocaleLowerCase() === name.toLocaleLowerCase())) continue;
+      await candidate.click({ force: true });
+      return label;
+    }
+  }
+  return null;
+}
+
+async function submitCurrentExam(targetPage) {
+  const clicked = await clickExactAction(targetPage, ["Submit", "שלח"]);
+  if (!clicked) throw new Error("The exam was filled, but its Submit button was not found or enabled.");
+  log(`Clicked ${clicked}.`);
+  await targetPage.waitForTimeout(3000);
+}
+
+async function advanceModulePage(targetPage) {
+  const clicked = await clickExactAction(
+    targetPage,
+    ["Next", "Continue", "הבא", "המשך"],
+    { childFramesOnly: true }
+  );
+  if (!clicked) return false;
+  log(`Clicked ${clicked} to advance within the module.`);
+  await targetPage.waitForTimeout(1500);
+  return true;
+}
+
 export async function processCurrentChapter() {
   const chapterPage = await connectedPage();
   logs = [];
@@ -178,6 +229,7 @@ export async function processCurrentChapter() {
   log(`Found ${items.length} linked chapter item${items.length === 1 ? "" : "s"}.`);
   const results = [];
   let examsFilled = 0;
+  let examsSubmitted = 0;
   let resourcesRead = 0;
   let failed = 0;
 
@@ -185,30 +237,45 @@ export async function processCurrentChapter() {
     const item = items[index];
     let itemPage = null;
     try {
+      if (index > 0) await waitRandom(chapterPage, 3, 12, "Between modules");
       log(`[${index + 1}/${items.length}] Opening ${item.title || item.url}`);
       itemPage = await context.newPage();
       page = itemPage;
       await itemPage.goto(item.url, { waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS });
       await itemPage.waitForTimeout(1500);
 
-      let detected = null;
-      try {
-        detected = await detectCurrentExam();
-      } catch {}
+      let moduleFinished = false;
+      let pagesRead = 0;
+      for (let modulePage = 0; modulePage < 50 && !moduleFinished; modulePage++) {
+        const readingDelay = randomDelay(35, 60);
+        log(`Module page ${modulePage + 1}: reading for ${Math.round(readingDelay / 1000)} seconds.`);
+        await scrollResource(itemPage, readingDelay);
 
-      if (detected && detected.matchedQuestions > 0) {
-        const run = await runExam(detected.id, false, { preserveLogs: true });
-        examsFilled++;
-        results.push({ title: detected.name, type: "exam", status: "filled", ...run });
-        log(`Exam left open for review: ${detected.name}`);
-      } else {
-        log(`Reading resource for 8 seconds: ${await itemPage.title().catch(() => item.title)}`);
-        await scrollResource(itemPage);
-        resourcesRead++;
-        results.push({ title: item.title || await itemPage.title(), type: "resource", status: "read" });
-        await itemPage.close();
-        itemPage = null;
+        let detected = null;
+        try {
+          detected = await detectCurrentExam();
+        } catch {}
+
+        if (detected && detected.matchedQuestions > 0) {
+          const run = await runExam(detected.id, false, { preserveLogs: true });
+          examsFilled++;
+          await waitRandom(itemPage, 35, 60, "Before submitting the completed exam");
+          await submitCurrentExam(itemPage);
+          examsSubmitted++;
+          results.push({ title: detected.name, type: "exam", status: "submitted", ...run });
+          moduleFinished = !(await advanceModulePage(itemPage));
+        } else {
+          pagesRead++;
+          moduleFinished = !(await advanceModulePage(itemPage));
+        }
       }
+
+      if (pagesRead > 0) {
+        resourcesRead++;
+        results.push({ title: item.title || await itemPage.title(), type: "resource", status: "read", pagesRead });
+      }
+      await itemPage.close();
+      itemPage = null;
     } catch (error) {
       failed++;
       const message = error instanceof Error ? error.message : String(error);
@@ -220,9 +287,8 @@ export async function processCurrentChapter() {
 
   page = chapterPage;
   await chapterPage.bringToFront().catch(() => {});
-  log(`Chapter complete: ${examsFilled} exams filled, ${resourcesRead} resources read, ${failed} failed.`);
-  log("Exam tabs remain open. No Submit button was clicked.");
-  return { total: items.length, examsFilled, resourcesRead, failed, results };
+  log(`Chapter complete: ${examsSubmitted} exams submitted, ${resourcesRead} resources read, ${failed} failed.`);
+  return { total: items.length, examsFilled, examsSubmitted, resourcesRead, failed, results };
 }
 
 export async function captureCurrentExam() {

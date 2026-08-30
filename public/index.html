@@ -52,13 +52,13 @@
       <button id="connectBtn" class="secondary">Connect tab</button>
       <button id="runBtn" class="primary">Detect &amp; fill exam</button>
     </div>
-    <button id="chapterBtn" class="primary" style="margin-top:12px;">Complete Current Chapter</button>
+    <button id="chapterBtn" class="primary" style="margin-top:12px;">Complete Current Chapter (submits exams)</button>
 
     <div id="result" class="result"></div>
     <pre id="logs">Waiting...</pre>
 
     <p class="note">
-      The automation fills answers only. It does not press the final Submit button.
+      Detect &amp; fill never submits. Complete Current Chapter submits each detected exam before continuing.
     </p>
   </main>
 
@@ -203,7 +203,7 @@
         const res = await fetch("/api/chapter/run", { method: "POST" });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Chapter automation failed");
-        result.textContent = `Chapter complete: ${data.examsFilled} exams filled, ${data.resourcesRead} resources read, ${data.failed} failed.`;
+        result.textContent = `Chapter complete: ${data.examsSubmitted} exams submitted, ${data.resourcesRead} resources read, ${data.failed} failed.`;
         await refreshLogs();
         await refreshStatus();
       } catch (e) {
