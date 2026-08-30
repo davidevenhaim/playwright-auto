@@ -48,22 +48,11 @@
     <label for="exam">Current exam</label>
     <select id="exam"></select>
 
-    <div class="check">
-      <input type="checkbox" id="dryRun" />
-      <label for="dryRun">Dry run (detect questions without clicking)</label>
-    </div>
-
     <div class="row">
       <button id="connectBtn" class="secondary">Connect tab</button>
       <button id="runBtn" class="primary">Detect &amp; fill exam</button>
     </div>
-
-    <div class="capture-row">
-      <button id="captureBtn" class="secondary">Capture current exam</button>
-      <button id="downloadBtn" class="secondary">Download captures JSON</button>
-    </div>
-    <button id="chapterBtn" class="primary" style="margin-top:12px;">Process current chapter</button>
-    <div id="captureCount" class="capture-count">0 exams captured</div>
+    <button id="chapterBtn" class="primary" style="margin-top:12px;">Complete Current Chapter</button>
 
     <div id="result" class="result"></div>
     <pre id="logs">Waiting...</pre>
@@ -123,6 +112,7 @@
     }
 
     async function refreshCaptureCount() {
+      if (!captureCount) return;
       try {
         const res = await fetch("/api/captures");
         const data = await res.json();
@@ -156,7 +146,8 @@
         const detected = await detectRes.json();
         if (!detectRes.ok) throw new Error(detected.error || "Could not identify the current exam");
         examSelect.value = detected.id;
-        result.textContent = dryRun.checked
+        const isDryRun = Boolean(dryRun?.checked);
+        result.textContent = isDryRun
           ? `Detected ${detected.name}. Running detection only...`
           : `Detected ${detected.name}. Filling answers...`;
         const res = await fetch("/api/run", {
@@ -164,7 +155,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             examId: detected.id,
-            dryRun: dryRun.checked
+            dryRun: isDryRun
           })
         });
         const data = await res.json();
@@ -181,7 +172,7 @@
       }
     });
 
-    captureBtn.addEventListener("click", async () => {
+    captureBtn?.addEventListener("click", async () => {
       captureBtn.disabled = true;
       result.textContent = "Capturing the current exam...";
       try {
@@ -198,14 +189,14 @@
       }
     });
 
-    downloadBtn.addEventListener("click", () => {
+    downloadBtn?.addEventListener("click", () => {
       window.location.href = "/api/captures/download";
     });
 
     chapterBtn.addEventListener("click", async () => {
       chapterBtn.disabled = true;
       runBtn.disabled = true;
-      captureBtn.disabled = true;
+      if (captureBtn) captureBtn.disabled = true;
       result.textContent = "Scanning and processing the current chapter...";
       logs.textContent = "Starting chapter automation...";
       try {
@@ -221,7 +212,7 @@
       } finally {
         chapterBtn.disabled = false;
         runBtn.disabled = false;
-        captureBtn.disabled = false;
+        if (captureBtn) captureBtn.disabled = false;
       }
     });
 
