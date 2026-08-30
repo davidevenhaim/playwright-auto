@@ -62,6 +62,7 @@
       <button id="captureBtn" class="secondary">Capture current exam</button>
       <button id="downloadBtn" class="secondary">Download captures JSON</button>
     </div>
+    <button id="chapterBtn" class="primary" style="margin-top:12px;">Process current chapter</button>
     <div id="captureCount" class="capture-count">0 exams captured</div>
 
     <div id="result" class="result"></div>
@@ -77,6 +78,7 @@
     const connectBtn = document.getElementById("connectBtn");
     const runBtn = document.getElementById("runBtn");
     const captureBtn = document.getElementById("captureBtn");
+    const chapterBtn = document.getElementById("chapterBtn");
     const downloadBtn = document.getElementById("downloadBtn");
     const captureCount = document.getElementById("captureCount");
     const dryRun = document.getElementById("dryRun");
@@ -198,6 +200,29 @@
 
     downloadBtn.addEventListener("click", () => {
       window.location.href = "/api/captures/download";
+    });
+
+    chapterBtn.addEventListener("click", async () => {
+      chapterBtn.disabled = true;
+      runBtn.disabled = true;
+      captureBtn.disabled = true;
+      result.textContent = "Scanning and processing the current chapter...";
+      logs.textContent = "Starting chapter automation...";
+      try {
+        const res = await fetch("/api/chapter/run", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Chapter automation failed");
+        result.textContent = `Chapter complete: ${data.examsFilled} exams filled, ${data.resourcesRead} resources read, ${data.failed} failed.`;
+        await refreshLogs();
+        await refreshStatus();
+      } catch (e) {
+        result.textContent = e.message;
+        await refreshLogs();
+      } finally {
+        chapterBtn.disabled = false;
+        runBtn.disabled = false;
+        captureBtn.disabled = false;
+      }
     });
 
     loadExams();

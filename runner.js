@@ -123,6 +123,100 @@ export async function detectCurrentExam() {
   return best;
 }
 
+async function collectChapterItems(chapterPage) {
+  const items = [];
+  for (const frame of chapterPage.frames()) {
+    const frameItems = await frame.evaluate(() => Array.from(document.querySelectorAll("a[href]"))
+      .map((anchor) => ({
+        url: anchor.href,
+        title: (anchor.innerText || anchor.getAttribute("aria-label") || "").replace(/\s+/g, " ").trim()
+      }))
+      .filter((item) => item.url.includes("/home/content/view/")))
+      .catch(() => []);
+    items.push(...frameItems);
+  }
+
+  const unique = new Map();
+  for (const item of items) {
+    const canonicalUrl = item.url.split("#")[0];
+    if (!unique.has(canonicalUrl)) unique.set(canonicalUrl, { ...item, url: canonicalUrl });
+  }
+  return [...unique.values()];
+}
+
+async function scrollResource(resourcePage, durationMs = 8000) {
+  const steps = Math.max(8, Math.ceil(durationMs / 500));
+  for (let step = 1; step <= steps; step++) {
+    for (const frame of resourcePage.frames()) {
+      await frame.evaluate(({ step, steps }) => {
+        const root = document.scrollingElement || document.documentElement;
+        const maximum = Math.max(0, root.scrollHeight - innerHeight);
+        scrollTo({ top: maximum * (step / steps), behavior: "smooth" });
+      }, { step, steps }).catch(() => {});
+    }
+    await resourcePage.waitForTimeout(500);
+  }
+}
+
+export async function processCurrentChapter() {
+  const chapterPage = await connectedPage();
+  logs = [];
+  log(`Scanning chapter page: ${await chapterPage.title().catch(() => chapterPage.url())}`);
+  const items = await collectChapterItems(chapterPage);
+  if (!items.length) {
+    throw new Error("No chapter resources were found. Open the chapter page that lists its exams and resources, then try again.");
+  }
+
+  log(`Found ${items.length} linked chapter item${items.length === 1 ? "" : "s"}.`);
+  const results = [];
+  let examsFilled = 0;
+  let resourcesRead = 0;
+  let failed = 0;
+
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
+    let itemPage = null;
+    try {
+      log(`[${index + 1}/${items.length}] Opening ${item.title || item.url}`);
+      itemPage = await context.newPage();
+      page = itemPage;
+      await itemPage.goto(item.url, { waitUntil: "domcontentloaded", timeout: 30000 });
+      await itemPage.waitForTimeout(1500);
+
+      let detected = null;
+      try {
+        detected = await detectCurrentExam();
+      } catch {}
+
+      if (detected && detected.matchedQuestions > 0) {
+        const run = await runExam(detected.id, false, { preserveLogs: true });
+        examsFilled++;
+        results.push({ title: detected.name, type: "exam", status: "filled", ...run });
+        log(`Exam left open for review: ${detected.name}`);
+      } else {
+        log(`Reading resource for 8 seconds: ${await itemPage.title().catch(() => item.title)}`);
+        await scrollResource(itemPage);
+        resourcesRead++;
+        results.push({ title: item.title || await itemPage.title(), type: "resource", status: "read" });
+        await itemPage.close();
+        itemPage = null;
+      }
+    } catch (error) {
+      failed++;
+      const message = error instanceof Error ? error.message : String(error);
+      log(`Failed: ${item.title || item.url}: ${message}`);
+      results.push({ title: item.title || item.url, status: "failed", error: message });
+      if (itemPage && !itemPage.isClosed()) await itemPage.close().catch(() => {});
+    }
+  }
+
+  page = chapterPage;
+  await chapterPage.bringToFront().catch(() => {});
+  log(`Chapter complete: ${examsFilled} exams filled, ${resourcesRead} resources read, ${failed} failed.`);
+  log("Exam tabs remain open. No Submit button was clicked.");
+  return { total: items.length, examsFilled, resourcesRead, failed, results };
+}
+
 export async function captureCurrentExam() {
   const targetPage = await connectedPage();
   await targetPage.waitForTimeout(500);
@@ -363,13 +457,13 @@ async function fillQuestion(question, dryRun = false) {
   }
 }
 
-export async function runExam(examId, dryRun = false) {
+export async function runExam(examId, dryRun = false, { preserveLogs = false } = {}) {
   const targetPage = await connectedPage();
 
   const exam = exams[examId];
   if (!exam) throw new Error(`Unknown exam: ${examId}`);
 
-  logs = [];
+  if (!preserveLogs) logs = [];
   log(`Starting "${exam.name}"${dryRun ? " (dry run)" : ""}`);
   log(`Using connected tab: ${await targetPage.title().catch(() => targetPage.url())}`);
   log("Matching questions by their text; rendered question order is ignored.");

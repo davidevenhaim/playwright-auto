@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, getLogs, runExam } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, getLogs, processCurrentChapter, runExam } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -132,6 +132,14 @@ app.delete("/api/captures", (_req, res) => {
 app.post("/api/connect", async (_req, res) => {
   try {
     res.json(await connectBrowser());
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+app.post("/api/chapter/run", async (_req, res) => {
+  try {
+    res.json(await processCurrentChapter());
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
