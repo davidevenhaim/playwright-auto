@@ -217,6 +217,115 @@ async function advanceModulePage(targetPage) {
   return true;
 }
 
+async function openAllAccordions(targetPage) {
+  let opened = 0;
+  for (let pass = 0; pass < 3; pass++) {
+    let openedThisPass = 0;
+    for (const frame of targetPage.frames()) {
+      if (frame === targetPage.mainFrame()) continue;
+
+      openedThisPass += await frame.evaluate(() => {
+        let count = 0;
+        for (const details of document.querySelectorAll("details:not([open])")) {
+          details.open = true;
+          count++;
+        }
+        return count;
+      }).catch(() => 0);
+
+      const toggles = frame.locator('[aria-expanded="false"]');
+      const count = await toggles.count().catch(() => 0);
+      for (let index = 0; index < count; index++) {
+        const toggle = toggles.nth(index);
+        if (!(await toggle.isVisible().catch(() => false))) continue;
+        if (!(await toggle.isEnabled().catch(() => false))) continue;
+        await toggle.click({ force: true }).catch(() => {});
+        openedThisPass++;
+        await targetPage.waitForTimeout(150);
+      }
+    }
+    opened += openedThisPass;
+    if (!openedThisPass) break;
+  }
+  if (opened) log(`Opened ${opened} accordion section${opened === 1 ? "" : "s"}.`);
+}
+
+async function startVisibleVideoControls(targetPage) {
+  for (const frame of targetPage.frames()) {
+    if (frame === targetPage.mainFrame()) continue;
+    const buttons = frame.locator('button, [role="button"]');
+    const count = await buttons.count().catch(() => 0);
+    for (let index = 0; index < count; index++) {
+      const button = buttons.nth(index);
+      if (!(await button.isVisible().catch(() => false))) continue;
+      const label = clean(
+        await button.getAttribute("aria-label").catch(() => "") ||
+        await button.getAttribute("title").catch(() => "") ||
+        await button.innerText().catch(() => "")
+      );
+      if (!/^(play|play video|הפעל|נגן)$/i.test(label)) continue;
+      await button.click({ force: true }).catch(() => {});
+      await targetPage.waitForTimeout(500);
+    }
+  }
+}
+
+async function playAllVideos(targetPage) {
+  const initialVideoCount = (await Promise.all(targetPage.frames().map((frame) =>
+    frame === targetPage.mainFrame() ? 0 : frame.locator("video").count().catch(() => 0)
+  ))).reduce((total, count) => total + count, 0);
+  if (!initialVideoCount) await startVisibleVideoControls(targetPage);
+  let played = 0;
+
+  for (const frame of targetPage.frames()) {
+    if (frame === targetPage.mainFrame()) continue;
+    const videos = frame.locator("video");
+    const count = await videos.count().catch(() => 0);
+
+    for (let index = 0; index < count; index++) {
+      const video = videos.nth(index);
+      await video.scrollIntoViewIfNeeded().catch(() => {});
+      const initial = await video.evaluate(async (element) => {
+        if (element.ended) element.currentTime = 0;
+        try {
+          await element.play();
+        } catch {
+          element.muted = true;
+          await element.play();
+        }
+        return { duration: element.duration, currentTime: element.currentTime };
+      }).catch(() => null);
+      if (!initial) throw new Error(`Video ${index + 1} could not be started.`);
+
+      played++;
+      const durationText = Number.isFinite(initial.duration) ? `${Math.ceil(initial.duration)} seconds` : "unknown duration";
+      log(`Playing video ${played} (${durationText}) and waiting for it to end.`);
+      const maximumWait = Number.isFinite(initial.duration)
+        ? Math.max(120000, (initial.duration - initial.currentTime + 120) * 1000)
+        : 4 * 60 * 60 * 1000;
+      const deadline = Date.now() + maximumWait;
+
+      while (Date.now() < deadline) {
+        const state = await video.evaluate(async (element) => {
+          if (element.paused && !element.ended) await element.play().catch(() => {});
+          return { ended: element.ended, currentTime: element.currentTime, duration: element.duration };
+        }).catch(() => null);
+        if (!state) throw new Error(`Video ${played} disappeared before it ended.`);
+        if (state.ended || (Number.isFinite(state.duration) && state.currentTime >= state.duration - 0.25)) break;
+        await targetPage.waitForTimeout(1000);
+      }
+
+      const ended = await video.evaluate((element) => element.ended ||
+        (Number.isFinite(element.duration) && element.currentTime >= element.duration - 0.25)).catch(() => false);
+      if (!ended) throw new Error(`Video ${played} did not finish before the safety timeout.`);
+      log(`Video ${played} finished.`);
+    }
+  }
+
+  if (!played) log("No videos found on this reading page.");
+  return played;
+}
+
 export async function processCurrentChapter() {
   const chapterPage = await connectedPage();
   logs = [];
@@ -265,8 +374,11 @@ export async function processCurrentChapter() {
           results.push({ title: detected.name, type: "exam", status: "submitted", ...run });
           moduleFinished = !(await advanceModulePage(itemPage));
         } else {
+          await openAllAccordions(itemPage);
+          await playAllVideos(itemPage);
           log(`Module page ${modulePage + 1} is reading material. Reading for 20 seconds.`);
           await scrollResource(itemPage, 20000);
+          await openAllAccordions(itemPage);
           pagesRead++;
           moduleFinished = !(await advanceModulePage(itemPage));
         }
