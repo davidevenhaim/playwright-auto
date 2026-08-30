@@ -3,11 +3,25 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, getLogs, processCurrentChapter, runExam } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, getLogs, processCurrentChapter, processForYou, runExam } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const capturesPath = path.join(__dirname, "captured-exams.json");
+const legacyExamResultsPath = path.join(__dirname, "exam-results.json");
+
+// One file per chapter run, named after the moment the run started, so runs
+// accumulate as history instead of overwriting each other.
+function examResultsPathFor(startedAt) {
+  const stamp = new Date(startedAt || Date.now()).toISOString().slice(0, 19).replace(/:/g, "-");
+  return path.join(__dirname, `exam-results-${stamp}.json`);
+}
+
+function listExamResultsFiles() {
+  return fs.readdirSync(__dirname)
+    .filter((name) => /^exam-results-.+\.json$/.test(name))
+    .sort();
+}
 
 function readCaptures() {
   try {
@@ -20,6 +34,40 @@ function readCaptures() {
 
 function writeCaptures(captures) {
   fs.writeFileSync(capturesPath, `${JSON.stringify(captures, null, 2)}\n`);
+}
+
+function writeExamResults(scope, run) {
+  const quizzes = (run.results || []).filter((item) => item.type === "quiz");
+  const report = {
+    generatedAt: new Date().toISOString(),
+    scope,
+    startedAt: run.startedAt || null,
+    summary: {
+      exams: quizzes.length,
+      passed: quizzes.filter((item) => item.passed === true).length,
+      failed: quizzes.filter((item) => item.passed === false).length,
+      // Submitted but returned no per-question grading, e.g. a quiz whose
+      // answers the server had already recorded.
+      recorded: quizzes.filter((item) => item.passed === null || item.passed === undefined).length,
+      resourcesRead: run.resourcesRead || 0,
+      processingFailures: run.failed || 0
+    },
+    exams: quizzes.map((item) => ({
+      title: item.title,
+      module: item.module,
+      passed: item.passed,
+      status: item.status,
+      identified: item.identified !== false,
+      // `threshold` is the site's own completionScore; without it a "failed"
+      // score cannot be told apart from a merely imperfect one.
+      score: { correct: item.correct, total: item.graded, percentage: item.percentage, threshold: item.threshold },
+      errors: item.errors || []
+    })),
+    processingErrors: (run.results || []).filter((item) => item.status === "failed" && item.type !== "quiz")
+  };
+  const target = examResultsPathFor(run.startedAt);
+  fs.writeFileSync(target, `${JSON.stringify(report, null, 2)}\n`);
+  return { ...report, file: path.basename(target) };
 }
 
 const app = express();
@@ -49,7 +97,7 @@ const chapterWiseEssentials = new Set([
   "task-management-essentials",
   "training-and-enablement-essentials",
   "virtual-training-essentials",
-  "work-order-management-essentials"
+  "workforce-management-essentials"
   ,"applecare-for-business-quiz"
   ,"apple-device-management-at-work-quiz"
   ,"clienteling-essentials"
@@ -110,15 +158,48 @@ app.get("/api/captures/download", (_req, res) => {
   res.download(capturesPath, "captured-exams.json");
 });
 
+app.get("/api/results", (_req, res) => {
+  const files = listExamResultsFiles().reverse();
+  res.json({ count: files.length, files });
+});
+
+app.get("/api/results/download", (req, res) => {
+  const noResults = {
+    error: "No graded exam results are available yet. Run Complete Chapter or Complete For You first."
+  };
+  const requested = typeof req.query.file === "string" ? path.basename(req.query.file) : null;
+  const files = listExamResultsFiles();
+  const name = requested && files.includes(requested) ? requested : files[files.length - 1];
+  if (!name) {
+    // Fall back to the single-file report written by earlier versions, but only
+    // if it holds a real run: the empty placeholder is not worth downloading.
+    try {
+      const legacy = JSON.parse(fs.readFileSync(legacyExamResultsPath, "utf8"));
+      if (!legacy.generatedAt || !Array.isArray(legacy.exams) || !legacy.exams.length) {
+        return res.status(404).json(noResults);
+      }
+    } catch {
+      return res.status(404).json(noResults);
+    }
+    return res.download(legacyExamResultsPath, "exam-results.json");
+  }
+
+  const target = path.join(__dirname, name);
+  try {
+    const report = JSON.parse(fs.readFileSync(target, "utf8"));
+    if (!Array.isArray(report.exams)) return res.status(404).json(noResults);
+  } catch {
+    return res.status(500).json({ error: "The exam results file is invalid. Run the chapter again to rebuild it." });
+  }
+  res.download(target, name);
+});
+
 app.post("/api/capture", async (_req, res) => {
   try {
     const capture = await captureCurrentExam();
-    const captures = readCaptures();
-    const duplicateIndex = captures.findIndex((item) => item.title === capture.title);
-    if (duplicateIndex >= 0) captures[duplicateIndex] = capture;
-    else captures.push(capture);
-    writeCaptures(captures);
-    res.json({ capture, count: captures.length, replaced: duplicateIndex >= 0 });
+    // Keep the capture file fresh: each identification replaces the previous exam.
+    writeCaptures([capture]);
+    res.json({ capture, count: 1, replaced: true });
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
@@ -137,9 +218,33 @@ app.post("/api/connect", async (_req, res) => {
   }
 });
 
-app.post("/api/chapter/run", async (_req, res) => {
+app.post("/api/chapter/run", async (req, res) => {
   try {
-    res.json(await processCurrentChapter());
+    const { skipCompleted = true, limit = 0 } = req.body || {};
+    const run = await processCurrentChapter({
+      skipCompleted: Boolean(skipCompleted),
+      limit: Number(limit) || 0,
+      // Flush after each item so an interrupted run keeps what it finished.
+      onProgress: (progress) => writeExamResults("chapter", progress)
+    });
+    const report = writeExamResults("chapter", run);
+    res.json({ ...run, report });
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+app.post("/api/for-you/run", async (req, res) => {
+  try {
+    const { skipCompleted = true, limit = 0 } = req.body || {};
+    const run = await processForYou({
+      skipCompleted: Boolean(skipCompleted),
+      limit: Number(limit) || 0,
+      // Flush after each item so an interrupted run keeps what it finished.
+      onProgress: (progress) => writeExamResults("for-you", progress)
+    });
+    const report = writeExamResults("for-you", run);
+    res.json({ ...run, report });
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
@@ -149,7 +254,9 @@ app.post("/api/run", async (req, res) => {
   try {
     const { examId, dryRun = false } = req.body || {};
     if (!examId) return res.status(400).json({ error: "examId is required" });
-    res.json(await runExam(examId, Boolean(dryRun)));
+    // The standalone detector is an inspection tool: fill as quickly as the
+    // page allows, leave Submit untouched, and let the user review the result.
+    res.json(await runExam(examId, Boolean(dryRun), { immediate: true }));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }

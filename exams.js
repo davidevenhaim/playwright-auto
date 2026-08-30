@@ -79,7 +79,7 @@ export const exams = {
       {
         type: "multiple",
         match: "אילו ערכי ליבה Apple משלבת בכל המוצרים שלה",
-        answers: ["פרטיות", "עמידות", "נגישות"]
+        answers: ["פרטיות", "הכללה וגיוון", "נגישות"]
       },
       {
         type: "multiple",
@@ -420,7 +420,7 @@ export const exams = {
       {
         type: "single",
         match: "According to IDC, how many decision-makers are involved",
-        answer: "Ten"
+        answer: "Eight"
       },
       {
         type: "multiple",
@@ -439,7 +439,7 @@ export const exams = {
       {
         type: "multiple",
         match: "Which trends are reshaping the field sales line of business",
-        answers: ["Digital sales tools", "Greater customer expectations", "More complexity"]
+        answers: ["Strategic sales enablement", "Greater customer expectations", "More complexity"]
       }
     ]
   },
@@ -612,7 +612,7 @@ export const exams = {
         answers: [
           "Does your business ever lose sales because team members have poor knowledge",
           "Have your sales teams raised issues about time spent on administrative workflows or data entry?",
-          "Does your business offer a secure mobile experience for sales teams?"
+          "How long does it take your sales representatives to send prospective clients a meeting summary with recommendations?"
         ]
       },
       {
@@ -625,7 +625,7 @@ export const exams = {
         match: "common objections of organisations that may benefit from implementing an assisted selling solution",
         answers: [
           "A new sales tool will disrupt workflows.",
-          "The organisation already has a training and enablement solution.",
+          "Mobility isn’t a priority.",
           "An assisted selling solution isn’t a priority."
         ]
       },
@@ -856,7 +856,7 @@ export const exams = {
       {
         type: "multiple",
         match: "major challenges in task management",
-        answers: ["Consistency", "Constantly changing processes", "Collaboration"]
+        answers: ["Consistency", "Employee turnover", "Constantly changing processes"]
       },
       {
         type: "multiple",
@@ -866,7 +866,7 @@ export const exams = {
       {
         type: "multiple",
         match: "Why is manual task management, such as using paper checklists, NOT ideal",
-        answers: ["Notes need to be transcribed", "Takes more time", "No way to ensure consistency"]
+        answers: ["Takes more time", "Requires checking on employees", "No way to ensure consistency"]
       },
       { type: "single", match: "task management solutions can use photo records to verify tasks", answer: "True" },
       {
@@ -928,8 +928,8 @@ export const exams = {
       { type: "single", match: "employees can seamlessly undertake virtual learning experiences", answer: "True" }
     ]
   },
-  "work-order-management-essentials": {
-    name: "Work order management essentials",
+  "workforce-management-essentials": {
+    name: "Workforce management essentials",
     questions: [
       {
         type: "multiple",
@@ -972,7 +972,7 @@ export const exams = {
     name: "בוחן – ניהול מכשירי Apple בעבודה",
     questions: [
       { type: "multiple", match: "להבין את צורכי הפריסה של הלקוחות", answers: ["מה מחלקת ה‑IT צריכה לעשות", "מה העובדים צריכים לעשות כדי להגדיר", "איך אתם מנהלים את מכשירי ה-iPhone שלכם?"] },
-      { type: "single", match: "מפריד בין נתונים בעבודה לבין נתונים אישיים", answer: "חשבונות Apple מנוהלים" },
+      { type: "single", match: "מפריד בין נתונים בעבודה לבין נתונים אישיים", answer: "רישום משתמשים" },
       { type: "multiple", match: "תומכת בארגונים בתהליכי הפריסה", answers: ["תוכנה שעובדת עם שירותי ניהול המכשירים", "תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה", "הכשרה בנושא ניהול מכשירים"] },
       { type: "single", match: "מאפיינים העיקריים של Apple Business המסייע בפריסה", answer: "רישום מכשירים אוטומטי" }
     ]
@@ -1002,7 +1002,7 @@ export const exams = {
       { type: "multiple", match: "challenges can a custom inspection solution help", answers: ["Keeping customers informed", "Avoiding lost documents", "Automating clerical workflows"] },
       { type: "multiple", match: "identify an opportunity to recommend a custom inspection solution", answers: ["How do your adjusters use software systems", "What obstacles do your customers encounter when filing claims?", "How long does it take your adjusters"] },
       { type: "single", match: "powerful hardware and custom inspection solutions allow insurers", answer: "True" },
-      { type: "multiple", match: "objections do organisations often have when considering a custom inspection", answers: ["doesn’t have the money to invest", "already has other custom solutions", "A new tool will disrupt workflows."] }
+      { type: "multiple", match: "objections do organisations often have when considering a custom inspection", answers: ["doesn’t have the money to invest", "Mobility isn’t a priority.", "A new tool will disrupt workflows."] }
     ]
   },
   "custom-needs-analysis-solutions-essentials": {
@@ -1010,7 +1010,7 @@ export const exams = {
     questions: [
       { type: "multiple", match: "Why do insurers conduct needs analyses", answers: ["To help customers understand the needs of their cover", "To simplify complex insurance products"] },
       { type: "multiple", match: "identify an opportunity to recommend a custom needs-analysis solution", answers: ["Where in the sales process do your agents use pen and paper?", "How long does it take agents to send a summary", "Are your agents able to lead effective sales meetings"] },
-      { type: "multiple", match: "continuing to use existing systems of record", answers: ["Lost productivity", "Not designed for field employees"] },
+      { type: "multiple", match: "continuing to use existing systems of record", answers: ["Lost productivity", "Agents need to use multiple apps to complete work"] },
       { type: "multiple", match: "hardware and software tools can insurers use in the needs-analysis", answers: ["Apple Pencil", "Microphones and voice-to-text"] },
       { type: "multiple", match: "objections do organisations often have when considering a custom needs-analysis", answers: ["doesn’t have the money to invest", "Mobility isn’t a priority.", "already uses bespoke solutions"] }
     ]
@@ -1019,7 +1019,7 @@ export const exams = {
     name: "Customer onboarding in financial services essentials",
     questions: [
       { type: "multiple", match: "biggest issues in customer onboarding", answers: ["length of time it takes to open an account", "Duplication of data in different systems", "Large amounts of paper"] },
-      { type: "multiple", match: "identify an opportunity to recommend a customer onboarding solution", answers: ["Where in your customer onboarding process", "How long does it take to onboard customers", "easy way of emailing product information"] },
+      { type: "multiple", match: "identify an opportunity to recommend a customer onboarding solution", answers: ["Where in your customer onboarding process", "How long does it take to onboard customers", "What is the rate of turnover in your branches?"] },
       { type: "multiple", match: "problems with using paper forms for customer onboarding", answers: ["Illegible data", "Expense of printing and shredding"] },
       { type: "multiple", match: "Apple products and features can bank workers use", answers: ["Apple Pencil", "Built-in camera"] },
       { type: "multiple", match: "benefits of implementing a customer onboarding solution", answers: ["manual data entry is reduced", "Customer confidence is built.", "Time is freed up"] }
@@ -1032,7 +1032,7 @@ export const exams = {
       { type: "multiple", match: "identify an opportunity to recommend a device management solution", answers: ["deploy and configure devices remotely", "Do software updates interfere", "remotely wipe sensitive company data"] },
       { type: "multiple", match: "set up their devices manually", answers: ["Risk of malware or a data breach", "Increased IT workloads", "Lost employee productivity"] },
       { type: "single", match: "flexible deployment models allow employees to get up and running", answer: "True" },
-      { type: "multiple", match: "benefits can be achieved by implementing a device management solution", answers: ["Enforce security compliance in real time", "Enable users to set up their own devices", "Filter online content"] }
+      { type: "multiple", match: "benefits can be achieved by implementing a device management solution", answers: ["Enforce security compliance in real time", "Enable users to set up their own devices", "Provide customers with encrypted devices"] }
     ]
   },
   "endpoint-security-essentials": {
@@ -1164,6 +1164,31 @@ export const exams = {
       { type: "multiple", match: "piecemeal approach to Wi-Fi optimisation", answers: ["Vulnerabilities across organisations", "Inconsistent employee workflows", "More IT support tickets"] },
       { type: "single", match: "coupled with Wi-Fi optimisation solutions allow organisations", answer: "True" },
       { type: "multiple", match: "benefits can be achieved by implementing a Wi-Fi optimisation", answers: ["Seamless roaming for employee devices", "Comprehensive analytics"] }
+    ]
+  },
+  "esim-knowledge-check": {
+    name: "בדיקת ידע בנושא eSIM",
+    questions: [
+      { type: "multiple", match: "איזה חיבור נדרש להפעלת eSIM", answers: ["חיבור סלולרי", "רשת אלחוטית"] },
+      { type: "single", match: "יכולים להגדיר eSIM רק כשהם מגיעים ליעד", answer: "לא נכון" },
+      { type: "multiple", match: "מהן התועלות של eSIM", answers: ["אי אפשר להסיר אותו מה‑iPhone", "אפשר להשתמש בשני קווים פעילים בו‑זמנית"] },
+      { type: "single", match: "באיזו שיטה להפעלת eSIM המפעיל הסלולרי שלהם תומך", answer: "לעיין במשאב הרלוונטי של התמיכה של Apple" },
+      { type: "single", match: "עוברים מ‑Android ל‑iPhone", answer: "Carrier Activation (הפעלה אצל מפעיל סלולרי)" },
+      { type: "single", match: "דגמי iPhone יכולים לאחסן יותר מ‑eSIM אחד", answer: "נכון" },
+      { type: "single", match: "עם אילו סוגי לקוחות כדאי לדבר על הפעלת eSIM", answer: "עם כל לקוח iPhone" },
+      { type: "single", match: "משדרגים את ה‑iPhone שלהם", answer: "Quick Transfer (העברה מהירה)" }
+    ]
+  },
+  "airpods-beyond-flagship-knowledge-check": {
+    name: "בוחן – מוכנים למצב את ה‑AirPods מעבר למכשירי דגל?",
+    questions: [
+      { type: "single", match: "שרון נכנסת ורוצה iPhone חדש", answer: "לבדוק בקצרה אם גם תחום השמע עשוי לעניין אותה" },
+      { type: "single", match: "שאלות פתוחות על שגרת היומיום יכולות לחשוף צרכים", answer: "נכון" },
+      { type: "single", match: "דנה אומרת שעבודה ונסיעות הם הדברים שהכי חשובים לה", answer: "להמליץ על האפשרות שהכי מתאימה למה שהיא אמרה לכם הרגע" },
+      { type: "multiple", match: "תום מטיל ספק אם ה‑AirPods שווים את המחיר", answers: ["כדאי להתמקד במה שישפר באמת את האופן שבו הוא משתמש במכשירים שלו מדי יום", "לקשר בין מאפיינים לתועלות ממשיות בחיי היומיום שלו"] },
+      { type: "single", match: "לקרן יש סגנון ברור ותקציב בראש", answer: "להציג בפניה כמה אפשרויות שמתאימות לסגנון ולתקציב שלה, ולתת לה להחליט" },
+      { type: "single", match: "לליאם יש מאפיינים זמינים שהוא לא יודע על קיומם", answer: "לתאר רגע בחייו שבו המאפיין יועיל לו משמעותית" },
+      { type: "single", match: "נראה שדין מתלבט בין שתי אפשרויות", answer: "לא" }
     ]
   }
 };

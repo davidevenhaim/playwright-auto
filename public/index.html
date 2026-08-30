@@ -52,7 +52,19 @@
       <button id="connectBtn" class="secondary">Connect tab</button>
       <button id="runBtn" class="primary">Detect &amp; fill exam</button>
     </div>
+    <button id="identifyBtn" class="secondary" style="margin-top:12px;">Identify exam &amp; save JSON</button>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:14px;font-weight:400;">
+      <input type="checkbox" id="skipCompleted" checked>
+      Skip items already marked completed
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:400;">
+      Process at most
+      <input type="number" id="limit" value="0" min="0" style="width:70px;padding:4px 6px;">
+      pending items (0 = all)
+    </label>
     <button id="chapterBtn" class="primary" style="margin-top:12px;">Complete Current Chapter (submits exams)</button>
+    <button id="forYouBtn" class="primary" style="margin-top:12px;">Process For You tab</button>
+    <button id="resultsBtn" class="secondary" style="margin-top:12px;">Download last exam results JSON</button>
 
     <div id="result" class="result"></div>
     <pre id="logs">Waiting...</pre>
@@ -66,11 +78,36 @@
     const examSelect = document.getElementById("exam");
     const connectBtn = document.getElementById("connectBtn");
     const runBtn = document.getElementById("runBtn");
+    const identifyBtn = document.getElementById("identifyBtn");
     const captureBtn = document.getElementById("captureBtn");
     const chapterBtn = document.getElementById("chapterBtn");
+    const forYouBtn = document.getElementById("forYouBtn");
+    const resultsBtn = document.getElementById("resultsBtn");
     const downloadBtn = document.getElementById("downloadBtn");
     const captureCount = document.getElementById("captureCount");
     const dryRun = document.getElementById("dryRun");
+    const skipCompleted = document.getElementById("skipCompleted");
+    const limitInput = document.getElementById("limit");
+
+    function runOptions() {
+      return {
+        skipCompleted: Boolean(skipCompleted?.checked),
+        limit: Number(limitInput?.value) || 0
+      };
+    }
+
+    function describeRun(label, data) {
+      const parts = [`${label}: ${data.examsSubmitted || 0} quizzes submitted, ${data.resourcesRead || 0} resources read, ${data.failed || 0} failed`];
+      if (data.report?.summary) {
+        parts.push(`${data.report.summary.passed} passed, ${data.report.summary.failed} did not pass`);
+      }
+      if (data.skipped) parts.push(`${data.skipped} skipped as already completed`);
+      if (data.progressAfter) {
+        const before = data.progressBefore ? `${data.progressBefore.completed} \u2192 ` : "";
+        parts.push(`progress ${before}${data.progressAfter.completed} of ${data.progressAfter.required} required`);
+      }
+      return `${parts.join(". ")}.`;
+    }
     const result = document.getElementById("result");
     const logs = document.getElementById("logs");
     const statusText = document.getElementById("statusText");
@@ -172,6 +209,28 @@
       }
     });
 
+    identifyBtn.addEventListener("click", async () => {
+      identifyBtn.disabled = true;
+      runBtn.disabled = true;
+    result.textContent = "Identifying and capturing the current exam...";
+    try {
+      const captureRes = await fetch("/api/capture", { method: "POST" });
+      const capture = await captureRes.json();
+      if (!captureRes.ok) throw new Error(capture.error || "Could not capture the current exam");
+      const title = capture.capture?.title || "Current exam";
+      result.textContent = `${capture.replaced ? "Updated" : "Captured"}: ${title}. Downloading JSON...`;
+        await refreshCaptureCount();
+        await refreshLogs();
+        window.location.href = "/api/captures/download";
+      } catch (e) {
+        result.textContent = e.message;
+        await refreshLogs();
+      } finally {
+        identifyBtn.disabled = false;
+        runBtn.disabled = false;
+      }
+    });
+
     captureBtn?.addEventListener("click", async () => {
       captureBtn.disabled = true;
       result.textContent = "Capturing the current exam...";
@@ -200,10 +259,14 @@
       result.textContent = "Scanning and processing the current chapter...";
       logs.textContent = "Starting chapter automation...";
       try {
-        const res = await fetch("/api/chapter/run", { method: "POST" });
+        const res = await fetch("/api/chapter/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(runOptions())
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Chapter automation failed");
-        result.textContent = `Chapter complete: ${data.examsSubmitted} exams submitted, ${data.resourcesRead} resources read, ${data.failed} failed.`;
+        result.textContent = describeRun("Chapter complete", data);
         await refreshLogs();
         await refreshStatus();
       } catch (e) {
@@ -214,6 +277,31 @@
         runBtn.disabled = false;
         if (captureBtn) captureBtn.disabled = false;
       }
+    });
+
+    forYouBtn.addEventListener("click", async () => {
+      forYouBtn.disabled = true;
+      result.textContent = "Opening For You and processing all available content...";
+      try {
+        const response = await fetch("/api/for-you/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(runOptions())
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "For You processing failed");
+        result.textContent = describeRun("For You complete", data);
+        await refreshLogs();
+      } catch (e) {
+        result.textContent = e.message;
+        await refreshLogs();
+      } finally {
+        forYouBtn.disabled = false;
+      }
+    });
+
+    resultsBtn.addEventListener("click", () => {
+      window.location.href = "/api/results/download";
     });
 
     loadExams();
