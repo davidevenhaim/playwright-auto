@@ -1,0 +1,7 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+if [ ! -d "node_modules" ]; then
+  npm install || exit 1
+  npx playwright install chromium || exit 1
+fi
+npm start

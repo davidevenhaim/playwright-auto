@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple Exam Runner</title>
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #f5f5f7; color: #1d1d1f; display: grid; place-items: center; padding: 32px; }
+    .app { width: min(760px, 100%); background: white; border: 1px solid #e6e6ea; border-radius: 24px; padding: 28px; box-shadow: 0 18px 60px rgba(0,0,0,.08); }
+    h1 { margin: 0 0 6px; font-size: 30px; }
+    .sub { margin: 0 0 28px; color: #6e6e73; }
+    .status { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #f7f7f9; border-radius: 14px; margin-bottom: 20px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #999; }
+    .dot.on { background: #1fa463; }
+    label { display: block; font-size: 13px; font-weight: 700; margin: 16px 0 8px; }
+    select, button { width: 100%; height: 48px; border-radius: 12px; font-size: 15px; }
+    select { padding: 0 14px; border: 1px solid #d2d2d7; background: white; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    button { border: 0; cursor: pointer; font-weight: 700; }
+    button.primary { background: #0071e3; color: white; }
+    button.secondary { background: #ececf0; color: #1d1d1f; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    .check { display: flex; gap: 10px; align-items: center; margin-top: 14px; }
+    .check input { width: 18px; height: 18px; }
+    .check label { margin: 0; font-weight: 500; }
+    .result { margin-top: 18px; min-height: 22px; font-weight: 700; }
+    pre { margin-top: 18px; min-height: 180px; max-height: 320px; overflow: auto; background: #111318; color: #d9f7e6; padding: 16px; border-radius: 14px; font-size: 12px; line-height: 1.5; white-space: pre-wrap; }
+    .note { font-size: 13px; color: #6e6e73; margin-top: 14px; }
+    .capture-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .capture-count { color: #6e6e73; font-size: 13px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>Apple Exam Runner</h1>
+    <p class="sub">Connect a tab, navigate to any supported exam in that tab, then fill it automatically.</p>
+
+    <div class="status">
+      <span id="dot" class="dot"></span>
+      <div>
+        <strong id="statusText">Browser not connected</strong>
+        <div id="pageText" style="font-size:12px;color:#6e6e73;margin-top:3px;"></div>
+      </div>
+    </div>
+
+    <label for="exam">Current exam</label>
+    <select id="exam"></select>
+
+    <div class="check">
+      <input type="checkbox" id="dryRun" />
+      <label for="dryRun">Dry run (detect questions without clicking)</label>
+    </div>
+
+    <div class="row">
+      <button id="connectBtn" class="secondary">Connect tab</button>
+      <button id="runBtn" class="primary">Detect &amp; fill exam</button>
+    </div>
+
+    <div class="capture-row">
+      <button id="captureBtn" class="secondary">Capture current exam</button>
+      <button id="downloadBtn" class="secondary">Download captures JSON</button>
+    </div>
+    <div id="captureCount" class="capture-count">0 exams captured</div>
+
+    <div id="result" class="result"></div>
+    <pre id="logs">Waiting...</pre>
+
+    <p class="note">
+      The automation fills answers only. It does not press the final Submit button.
+    </p>
+  </main>
+
+  <script>
+    const examSelect = document.getElementById("exam");
+    const connectBtn = document.getElementById("connectBtn");
+    const runBtn = document.getElementById("runBtn");
+    const captureBtn = document.getElementById("captureBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const captureCount = document.getElementById("captureCount");
+    const dryRun = document.getElementById("dryRun");
+    const result = document.getElementById("result");
+    const logs = document.getElementById("logs");
+    const statusText = document.getElementById("statusText");
+    const pageText = document.getElementById("pageText");
+    const dot = document.getElementById("dot");
+
+    async function loadExams() {
+      const res = await fetch("/api/exams");
+      const exams = await res.json();
+      const sections = exams.reduce((groups, exam) => {
+        const section = exam.section || "Other Exams";
+        (groups[section] ||= []).push(exam);
+        return groups;
+      }, {});
+      examSelect.innerHTML = Object.entries(sections).map(([section, sectionExams]) =>
+        `<optgroup label="${section}">${sectionExams.map(e =>
+          `<option value="${e.id}">${e.name} (${e.questionCount} questions)</option>`
+        ).join("")}</optgroup>`
+      ).join("");
+    }
+
+    async function refreshStatus() {
+      try {
+        const res = await fetch("/api/status");
+        const s = await res.json();
+        dot.classList.toggle("on", !!s.connected);
+        statusText.textContent = s.connected ? "Tab connected" : "No tab connected";
+        pageText.textContent = s.connected ? (s.title || s.url || "") : "";
+      } catch {}
+    }
+
+    async function refreshLogs() {
+      try {
+        const res = await fetch("/api/logs");
+        const data = await res.json();
+        logs.textContent = data.logs?.length ? data.logs.join("\n") : "Waiting...";
+        logs.scrollTop = logs.scrollHeight;
+      } catch {}
+    }
+
+    async function refreshCaptureCount() {
+      try {
+        const res = await fetch("/api/captures");
+        const data = await res.json();
+        captureCount.textContent = `${data.count} exam${data.count === 1 ? "" : "s"} captured`;
+      } catch {}
+    }
+
+    connectBtn.addEventListener("click", async () => {
+      connectBtn.disabled = true;
+      result.textContent = "Opening a tab...";
+      try {
+        const res = await fetch("/api/connect", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to connect tab");
+        result.textContent = "Tab connected. In that tab, log in and navigate to the exam; then click Fill exam.";
+        await refreshStatus();
+      } catch (e) {
+        result.textContent = e.message;
+      } finally {
+        connectBtn.disabled = false;
+      }
+    });
+
+    runBtn.addEventListener("click", async () => {
+      runBtn.disabled = true;
+      connectBtn.disabled = true;
+      result.textContent = "Identifying the current exam...";
+      logs.textContent = "Starting...";
+      try {
+        const detectRes = await fetch("/api/detect");
+        const detected = await detectRes.json();
+        if (!detectRes.ok) throw new Error(detected.error || "Could not identify the current exam");
+        examSelect.value = detected.id;
+        result.textContent = dryRun.checked
+          ? `Detected ${detected.name}. Running detection only...`
+          : `Detected ${detected.name}. Filling answers...`;
+        const res = await fetch("/api/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            examId: detected.id,
+            dryRun: dryRun.checked
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Automation failed");
+        result.textContent = `Done: ${data.success}/${data.total} succeeded, ${data.failed} failed.`;
+        await refreshLogs();
+        await refreshStatus();
+      } catch (e) {
+        result.textContent = e.message;
+        await refreshLogs();
+      } finally {
+        runBtn.disabled = false;
+        connectBtn.disabled = false;
+      }
+    });
+
+    captureBtn.addEventListener("click", async () => {
+      captureBtn.disabled = true;
+      result.textContent = "Capturing the current exam...";
+      try {
+        const res = await fetch("/api/capture", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Capture failed");
+        result.textContent = `${data.replaced ? "Updated" : "Captured"}: ${data.capture.title}. No answers were selected.`;
+        await refreshCaptureCount();
+        await refreshLogs();
+      } catch (e) {
+        result.textContent = e.message;
+      } finally {
+        captureBtn.disabled = false;
+      }
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      window.location.href = "/api/captures/download";
+    });
+
+    loadExams();
+    refreshStatus();
+    refreshCaptureCount();
+    setInterval(refreshStatus, 2500);
+    setInterval(refreshLogs, 1200);
+  </script>
+</body>
+</html>
