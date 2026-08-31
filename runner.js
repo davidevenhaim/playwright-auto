@@ -1529,15 +1529,47 @@ async function openListing(listPage, url) {
   await listPage.waitForTimeout(500);
 }
 
+// Rails below the fold are only built once they are scrolled to, so a listing
+// has to be walked to the bottom before it can be read.
+async function revealListing(targetPage) {
+  await targetPage.evaluate(async () => {
+    const pause = () => new Promise((resolve) => setTimeout(resolve, 250));
+    let previous = -1;
+    for (let step = 0; step < 12 && document.body.scrollHeight !== previous; step++) {
+      previous = document.body.scrollHeight;
+      window.scrollTo(0, document.body.scrollHeight);
+      await pause();
+    }
+    window.scrollTo(0, 0);
+  }).catch(() => {});
+}
+
+// How long the item count has to hold still before a listing counts as loaded.
+const LISTING_SETTLE_MS = 2500;
+
 async function waitForChapterItems(targetPage, timeoutMs = EXAM_LOAD_TIMEOUT_MS) {
   const deadline = Date.now() + timeoutMs;
   let nodes = [];
   let renderedSince = null;
+  let mostSeen = 0;
+  let steadySince = null;
 
   while (Date.now() < deadline) {
     await openAllAccordions(targetPage).catch(() => {});
+    await revealListing(targetPage);
     nodes = await collectNodes(targetPage);
-    if (nodes.length) return nodes;
+    // Returning on the first card found is why a For You page reported one
+    // section: the Academy card paints seconds before the rails under it.
+    if (nodes.length) {
+      if (nodes.length > mostSeen) {
+        mostSeen = nodes.length;
+        steadySince = Date.now();
+      } else if (steadySince && Date.now() - steadySince >= LISTING_SETTLE_MS) {
+        return nodes;
+      }
+      await targetPage.waitForTimeout(500);
+      continue;
+    }
 
     // A page that has already painted its own copy and still lists nothing is
     // a leaf, not a slow load. Waiting out the full timeout on every one of
@@ -1635,7 +1667,17 @@ async function walkContainer(listPage, container, state, depth = 0) {
     log(`${indent}${blocked} row(s) inside "${container.title}" are still locked and carry no link.`);
   }
 
-  const children = await waitForChapterItems(listPage, 20000);
+  let children = await waitForChapterItems(listPage, 30000);
+  if (!children.length) {
+    // This site is slow enough that a program page regularly loses the race.
+    // An empty listing is a reload away from a full one far more often than it
+    // is genuinely empty.
+    log(`${indent}Nothing listed yet inside "${container.title}"; reloading and waiting again.`);
+    await listPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS }).catch(() => {});
+    await listPage.waitForTimeout(2000);
+    await openAllAccordions(listPage).catch(() => {});
+    children = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
+  }
   if (!children.length) {
     log(`${indent}Nothing is listed inside "${container.title}".`);
     return;
@@ -1783,9 +1825,21 @@ export async function processAcademy({ skipCompleted = true, limit = 0, onProgre
   });
 }
 
-// Nav destinations that are account tools rather than learning content. The
-// walk would find nothing in them and Manage is somebody's admin console.
-const SITE_HUB_SKIP = /profile|settings?|account|sign\s?out|log\s?out|manage|alerts?|notifications?|saved|search|help|support|feedback/i;
+// Destinations that are account tools rather than learning content, matched on
+// the path: the For You link's own text reads "For You 1 unread alerts", so
+// matching link text would throw away the main tab.
+const SITE_HUB_SKIP = /^\/home\/(profile|account|settings?|manage|alerts?|notifications?|saved(-content)?|search|help|support|feedback|sign-?out|log-?out)$/i;
+
+function hubPath(url) {
+  try {
+    return new URL(url).pathname.replace(/\/$/, "");
+  } catch {
+    return url;
+  }
+}
+
+// Pages that tend to carry the account's XP total, tried in turn.
+const XP_PAGE_HINTS = /\/home\/(achievements|profile)$/i;
 const SITE_HOME = "https://salescoach.apple.com/home/for-you";
 // A fresh account unlocks its way up in stages, so the whole-site walk gets more
 // passes than the Academy one, and every module gets a few attempts before the
@@ -1806,27 +1860,47 @@ function siteHome(listPage) {
 // shown. They are read off the nav rather than hardcoded, so a renamed or moved
 // tab still gets walked. `collectNodes` deliberately ignores nav links as page
 // chrome, which is exactly why they have to be gathered separately here.
+// Sales Coach puts its tabs in a plain sidebar, not in a <nav>, so a scoped
+// search finds nothing. What actually marks a tab is its URL: a single word
+// under /home/ with no id in it, unlike /home/collection/241204.
 async function readNavLinks(targetPage) {
   return targetPage.evaluate(() => {
     const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
     const found = new Map();
-    const scopes = document.querySelectorAll('nav, [role="navigation"], header, [role="banner"]');
-    for (const scope of scopes) {
-      for (const anchor of scope.querySelectorAll("a[href]")) {
-        if (!anchor.href.startsWith(location.origin)) continue;
-        const url = anchor.href.split("#")[0];
-        if (!/\/home\//.test(url)) continue;
-        const title = tidy(anchor.innerText) || tidy(anchor.getAttribute("aria-label")) || url;
-        if (!found.has(url)) found.set(url, title);
+
+    for (const anchor of document.querySelectorAll("a[href]")) {
+      if (!anchor.href.startsWith(location.origin)) continue;
+      const url = anchor.href.split("#")[0];
+      let path;
+      try {
+        path = new URL(url).pathname.replace(/\/$/, "");
+      } catch {
+        continue;
       }
+      if (!/^\/home\/[a-z][a-z0-9-]*$/i.test(path)) continue;
+      const title = tidy(anchor.innerText) || tidy(anchor.getAttribute("aria-label")) || path;
+      if (!found.has(url)) found.set(url, title);
     }
+
     return [...found].map(([url, title]) => ({ url, title }));
   }).catch(() => []);
 }
 
+function hubTitle(link) {
+  // These links are labelled "See All" on the page they sit on, which says
+  // nothing in a log. The path does.
+  if (!link.title || /^(see|show|view)\s+all$/i.test(link.title.trim())) {
+    return hubPath(link.url).replace("/home/", "").replace(/-/g, " ")
+      .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  }
+  return link.title;
+}
+
 export async function readNavHubs(targetPage) {
   const links = await readNavLinks(targetPage);
-  return links.filter((link) => !SITE_HUB_SKIP.test(link.title) && !SITE_HUB_SKIP.test(link.url));
+  return links
+    .filter((link) => !SITE_HUB_SKIP.test(hubPath(link.url)))
+    .map((link) => ({ ...link, title: hubTitle(link) }));
 }
 
 // XP is the number the account is judged on, so a run reports what it moved.
@@ -1848,22 +1922,27 @@ async function readXpFrom(targetPage) {
   return null;
 }
 
-// The home page usually carries the total; the profile page is the fallback for
-// a layout that only shows it there.
-async function readXp(listPage, profileUrl) {
+// The total is read wherever this account happens to show it: the page in front
+// of us first, then Achievements and Profile.
+async function readXp(listPage, xpPages = []) {
   const here = await readXpFrom(listPage);
   if (here !== null) return here;
-  if (!profileUrl) return null;
 
   const back = listPage.url();
-  try {
-    await openListing(listPage, profileUrl);
-    const value = await readXpFrom(listPage);
-    await openListing(listPage, back).catch(() => {});
-    return value;
-  } catch {
-    return null;
+  for (const url of xpPages) {
+    try {
+      await openListing(listPage, url);
+      const value = await readXpFrom(listPage);
+      if (value !== null) {
+        await openListing(listPage, back).catch(() => {});
+        return value;
+      }
+    } catch {
+      // A page that will not open simply has no total to give.
+    }
   }
+  if (xpPages.length) await openListing(listPage, back).catch(() => {});
+  return null;
 }
 
 async function collectHubs(listPage) {
@@ -1871,14 +1950,54 @@ async function collectHubs(listPage) {
   await openListing(listPage, home);
 
   const links = await readNavLinks(listPage);
-  // For You is always walked, whether or not the nav names it.
-  const hubs = new Map([[home, { url: home, title: "For You" }]]);
+  // For You is always walked, whether or not the sidebar names it.
+  const hubs = new Map([[hubPath(home), { url: home, title: "For You" }]]);
   for (const link of links) {
-    if (SITE_HUB_SKIP.test(link.title) || SITE_HUB_SKIP.test(link.url)) continue;
-    if (!hubs.has(link.url)) hubs.set(link.url, link);
+    const path = hubPath(link.url);
+    if (SITE_HUB_SKIP.test(path)) continue;
+    if (!hubs.has(path)) hubs.set(path, { ...link, title: hubTitle(link) });
   }
-  const profile = links.find((link) => /profile|נקודות|my learning/i.test(`${link.title} ${link.url}`));
-  return { hubs: [...hubs.values()], profileUrl: profile?.url || null };
+  // The account's own pages are not walked, but they are where an XP total is
+  // shown, so their URLs are kept.
+  const xpPages = links.filter((link) => XP_PAGE_HINTS.test(hubPath(link.url))).map((link) => link.url);
+  return { hubs: [...hubs.values()], xpPages };
+}
+
+// Some rails render each card as a React div: no anchor, no role, no tabindex,
+// so nothing in the DOM says it is a link. On the live For You page that is
+// exactly what the "Up Next" cards are. When a listing looks empty for that
+// reason, each card-shaped row is clicked once to find out where it leads.
+async function findCardTargets(listPage, hubUrl, max = 20) {
+  const selector = ".entity, [role='listitem'], [class*='card' i]";
+  const found = new Map();
+  const total = Math.min(await listPage.locator(selector).count().catch(() => 0), max);
+  if (!total) return [];
+
+  log(`Nothing on this page links anywhere; clicking through ${total} card-shaped row(s) to find out where they go.`);
+  for (let index = 0; index < total; index++) {
+    const row = listPage.locator(selector).nth(index);
+    if (!(await row.isVisible().catch(() => false))) continue;
+    if (await row.locator("a[href]").count().catch(() => 0)) continue;
+    const title = clean(await row.innerText().catch(() => "")).slice(0, 120);
+    if (!title) continue;
+
+    const before = listPage.url();
+    await row.click({ force: true, timeout: 5000 }).catch(() => {});
+    await listPage.waitForTimeout(1500);
+    const after = listPage.url().split("#")[0];
+
+    if (after !== before) {
+      if (/\/home\//.test(after) && !found.has(after)) {
+        const module = after.match(/\/home\/content\/view\/(\d+)/);
+        found.set(after, module
+          ? { kind: "module", id: `module:${module[1]}`, url: after, title, completed: false, locked: false }
+          : { kind: "container", id: `container:${after}`, url: after, title, completed: false, locked: false });
+      }
+      await openListing(listPage, hubUrl).catch(() => {});
+    }
+  }
+  log(`Found ${found.size} destination(s) behind the cards.`);
+  return [...found.values()];
 }
 
 // One hub page: everything listed on it is a root to walk into, and anything
@@ -1893,7 +2012,15 @@ async function walkHub(listPage, hub, state) {
   }
   session().page = listPage;
 
-  const nodes = await waitForChapterItems(listPage, 20000);
+  let nodes = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
+  if (!nodes.length) {
+    log(`Hub "${hub.title}" listed nothing; reloading it once.`);
+    await listPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS }).catch(() => {});
+    await listPage.waitForTimeout(2000);
+    nodes = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
+  }
+  if (!nodes.length) nodes = await findCardTargets(listPage, hub.url);
+
   const containers = nodes.filter((node) => node.kind === "container");
   const modules = nodes.filter((node) => node.kind === "module");
   log(`Hub "${hub.title}": ${containers.length} section(s) and ${modules.length} module(s) listed.`);
@@ -1969,10 +2096,10 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
   if (mode === "capture") log("Capture mode: quizzes are read, never answered or submitted.");
   if (limit > 0) log(`Stopping after ${limit} module(s).`);
 
-  const { hubs, profileUrl } = await collectHubs(listPage);
+  const { hubs, xpPages } = await collectHubs(listPage);
   log(`Found ${hubs.length} tab(s) to walk: ${hubs.map((hub) => hub.title).join(", ")}.`);
 
-  const xpBefore = await readXp(listPage, profileUrl);
+  const xpBefore = await readXp(listPage, xpPages);
   if (xpBefore === null) {
     log("No XP total is shown on this account's pages; the run will report progress by module instead.");
   } else {
@@ -2009,7 +2136,7 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
     const toRetry = [...state.retryable.keys()].filter((id) =>
       (state.attempts.get(id) || 0) < MAX_MODULE_ATTEMPTS).length;
 
-    xpAfter = await readXp(listPage, profileUrl);
+    xpAfter = await readXp(listPage, xpPages);
     if (xpAfter !== null) {
       const moved = xpBefore === null ? null : xpAfter - xpBefore;
       log(`XP after pass ${pass}: ${xpAfter.toLocaleString()}${moved === null ? "" : ` (${moved >= 0 ? "+" : ""}${moved.toLocaleString()})`}.`);
@@ -2038,7 +2165,7 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
 
   await openListing(listPage, siteHome(listPage)).catch(() => {});
   session().page = listPage;
-  if (xpAfter === null) xpAfter = await readXp(listPage, profileUrl);
+  if (xpAfter === null) xpAfter = await readXp(listPage, xpPages);
 
   const quizzes = state.results.filter((item) => item.type === "quiz");
   const passed = quizzes.filter((item) => item.passed === true).length;
