@@ -79,6 +79,10 @@ function writeExamResults(scope, run, session) {
     // What the walk found level by level, so a chapter it never entered is
     // visible in the report rather than only in the log.
     chapters: run.chapters || [],
+    // Every section any listing page offered and what the walk did with each —
+    // walked, locked, or cut off by the module limit. A section a page lists but
+    // the run never enters shows up here and nowhere else.
+    containersSeen: run.containersSeen || [],
     // What the account's XP total did over the run, when the site shows one.
     xp: run.xp || null,
     answersLearned: run.answersLearned || 0,

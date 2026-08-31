@@ -1388,7 +1388,7 @@ export const exams = {
     questions: [
       { type: "multiple", match: "מה מהדברים הבאים נכון לגבי משתמשים רגילים?", answers: ["יכולים לשנות את ההגדרות שלהם", "יכולים להתקין יישומים"] },
       { type: "multiple", match: "FileVault מופעל ב-Mac. במה תוכלו להשתמש כדי לפתוח את הנעילה של כונן ההפעלה אם שכחתם את", answers: ["מפתח שחזור", "חשבון iCloud"] },
-      { type: "multiple", match: "אילו מאפייני נגישוּת זמינים ב-macOS?", answers: ["ראייה", "דיבור", "תנועה"], unverified: true },
+      { type: "multiple", match: "אילו מאפייני נגישוּת זמינים ב-macOS?", answers: ["דיבור", "ראייה"] },
       { type: "single", match: "איך יש להפעיל מחדש את ה-Mac?", answer: "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'הפעלה מחדש'." },
       { type: "single", match: "עליכם לבטל גישה של יישום לתיקיה 'מסמכים'. איזו הגדרת מערכת מאפשרת לכם לשנות את הגישה של", answer: "'פרטיות ואבטחה' > 'קבצים ותיקיות'" },
       { type: "multiple", match: "יישום הפסיק להגיב. איך תאכפו סיום מיידי של היישום?", answers: ["יש ללחוץ על Option-Command-Escape כדי לפתוח את החלון 'סיום מיידי', ואחר כך יש לבחור ביישום שאינו מגיב.", "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'סיום מיידי'."] },
@@ -1411,7 +1411,9 @@ export const exams = {
       { type: "single", match: "היכן מפעילים עדכוני תוכנה אוטומטיים?", answer: "'הגדרות' > 'כללי' > 'עדכון תוכנה'" },
       // The options are pictures with no text: this is the input value of the correct one.
       { type: "single", match: "איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום?", answer: "1408323" },
-      { type: "single", match: "איזו קטגוריית נגישות מכילה תכונות שמקלות על הצגת הטקסט ב-iPad?", answer: "ראייה" },
+      // The server rejected "ראייה" (three attempts) and "תצוגה" (one). Only
+      // "גודל המלל" and "חזות" are left; trying the likelier of the two.
+      { type: "single", match: "איזו קטגוריית נגישות מכילה תכונות שמקלות על הצגת הטקסט ב-iPad?", answer: "גודל המלל", unverified: true },
       { type: "multiple", match: "עליכם להעביר את היישומים והמידע מה-iPhone הקודם ל-iPhone חדש. מה עליכם לעשות כדי להתחיל", answers: ["במכשיר הקודם, לעבור אל 'הגדרות'> 'כללי', להקיש על 'העברה או איפוס של ה-iPhone', ואחר כך לפעול לפי ההוראות שעל המסך.", "לקרב את שני המכשירים, ואחר כך לפעול לפי ההוראות שעל המסך."] }
     ]
   },
@@ -1449,5 +1451,165 @@ export const exams = {
       { type: "multiple", match: "כיצד תוכלו להשפיע על התנאים של RFP זה", answers: ["שיתוף סיפורי הצלחה של רכש והמלצות של לקוחות.", "מתן הנחיות בכתב מראש לגבי מפרטים טכניים שמדגישות את הערך הייחודי של Apple.", "בדיקות שוטפות כדי לטפל בחששות ובמחסומים."], unverified: true },
       { type: "multiple", match: "אילו מהפעולות הבאות עליכם לעשות כדי להשלים את השליחה", answers: ["הקמת צוות תגובה למכרז.", "עיון בדרישות המכרז."], unverified: true }
     ]
-  }
+  },
+  // Sales Coach › הכנה לפריסה מוצלחת של הפתרונות של Apple › יעדים, צוותים ותכנון
+  // https://salescoach.apple.com/home/content/view/475616?backTo=%2Fhome%2Fcollection%2F225054
+  // Scored 40% against a 70% threshold on 2026-08-31; the two confirmed answers
+  // are the server's own. The rest are read off the feedback the graded page
+  // printed next to each option ("נכון" / "לא נכון"), so they are unverified.
+  "goals-teams-and-planning": {
+    name: "יעדים, צוותים ותכנון",
+    section: "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+    questions: [
+      { type: "single", match: "מהו היתרון של פריסה בשלבים?", answer: "פריסה בשלבים מספקת את הזמן הנחוץ כדי להבטיח שהכול פועל בצורה חלקה" },
+      { type: "multiple", match: "מה יכול השירות של שמירת תוכן במטמון ב-macOS לעשות כדי לשפר", answers: ["לאחסן יישומים מה-App Store במטמון", "לאחסן במטמון עדכונים ושדרוגים של מערכת ההפעלה"] },
+      // "כרטיס SIM משולב" was rejected. Left: כרטיס SIM מוטבע | כרטיס Micro SIM | eSIM.
+      { type: "single", match: "איזה סוג של SIM מאפשר לבצע מרחוק הקצאה של מכשירים מנוהלים", answer: "eSIM", unverified: true },
+      // The feedback confirmed "שירותי פרוקסי או סינון תוכן" and ruled out
+      // "מאיץ VPN"; ממסרי רשת is the remaining network-load answer.
+      { type: "multiple", match: "ניתן להשתמש ב-MDM לניהול יעיל של כוח אדם בעבודה מרחוק", answers: ["שירותי פרוקסי או סינון תוכן", "ממסרי רשת"], unverified: true },
+      // The feedback confirmed 6GHz and ruled out 7GHz ("not allocated to Wi-Fi").
+      { type: "multiple", match: "אילו שני תדרי רדיו Wi-Fi הכי מתאימים לצפיפות גבוהה של לקוח", answers: ["6GHz", "5GHz"], unverified: true },
+    ]
+  },
+  // Sales Coach › הערכים של Apple › הכירו את הערכים של Apple
+  // https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872
+  // Scored 0% against an 80% threshold on 2026-08-31. Nothing was confirmed, but
+  // the graded page marked the environment and privacy options right and the
+  // personalised-tracking option wrong, so that one is dropped and the
+  // accessibility option — never tried — takes its place.
+  "apple-values-knowledge-check": {
+    name: "הכירו את הערכים של Apple",
+    section: "הערכים של Apple",
+    questions: [
+      { type: "multiple", match: "כיצד Apple מיישמת את הערכים שלה בפועל?", answers: ["יצירת תוכנית שמטרתה להביא את Apple לניטרליות פחמנית בכל טביעת הרגל הגלובלית שלה עד 2030", "עיצוב מוצרי Apple כך שיגנו על פרטי הלקוחות", "בניית מאפייני נגישות במוצרי Apple ללא עלות נוספת"], unverified: true },
+    ]
+  },
+  // Sales Coach › הכנה לפריסה מוצלחת של הפתרונות של Apple › הגדרת הפריסה שלכם
+  // https://salescoach.apple.com/home/content/view/475619
+  // Captured 2026-08-31; passing mark is 70%, so 5 of 6 must land. The one
+  // attempt on record crashed before submission ("Target page ... has been
+  // closed"), so nothing here has been graded — every answer is reasoned from
+  // the module, not confirmed.
+  "configuring-your-deployment": {
+    name: "הגדרת הפריסה שלכם",
+    section: "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+    questions: [
+      // "מעקב GPS אוטומטי" is the obvious distractor; enrolment under ADE is
+      // automatic, so "דרישה ממשתמשים" is the other one left out.
+      { type: "multiple", match: "אילו הן שלוש תועלות של השימוש ב'הרשמה אוטומטית למכשיר' לצורך רישום מכשירים", answers: ["תצורה של אפס מגע עבור מנהלי מערכת ב-IT", "המכשיר נעצר בהפעלה אם הוא מאופס", "קביעת תצורה של מכשירים עם ההפעלה"], unverified: true },
+      { type: "single", match: "מה משתמש צריך כדי לרשום את ה-iPhone האישי שלו לפתרון MDM של ארגון באמצעות רישום משתמש מבוסס חשבון", answer: "חשבון Apple מנוהל", unverified: true },
+      // The separate volume exists to keep managed data apart; its key is
+      // destroyed on unenrolment. "מגן על נתונים ארגוניים" is the stated purpose,
+      // with "מחיקה מאובטחת" the consequence — that is the likelier trap.
+      { type: "single", match: "מה המטרה של אמצעי האחסון הנפרד בהצפנה שנוצר כאשר מכשיר נרשם באמצעות רישום משתמשים מבוסס חשבון", answer: "הוא מגן על נתונים ארגוניים.", unverified: true },
+      { type: "single", match: "איזו תועלת עיקרית יש ל-Apple Business Manager", answer: "הרשמה אוטומטית למכשיר ב-MDM", unverified: true },
+      { type: "multiple", match: "מהן שתי תועלות עיקריות למשתמשים בהתייחסות של Apple לניהול מכשירים", answers: ["התהליך קל למשתמש.", "הניהול הוא שקוף."], unverified: true },
+      { type: "single", match: "במה משתמש MDM כדי להתריע למכשירים על פקודות או פרופילים זמינים", answer: "MDM משתמש בשירות העדכונים בטכנולוגיית Push של Apple\u200f (APNs).", unverified: true },
+    ]
+  },
+  // Sales Coach › הכנה לפריסה מוצלחת של הפתרונות של Apple › בחירת פתרון MDM
+  // https://salescoach.apple.com/home/content/view/475854
+  // Captured 2026-08-31; passing mark is 70% over 3 questions, so all three have
+  // to land. Never graded — answers reasoned from the module, not confirmed.
+  "choosing-an-mdm-solution": {
+    name: "בחירת פתרון MDM",
+    section: "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+    questions: [
+      // The other three all assert a ranking Apple does not make: identical
+      // solutions, preferential APNs access, or closeness to Apple as performance.
+      { type: "single", match: "איזה מהמשפטים הבאים לגבי בחירת פתרון MDM הוא נכון", answer: "ספקי MDM נבדלים אלה מאלה בהתייחסותם לארכיטקטורה מארחת, לקונסולות ניהול, לתהליכי עבודה ולדיווח.", unverified: true },
+      // Four of the five read as plausible. "איזה פתרון MDM מומלץ ביותר על ידי
+      // Apple" is out because Apple endorses no vendor; the legacy-vs-new device
+      // split is the second one left out, day-zero support being the canonical
+      // third question.
+      { type: "multiple", match: "אילו שלוש שאלות עיקריות צריכות לסייע לשיקולים שלכם בבחירת פתרון MDM", answers: ["כמה מכשירים ינוהלו?", "מהן היכולות של המכשירים שברצונכם לנהל?", "האם פתרון ה-MDM יהיה תואם למהדורות חומרה ותוכנה עתידיות של Apple?"], unverified: true },
+      // MDM does not back up user content, and automatic enrolment belongs to
+      // Apple Business Manager rather than to the MDM solution.
+      { type: "multiple", match: "אילו שלוש יכולות יש לפתרונות MDM", answers: ["בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.", "הפצת יישומים וספרים למכשירים או למשתמשים.", "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."], unverified: true },
+    ]
+  },
+  // Sales Coach › מוצרי למידה › מוסיפים רגעי "וואו" להדגמות של iPad
+  // https://salescoach.apple.com/home/content/view/488558
+  // Confirmed 2026-08-31 by a hand attempt that scored 100%.
+  "ipad-demo-wow-moments": {
+    name: "מוסיפים רגעי \"וואו\" להדגמות של iPad",
+    section: "מוצרי למידה",
+    questions: [
+      { type: "multiple", match: "מה תוכלו לעשות כדי ליצור הזדמנויות נוספות לרגעי", answers: ["להעביר הדגמה קצרה כדי למשוך את תשומת הלב של הלקוחות", "להעביר הדגמות שמתייחסות לשגרת היומיום של הלקוחות", "להדגיש בהדגמות את מה שהופך את חוויית השימוש ב-iPad לייחודית"] }
+    ]
+  },
+  // Sales Coach › הרחבת הזדמנויות המכירה על ידי צירוף Apple Professional Learning
+  // https://salescoach.apple.com/home/content/view/489333
+  // Confirmed 2026-08-31 by a hand attempt that scored 100% (passing mark 80%).
+  // NOTE: the quiz has a sixth question — a "התאימו כל שירות" matching exercise
+  // for the APL first-year plan — that the capture does not record, because it
+  // uses neither radios, checkboxes nor selects. Filling only these five leaves
+  // it unanswered and the player will refuse the submission.
+  "apl-sales-opportunities-quiz": {
+    name: "בוחן – הרחבת הזדמנויות המכירה על ידי צירוף APL",
+    section: "הרחבת הזדמנויות המכירה על ידי צירוף Apple Professional Learning",
+    questions: [
+      { type: "single", match: "מהו האתגר העיקרי של GoodWill Primary School ביוזמת ה-iPad שלו", answer: "למורים חסרה ההדרכה לשילוב יעיל של iPad בהוראת כתיבה ותכנות." },
+      { type: "multiple", match: "מה עליכם לומר למנהל בית הספר על תוכנית Apple Professional Learning", answers: ["\"Apple Professional Learning מציעה חוויה אישית, פרקטית ומעוררת השראה.\"", "\"ניתן להשתתף בחוויות Apple Professional Learning באופן אישי או מקוון.\""] },
+      { type: "single", match: "איזו טעות מרכזית תרמה ככל הנראה לקושי במדידת ההשפעה", answer: "בית הספר מסתמך על סדנאות בהנחיית עמיתים ללא תוכנית למידה מקצועית מובנית." },
+      { type: "single", match: "מהי הדרך היעילה ביותר שבה מנהל בית הספר יוכל להבטיח תשואה גבוהה", answer: "עליו להשקיע בפיתוח מקצועי שיסייע למורים למצות את מלוא הפוטנציאל של שילוב הטכנולוגיה בלמידה." },
+      { type: "single", match: "כיצד מומחי Apple Professional Learning יכולים לעזור למורים להתקדם", answer: "מומחים יכולים להציג אסטרטגיות מעשיות המותאמות לתוכנית הלימודים, כדי לקדם שימוש יעיל ב-iPad בהוראה." }
+    ]
+  },
+  // Sales Coach › התכונות הבסיסיות של iPad › iPad Pro ‒ מבט ראשון
+  // https://salescoach.apple.com/home/content/view/505226
+  // Confirmed 2026-08-31 by a hand attempt that scored 100%. The three rejected
+  // options belong to other silicon: ProMotion, the N1 chip and the LiDAR scanner.
+  "ipad-pro-first-look": {
+    name: "iPad Pro ‒ מבט ראשון",
+    section: "התכונות הבסיסיות של iPad",
+    questions: [
+      { type: "multiple", match: "איזה מהמאפיינים הלקוחות מקבלים בזכות שבב M5 ב-iPad Pro", answers: ["חיסכון בצריכת חשמל לחיי סוללה שמספיקים לכל היום", "רוחב פס זיכרון מהיר יותר", "ביצועים טובים יותר למשימות AI"] }
+    ]
+  },
+  // Sales Coach › התכונות הבסיסיות של iPad › iPad Air – מבט ראשון
+  // https://salescoach.apple.com/home/content/view/519041
+  // Confirmed 2026-08-31 by a hand attempt that scored 100%.
+  "ipad-air-first-look": {
+    name: "iPad Air – מבט ראשון",
+    section: "התכונות הבסיסיות של iPad",
+    questions: [
+      { type: "multiple", match: "אילו מהמשפטים נכון לומר על ה-iPad Air החדש", answers: ["ה-iPad Air תואם ל-Apple Pencil Pro או ל-Apple Pencil (בחיבור USB-C).", "הוא מופעל באמצעות שבב M4."] }
+    ]
+  },
+  // Sales Coach › התכונות הבסיסיות של Mac › Mac מוביל את הדרך ב-AI
+  // https://salescoach.apple.com/home/content/view/520478
+  // This one is a POLL, not a quiz: it has no passing mark and the capture shows
+  // every option carrying correctAnswer: false. Any pick completes it, so the
+  // answer below is arbitrary and does not need confirming.
+  "mac-leads-on-ai-poll": {
+    name: "Mac מוביל את הדרך ב-AI",
+    section: "התכונות הבסיסיות של Mac",
+    questions: [
+      { type: "single", match: "לאיזו פעולה הבינה מלאכותית ב-Mac הכי מועילה לכם", answer: "חיפוש ועריכה של תמונות וסרטונים" }
+    ]
+  },
+  // Sales Coach › התכונות הבסיסיות של Mac › MacBook Air – מבט ראשון
+  // https://salescoach.apple.com/home/content/view/519429
+  // Confirmed 2026-08-31 by a hand attempt that scored 100%. Q2 is false: the
+  // new MacBook Air goes up to 4TB, not 512GB.
+  "macbook-air-first-look": {
+    name: "MacBook Air – מבט ראשון",
+    section: "התכונות הבסיסיות של Mac",
+    questions: [
+      { type: "single", match: "שבב M5 ב-MacBook Air כולל מעבד גרפי מהדור הבא", answer: "נכון" },
+      { type: "single", match: "ב-MacBook Air, הלקוחות יכולים לקבל אחסון מהיר בנפח של עד 512GB", answer: "לא נכון" }
+    ]
+  },
+  // Sales Coach › התכונות הבסיסיות של Mac › MacBook Pro – מבט ראשון
+  // https://salescoach.apple.com/home/content/view/520307
+  // Confirmed 2026-08-31 by a hand attempt that scored 100%.
+  "macbook-pro-first-look": {
+    name: "MacBook Pro – מבט ראשון",
+    section: "התכונות הבסיסיות של Mac",
+    questions: [
+      { type: "single", match: "השבב M5 Max הוא השבב המתקדם ביותר של Apple שנבנה אי פעם", answer: "נכון" }
+    ]
+  },
 };

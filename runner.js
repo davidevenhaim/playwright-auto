@@ -284,7 +284,15 @@ export async function collectNodes(targetPage) {
       // a URL pattern alone decides nothing. What marks a card as a container is
       // the learning-item furniture on the row itself — its own progress bar,
       // completion badge, lock or "Collection" kind label.
-      const STATE_SIGNALS = ["progress-bar", "completion-badge", "lock", "aria-completed", "kind-label"];
+      // A card carrying one of these is a learning item in its own right, and is
+      // walked into without needing siblings of the same shape to vouch for it.
+      // "container-url" belongs here: /home/collection/<id> and its siblings are
+      // id-bearing listing URLs that nothing but a listing card carries, and the
+      // breadcrumb and tab-bar copies of them are already dropped by isChrome().
+      // Without it, a lone COLLECTION card — the "מהלך מכירות" and Specialist
+      // rows on the Academy page — was collected only when another card happened
+      // to share its URL shape, and silently dropped when none did.
+      const STATE_SIGNALS = ["progress-bar", "completion-badge", "lock", "aria-completed", "kind-label", "container-url"];
 
       const containerEvidence = (anchor, card) => {
         const reasons = [];
@@ -293,7 +301,10 @@ export async function collectNodes(targetPage) {
         if (card.querySelector(".completed-task, [class*='completed' i]")) reasons.push("completion-badge");
         if (card.querySelector("[class*='lock' i], [aria-label*='lock' i]")) reasons.push("lock");
         if (/,\s*completed\b/i.test(tidy(anchor.getAttribute("aria-label")))) reasons.push("aria-completed");
-        if (/^(collection|course|chapter|program|series|path|module)\b/i.test(text)) reasons.push("kind-label");
+        // The label sits above the title in the card, but innerText order is not
+        // guaranteed to put it first in an RTL layout, so it is looked for
+        // anywhere in the opening of the card rather than only at the start.
+        if (/(^|\s)(collection|course|chapter|program|series|path|module)\b/i.test(text.slice(0, 60))) reasons.push("kind-label");
         if (/\d+\s*(?:\/\s*\d+)?\s*(?:completed|required)/i.test(text)) reasons.push("counter");
         if (/\/home\/(collection|course|chapter|program|curriculum|journey|learningplan|learning-plan|path|plan|series|topic)\//i.test(anchor.href)) {
           reasons.push("container-url");
@@ -1113,7 +1124,11 @@ function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mo
     visitedContainers: new Set(),
     deferred: new Map(),
     blocked: 0,
-    chapters: new Map()
+    chapters: new Map(),
+    // Every container any listing page offered, walked or not. A run that
+    // reaches fewer sections than a page lists used to leave no trace of the
+    // ones it passed over; this is where they show up.
+    containersSeen: new Map()
   };
 }
 
@@ -1133,6 +1148,21 @@ function recordResult(state, item, entry) {
   const isFailure = record.status === "failed";
   if (wasFailure && !isFailure) state.failed = Math.max(0, state.failed - 1);
   state.results[index] = record;
+}
+
+// Every container a listing page offered, and what the walk did with it. Keyed
+// by id so a section listed under two parents is one row, and so a later pass
+// that gets into a section it had to defer overwrites the earlier verdict.
+function noteContainer(state, node, parent, outcome) {
+  state.containersSeen.set(node.id, {
+    title: node.title,
+    url: node.url,
+    parent: parent || null,
+    completed: Boolean(node.completed),
+    locked: Boolean(node.locked),
+    evidence: node.evidence || [],
+    outcome
+  });
 }
 
 // A quiz that did not pass, and a module that broke, are worth another attempt
@@ -1155,6 +1185,7 @@ function snapshotOf(state, extra = {}) {
     failed: state.failed,
     results: [...state.results],
     chapters: [...state.chapters.values()],
+    containersSeen: [...state.containersSeen.values()],
     mode: state.mode,
     answersLearned: state.answersLearned || 0,
     captures: [...state.captures],
@@ -1884,20 +1915,25 @@ async function walkContainer(listPage, container, state, depth = 0) {
   }
 
   for (const child of subContainers.values()) {
-    if (limitReached(state)) return;
+    if (limitReached(state)) {
+      noteContainer(state, child, container.title, "limit-reached");
+      return;
+    }
     if (state.visitedContainers.has(child.id)) continue;
     if (child.locked) {
       state.deferred.set(child.id, { ...child, chapter: container.title });
+      noteContainer(state, child, container.title, "locked");
       log(`${indent}  Locked sub-section for now: "${child.title}".`);
       continue;
     }
-    if (state.skipCompleted && child.completed) {
-      state.visitedContainers.add(child.id);
-      log(`${indent}  Already completed: "${child.title}".`);
-      continue;
-    }
+    // A container's completion badge counts only the items it requires, so a
+    // collection can read as done while optional modules under it have never
+    // been opened. Walking in costs one page load and every finished module
+    // inside is still skipped by its own check, so the walk always descends.
+    if (child.completed) log(`${indent}  "${child.title}" reads as completed; looking inside anyway.`);
     // The tab is left inside the child, which does not matter: the next
     // sibling is opened by its own URL rather than by going back.
+    noteContainer(state, child, container.title, "walked");
     await walkContainer(listPage, child, state, depth + 1);
   }
 }
@@ -2267,18 +2303,19 @@ async function walkHub(listPage, hub, state) {
   }
 
   for (const container of containers) {
-    if (limitReached(state)) return;
+    if (limitReached(state)) {
+      noteContainer(state, container, hub.title, "limit-reached");
+      return;
+    }
     if (state.visitedContainers.has(container.id)) continue;
     if (container.locked) {
       state.deferred.set(container.id, { ...container, chapter: hub.title });
+      noteContainer(state, container, hub.title, "locked");
       log(`Locked for now: "${container.title}".`);
       continue;
     }
-    if (state.skipCompleted && container.completed) {
-      state.visitedContainers.add(container.id);
-      log(`Already completed: "${container.title}".`);
-      continue;
-    }
+    if (container.completed) log(`"${container.title}" reads as completed; looking inside anyway.`);
+    noteContainer(state, container, hub.title, "walked");
     await walkContainer(listPage, container, state, 1);
     // walkContainer leaves the tab deep inside; the next root is opened by URL,
     // but the hub has to be re-read to find it after a sibling moved the page.
