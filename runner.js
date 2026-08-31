@@ -836,7 +836,12 @@ async function clearRejectedQuestions(frame, graded) {
 
   return frame.evaluate((wrongKeys) => {
     const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
-    const keyOf = (text) => tidy(text).replace(/^\d+[\s.)]*/, "").toLowerCase().slice(0, 80);
+    const keyOf = (text) => tidy(String(text).normalize("NFKC"))
+      .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, " ")
+      .replace(/^\d+[\s.)]*/, "")
+      .replace(/(?:יש לבחור|select)\s+(?:one|two|three|four|five|\d+).*$/i, "")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim().toLowerCase().slice(0, 64);
     let cleared = 0;
 
     for (const question of document.querySelectorAll(".question")) {
@@ -877,7 +882,11 @@ async function clearRejectedQuestions(frame, graded) {
 const learnedAnswers = new Map();
 
 function answerKeyOf(questionText) {
-  return clean(questionText).replace(/^\d+[\s.)]*/, "").toLocaleLowerCase().slice(0, 80);
+  return clean(questionText).normalize("NFKC")
+    .replace(/^\d+[\s.)]*/, "")
+    .replace(/(?:יש לבחור|select)\s+(?:one|two|three|four|five|\d+).*$/i, "")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim().toLocaleLowerCase().slice(0, 64);
 }
 
 // The other half of what a grade says. A "select one" question the server
@@ -941,7 +950,12 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
       return tidy(label?.innerText || input.value);
     };
 
-    const keyOf = (text) => tidy(text).replace(/^\d+[\s.)]*/, "").toLowerCase().slice(0, 80);
+    const keyOf = (text) => tidy(String(text).normalize("NFKC"))
+      .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, " ")
+      .replace(/^\d+[\s.)]*/, "")
+      .replace(/(?:יש לבחור|select)\s+(?:one|two|three|four|five|\d+).*$/i, "")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim().toLowerCase().slice(0, 64);
     // A confirmed answer captured after a submit carries the site's feedback
     // appended to the option it revealed ("Mac נכון. ..."), so a plain label is
     // also accepted as a whole-word prefix of it. Exact matches are preferred,
@@ -1606,6 +1620,17 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       answeredBlind = true;
       log("No stored answers for this quiz. Answering it blind so the grade reports the key back.");
     } else {
+      const capture = await captureCurrentExam().catch((captureError) => {
+        log(`Could not capture the unknown quiz: ${captureError instanceof Error ? captureError.message : String(captureError)}`);
+        return null;
+      });
+      if (capture) {
+        capture.module = item.title;
+        capture.chapter = item.chapter || null;
+        capture.reason = "unknown-answer-bank";
+        state.captures.push(capture);
+        log(`Captured ${capture.questions.length} question(s) from unknown quiz "${item.title}" for exams.js.`);
+      }
       throw new Error(`No stored answers match this quiz; "${detected?.name || "nothing"}" was the closest by title. Capture it and add it to exams.js.`);
     }
 
