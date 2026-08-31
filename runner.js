@@ -70,6 +70,18 @@ function clean(text = "") {
     .trim();
 }
 
+// `backTo` only controls the breadcrumb destination. The same collection is
+// linked with a different value from each parent, so query-sensitive identity
+// creates cycles (Education -> Learning -> Education) and walks completed trees
+// repeatedly. A Sales Coach content container's pathname is its stable ID.
+function containerId(rawUrl) {
+  try {
+    return `container:${new URL(rawUrl).pathname}`;
+  } catch {
+    return `container:${String(rawUrl).split(/[?#]/)[0]}`;
+  }
+}
+
 function isBlankPage(candidate) {
   return candidate.url() === "about:blank" || candidate.url().startsWith("chrome://newtab");
 }
@@ -404,7 +416,7 @@ export async function collectNodes(targetPage) {
 
         results.push({
           kind: "container",
-          id: `container:${url}`,
+          id: `container:${new URL(url).pathname}`,
           url,
           title: titleOf(anchor, card),
           completed: isCompleted(anchor, card),
@@ -2102,7 +2114,7 @@ async function openAcademy(listPage) {
   let link = await academyLink();
   if (!link && await alreadyHere()) {
     log("The connected tab is already inside the Academy.");
-    return { id: `container:${listPage.url().split("#")[0]}`, url: listPage.url().split("#")[0], title: "Apple Professional Academy" };
+    return { id: containerId(listPage.url()), url: listPage.url().split("#")[0], title: "Apple Professional Academy" };
   }
 
   if (!link) {
@@ -2119,7 +2131,7 @@ async function openAcademy(listPage) {
     if (await clickVisibleText(listPage, "Apple Professional Academy", { exact: false })) {
       await listPage.waitForTimeout(2500);
       if (await alreadyHere()) {
-        return { id: `container:${listPage.url().split("#")[0]}`, url: listPage.url().split("#")[0], title: "Apple Professional Academy" };
+        return { id: containerId(listPage.url()), url: listPage.url().split("#")[0], title: "Apple Professional Academy" };
       }
     }
     throw new Error(`Could not find Apple Professional Academy from ${listPage.url()}. Open it in the connected tab and try again.`);
@@ -2133,7 +2145,7 @@ async function openAcademy(listPage) {
     throw new Error("Apple Professional Academy opened, but nothing was listed on it. Wait for the page to finish loading and try again.");
   }
   log(`Apple Professional Academy is ready with ${nodes.length} listed item${nodes.length === 1 ? "" : "s"}.`);
-  return { id: `container:${link.url}`, url: link.url, title: link.title || "Apple Professional Academy" };
+  return { id: containerId(link.url), url: link.url, title: link.title || "Apple Professional Academy" };
 }
 
 // Sections that still have work in them are walked first. The site marks a
@@ -2603,7 +2615,7 @@ async function findCardTargets(listPage, hubUrl, max = 20) {
         const module = after.match(/\/home\/content\/view\/(\d+)/);
         found.set(after, module
           ? { kind: "module", id: `module:${module[1]}`, url: after, title, completed: false, locked: false }
-          : { kind: "container", id: `container:${after}`, url: after, title, completed: false, locked: false });
+          : { kind: "container", id: containerId(after), url: after, title, completed: false, locked: false });
       }
       await openListing(listPage, hubUrl).catch(() => {});
     }
@@ -2635,7 +2647,7 @@ async function withAcademy(listPage, hub, nodes) {
   log(`Apple Professional Academy was not listed as a section; opening it from its own link: ${link.url}`);
   return [{
     kind: "container",
-    id: `container:${link.url}`,
+    id: containerId(link.url),
     url: link.url,
     title: "Apple Professional Academy",
     completed: false,
