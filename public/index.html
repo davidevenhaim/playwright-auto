@@ -30,6 +30,9 @@
     .note { font-size: 13px; color: #6e6e73; margin-top: 14px; }
     .capture-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
     .capture-count { color: #6e6e73; font-size: 13px; margin-top: 10px; }
+    button.play { height: 68px; font-size: 19px; background: #1fa463; color: white; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+    button.play:hover:not(:disabled) { background: #1a8d55; }
+    .play-note { font-size: 13px; color: #6e6e73; margin: 8px 0 0; text-align: center; }
     .session-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
     .session-row button { width: auto; padding: 0 18px; height: 48px; }
   </style>
@@ -84,6 +87,20 @@
       <input type="number" id="limit" value="0" min="0" style="width:70px;padding:4px 6px;">
       pending items (0 = all)
     </label>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:400;">
+      Stop once the account reaches
+      <input type="number" id="targetXp" value="0" min="0" step="500" style="width:90px;padding:4px 6px;">
+      XP (0 = run everything)
+    </label>
+    <button id="playBtn" class="play">&#9654; Play &mdash; run the whole site</button>
+    <p class="play-note">
+      Walks every tab, program and section this account can reach, opens each
+      resource and quiz in its own tab, and keeps going past anything it cannot
+      pass &mdash; that lands in the report as a failed exam. A quiz that fails is
+      retried later in the same run with whatever the grading has since confirmed,
+      so a brand-new account climbs on its own.
+    </p>
+
     <button id="chapterBtn" class="primary" style="margin-top:12px;">Complete Current Chapter (submits exams)</button>
     <button id="forYouBtn" class="primary" style="margin-top:12px;">Complete Apple Professional Academy</button>
     <button id="captureAllBtn" class="secondary" style="margin-top:12px;">Capture every Academy quiz (no answers, no submits)</button>
@@ -113,6 +130,7 @@
     const runBtn = document.getElementById("runBtn");
     const identifyBtn = document.getElementById("identifyBtn");
     const captureBtn = document.getElementById("captureBtn");
+    const playBtn = document.getElementById("playBtn");
     const chapterBtn = document.getElementById("chapterBtn");
     const forYouBtn = document.getElementById("forYouBtn");
     const inspectBtn = document.getElementById("inspectBtn");
@@ -123,6 +141,7 @@
     const dryRun = document.getElementById("dryRun");
     const skipCompleted = document.getElementById("skipCompleted");
     const limitInput = document.getElementById("limit");
+    const targetXpInput = document.getElementById("targetXp");
     const submitUnverified = document.getElementById("submitUnverified");
     const blind = document.getElementById("blind");
 
@@ -186,7 +205,8 @@
         skipCompleted: Boolean(skipCompleted?.checked),
         limit: Number(limitInput?.value) || 0,
         submitUnverified: Boolean(submitUnverified?.checked),
-        blind: Boolean(blind?.checked)
+        blind: Boolean(blind?.checked),
+        targetXp: Number(targetXpInput?.value) || 0
       };
     }
 
@@ -207,6 +227,16 @@
         const asked = data.learned.reduce((t, e) => t + e.questions.length, 0);
         parts.push(`learned ${solved}/${asked} answers`);
         if (data.report?.learnedFile) parts.push(`written to ${data.report.learnedFile}`);
+      }
+      const xp = data.xp || data.report?.xp;
+      if (xp && (xp.before !== null || xp.after !== null)) {
+        const before = xp.before === null ? "?" : xp.before.toLocaleString();
+        const after = xp.after === null ? "?" : xp.after.toLocaleString();
+        parts.push(`XP ${before} \u2192 ${after}`);
+        if (xp.target && xp.after !== null) {
+          const short = Math.max(0, xp.target - xp.after);
+          parts.push(short ? `${short.toLocaleString()} XP short of ${xp.target.toLocaleString()}` : `target ${xp.target.toLocaleString()} reached`);
+        }
       }
       if (data.chapters?.length) parts.push(`${data.chapters.length} sections walked`);
       if (data.stillLocked) parts.push(`${data.stillLocked} still locked`);
@@ -388,6 +418,37 @@
         chapterBtn.disabled = false;
         runBtn.disabled = false;
         if (captureBtn) captureBtn.disabled = false;
+      }
+    });
+
+    // One click, whole site. Everything else on this page is a narrower slice of
+    // the same run.
+    playBtn.addEventListener("click", async () => {
+      playBtn.disabled = true;
+      chapterBtn.disabled = true;
+      forYouBtn.disabled = true;
+      logsPinned = false;
+      result.textContent = "Walking the whole site. Leave the browser window open...";
+      logs.textContent = "Starting the site run...";
+      try {
+        const response = await fetch(api("/api/site/run"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(runOptions())
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Site run failed");
+        const where = data.hubs?.length ? ` across ${data.hubs.join(", ")}` : "";
+        result.textContent = describeRun(`Site run complete${where}`, data);
+        await refreshLogs();
+        await refreshStatus();
+      } catch (e) {
+        result.textContent = e.message;
+        await refreshLogs();
+      } finally {
+        playBtn.disabled = false;
+        chapterBtn.disabled = false;
+        forYouBtn.disabled = false;
       }
     });
 

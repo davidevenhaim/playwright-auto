@@ -685,8 +685,34 @@ async function submitAssessment(targetPage, frame) {
 // accept a submission. The picks are deterministic — the first N options the
 // question asks for — so a blind run is reproducible, and the graded reply is
 // what turns each guess into a real answer for next time.
-async function fillBlindly(frame) {
-  return frame.evaluate(() => {
+// What this run has learned so far, keyed by question text. A quiz that failed
+// on an earlier pass is re-attempted with every answer the site has since
+// confirmed, which is how a fresh account climbs: each attempt settles some
+// questions, and the next attempt keeps them and guesses only the rest.
+const learnedAnswers = new Map();
+
+function answerKeyOf(questionText) {
+  return clean(questionText).replace(/^\d+[\s.)]*/, "").toLocaleLowerCase().slice(0, 80);
+}
+
+function rememberLearned(learned) {
+  let remembered = 0;
+  for (const question of learned.questions || []) {
+    if (!question.confirmedAnswers?.length) continue;
+    const key = answerKeyOf(question.question);
+    if (!key) continue;
+    if (!learnedAnswers.has(key)) remembered++;
+    learnedAnswers.set(key, question.confirmedAnswers);
+  }
+  return remembered;
+}
+
+export function clearLearnedAnswers() {
+  learnedAnswers.clear();
+}
+
+async function fillBlindly(frame, known = {}) {
+  return frame.evaluate((knownAnswers) => {
     const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
     const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
     const picked = [];
@@ -696,6 +722,27 @@ async function fillBlindly(frame) {
         question.querySelector(`label[for="${CSS.escape(input.id || "unmatched")}"]`) ||
         input.closest("label");
       return tidy(label?.innerText || input.value);
+    };
+
+    const keyOf = (text) => tidy(text).replace(/^\d+[\s.)]*/, "").toLowerCase().slice(0, 80);
+    // A confirmed answer captured after a submit carries the site's feedback
+    // appended to the option it revealed ("Mac נכון. ..."), so a plain label is
+    // also accepted as a whole-word prefix of it. Exact matches are preferred,
+    // which keeps "iPhone 15" from swallowing "iPhone 15 Pro".
+    const isPrefixAnswer = (labelText, answer) => {
+      if (!labelText || !answer || labelText.length < 2) return false;
+      const [longer, shorter] = answer.length >= labelText.length ? [answer, labelText] : [labelText, answer];
+      return longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
+    };
+    const knownFor = (question) => {
+      const heading = question.querySelector(
+        ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
+      );
+      for (const source of [heading?.innerText, question.innerText]) {
+        const hit = knownAnswers[keyOf(source || "")];
+        if (hit?.length) return hit;
+      }
+      return null;
     };
 
     for (const question of document.querySelectorAll(".question")) {
@@ -710,6 +757,33 @@ async function fillBlindly(frame) {
       const want = asked ? (WORDS[String(asked[1]).toLowerCase()] || Number(asked[1]) || 1) : 1;
 
       const chosen = [];
+      const settled = knownFor(question);
+
+      // Everything this run already knows about this question goes in first;
+      // only what is left over is guessed.
+      if (settled && (boxes.length || radios.length)) {
+        const inputs = boxes.length ? boxes : radios;
+        const rows = inputs.map((input) => ({ input, text: labelOf(input, question) }));
+        const wanted = new Set();
+        for (const answer of settled) {
+          const row = rows.find((candidate) => candidate.text === answer) ||
+            rows.find((candidate) => isPrefixAnswer(candidate.text, answer));
+          if (row) wanted.add(row.input);
+        }
+        if (wanted.size) {
+          for (const input of inputs) {
+            const shouldSelect = wanted.has(input);
+            if (input.checked !== shouldSelect) input.click();
+          }
+          picked.push({
+            question: tidy((question.querySelector(".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4") || question).innerText).slice(0, 300),
+            chosen: rows.filter((row) => wanted.has(row.input)).map((row) => row.text),
+            fromLearned: true
+          });
+          continue;
+        }
+      }
+
       if (selects.length) {
         for (const select of selects) {
           if (select.selectedIndex <= 0 && select.options.length > 1) {
@@ -741,7 +815,7 @@ async function fillBlindly(frame) {
     }
 
     return picked;
-  });
+  }, known);
 }
 
 // A question the server marked correct is a confirmed answer: whatever was
@@ -977,11 +1051,39 @@ function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mo
     pending: 0,
     modulesProcessed: 0,
     processedModules: new Set(),
+    attempts: new Map(),
+    retryable: new Map(),
+    answersLearned: 0,
     visitedContainers: new Set(),
     deferred: new Map(),
     blocked: 0,
     chapters: new Map()
   };
+}
+
+// One row per module. A module that failed and was tried again on a later pass
+// replaces its earlier row instead of appearing twice, and the failure tally
+// follows it, so the report says where the account actually stands.
+function recordResult(state, item, entry) {
+  const moduleId = item?.id || null;
+  const record = { ...entry, moduleId, attempt: state.attempts.get(moduleId) || 1 };
+  const index = moduleId ? state.results.findIndex((existing) => existing.moduleId === moduleId) : -1;
+  if (index < 0) {
+    state.results.push(record);
+    return;
+  }
+  const previous = state.results[index];
+  const wasFailure = previous.status === "failed";
+  const isFailure = record.status === "failed";
+  if (wasFailure && !isFailure) state.failed = Math.max(0, state.failed - 1);
+  state.results[index] = record;
+}
+
+// A quiz that did not pass, and a module that broke, are worth another attempt
+// later in the same run: by then the run may have confirmed some of its answers.
+function markRetryable(state, item) {
+  if (!item?.id) return;
+  state.retryable.set(item.id, (state.attempts.get(item.id) || 1));
 }
 
 function snapshotOf(state, extra = {}) {
@@ -998,6 +1100,7 @@ function snapshotOf(state, extra = {}) {
     results: [...state.results],
     chapters: [...state.chapters.values()],
     mode: state.mode,
+    answersLearned: state.answersLearned || 0,
     captures: [...state.captures],
     learned: [...state.learned],
     ...extra
@@ -1026,6 +1129,8 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
   // result rather than a generic processing error.
   let quizName = null;
   let isQuizModule = false;
+
+  if (item?.id) state.attempts.set(item.id, (state.attempts.get(item.id) || 0) + 1);
 
   try {
     log(`${label}Opening ${item.title || item.url}`);
@@ -1058,7 +1163,7 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
     if (state.mode === "capture") {
       if (!ready.hasAssessments) {
         log("Reading material; nothing to capture here.");
-        state.results.push({
+        recordResult(state, item, {
           title: item.title || item.url,
           chapter: item.chapter || null,
           type: "resource",
@@ -1072,7 +1177,7 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
         capture.chapter = item.chapter || null;
         state.captures.push(capture);
         state.examsFilled++;
-        state.results.push({
+        recordResult(state, item, {
           title: capture.title,
           module: item.title,
           chapter: item.chapter || null,
@@ -1125,9 +1230,11 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
       }
 
       if (answeredBlind) {
-        const picks = await fillBlindly(ready.frame);
+        const picks = await fillBlindly(ready.frame, Object.fromEntries(learnedAnswers));
         if (!picks.length) throw new Error("Nothing on this quiz could be answered blind.");
-        log(`Answered ${picks.length} question(s) blind.`);
+        const settled = picks.filter((pick) => pick.fromLearned).length;
+        log(`Answered ${picks.length} question(s) blind` +
+          (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
       }
       state.examsFilled++;
 
@@ -1135,7 +1242,7 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
       // A blind run is exactly that instruction, so it never holds back.
       if (!answeredBlind && run.unverified?.length && !state.submitUnverified) {
         log(`"${detected.name}" is filled but NOT submitted: ${run.unverified.length} answer(s) have never been confirmed.`);
-        state.results.push({
+        recordResult(state, item, {
           title: detected.name,
           module: item.title,
           chapter: item.chapter || null,
@@ -1180,10 +1287,13 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
       if (learned) {
         state.learned.push(learned);
         const solved = learned.questions.filter((question) => question.confirmedAnswers).length;
-        log(`Learned ${solved} of ${learned.questions.length} answer(s) for "${learned.exam}".`);
+        const fresh = rememberLearned(learned);
+        state.answersLearned = (state.answersLearned || 0) + fresh;
+        log(`Learned ${solved} of ${learned.questions.length} answer(s) for "${learned.exam}"` +
+          (fresh ? `, ${fresh} of them new to this run.` : "."));
       }
 
-      state.results.push({
+      recordResult(state, item, {
         title: quizName || item.title,
         module: item.title,
         chapter: item.chapter || null,
@@ -1200,6 +1310,7 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
         ...run
       });
       if (passed === false) {
+        markRetryable(state, item);
         // In blind mode this is the expected outcome of a first attempt, not a
         // broken key: the questions it did get right are now confirmed.
         const unsolved = learned
@@ -1213,7 +1324,7 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
       log("Module is reading material; scrolling it to the player's completion threshold.");
       const scrolledEnough = await completeReadingResource(itemPage, ready.frame);
       state.resourcesRead++;
-      state.results.push({
+      recordResult(state, item, {
         title: item.title || await itemPage.title(),
         chapter: item.chapter || null,
         type: "resource",
@@ -1232,7 +1343,8 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
     log(`Failed: ${item.title || item.url}: ${message}`);
     // Every quiz module belongs in the report, including the ones that never
     // reached grading, so a whole chapter's answer problems land in one file.
-    state.results.push((quizName || isQuizModule)
+    markRetryable(state, item);
+    recordResult(state, item, (quizName || isQuizModule)
       ? {
           title: quizName || item.title || item.url,
           module: item.title,
@@ -1671,6 +1783,293 @@ export async function processAcademy({ skipCompleted = true, limit = 0, onProgre
   });
 }
 
+// Nav destinations that are account tools rather than learning content. The
+// walk would find nothing in them and Manage is somebody's admin console.
+const SITE_HUB_SKIP = /profile|settings?|account|sign\s?out|log\s?out|manage|alerts?|notifications?|saved|search|help|support|feedback/i;
+const SITE_HOME = "https://salescoach.apple.com/home/for-you";
+// A fresh account unlocks its way up in stages, so the whole-site walk gets more
+// passes than the Academy one, and every module gets a few attempts before the
+// run gives up on it.
+const SITE_MAX_PASSES = 12;
+const MAX_MODULE_ATTEMPTS = 3;
+
+function siteHome(listPage) {
+  try {
+    const origin = new URL(listPage.url()).origin;
+    return origin.includes("salescoach") ? `${origin}/home/for-you` : SITE_HOME;
+  } catch {
+    return SITE_HOME;
+  }
+}
+
+// The site's own top tabs — For You, Explore, whatever else this account is
+// shown. They are read off the nav rather than hardcoded, so a renamed or moved
+// tab still gets walked. `collectNodes` deliberately ignores nav links as page
+// chrome, which is exactly why they have to be gathered separately here.
+async function readNavLinks(targetPage) {
+  return targetPage.evaluate(() => {
+    const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+    const found = new Map();
+    const scopes = document.querySelectorAll('nav, [role="navigation"], header, [role="banner"]');
+    for (const scope of scopes) {
+      for (const anchor of scope.querySelectorAll("a[href]")) {
+        if (!anchor.href.startsWith(location.origin)) continue;
+        const url = anchor.href.split("#")[0];
+        if (!/\/home\//.test(url)) continue;
+        const title = tidy(anchor.innerText) || tidy(anchor.getAttribute("aria-label")) || url;
+        if (!found.has(url)) found.set(url, title);
+      }
+    }
+    return [...found].map(([url, title]) => ({ url, title }));
+  }).catch(() => []);
+}
+
+export async function readNavHubs(targetPage) {
+  const links = await readNavLinks(targetPage);
+  return links.filter((link) => !SITE_HUB_SKIP.test(link.title) && !SITE_HUB_SKIP.test(link.url));
+}
+
+// XP is the number the account is judged on, so a run reports what it moved.
+// It is read off whatever the page shows rather than from a known element:
+// nothing in the player exposes it, and the wording differs by locale.
+const XP_PATTERNS = [
+  /\b(?:xp|points?|נקודות)\s*[:\-]?\s*([\d][\d.,]*)/i,
+  /([\d][\d.,]*)\s*(?:xp|points|נקודות)\b/i
+];
+
+async function readXpFrom(targetPage) {
+  const text = clean(await targetPage.locator("body").innerText().catch(() => ""));
+  for (const pattern of XP_PATTERNS) {
+    const found = text.match(pattern);
+    if (!found) continue;
+    const value = Number(found[1].replace(/[.,]/g, ""));
+    if (Number.isFinite(value)) return value;
+  }
+  return null;
+}
+
+// The home page usually carries the total; the profile page is the fallback for
+// a layout that only shows it there.
+async function readXp(listPage, profileUrl) {
+  const here = await readXpFrom(listPage);
+  if (here !== null) return here;
+  if (!profileUrl) return null;
+
+  const back = listPage.url();
+  try {
+    await openListing(listPage, profileUrl);
+    const value = await readXpFrom(listPage);
+    await openListing(listPage, back).catch(() => {});
+    return value;
+  } catch {
+    return null;
+  }
+}
+
+async function collectHubs(listPage) {
+  const home = siteHome(listPage);
+  await openListing(listPage, home);
+
+  const links = await readNavLinks(listPage);
+  // For You is always walked, whether or not the nav names it.
+  const hubs = new Map([[home, { url: home, title: "For You" }]]);
+  for (const link of links) {
+    if (SITE_HUB_SKIP.test(link.title) || SITE_HUB_SKIP.test(link.url)) continue;
+    if (!hubs.has(link.url)) hubs.set(link.url, link);
+  }
+  const profile = links.find((link) => /profile|נקודות|my learning/i.test(`${link.title} ${link.url}`));
+  return { hubs: [...hubs.values()], profileUrl: profile?.url || null };
+}
+
+// One hub page: everything listed on it is a root to walk into, and anything
+// that is already a module is run right there.
+async function walkHub(listPage, hub, state) {
+  log(`Hub "${hub.title}": opening ${hub.url}`);
+  try {
+    await openListing(listPage, hub.url);
+  } catch (error) {
+    log(`Could not open "${hub.title}": ${error instanceof Error ? error.message : String(error)}`);
+    return;
+  }
+  session().page = listPage;
+
+  const nodes = await waitForChapterItems(listPage, 20000);
+  const containers = nodes.filter((node) => node.kind === "container");
+  const modules = nodes.filter((node) => node.kind === "module");
+  log(`Hub "${hub.title}": ${containers.length} section(s) and ${modules.length} module(s) listed.`);
+  if (!nodes.length) return;
+
+  state.chapters.set(hub.url, {
+    title: hub.title,
+    url: hub.url,
+    depth: -1,
+    progress: null,
+    modules: modules.length,
+    subSections: containers.length
+  });
+
+  // A module linked straight from a hub belongs to no section; it is still work.
+  for (const module of modules) {
+    if (limitReached(state)) return;
+    if (state.processedModules.has(module.id)) continue;
+    if (module.locked) {
+      state.deferred.set(module.id, { ...module, chapter: hub.title });
+      continue;
+    }
+    if (state.skipCompleted && module.completed) {
+      state.processedModules.add(module.id);
+      state.skipped++;
+      continue;
+    }
+    state.processedModules.add(module.id);
+    state.pending++;
+    await processModule({ ...module, chapter: hub.title }, state, {
+      label: `[${state.modulesProcessed + 1}] `,
+      listPage
+    });
+    if (!listPage.isClosed()) {
+      await listPage.bringToFront().catch(() => {});
+      session().page = listPage;
+    }
+  }
+
+  for (const container of containers) {
+    if (limitReached(state)) return;
+    if (state.visitedContainers.has(container.id)) continue;
+    if (container.locked) {
+      state.deferred.set(container.id, { ...container, chapter: hub.title });
+      log(`Locked for now: "${container.title}".`);
+      continue;
+    }
+    if (state.skipCompleted && container.completed) {
+      state.visitedContainers.add(container.id);
+      log(`Already completed: "${container.title}".`);
+      continue;
+    }
+    await walkContainer(listPage, container, state, 1);
+    // walkContainer leaves the tab deep inside; the next root is opened by URL,
+    // but the hub has to be re-read to find it after a sibling moved the page.
+    await openListing(listPage, hub.url).catch(() => {});
+  }
+}
+
+// The whole site in one click: every tab, every program, every section under
+// them, running each module the same way a chapter run does. A quiz whose
+// answers are known is answered and submitted; one that is not is answered
+// blind when blind mode is on, and either way its grade is reported.
+export async function processSite({ skipCompleted = true, limit = 0, onProgress = null, mode = "run", submitUnverified = false, blind = false, targetXp = 0 } = {}) {
+  const listPage = await connectedPage();
+  resetLogs();
+  const state = createRunState({ onProgress, skipCompleted, limit, mode, submitUnverified, blind });
+
+  log("Whole-site run: walking every tab this account can reach, not just the Academy.");
+  if (blind && mode !== "capture") {
+    log("Blind mode: a quiz with no stored answers is still answered and submitted, and its grade is reported back as an answer key.");
+  }
+  if (mode === "capture") log("Capture mode: quizzes are read, never answered or submitted.");
+  if (limit > 0) log(`Stopping after ${limit} module(s).`);
+
+  const { hubs, profileUrl } = await collectHubs(listPage);
+  log(`Found ${hubs.length} tab(s) to walk: ${hubs.map((hub) => hub.title).join(", ")}.`);
+
+  const xpBefore = await readXp(listPage, profileUrl);
+  if (xpBefore === null) {
+    log("No XP total is shown on this account's pages; the run will report progress by module instead.");
+  } else {
+    log(`XP before this run: ${xpBefore.toLocaleString()}${targetXp ? ` (target ${targetXp.toLocaleString()})` : ""}.`);
+  }
+  let xpAfter = xpBefore;
+
+  for (let pass = 1; pass <= SITE_MAX_PASSES; pass++) {
+    const processedBefore = state.modulesProcessed;
+    const learnedBefore = state.answersLearned;
+    state.visitedContainers = new Set();
+    state.deferred = new Map();
+    state.blocked = 0;
+
+    // A quiz that did not pass, and a module that broke, are walked again: by
+    // now the run has confirmed answers it did not have the first time.
+    const retrying = [...state.retryable.keys()].filter((id) =>
+      (state.attempts.get(id) || 0) < MAX_MODULE_ATTEMPTS);
+    if (pass > 1) {
+      for (const id of retrying) state.processedModules.delete(id);
+      log(`Pass ${pass}: re-walking the site for anything that unlocked` +
+        (retrying.length ? `, and retrying ${retrying.length} item(s) that did not pass.` : "."));
+    }
+    state.retryable = new Map();
+
+    for (const hub of hubs) {
+      if (limitReached(state)) break;
+      await walkHub(listPage, hub, state);
+    }
+
+    const gained = state.modulesProcessed - processedBefore;
+    const settled = state.answersLearned - learnedBefore;
+    const stillShut = state.deferred.size + state.blocked;
+    const toRetry = [...state.retryable.keys()].filter((id) =>
+      (state.attempts.get(id) || 0) < MAX_MODULE_ATTEMPTS).length;
+
+    xpAfter = await readXp(listPage, profileUrl);
+    if (xpAfter !== null) {
+      const moved = xpBefore === null ? null : xpAfter - xpBefore;
+      log(`XP after pass ${pass}: ${xpAfter.toLocaleString()}${moved === null ? "" : ` (${moved >= 0 ? "+" : ""}${moved.toLocaleString()})`}.`);
+    }
+
+    if (limitReached(state)) {
+      log(`Stopping: the ${limit}-module limit for this run was reached.`);
+      break;
+    }
+    if (targetXp > 0 && xpAfter !== null && xpAfter >= targetXp) {
+      log(`Target of ${targetXp.toLocaleString()} XP reached; stopping.`);
+      break;
+    }
+    if (!stillShut && !toRetry) {
+      log("Nothing is locked and nothing is left to retry; the walk is complete.");
+      break;
+    }
+    // Another pass is only worth making if this one moved something: it opened
+    // a lock, or it settled answers that a failed quiz can now be retried with.
+    if (!gained && !settled) {
+      log(`${stillShut} locked and ${toRetry} unpassed item(s) remain, and this pass moved nothing; stopping.`);
+      break;
+    }
+    if (pass === SITE_MAX_PASSES) log("Reached the maximum number of passes.");
+  }
+
+  await openListing(listPage, siteHome(listPage)).catch(() => {});
+  session().page = listPage;
+  if (xpAfter === null) xpAfter = await readXp(listPage, profileUrl);
+
+  const quizzes = state.results.filter((item) => item.type === "quiz");
+  const passed = quizzes.filter((item) => item.passed === true).length;
+  const failedQuizzes = quizzes.filter((item) => item.passed === false).length;
+  log(`Site run finished: ${state.examsSubmitted} quiz(zes) submitted (${passed} passed, ${failedQuizzes} did not), ${state.resourcesRead} resource(s) read, ${state.failed} failure(s).`);
+  const solved = state.learned.reduce((total, entry) =>
+    total + entry.questions.filter((question) => question.confirmedAnswers).length, 0);
+  const asked = state.learned.reduce((total, entry) => total + entry.questions.length, 0);
+  if (asked) log(`Answer key learned this run: ${solved} of ${asked} question(s) confirmed across ${state.learned.length} quiz(zes).`);
+
+  if (xpBefore !== null || xpAfter !== null) {
+    const moved = xpBefore !== null && xpAfter !== null ? xpAfter - xpBefore : null;
+    log(`XP: ${xpBefore === null ? "?" : xpBefore.toLocaleString()} \u2192 ${xpAfter === null ? "?" : xpAfter.toLocaleString()}` +
+      (moved === null ? "" : ` (${moved >= 0 ? "+" : ""}${moved.toLocaleString()})`) +
+      (targetXp > 0 && xpAfter !== null ? `, ${Math.max(0, targetXp - xpAfter).toLocaleString()} short of the ${targetXp.toLocaleString()} target` : ""));
+  }
+
+  const stillLocked = [...state.deferred.values()].map((node) => node.title);
+  if (stillLocked.length) log(`Still locked: ${stillLocked.join(", ")}.`);
+
+  return snapshotOf(state, {
+    total: state.processedModules.size,
+    processed: state.modulesProcessed,
+    chapters: [...state.chapters.values()],
+    hubs: hubs.map((hub) => hub.title),
+    xp: { before: xpBefore, after: xpAfter, target: targetXp || null },
+    stillLocked: state.blocked,
+    stillIncomplete: stillLocked
+  });
+}
+
 // Kept so the existing /api/for-you/run endpoint keeps working; the For You tab
 // is only ever the way in to the Academy.
 export async function processForYou(options = {}) {
@@ -2059,7 +2458,6 @@ async function optionRows(block) {
   for (let index = 0; index < count; index++) {
     const label = labels.nth(index);
     const text = clean(await label.innerText().catch(() => ""));
-    if (!text) continue;
 
     let input = label.locator('input[type="checkbox"], input[type="radio"]').first();
     if (!(await input.count().catch(() => 0))) {
@@ -2067,7 +2465,12 @@ async function optionRows(block) {
       input = forId ? block.locator(`input[id="${forId}"]`).first() : null;
       if (input && !(await input.count().catch(() => 0))) input = null;
     }
-    rows.push({ label, text, input });
+    // Some questions answer with pictures: the label carries an image and no
+    // text at all, and the only thing that tells the options apart is the
+    // input's value. Such a row is kept so an answer can name that value.
+    const value = input ? clean(await input.getAttribute("value").catch(() => "") || "") : "";
+    if (!text && !value) continue;
+    rows.push({ label, text, value, input });
   }
   return rows;
 }
@@ -2081,9 +2484,11 @@ async function applyAnswers(block, answers, { exclusive = false, delayMs = 200 }
   if (!rows.length) return chooseOptionByText(block, answers, delayMs);
 
   const matched = new Set();
+  const exact = (row, answer) => row.text === answer || (row.value && row.value === answer);
   const plan = rows.map((row) => {
-    const hit = wanted.find((answer) => row.text === answer) ||
-      wanted.find((answer) => !rows.some((candidate) => candidate.text === answer) && row.text.includes(answer));
+    const hit = wanted.find((answer) => exact(row, answer)) ||
+      wanted.find((answer) => !rows.some((candidate) => exact(candidate, answer)) &&
+        row.text && row.text.includes(answer));
     if (hit) matched.add(hit);
     return { row, shouldSelect: Boolean(hit) };
   });
@@ -2113,7 +2518,8 @@ async function applyAnswers(block, answers, { exclusive = false, delayMs = 200 }
     if (!entry.row.input) continue;
     const selected = await entry.row.input.isChecked().catch(() => false);
     if (selected !== entry.shouldSelect) {
-      throw new Error(`Could not ${entry.shouldSelect ? "select" : "clear"} option: ${entry.row.text.slice(0, 70)}`);
+      const name = entry.row.text || entry.row.value;
+      throw new Error(`Could not ${entry.shouldSelect ? "select" : "clear"} option: ${name.slice(0, 70)}`);
     }
   }
 }

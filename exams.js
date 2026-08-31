@@ -1369,5 +1369,64 @@ export const exams = {
       { type: "multiple", match: "אילו מהמוצרים הבאים הם המוצרים הראשונים שלנו שהם ניטרליים פחמנית", answers: ["Apple Watch Series 10", "Apple Watch Ultra 2", "Mac mini"] },
       { type: "single", match: "מהו החסכון הכולל לאורך מחזור החיים של כל Mac שנפרס", answer: "$847", unverified: true }
     ]
+  },
+  // Curriculum "Technical". Answers come from the 2026-08-31 blind run:
+  // what the site marked correct is kept, what it marked wrong is replaced.
+  // `unverified` marks the replacements that are still a best guess.
+  "apple-configurator-and-shortcuts": {
+    name: "Apple Configurator והיישום 'קיצורים'",
+    section: "Technical",
+    questions: [
+      { type: "single", match: "איזו מהפלטפורמות הבאות היא המתאימה ביותר לשימוש ב-Apple Configurator וביישום 'קיצורים'", answer: "Mac" },
+      { type: "single", match: "מנהל מערכת מפתח זרימת עבודה ומחפש בה באגים באמצעות פעולות Configurator ביישום 'קיצורים'", answer: "איתור מכשירים מחוברים" },
+      { type: "multiple", match: "ארגון מגדיר ומגדיר מחדש לעתים קרובות מכשירי iPhone ו-iPad לתרחישים שונים של שימוש משותף.", answers: ["שירות שמירת תוכן במטמון", "חיבור Ethernet במהירות גבוהה", "רכזת USB עם מספר יציאות USB"], unverified: true }
+    ]
+  },
+  "mac-fundamentals-quiz": {
+    name: "בוחן — היסודות של Mac",
+    section: "Technical",
+    questions: [
+      { type: "multiple", match: "מה מהדברים הבאים נכון לגבי משתמשים רגילים?", answers: ["יכולים לשנות את ההגדרות שלהם", "יכולים להתקין יישומים"] },
+      { type: "multiple", match: "FileVault מופעל ב-Mac. במה תוכלו להשתמש כדי לפתוח את הנעילה של כונן ההפעלה אם שכחתם את", answers: ["מפתח שחזור", "חשבון iCloud"] },
+      { type: "multiple", match: "אילו מאפייני נגישוּת זמינים ב-macOS?", answers: ["ראייה", "דיבור", "תנועה"], unverified: true },
+      { type: "single", match: "איך יש להפעיל מחדש את ה-Mac?", answer: "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'הפעלה מחדש'." },
+      { type: "single", match: "עליכם לבטל גישה של יישום לתיקיה 'מסמכים'. איזו הגדרת מערכת מאפשרת לכם לשנות את הגישה של", answer: "'פרטיות ואבטחה' > 'קבצים ותיקיות'" },
+      { type: "multiple", match: "יישום הפסיק להגיב. איך תאכפו סיום מיידי של היישום?", answers: ["יש ללחוץ על Option-Command-Escape כדי לפתוח את החלון 'סיום מיידי', ואחר כך יש לבחור ביישום שאינו מגיב.", "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'סיום מיידי'."] },
+      { type: "single", match: "איזה סוג של חשבון מאפשר לכם להשתמש ב-Mac באופן זמני מבלי ליצור שם משתמש וסיסמה?", answer: "אורח" },
+      { type: "single", match: "ה-Mac מציג התראה לאחר ניסיון לפתוח יישום שהותקן מהאינטרנט. מה אתם חייבים לעשות כדי לאפשר", answer: "לבחור ב'הגדרות המערכת' > 'פרטיות ואבטחה', ואחר כך להקליק על 'פתיחה בכל זאת' מתחת ל'אבטחה'." },
+      { type: "single", match: "אתם משתמשים ב-macOS Sonoma ואתם מוכנים להתקין את macOS Sequoia. איך תשדרגו את ה-Mac לגרסה", answer: "יש לפתוח את 'הגדרות המערכת', להקליק על 'כללי' ולאחר מכן להקליק על 'עדכון תוכנה'." },
+      { type: "multiple", match: "כיצד תוכלו למצוא מידע נוסף על ציוד היקפי המחובר ל-Thunderbolt?", answers: ["יש לבחור ב'הגדרות המערכת' > 'כללי' > 'מידע', ואחר כך להקליק על 'נתוני המערכת'.", "יש לפתוח את Spotlight ולהקליד \"נתוני המערכת\" בשדה החיפוש."] }
+    ]
+  },
+  "iphone-ipad-fundamentals-quiz": {
+    name: "בוחן — יסודות ה—iPhone וה—iPad",
+    section: "Technical",
+    questions: [
+      { type: "single", match: "כיצד אפשר לבדוק את השימוש בסוללה ב-iPhone שלכם?", answer: "עוברים אל 'הגדרות' > 'סוללה' כדי להציג מידע על השימוש בסוללה." },
+      { type: "single", match: "איך מוסיפים חשבון לוח שנה ב-iPad?", answer: "עוברים ל'הגדרות' > 'יישומים' > 'לוח שנה' > 'חשבונות לוח שנה'." },
+      { type: "single", match: "היכן ניתן לשנות את הגדרות המיקום של יישום?", answer: "'הגדרות' > 'פרטיות ואבטחה' > 'שירותי מיקום'" },
+      { type: "single", match: "איך מסירים יישום?", answer: "נוגעים נגיעה ממושכת ביישום כדי לפתוח תפריט אפשרויות מהיר, ואחר כך בוחרים באפשרות 'הסרת היישום'." },
+      { type: "single", match: "שטח האחסון ב-iPad Pro כמעט מלא. איך אפשר להציג את זמינות האחסון הכוללת ב-iPad?", answer: "עוברים אל 'הגדרות' > 'כללי' > 'אחסון ב-iPad'." },
+      { type: "single", match: "איך יוצרים תיקייה לארגון יישומים ב-iPhone?", answer: "נוגעים נגיעה ממושכת ברקע של מסך הבית עד שהיישומים יתחילו להתנועע, ואז גוררים יישום על גבי יישום אחר." },
+      { type: "single", match: "היכן מפעילים עדכוני תוכנה אוטומטיים?", answer: "'הגדרות' > 'כללי' > 'עדכון תוכנה'" },
+      // The options are pictures with no text: this is the input value of the correct one.
+      { type: "single", match: "איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום?", answer: "1408323" },
+      { type: "single", match: "איזו קטגוריית נגישות מכילה תכונות שמקלות על הצגת הטקסט ב-iPad?", answer: "ראייה" },
+      { type: "multiple", match: "עליכם להעביר את היישומים והמידע מה-iPhone הקודם ל-iPhone חדש. מה עליכם לעשות כדי להתחיל", answers: ["במכשיר הקודם, לעבור אל 'הגדרות'> 'כללי', להקיש על 'העברה או איפוס של ה-iPhone', ואחר כך לפעול לפי ההוראות שעל המסך.", "לקרב את שני המכשירים, ואחר כך לפעול לפי ההוראות שעל המסך."] }
+    ]
+  },
+  "apple-account-icloud-fundamentals-quiz": {
+    name: "בוחן — היסודות של חשבון Apple ו—iCloud",
+    section: "Technical",
+    questions: [
+      { type: "multiple", match: "מה דרוש כדי להשבית את האפשרויות 'איתור' ו'נעילת ההפעלה'?", answers: ["קוד גישה למכשיר", "אישורי חשבון Apple"], unverified: true },
+      { type: "multiple", match: "שכחתם את הסיסמה לחשבון Apple, אך באפשרותכם להשתמש באימות בשני גורמים. אילו מהבאים יכול", answers: ["מספר טלפון מהימן", "מכשיר Apple מהימן"] },
+      { type: "multiple", match: "אילו פריטים מאוחסנים ב'סיסמאות של iCloud'?", answers: ["מפתחות התחברות", "שמות משתמשים וסיסמאות של Safari"] },
+      { type: "single", match: "איזה מהבאים דרוש כדי שמאפייני 'המשכיות' יפעלו במכשירי Apple שלכם?", answer: "חשבון Apple" },
+      { type: "single", match: "איזה יישום של iPad מכיל קבצים ותיקיות שסונכרנו מ-iCloud Drive?", answer: "היישום 'קבצים'" },
+      { type: "single", match: "באיזה מאפיין של iCloud תוכלו להשתמש כדי לאתר iPhone שאבד?", answer: "איתור" },
+      { type: "multiple", match: "מה דרוש כדי שיושלם 'גיבוי iCloud' אוטומטי ב-iPad?", answers: ["חיבור לרשת אלחוטית", "מכשיר המחובר לחשמל"] },
+      { type: "single", match: "איזה מאפיין מאפשר לכם לסנכרן קבצים ותיקיות בין Mac ל-iPad?", answer: "iCloud Drive" }
+    ]
   }
 };

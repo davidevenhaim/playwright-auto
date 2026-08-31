@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, processAcademy, processCurrentChapter, runExam, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, processAcademy, processCurrentChapter, processSite, runExam, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,6 +79,9 @@ function writeExamResults(scope, run, session) {
     // What the walk found level by level, so a chapter it never entered is
     // visible in the report rather than only in the log.
     chapters: run.chapters || [],
+    // What the account's XP total did over the run, when the site shows one.
+    xp: run.xp || null,
+    answersLearned: run.answersLearned || 0,
     progressBefore: run.progressBefore || null,
     progressAfter: run.progressAfter || null,
     exams: quizzes.map((item) => ({
@@ -368,6 +371,30 @@ async function runAcademy(req, res) {
 }
 
 app.post("/api/academy/run", runAcademy);
+
+// One button for the whole site: every tab, every program under it, every
+// section under that. Same per-module behaviour as a chapter run — a quiz is
+// identified and submitted, and one that cannot be passed is reported as a
+// failed exam rather than stopping the run.
+app.post("/api/site/run", async (req, res) => {
+  const session = sessionOf(req);
+  try {
+    const { skipCompleted = true, limit = 0, submitUnverified = false, blind = false, targetXp = 0 } = req.body || {};
+    const run = await withSession(session, () => processSite({
+      skipCompleted: Boolean(skipCompleted),
+      limit: Number(limit) || 0,
+      submitUnverified: Boolean(submitUnverified),
+      blind: Boolean(blind),
+      targetXp: Number(targetXp) || 0,
+      // Flush after each item so an interrupted run keeps what it finished.
+      onProgress: (progress) => writeExamResults("site", progress, session)
+    }));
+    const report = writeExamResults("site", run, session);
+    res.json({ ...run, report });
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
 
 // Reads every quiz in the Academy without answering or submitting one, and
 // writes both the raw captures and a paste-ready exams.js skeleton. This is how
