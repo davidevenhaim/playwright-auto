@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, processAcademy, processCurrentChapter, processSite, runExam, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -86,6 +86,10 @@ function writeExamResults(scope, run, session) {
     // What the account's XP total did over the run, when the site shows one.
     xp: run.xp || null,
     answersLearned: run.answersLearned || 0,
+    // Unknown and partial quizzes captured during a conservative run. Keeping
+    // their full controls/options in the report makes the next exams.js update
+    // possible without reopening every failed module by hand.
+    captures: run.captures || [],
     progressBefore: run.progressBefore || null,
     progressAfter: run.progressAfter || null,
     exams: quizzes.map((item) => ({
@@ -333,6 +337,14 @@ app.post("/api/connect", async (req, res) => {
     res.json(await withSession(sessionOf(req), () => connectBrowser()));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+app.post("/api/open", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => openSalesCoachUrl(req.body?.url)));
+  } catch (error) {
+    res.status(400).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
 

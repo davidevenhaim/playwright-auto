@@ -150,6 +150,22 @@ export async function browserStatus() {
   }
 }
 
+// Debugging a missing answer should not require another whole-site walk just
+// to return to the module. Keep this deliberately limited to Sales Coach so a
+// caller cannot turn the local runner into a general-purpose URL opener.
+export async function openSalesCoachUrl(rawUrl) {
+  const targetPage = await connectedPage();
+  const url = new URL(String(rawUrl || ""));
+  if (url.protocol !== "https:" || !/(^|\.)salescoach\.apple\.com$/i.test(url.hostname)) {
+    throw new Error("Only https://salescoach.apple.com URLs can be opened.");
+  }
+  await targetPage.goto(url.href, { waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS });
+  await targetPage.bringToFront();
+  session().page = targetPage;
+  log(`Opened Sales Coach URL for debugging: ${url.href}`);
+  return { connected: true, session: session().id, url: targetPage.url(), title: await targetPage.title() };
+}
+
 export async function detectCurrentExam() {
   const targetPage = await connectedPage();
   const deadline = Date.now() + MODULE_READY_TIMEOUT_MS;
@@ -1224,6 +1240,7 @@ async function startVisibleVideoControls(targetPage) {
 // walking away from one that has stalled.
 const VIDEO_UNKNOWN_DURATION_MAX_MS = 15 * 60 * 1000;
 const VIDEO_STALL_MS = 90000;
+const VIDEO_PLAYBACK_RATE = 16;
 
 async function playAllVideos(targetPage) {
   const initialVideoCount = (await Promise.all(targetPage.frames().map((frame) =>
@@ -1241,6 +1258,11 @@ async function playAllVideos(targetPage) {
       await video.scrollIntoViewIfNeeded().catch(() => {});
       const initial = await video.evaluate(async (element) => {
         if (element.ended) element.currentTime = 0;
+        // Keep the media lifecycle genuine (including its `ended` event), but
+        // do not make a whole-site automation sit through every clip in real
+        // time. Chromium supports 16x playback and the loop below reapplies it
+        // if a package resets the rate while playing.
+        element.playbackRate = 16;
         try {
           await element.play();
         } catch {
@@ -1258,7 +1280,7 @@ async function playAllVideos(targetPage) {
       const durationText = Number.isFinite(initial.duration) ? `${Math.ceil(initial.duration)} seconds` : "unknown duration";
       log(`Playing video ${played} (${durationText}) and waiting for it to end.`);
       const maximumWait = Number.isFinite(initial.duration)
-        ? Math.max(120000, (initial.duration - initial.currentTime + 120) * 1000)
+        ? Math.max(30000, ((initial.duration - initial.currentTime) / VIDEO_PLAYBACK_RATE + 30) * 1000)
         : VIDEO_UNKNOWN_DURATION_MAX_MS;
       const deadline = Date.now() + maximumWait;
       // A video that reports no duration used to be waited on for four hours,
@@ -1271,6 +1293,7 @@ async function playAllVideos(targetPage) {
 
       while (Date.now() < deadline) {
         const state = await video.evaluate(async (element) => {
+          if (element.playbackRate !== 16) element.playbackRate = 16;
           if (element.paused && !element.ended) await element.play().catch(() => {});
           return { ended: element.ended, currentTime: element.currentTime, duration: element.duration };
         }).catch(() => null);
@@ -1541,6 +1564,29 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         }
         log(`${run.failed} of ${run.total} stored answers would not apply; filling what is left blind.`);
         answeredBlind = true;
+      }
+      // A partial answer-bank entry can match perfectly while the live quiz has
+      // additional questions. `run.failed` only describes stored questions, so
+      // without this check the extra live questions remain empty and Submit is
+      // rejected as "unanswered". Blind/explicit-unverified runs are allowed to
+      // fill only that remainder; conservative runs still stop before spending
+      // an attempt and report the missing question through the pre-flight error.
+      if (ready.questions > run.total && (state.blind || state.submitUnverified)) {
+        log(`The live quiz has ${ready.questions} question(s), but exams.js has ${run.total}; filling the missing ${ready.questions - run.total} question(s) blind.`);
+        answeredBlind = true;
+      } else if (ready.questions > run.total) {
+        const missing = ready.questions - run.total;
+        log(`The live quiz has ${ready.questions} question(s), but exams.js has ${run.total}; capturing ${missing} missing question(s) and keeping this attempt unsubmitted.`);
+        const capture = await captureCurrentExam().catch((error) => {
+          log(`Could not capture the partial quiz: ${error instanceof Error ? error.message : String(error)}`);
+          return null;
+        });
+        if (capture) {
+          capture.module = item.title;
+          capture.chapter = item.chapter || null;
+          capture.reason = "partial-answer-bank";
+          state.captures.push(capture);
+        }
       }
     } else if (state.blind) {
       quizName = detected?.name || null;
@@ -2979,11 +3025,20 @@ function captureAnswerKeyScript() {
     walk(SeedInterface.QSP, "QSP", 0, shape);
 
     const assessments = [];
+    const responses = [];
     try {
       for (const element of document.querySelectorAll("[assessmentId]")) {
         const id = element.getAttribute("assessmentId");
         const assessment = SeedInterface.QSP.getAssessmentWithID?.(id);
-        if (assessment) assessments.push({ id, keys: Object.keys(assessment).slice(0, 60) });
+        if (assessment) {
+          assessments.push({ id, keys: Object.keys(assessment).slice(0, 60) });
+          const stored = SeedInterface.QSP.assessments?.[id] || assessment;
+          const attempts = Array.isArray(stored.submittedResponse) ? stored.submittedResponse : [];
+          responses.push(...attempts.slice(-2).map((attempt) => ({
+            id,
+            questions: (attempt?.questionObjects || []).map((question) => safe(question))
+          })));
+        }
       }
     } catch {}
 
@@ -2991,6 +3046,7 @@ function captureAnswerKeyScript() {
       available: true,
       completionScore: Number.isFinite(SeedInterface.QSP.completionScore) ? SeedInterface.QSP.completionScore : null,
       assessments,
+      responses,
       // Anything named like a correct answer, so a real key is obvious if present.
       candidates: hits.slice(0, 120),
       shape
