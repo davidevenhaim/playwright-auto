@@ -972,9 +972,27 @@ export const exams = {
     name: "בוחן – ניהול מכשירי Apple בעבודה",
     questions: [
       { type: "multiple", match: "להבין את צורכי הפריסה של הלקוחות", answers: ["מה מחלקת ה‑IT צריכה לעשות", "מה העובדים צריכים לעשות כדי להגדיר", "איך אתם מנהלים את מכשירי ה-iPhone שלכם?"] },
-      { type: "single", match: "מפריד בין נתונים בעבודה לבין נתונים אישיים", answer: "רישום משתמשים" },
+      // "רישום משתמשים" (User Enrolment) is not one of the options this quiz
+      // offers, so the question was left empty and the whole attempt went in
+      // at 75%. Of what it does offer, the managed account is what separates
+      // work data from personal data.
+      { type: "single", match: "מפריד בין נתונים בעבודה לבין נתונים אישיים", answer: "חשבונות Apple מנוהלים" },
       { type: "multiple", match: "תומכת בארגונים בתהליכי הפריסה", answers: ["תוכנה שעובדת עם שירותי ניהול המכשירים", "תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה", "הכשרה בנושא ניהול מכשירים"] },
       { type: "single", match: "מאפיינים העיקריים של Apple Business המסייע בפריסה", answer: "רישום מכשירים אוטומטי" }
+    ]
+  },
+  // "הקצאת מכשירים" / Device assignment. These four are what Apple Business
+  // Manager actually does, not answers a grade has confirmed; the fifth
+  // question (the three search filters) is deliberately left out so the run
+  // guesses it and learns it from the grade. Any of these that turns out wrong
+  // is cleared and re-guessed on the next attempt in the same visit.
+  "device-assignment-quiz": {
+    name: "הקצאת מכשירים",
+    questions: [
+      { type: "single", match: "מתי צריך לשחרר מכשיר מ-Apple Business Manager", answer: "אם המכשיר אבד, הוצא משימוש, נמכר או אינו ניתן לתיקון" },
+      { type: "single", match: "קריטריונים ניתן להשתמש לצורך הקצאת מכשירים אוטומטית", answer: "סוג המכשיר" },
+      { type: "single", match: "כיצד ניתן להוסיף מחשבי Mac באופן ידני", answer: "באמצעות Apple Configurator ל-iPhone" },
+      { type: "single", match: "לכמה פתרונות MDM ניתן להקצות מכשיר", answer: "אחד" }
     ]
   },
   "clienteling-essentials": {

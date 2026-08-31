@@ -743,6 +743,101 @@ async function submitAssessment(targetPage, frame) {
   throw new Error("Submit was clicked, but the server never returned a graded attempt.");
 }
 
+// A failed quiz is offered again, and taking that offer in the same tab is the
+// difference between one guess per whole-site pass and a question that is
+// worked out on the spot. Most SEED packages reset themselves to an answerable
+// state as soon as the grade is shown — the failed attempt's wrong answers are
+// cleared and the Submit button comes back — so the reset is waited for first
+// and a "try again" control is only looked for when it does not arrive.
+const QUIZ_RETRY_READY_MS = 20000;
+
+async function quizIsAnswerable(frame) {
+  return frame.evaluate(() => {
+    const button = document.querySelector(".submitAssessmentButton");
+    if (!button || button.classList.contains("disabled")) return false;
+    const inputs = Array.from(document.querySelectorAll('.question input[type="radio"], .question input[type="checkbox"]'));
+    if (!inputs.length) return false;
+    return inputs.some((input) => !input.disabled);
+  }).catch(() => false);
+}
+
+async function startAnotherAttempt(targetPage, frame) {
+  const deadline = Date.now() + QUIZ_RETRY_READY_MS;
+  let clicked = null;
+
+  while (Date.now() < deadline) {
+    if (await quizIsAnswerable(frame)) return true;
+
+    if (!clicked) {
+      clicked = await frame.evaluate(() => {
+        const RETRY = /try again|try it again|retake|start over|נסה שוב|נסו שוב/i;
+        const MARKS = /tryagain|try-again|retry|retake|restart/i;
+        const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+
+        for (const element of document.querySelectorAll(
+          "button, a, [role='button'], input[type='button'], input[type='submit'], [class*='try' i], [class*='retry' i], [class*='retake' i]"
+        )) {
+          const text = tidy(element.innerText || element.value || element.getAttribute("aria-label"));
+          const marks = tidy(`${element.className || ""} ${element.id || ""}`);
+          if (!RETRY.test(text) && !MARKS.test(marks)) continue;
+          const rect = element.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) continue;
+          element.click();
+          return text || marks;
+        }
+        return null;
+      }).catch(() => null);
+      if (clicked) log(`Taking another attempt at this quiz: clicked "${clicked.slice(0, 60)}".`);
+    }
+
+    await targetPage.waitForTimeout(1000);
+  }
+
+  return quizIsAnswerable(frame);
+}
+
+// Whatever the last grade rejected is cleared before the next attempt is
+// filled. A stored answer that the server has just called wrong would otherwise
+// be put straight back, and the retry would send the same attempt again.
+async function clearRejectedQuestions(frame, graded) {
+  const keys = (graded.gradedQuestions || [])
+    .filter((question) => question.state === "incorrect")
+    .map((question) => answerKeyOf(question.question))
+    .filter(Boolean);
+  if (!keys.length) return 0;
+
+  return frame.evaluate((wrongKeys) => {
+    const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+    const keyOf = (text) => tidy(text).replace(/^\d+[\s.)]*/, "").toLowerCase().slice(0, 80);
+    let cleared = 0;
+
+    for (const question of document.querySelectorAll(".question")) {
+      const heading = question.querySelector(
+        ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
+      );
+      const keys = [keyOf(heading?.innerText || ""), keyOf(question.innerText || "")];
+      if (!keys.some((key) => key && wrongKeys.includes(key))) continue;
+      for (const input of question.querySelectorAll('input[type="radio"], input[type="checkbox"]')) {
+        if (!input.checked) continue;
+        // A checkbox is cleared by clicking it, which is also what keeps the
+        // player's own model in step. A radio is not: clicking the one that is
+        // already on leaves it on, which left every wrong single-answer
+        // question holding its rejected answer and made each retry a copy of
+        // the attempt before it.
+        if (input.type === "checkbox") {
+          input.click();
+        } else {
+          input.checked = false;
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        cleared++;
+      }
+    }
+    return cleared;
+  }, keys).catch(() => 0);
+}
+
 // With no stored key, something still has to be selected before the player will
 // accept a submission. The picks are deterministic — the first N options the
 // question asks for — so a blind run is reproducible, and the graded reply is
@@ -757,12 +852,43 @@ function answerKeyOf(questionText) {
   return clean(questionText).replace(/^\d+[\s.)]*/, "").toLocaleLowerCase().slice(0, 80);
 }
 
+// The other half of what a grade says. A "select one" question the server
+// marked wrong rules that option out for good, and a "select three" rules out
+// that combination. Without this, every retry re-picked the same first option
+// and a question with no stored answer could never be solved by trying again.
+const rejectedAnswers = new Map();
+
+function rejectionsFor(key) {
+  if (!rejectedAnswers.has(key)) rejectedAnswers.set(key, { options: [], sets: [] });
+  return rejectedAnswers.get(key);
+}
+
 function rememberLearned(learned) {
   let remembered = 0;
   for (const question of learned.questions || []) {
-    if (!question.confirmedAnswers?.length) continue;
     const key = answerKeyOf(question.question);
     if (!key) continue;
+
+    if (question.state === "incorrect" && question.chose?.length) {
+      const rejected = rejectionsFor(key);
+      // Kept as the set itself rather than a joined string: the player appends
+      // its feedback to the label of a graded option, so the answers coming
+      // back out of a grade have to be matched loosely against the plain
+      // labels on the page.
+      const combination = [...question.chose].sort();
+      if (!rejected.sets.some((set) => set.join("\u0000") === combination.join("\u0000"))) {
+        rejected.sets.push(combination);
+      }
+      // Only a single-answer question convicts the option itself: one wrong
+      // option in a three-answer set says nothing about the other two.
+      if (question.type === "single") {
+        for (const chosen of question.chose) {
+          if (!rejected.options.includes(chosen)) rejected.options.push(chosen);
+        }
+      }
+    }
+
+    if (!question.confirmedAnswers?.length) continue;
     if (!learnedAnswers.has(key)) remembered++;
     learnedAnswers.set(key, question.confirmedAnswers);
   }
@@ -771,10 +897,11 @@ function rememberLearned(learned) {
 
 export function clearLearnedAnswers() {
   learnedAnswers.clear();
+  rejectedAnswers.clear();
 }
 
-async function fillBlindly(frame, known = {}) {
-  return frame.evaluate((knownAnswers) => {
+async function fillBlindly(frame, known = {}, rejected = {}) {
+  return frame.evaluate(([knownAnswers, rejectedAnswersByKey]) => {
     const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
     const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
     const picked = [];
@@ -796,6 +923,17 @@ async function fillBlindly(frame, known = {}) {
       const [longer, shorter] = answer.length >= labelText.length ? [answer, labelText] : [labelText, answer];
       return longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
     };
+    const rejectedFor = (question) => {
+      const heading = question.querySelector(
+        ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
+      );
+      for (const source of [heading?.innerText, question.innerText]) {
+        const hit = rejectedAnswersByKey[keyOf(source || "")];
+        if (hit) return hit;
+      }
+      return { options: [], sets: [] };
+    };
+
     const knownFor = (question) => {
       const heading = question.querySelector(
         ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
@@ -816,10 +954,21 @@ async function fillBlindly(frame, known = {}) {
       // "Select two." and "יש לבחור 2." are the only statement of how many a
       // multiple-choice question wants.
       const asked = text.match(/select\s+(one|two|three|four|five|\d+)/i) || text.match(/יש לבחור\s+(\d+)/);
-      const want = asked ? (WORDS[String(asked[1]).toLowerCase()] || Number(asked[1]) || 1) : 1;
+      // The Hebrew packages phrase it as a tally instead — "נבחרו 3 מתוך 3",
+      // "3 of 3 selected" — and reading only the first two forms left every one
+      // of those questions guessed at with a single tick, which the player
+      // counts as unanswered and refuses to submit.
+      const tallied = text.match(/נבחרו\s+(\d+)\s+מתוך\s+(\d+)/);
+      const want = asked
+        ? (WORDS[String(asked[1]).toLowerCase()] || Number(asked[1]) || 1)
+        : (tallied ? Number(tallied[2]) || Number(tallied[1]) || 1 : 1);
 
       const chosen = [];
       const settled = knownFor(question);
+      // Everything the server has already rejected for this question. Picking
+      // around it is what turns a second attempt into a different guess rather
+      // than the same one.
+      const refused = rejectedFor(question);
 
       // Everything this run already knows about this question goes in first;
       // only what is left over is guessed.
@@ -865,11 +1014,48 @@ async function fillBlindly(frame, known = {}) {
         // selection, and the player counts a half-answered question as
         // unanswered and refuses the submission.
         if (!boxes.some((box) => box.checked)) {
-          for (const box of boxes.slice(0, Math.min(want, boxes.length))) box.click();
+          // Every set of the size the question asks for, in a fixed order, and
+          // the first one the server has not already refused is the guess. A
+          // "choose 3 of 5" has ten of them, so shifting a window along by one
+          // — five sets — could never reach the rest of them.
+          const size = Math.min(want, boxes.length);
+          const rows = boxes.map((box) => labelOf(box, question));
+          const sets = [];
+          const build = (start, chosenIndexes) => {
+            if (chosenIndexes.length === size) {
+              sets.push([...chosenIndexes]);
+              return;
+            }
+            for (let index = start; index < boxes.length; index++) {
+              chosenIndexes.push(index);
+              build(index + 1, chosenIndexes);
+              chosenIndexes.pop();
+            }
+          };
+          if (boxes.length <= 12) build(0, []);
+          if (!sets.length) for (let index = 0; index < size; index++) sets.push([index]);
+
+          const sameSet = (indexes, answers) => indexes.length === answers.length &&
+            indexes.every((index) => answers.some((answer) =>
+              answer === rows[index] || isPrefixAnswer(rows[index], answer)));
+          const fresh = sets.find((candidate) =>
+            !refused.sets.some((answers) => sameSet(candidate, answers)));
+
+          for (const index of (fresh || sets[0])) boxes[index].click();
         }
         chosen.push(...boxes.filter((box) => box.checked).map((box) => labelOf(box, question)));
       } else if (radios.length) {
-        if (!radios.some((radio) => radio.checked)) radios[0].click();
+        if (!radios.some((radio) => radio.checked)) {
+          // A single-answer option the server has called wrong is wrong; the
+          // guess moves on to one it has not tried. The comparison is the loose
+          // one, because a graded label comes back with the player's feedback
+          // stuck on the end of it.
+          const untried = radios.filter((radio) => {
+            const text = labelOf(radio, question);
+            return !refused.options.some((answer) => answer === text || isPrefixAnswer(text, answer));
+          });
+          (untried[0] || radios[0]).click();
+        }
         chosen.push(...radios.filter((radio) => radio.checked).map((radio) => labelOf(radio, question)));
       } else {
         continue;
@@ -882,7 +1068,7 @@ async function fillBlindly(frame, known = {}) {
     }
 
     return picked;
-  }, known);
+  }, [known, rejected]);
 }
 
 // A question the server marked correct is a confirmed answer: whatever was
@@ -1032,6 +1218,13 @@ async function startVisibleVideoControls(targetPage) {
   }
 }
 
+// A video that never reports a duration is given a flat cap rather than the
+// rest of the day, and any video whose playhead stops moving for this long is
+// abandoned: playback is not what records completion, so nothing is lost by
+// walking away from one that has stalled.
+const VIDEO_UNKNOWN_DURATION_MAX_MS = 15 * 60 * 1000;
+const VIDEO_STALL_MS = 90000;
+
 async function playAllVideos(targetPage) {
   const initialVideoCount = (await Promise.all(targetPage.frames().map((frame) =>
     frame.locator("video").count().catch(() => 0)
@@ -1066,8 +1259,15 @@ async function playAllVideos(targetPage) {
       log(`Playing video ${played} (${durationText}) and waiting for it to end.`);
       const maximumWait = Number.isFinite(initial.duration)
         ? Math.max(120000, (initial.duration - initial.currentTime + 120) * 1000)
-        : 4 * 60 * 60 * 1000;
+        : VIDEO_UNKNOWN_DURATION_MAX_MS;
       const deadline = Date.now() + maximumWait;
+      // A video that reports no duration used to be waited on for four hours,
+      // and one whose stream dies mid-play was waited on for its whole length
+      // plus two minutes. Either one stops the run dead in the middle of a
+      // module, which is what a run that "gets stuck" is doing. Playback is
+      // only worth waiting on while the playhead is still moving.
+      let furthest = initial.currentTime || 0;
+      let movedAt = Date.now();
 
       while (Date.now() < deadline) {
         const state = await video.evaluate(async (element) => {
@@ -1076,6 +1276,13 @@ async function playAllVideos(targetPage) {
         }).catch(() => null);
         if (!state) break;
         if (state.ended || (Number.isFinite(state.duration) && state.currentTime >= state.duration - 0.25)) break;
+        if (state.currentTime > furthest + 0.25) {
+          furthest = state.currentTime;
+          movedAt = Date.now();
+        } else if (Date.now() - movedAt > VIDEO_STALL_MS) {
+          log(`Video ${played} stopped advancing at ${Math.round(furthest)}s; leaving it and moving on.`);
+          break;
+        }
         await targetPage.waitForTimeout(1000);
       }
 
@@ -1122,6 +1329,11 @@ function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mo
     retryable: new Map(),
     answersLearned: 0,
     visitedContainers: new Set(),
+    // Sections a pass has been all the way through and found nothing left in:
+    // no locked row, no unfinished module, nothing to retry. Unlike
+    // `visitedContainers` this survives between passes, so a later pass spends
+    // its page loads on the sections that are still missing something.
+    exhaustedContainers: new Set(),
     deferred: new Map(),
     blocked: 0,
     chapters: new Map(),
@@ -1208,162 +1420,200 @@ function limitReached(state) {
   return state.limit > 0 && state.modulesProcessed >= state.limit;
 }
 
+// Nothing inside a module is allowed to hold the whole run. Every wait in here
+// is bounded on its own, but a renderer that stops answering hangs an
+// `evaluate` that no timeout of its own covers, and a run that "gets stuck" is
+// sitting in one of those. The module is abandoned, its tab is closed, and the
+// walk carries on to the next one.
+const MODULE_WATCHDOG_MS = 25 * 60 * 1000;
+
+// How many times one quiz is answered and submitted in a single visit. Enough
+// for every option of a four-option question to be tried once, plus a last one
+// that puts the confirmed answers together.
+const MAX_QUIZ_ATTEMPTS_IN_PLACE = 6;
+
+function withTimeout(promise, ms, message) {
+  let timer = null;
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(message)), ms); })
+  ]).finally(() => { if (timer) clearTimeout(timer); });
+}
+
 // Open one module in its own tab, play whatever it holds, and either answer its
 // quiz or scroll its reading material to the player's completion threshold.
-async function processModule(item, state, { label = "", listPage = null } = {}) {
+// Throws on anything that stops it; the caller turns that into a result row.
+async function runModule(item, state, { label = "", listPage = null } = {}, held) {
   let itemPage = null;
   // Remembered so a quiz that fails before grading is still reported as an exam
   // result rather than a generic processing error.
   let quizName = null;
-  let isQuizModule = false;
 
-  if (item?.id) state.attempts.set(item.id, (state.attempts.get(item.id) || 0) + 1);
+  log(`${label}Opening ${item.title || item.url}`);
+  itemPage = await session().context.newPage();
+  held.page = itemPage;
+  session().page = itemPage;
+  await openModule(itemPage, item.url);
 
-  try {
-    log(`${label}Opening ${item.title || item.url}`);
-    itemPage = await session().context.newPage();
-    session().page = itemPage;
-    await openModule(itemPage, item.url);
+  const ready = await loadModulePlayer(itemPage);
+  if (!ready) throw new Error(`No content player loaded for this module after ${MODULE_LOAD_ATTEMPTS} attempts.`);
 
-    const ready = await loadModulePlayer(itemPage);
-    if (!ready) throw new Error(`No content player loaded for this module after ${MODULE_LOAD_ATTEMPTS} attempts.`);
+  // Accordions hide quiz content, so they are opened either way. Videos are
+  // only worth sitting through on a real run: a capture is reading the
+  // questions, and waiting out every video to its end would add the whole
+  // Academy's running time for nothing.
+  await openAllAccordions(itemPage).catch(() => {});
+  if (state.mode === "capture") {
+    log("Capture mode: not playing this module's videos.");
+  } else {
+    await playAllVideos(itemPage).catch((error) => {
+      log(`Video playback skipped: ${error instanceof Error ? error.message : String(error)}`);
+    });
+  }
 
-    // Accordions hide quiz content, so they are opened either way. Videos are
-    // only worth sitting through on a real run: a capture is reading the
-    // questions, and waiting out every video to its end would add the whole
-    // Academy's running time for nothing.
-    await openAllAccordions(itemPage).catch(() => {});
-    if (state.mode === "capture") {
-      log("Capture mode: not playing this module's videos.");
+  held.isQuiz = Boolean(ready.hasAssessments);
+
+  // Capture mode reads the quiz and stops. It must not answer, must not
+  // submit, and must not scroll reading material past the point that would
+  // mark it complete, because it is meant to run against an account whose
+  // progress should not move.
+  if (state.mode === "capture") {
+    if (!ready.hasAssessments) {
+      log("Reading material; nothing to capture here.");
+      recordResult(state, item, {
+        title: item.title || item.url,
+        chapter: item.chapter || null,
+        type: "resource",
+        status: "skipped in capture mode"
+      });
+    } else if (!ready.questions) {
+      throw new Error("This module has a quiz, but its questions never rendered.");
     } else {
-      await playAllVideos(itemPage).catch((error) => {
-        log(`Video playback skipped: ${error instanceof Error ? error.message : String(error)}`);
+      const capture = await captureCurrentExam();
+      capture.module = item.title;
+      capture.chapter = item.chapter || null;
+      state.captures.push(capture);
+      state.examsFilled++;
+      recordResult(state, item, {
+        title: capture.title,
+        module: item.title,
+        chapter: item.chapter || null,
+        type: "quiz",
+        status: "captured",
+        questions: capture.questions.length
       });
     }
+    await itemPage.close();
+    itemPage = null;
+    held.page = null;
+    return;
+  }
 
-    isQuizModule = Boolean(ready.hasAssessments);
+  if (ready.hasAssessments) {
+    if (!ready.questions) {
+      throw new Error("This module has a quiz, but its questions never rendered. It may be locked or out of attempts.");
+    }
+    // In blind mode an unknown quiz is the normal case, not an error: it is
+    // answered anyway so that its grade reports the key back.
+    let detected = null;
+    try {
+      detected = await detectCurrentExam();
+    } catch (error) {
+      if (!state.blind) throw error;
+      log(`Could not identify this quiz: ${error instanceof Error ? error.message : String(error)}`);
+    }
 
-    // Capture mode reads the quiz and stops. It must not answer, must not
-    // submit, and must not scroll reading material past the point that would
-    // mark it complete, because it is meant to run against an account whose
-    // progress should not move.
-    if (state.mode === "capture") {
-      if (!ready.hasAssessments) {
-        log("Reading material; nothing to capture here.");
-        recordResult(state, item, {
-          title: item.title || item.url,
-          chapter: item.chapter || null,
-          type: "resource",
-          status: "skipped in capture mode"
-        });
-      } else if (!ready.questions) {
-        throw new Error("This module has a quiz, but its questions never rendered.");
-      } else {
-        const capture = await captureCurrentExam();
-        capture.module = item.title;
-        capture.chapter = item.chapter || null;
-        state.captures.push(capture);
-        state.examsFilled++;
-        recordResult(state, item, {
-          title: capture.title,
-          module: item.title,
-          chapter: item.chapter || null,
-          type: "quiz",
-          status: "captured",
-          questions: capture.questions.length
-        });
+    let run = { success: 0, failed: 0, total: 0, unverified: [] };
+    let answeredBlind = false;
+
+    if (detected?.matchedQuestions) {
+      quizName = detected.name;
+      held.quizName = quizName;
+      run = await runExam(detected.id, false, { preserveLogs: true });
+      if (run.failed > 0) {
+        // A stored answer that names an option this quiz does not have leaves
+        // its question empty, and the player refuses a submission with an
+        // empty question, so the whole module used to fail on one stale key.
+        // What is left is filled the same way an unknown quiz is, and the
+        // grading then says which of the guesses were right.
+        if (!state.blind && !state.submitUnverified) {
+          throw new Error(`Quiz not submitted because ${run.failed} of ${run.total} questions failed to fill.`);
+        }
+        log(`${run.failed} of ${run.total} stored answers would not apply; filling what is left blind.`);
+        answeredBlind = true;
       }
+    } else if (state.blind) {
+      quizName = detected?.name || null;
+      held.quizName = quizName;
+      answeredBlind = true;
+      log("No stored answers for this quiz. Answering it blind so the grade reports the key back.");
+    } else {
+      throw new Error(`No stored answers match this quiz; "${detected?.name || "nothing"}" was the closest by title. Capture it and add it to exams.js.`);
+    }
+
+    if (answeredBlind) {
+      const picks = await fillBlindly(
+        ready.frame,
+        Object.fromEntries(learnedAnswers),
+        Object.fromEntries(rejectedAnswers)
+      );
+      if (!picks.length) throw new Error("Nothing on this quiz could be answered blind.");
+      const settled = picks.filter((pick) => pick.fromLearned).length;
+      log(`Answered ${picks.length} question(s) blind` +
+        (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
+    }
+    state.examsFilled++;
+
+    // A guessed answer is not worth an attempt unless the run was told it is.
+    // A blind run is exactly that instruction, so it never holds back.
+    if (!answeredBlind && run.unverified?.length && !state.submitUnverified) {
+      log(`"${detected.name}" is filled but NOT submitted: ${run.unverified.length} answer(s) have never been confirmed.`);
+      recordResult(state, item, {
+        title: detected.name,
+        module: item.title,
+        chapter: item.chapter || null,
+        type: "quiz",
+        status: "filled, awaiting verification",
+        passed: null,
+        unverified: run.unverified,
+        ...run
+      });
+      await itemPage.waitForTimeout(1500);
       await itemPage.close();
       itemPage = null;
-      state.modulesProcessed++;
-      if (listPage && !listPage.isClosed()) session().page = listPage;
-      flush(state);
+      held.page = null;
       return;
     }
 
-    if (ready.hasAssessments) {
-      if (!ready.questions) {
-        throw new Error("This module has a quiz, but its questions never rendered. It may be locked or out of attempts.");
-      }
-      // In blind mode an unknown quiz is the normal case, not an error: it is
-      // answered anyway so that its grade reports the key back.
-      let detected = null;
-      try {
-        detected = await detectCurrentExam();
-      } catch (error) {
-        if (!state.blind) throw error;
-        log(`Could not identify this quiz: ${error instanceof Error ? error.message : String(error)}`);
-      }
+    // One quiz, as many attempts as the player will give it. Every grade says
+    // which questions were right — those are kept — and which were wrong —
+    // those are cleared and guessed at differently. Leaving that to the next
+    // pass over the whole site meant one guess per quiz per pass, which is why
+    // a five-question quiz with nothing stored never came out passed.
+    let graded = null;
+    let percentage = null;
+    let threshold = 80;
+    let passed = null;
+    let learned = null;
+    let attempt = 1;
 
-      let run = { success: 0, failed: 0, total: 0, unverified: [] };
-      let answeredBlind = false;
-
-      if (detected?.matchedQuestions) {
-        quizName = detected.name;
-        run = await runExam(detected.id, false, { preserveLogs: true });
-        if (run.failed > 0) {
-          if (!state.blind) {
-            throw new Error(`Quiz not submitted because ${run.failed} of ${run.total} questions failed to fill.`);
-          }
-          log(`${run.failed} of ${run.total} stored answers would not apply; filling what is left blind.`);
-          answeredBlind = true;
-        }
-      } else if (state.blind) {
-        quizName = detected?.name || null;
-        answeredBlind = true;
-        log("No stored answers for this quiz. Answering it blind so the grade reports the key back.");
-      } else {
-        throw new Error(`No stored answers match this quiz; "${detected?.name || "nothing"}" was the closest by title. Capture it and add it to exams.js.`);
-      }
-
-      if (answeredBlind) {
-        const picks = await fillBlindly(ready.frame, Object.fromEntries(learnedAnswers));
-        if (!picks.length) throw new Error("Nothing on this quiz could be answered blind.");
-        const settled = picks.filter((pick) => pick.fromLearned).length;
-        log(`Answered ${picks.length} question(s) blind` +
-          (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
-      }
-      state.examsFilled++;
-
-      // A guessed answer is not worth an attempt unless the run was told it is.
-      // A blind run is exactly that instruction, so it never holds back.
-      if (!answeredBlind && run.unverified?.length && !state.submitUnverified) {
-        log(`"${detected.name}" is filled but NOT submitted: ${run.unverified.length} answer(s) have never been confirmed.`);
-        recordResult(state, item, {
-          title: detected.name,
-          module: item.title,
-          chapter: item.chapter || null,
-          type: "quiz",
-          status: "filled, awaiting verification",
-          passed: null,
-          unverified: run.unverified,
-          ...run
-        });
-        await itemPage.waitForTimeout(1500);
-        await itemPage.close();
-        itemPage = null;
-        state.modulesProcessed++;
-        if (listPage && !listPage.isClosed()) session().page = listPage;
-        flush(state);
-        return;
-      }
-
-      await waitRandom(itemPage, 3, 8, "Before submitting the quiz");
-      const graded = await submitAssessment(itemPage, ready.frame);
+    while (true) {
+      await waitRandom(itemPage, 3, 8, `Before submitting the quiz${attempt > 1 ? ` (attempt ${attempt})` : ""}`);
+      graded = await submitAssessment(itemPage, ready.frame);
       state.examsSubmitted++;
       // Sales Coach quizzes pass on a threshold (completionScore, 80 on the
       // WISE modules), not on a perfect score. A quiz whose answers were
       // already recorded server-side comes back ungraded, which is not a fail.
-      const percentage = graded.total > 0 ? Math.round((graded.correct / graded.total) * 100) : null;
+      percentage = graded.total > 0 ? Math.round((graded.correct / graded.total) * 100) : null;
       // Some packages omit completionScore from their runtime state even though
       // the results UI still applies the threshold, so do not require 100%.
-      const threshold = Number.isFinite(graded.completionScore) ? graded.completionScore : 80;
-      const passed = percentage === null ? null : percentage >= threshold;
+      threshold = Number.isFinite(graded.completionScore) ? graded.completionScore : 80;
+      passed = percentage === null ? null : percentage >= threshold;
 
       // Whatever the server just graded is the best answer key available. Keep
       // it whether the attempt passed or not: a failed attempt still confirms
       // every question it did mark correct.
-      const learned = learnFromGrading(graded, {
+      const fromThisAttempt = learnFromGrading(graded, {
         exam: quizName || item.title,
         module: item.title,
         chapter: item.chapter || null,
@@ -1371,7 +1621,11 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
         percentage,
         threshold
       });
-      if (learned) {
+      if (fromThisAttempt) {
+        // One entry per quiz, not one per attempt: the latest grade knows
+        // everything the earlier ones did.
+        if (learned) state.learned.splice(state.learned.indexOf(learned), 1);
+        learned = fromThisAttempt;
         state.learned.push(learned);
         const solved = learned.questions.filter((question) => question.confirmedAnswers).length;
         const fresh = rememberLearned(learned);
@@ -1380,50 +1634,96 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
           (fresh ? `, ${fresh} of them new to this run.` : "."));
       }
 
-      recordResult(state, item, {
-        title: quizName || item.title,
-        module: item.title,
-        chapter: item.chapter || null,
-        type: "quiz",
-        status: passed === null ? "recorded" : (passed ? "passed" : "failed"),
-        passed,
-        correct: graded.correct,
-        graded: graded.total,
-        percentage,
-        threshold,
-        errors: graded.incorrectQuestions || [],
-        unverified: run.unverified || [],
-        answeredBlind,
-        ...run
-      });
-      if (passed === false) {
-        markRetryable(state, item);
-        // In blind mode this is the expected outcome of a first attempt, not a
-        // broken key: the questions it did get right are now confirmed.
-        const unsolved = learned
-          ? learned.questions.filter((question) => !question.confirmedAnswers).length
-          : null;
-        log(answeredBlind
-          ? `Blind attempt at "${quizName || item.title}" scored ${percentage}% against a ${threshold}% threshold; ${unsolved} question(s) still unsolved.`
-          : `Answer key is wrong for "${quizName || item.title}": scored ${percentage}%, needs ${threshold}%.`);
+      if (passed !== false) break;
+      if (attempt >= MAX_QUIZ_ATTEMPTS_IN_PLACE) {
+        log(`Stopping after ${attempt} attempt(s) at this quiz; the rest is left to a later pass.`);
+        break;
       }
-    } else {
-      log("Module is reading material; scrolling it to the player's completion threshold.");
-      const scrolledEnough = await completeReadingResource(itemPage, ready.frame);
-      state.resourcesRead++;
-      recordResult(state, item, {
-        title: item.title || await itemPage.title(),
-        chapter: item.chapter || null,
-        type: "resource",
-        status: scrolledEnough ? "read" : "partially read"
-      });
+      // A run that was told not to spend attempts on guesses does not spend
+      // them here either.
+      if (!state.blind && !state.submitUnverified) break;
+      if (!await startAnotherAttempt(itemPage, ready.frame)) {
+        log("The player is not offering another attempt at this quiz.");
+        break;
+      }
+
+      const cleared = await clearRejectedQuestions(ready.frame, graded);
+      const picks = await fillBlindly(
+        ready.frame,
+        Object.fromEntries(learnedAnswers),
+        Object.fromEntries(rejectedAnswers)
+      );
+      if (!picks.length) {
+        log("Nothing could be filled in for another attempt.");
+        break;
+      }
+      answeredBlind = true;
+      attempt++;
+      const settled = picks.filter((pick) => pick.fromLearned).length;
+      log(`Attempt ${attempt} at "${quizName || item.title}": cleared ${cleared} rejected answer(s), ` +
+        `kept ${settled} confirmed one(s), guessed the rest around what the last grade refused.`);
     }
 
-    // Completion is reported to the server from the page; give that call time to
-    // leave before the tab goes away.
-    await itemPage.waitForTimeout(1500);
-    await itemPage.close();
-    itemPage = null;
+    recordResult(state, item, {
+      title: quizName || item.title,
+      module: item.title,
+      chapter: item.chapter || null,
+      type: "quiz",
+      status: passed === null ? "recorded" : (passed ? "passed" : "failed"),
+      passed,
+      correct: graded.correct,
+      graded: graded.total,
+      percentage,
+      threshold,
+      errors: graded.incorrectQuestions || [],
+      unverified: run.unverified || [],
+      answeredBlind,
+      attempts: attempt,
+      ...run
+    });
+    if (passed === false) {
+      markRetryable(state, item);
+      // In blind mode this is the expected outcome of a first attempt, not a
+      // broken key: the questions it did get right are now confirmed.
+      const unsolved = learned
+        ? learned.questions.filter((question) => !question.confirmedAnswers).length
+        : null;
+      log(answeredBlind
+        ? `${attempt} attempt(s) at "${quizName || item.title}" ended at ${percentage}% against a ${threshold}% threshold; ${unsolved} question(s) still unsolved.`
+        : `Answer key is wrong for "${quizName || item.title}": scored ${percentage}%, needs ${threshold}%.`);
+    }
+  } else {
+    log("Module is reading material; scrolling it to the player's completion threshold.");
+    const scrolledEnough = await completeReadingResource(itemPage, ready.frame);
+    state.resourcesRead++;
+    recordResult(state, item, {
+      title: item.title || await itemPage.title(),
+      chapter: item.chapter || null,
+      type: "resource",
+      status: scrolledEnough ? "read" : "partially read"
+    });
+  }
+
+  // Completion is reported to the server from the page; give that call time to
+  // leave before the tab goes away.
+  await itemPage.waitForTimeout(1500);
+  await itemPage.close();
+  itemPage = null;
+  held.page = null;
+}
+
+async function processModule(item, state, { label = "", listPage = null } = {}) {
+  // Filled in by the run itself, and read here whether it finished or not.
+  const held = { page: null, quizName: null, isQuiz: false };
+
+  if (item?.id) state.attempts.set(item.id, (state.attempts.get(item.id) || 0) + 1);
+
+  try {
+    await withTimeout(
+      runModule(item, state, { label, listPage }, held),
+      MODULE_WATCHDOG_MS,
+      `This module was still going after ${Math.round(MODULE_WATCHDOG_MS / 60000)} minutes and was abandoned so the run could carry on.`
+    );
   } catch (error) {
     state.failed++;
     const message = error instanceof Error ? error.message : String(error);
@@ -1431,20 +1731,22 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
     // Every quiz module belongs in the report, including the ones that never
     // reached grading, so a whole chapter's answer problems land in one file.
     markRetryable(state, item);
-    recordResult(state, item, (quizName || isQuizModule)
+    recordResult(state, item, (held.quizName || held.isQuiz)
       ? {
-          title: quizName || item.title || item.url,
+          title: held.quizName || item.title || item.url,
           module: item.title,
           chapter: item.chapter || null,
           type: "quiz",
           status: "failed",
           passed: false,
-          identified: Boolean(quizName),
+          identified: Boolean(held.quizName),
           errors: [{ reason: message }],
           error: message
         }
       : { title: item.title || item.url, chapter: item.chapter || null, status: "failed", error: message });
-    if (itemPage && !itemPage.isClosed()) await itemPage.close().catch(() => {});
+    // The abandoned tab is closed here rather than inside the run, which by now
+    // may still be sitting in a call that will never come back.
+    if (held.page && !held.page.isClosed()) await held.page.close().catch(() => {});
   }
 
   state.modulesProcessed++;
@@ -1788,6 +2090,14 @@ async function openAcademy(listPage) {
   return { id: `container:${link.url}`, url: link.url, title: link.title || "Apple Professional Academy" };
 }
 
+// Sections that still have work in them are walked first. The site marks a
+// section completed when the items it requires are done, so a run that starts
+// with those spends its first hours re-reading finished material while the
+// unfinished sections wait.
+function workFirst(nodes) {
+  return [...nodes].sort((a, b) => Number(Boolean(a.completed)) - Number(Boolean(b.completed)));
+}
+
 // A section hands its modules out one at a time: the introduction is open and
 // everything after it is locked until that one is finished, and the listing
 // keeps saying "locked" for a while afterwards. So a section is swept more than
@@ -1796,16 +2106,19 @@ async function openAcademy(listPage) {
 const CONTAINER_UNLOCK_ROUNDS = 4;
 
 // Depth-first through chapters and collections, running every module it reaches.
+// Returns true when the walk got all the way through this section and found
+// nothing left in it: every module done, nothing locked, nothing to retry, and
+// every sub-section the same. That is what lets a later pass leave it alone.
 async function walkContainer(listPage, container, state, depth = 0) {
-  if (state.visitedContainers.has(container.id)) return;
+  if (state.visitedContainers.has(container.id)) return state.exhaustedContainers.has(container.id);
   state.visitedContainers.add(container.id);
   const indent = "  ".repeat(depth);
 
   if (depth > ACADEMY_MAX_DEPTH) {
     log(`${indent}Not descending past ${ACADEMY_MAX_DEPTH} levels at "${container.title}".`);
-    return;
+    return false;
   }
-  if (limitReached(state)) return;
+  if (limitReached(state)) return false;
 
   log(`${indent}Entering "${container.title || container.url}".`);
   let children;
@@ -1813,7 +2126,7 @@ async function walkContainer(listPage, container, state, depth = 0) {
     children = await loadListingItems(listPage, container.url, { indent: `${indent}  ` });
   } catch (error) {
     log(`${indent}Could not open "${container.title}": ${error instanceof Error ? error.message : String(error)}`);
-    return;
+    return false;
   }
   session().page = listPage;
 
@@ -1826,9 +2139,13 @@ async function walkContainer(listPage, container, state, depth = 0) {
     log(`${indent}${blocked} row(s) inside "${container.title}" are still locked and carry no link.`);
   }
 
+  // Anything the walk could not finish here. While this is non-zero the section
+  // is worth coming back to on a later pass.
+  let unfinished = blocked;
+
   if (!children.length) {
     log(`${indent}Nothing is listed inside "${container.title}".`);
-    return;
+    return false;
   }
 
   // Sub-sections are gathered across every sweep, because one of them can be
@@ -1882,7 +2199,7 @@ async function walkContainer(listPage, container, state, depth = 0) {
       }
       if (limitReached(state)) {
         log(`${indent}Reached the ${state.limit}-module limit for this run.`);
-        return;
+        return false;
       }
 
       // It is open now, so it is no longer something the run is waiting on.
@@ -1892,10 +2209,18 @@ async function walkContainer(listPage, container, state, depth = 0) {
       if (index > 0) await waitRandom(listPage, 1, 3, "Between modules");
       index++;
       ran++;
+      // `retryable` carries the attempt number, so a fresh mark against this
+      // module is what says this attempt did not settle it. Comparing the mark
+      // rather than its presence keeps a module that failed on an earlier pass
+      // and passed on this one from holding its section open for ever.
+      const retryMark = state.retryable.get(module.id);
       await processModule({ ...module, chapter: container.title }, state, {
         label: `${indent}  [${state.modulesProcessed + 1}] `,
         listPage
       });
+      // A module that did not come out passed is one this section is still
+      // waiting on, so the section stays on the list for the next pass.
+      if (state.retryable.get(module.id) !== retryMark) unfinished++;
       // Each module ran in its own tab; come back to the listing for the next.
       if (!listPage.isClosed()) {
         await listPage.bringToFront().catch(() => {});
@@ -1905,6 +2230,7 @@ async function walkContainer(listPage, container, state, depth = 0) {
 
     // Nothing here is waiting on a lock, so a re-read has nothing to add.
     if (!locked) break;
+    unfinished += locked;
     if (!ran) {
       log(`${indent}${locked} module(s) in "${container.title}" are still locked, and this sweep opened nothing.`);
       break;
@@ -1914,28 +2240,49 @@ async function walkContainer(listPage, container, state, depth = 0) {
     }
   }
 
-  for (const child of subContainers.values()) {
+  for (const child of workFirst([...subContainers.values()])) {
     if (limitReached(state)) {
       noteContainer(state, child, container.title, "limit-reached");
-      return;
+      return false;
     }
-    if (state.visitedContainers.has(child.id)) continue;
+    // Walked already on this pass, under some other parent. Whether this
+    // section still counts as finished follows what that walk found.
+    if (state.visitedContainers.has(child.id)) {
+      if (!state.exhaustedContainers.has(child.id)) unfinished++;
+      continue;
+    }
     if (child.locked) {
+      unfinished++;
       state.deferred.set(child.id, { ...child, chapter: container.title });
       noteContainer(state, child, container.title, "locked");
       log(`${indent}  Locked sub-section for now: "${child.title}".`);
       continue;
     }
+    // An earlier pass already went through this one and found nothing left in
+    // it. Opening it again would cost a page load to re-read a section the run
+    // has already settled, which is what made a long run spend its later passes
+    // inside finished material.
+    if (state.exhaustedContainers.has(child.id)) {
+      noteContainer(state, child, container.title, "already-finished");
+      continue;
+    }
     // A container's completion badge counts only the items it requires, so a
     // collection can read as done while optional modules under it have never
     // been opened. Walking in costs one page load and every finished module
-    // inside is still skipped by its own check, so the walk always descends.
+    // inside is still skipped by its own check, so the walk always descends —
+    // once. What it finds decides whether it is worth descending again.
     if (child.completed) log(`${indent}  "${child.title}" reads as completed; looking inside anyway.`);
     // The tab is left inside the child, which does not matter: the next
     // sibling is opened by its own URL rather than by going back.
     noteContainer(state, child, container.title, "walked");
-    await walkContainer(listPage, child, state, depth + 1);
+    if (!await walkContainer(listPage, child, state, depth + 1)) unfinished++;
   }
+
+  if (!unfinished) {
+    state.exhaustedContainers.add(container.id);
+    return true;
+  }
+  return false;
 }
 
 export async function processAcademy({ skipCompleted = true, limit = 0, onProgress = null, mode = "run", submitUnverified = false, blind = false } = {}) {
@@ -1964,6 +2311,9 @@ export async function processAcademy({ skipCompleted = true, limit = 0, onProgre
 
     const gained = state.modulesProcessed - processedBefore;
     const stillShut = state.deferred.size + state.blocked;
+    if (state.exhaustedContainers.size) {
+      log(`${state.exhaustedContainers.size} section(s) have nothing left in them; a later pass will not open them again.`);
+    }
 
     if (limitReached(state)) {
       log(`Stopping: the ${limit}-module limit for this run was reached.`);
@@ -2036,7 +2386,10 @@ const SITE_HOME = "https://salescoach.apple.com/home/for-you";
 // passes than the Academy one, and every module gets a few attempts before the
 // run gives up on it.
 const SITE_MAX_PASSES = 12;
-const MAX_MODULE_ATTEMPTS = 3;
+// Enough attempts for a four-option question to be worked through one wrong
+// answer at a time, now that each attempt guesses around what the last one had
+// rejected.
+const MAX_MODULE_ATTEMPTS = 5;
 
 function siteHome(listPage) {
   try {
@@ -2302,7 +2655,10 @@ async function walkHub(listPage, hub, state) {
     }
   }
 
-  for (const container of containers) {
+  // Unfinished sections first: a run that is cut short, or that is watched for
+  // ten minutes to see whether it is doing anything, should be inside the work
+  // that is still missing rather than the work the site already counts as done.
+  for (const container of workFirst(containers)) {
     if (limitReached(state)) {
       noteContainer(state, container, hub.title, "limit-reached");
       return;
@@ -2312,6 +2668,10 @@ async function walkHub(listPage, hub, state) {
       state.deferred.set(container.id, { ...container, chapter: hub.title });
       noteContainer(state, container, hub.title, "locked");
       log(`Locked for now: "${container.title}".`);
+      continue;
+    }
+    if (state.exhaustedContainers.has(container.id)) {
+      noteContainer(state, container, hub.title, "already-finished");
       continue;
     }
     if (container.completed) log(`"${container.title}" reads as completed; looking inside anyway.`);
@@ -2375,6 +2735,9 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
 
     const gained = state.modulesProcessed - processedBefore;
     const settled = state.answersLearned - learnedBefore;
+    if (state.exhaustedContainers.size) {
+      log(`${state.exhaustedContainers.size} section(s) have nothing left in them; a later pass will not open them again.`);
+    }
     const stillShut = state.deferred.size + state.blocked;
     const toRetry = [...state.retryable.keys()].filter((id) =>
       (state.attempts.get(id) || 0) < MAX_MODULE_ATTEMPTS).length;
