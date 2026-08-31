@@ -30,12 +30,26 @@
     .note { font-size: 13px; color: #6e6e73; margin-top: 14px; }
     .capture-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
     .capture-count { color: #6e6e73; font-size: 13px; margin-top: 10px; }
+    .session-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+    .session-row button { width: auto; padding: 0 18px; height: 48px; }
   </style>
 </head>
 <body>
   <main class="app">
     <h1>Apple Exam Runner</h1>
     <p class="sub">Connect a tab, navigate to any supported exam in that tab, then fill it automatically.</p>
+
+    <label for="session">Browser session (one login each)</label>
+    <div class="session-row">
+      <select id="session"></select>
+      <button id="newSessionBtn" class="secondary">New session</button>
+    </div>
+    <p class="note" style="margin-top:8px;">
+      Each session opens its own browser window with its own profile, so you can
+      log a different Apple account into each one and run them at the same time.
+      Open this page in another browser tab, pick another session there, and the
+      two runs stay completely apart.
+    </p>
 
     <div class="status">
       <span id="dot" class="dot"></span>
@@ -58,23 +72,42 @@
       Skip items already marked completed
     </label>
     <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:400;">
+      <input type="checkbox" id="blind" checked>
+      Answer unknown quizzes blind and learn the key from the grade
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:400;">
+      <input type="checkbox" id="submitUnverified">
+      Also submit stored answers that are only a best guess
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:400;">
       Process at most
       <input type="number" id="limit" value="0" min="0" style="width:70px;padding:4px 6px;">
       pending items (0 = all)
     </label>
     <button id="chapterBtn" class="primary" style="margin-top:12px;">Complete Current Chapter (submits exams)</button>
-    <button id="forYouBtn" class="primary" style="margin-top:12px;">Process For You tab</button>
-    <button id="resultsBtn" class="secondary" style="margin-top:12px;">Download last exam results JSON</button>
+    <button id="forYouBtn" class="primary" style="margin-top:12px;">Complete Apple Professional Academy</button>
+    <button id="captureAllBtn" class="secondary" style="margin-top:12px;">Capture every Academy quiz (no answers, no submits)</button>
+    <div class="row">
+      <button id="inspectBtn" class="secondary">Scan page structure</button>
+      <button id="resultsBtn" class="secondary">Download results JSON</button>
+    </div>
 
     <div id="result" class="result"></div>
     <pre id="logs">Waiting...</pre>
 
     <p class="note">
-      Detect &amp; fill never submits. Complete Current Chapter submits each detected exam before continuing.
+      Detect &amp; fill never submits. Complete Current Chapter and Complete Apple
+      Professional Academy submit each quiz. With blind mode on, a quiz with no
+      stored answers is still answered and submitted, and every question the site
+      marks correct is written to <code>exams-learned-*.js</code> as a real
+      answer &mdash; move those into <code>exams.js</code> and the next run
+      passes them outright.
     </p>
   </main>
 
   <script>
+    const sessionSelect = document.getElementById("session");
+    const newSessionBtn = document.getElementById("newSessionBtn");
     const examSelect = document.getElementById("exam");
     const connectBtn = document.getElementById("connectBtn");
     const runBtn = document.getElementById("runBtn");
@@ -82,17 +115,78 @@
     const captureBtn = document.getElementById("captureBtn");
     const chapterBtn = document.getElementById("chapterBtn");
     const forYouBtn = document.getElementById("forYouBtn");
+    const inspectBtn = document.getElementById("inspectBtn");
+    const captureAllBtn = document.getElementById("captureAllBtn");
     const resultsBtn = document.getElementById("resultsBtn");
     const downloadBtn = document.getElementById("downloadBtn");
     const captureCount = document.getElementById("captureCount");
     const dryRun = document.getElementById("dryRun");
     const skipCompleted = document.getElementById("skipCompleted");
     const limitInput = document.getElementById("limit");
+    const submitUnverified = document.getElementById("submitUnverified");
+    const blind = document.getElementById("blind");
+
+    // The session lives in sessionStorage, not localStorage, so two browser tabs
+    // of this page can drive two different accounts at once.
+    const urlSession = new URLSearchParams(location.search).get("session");
+    let currentSession = urlSession || sessionStorage.getItem("examRunnerSession") || "1";
+    let knownSessions = ["1", "2", "3", "4"];
+
+    function renderSessions() {
+      const options = [...new Set([...knownSessions, currentSession])]
+        .sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true }));
+      sessionSelect.innerHTML = options
+        .map((id) => `<option value="${id}"${id === currentSession ? " selected" : ""}>Session ${id}</option>`)
+        .join("");
+    }
+
+    // Every request carries the session, so the server drives the right window
+    // and reports that window's own status and log.
+    function api(path) {
+      return `${path}${path.includes("?") ? "&" : "?"}session=${encodeURIComponent(currentSession)}`;
+    }
+
+    async function refreshSessions() {
+      try {
+        const res = await fetch("/api/sessions");
+        const data = await res.json();
+        const ids = (data.sessions || []).map((entry) => entry.id);
+        if (ids.length) knownSessions = [...new Set([...knownSessions, ...ids])];
+        renderSessions();
+      } catch {}
+    }
+
+    sessionSelect.addEventListener("change", () => {
+      currentSession = sessionSelect.value;
+      sessionStorage.setItem("examRunnerSession", currentSession);
+      result.textContent = `Switched to session ${currentSession}. Connect its tab to open its own browser window.`;
+      logs.textContent = "Waiting...";
+      logsPinned = false;
+      refreshStatus();
+      refreshLogs();
+      refreshCaptureCount();
+    });
+
+    newSessionBtn.addEventListener("click", () => {
+      const name = prompt("Name for the new session (letters, digits, dashes):", String(knownSessions.length + 1));
+      if (!name) return;
+      const id = name.trim().replace(/[^A-Za-z0-9_-]/g, "-");
+      if (!id) return;
+      knownSessions = [...new Set([...knownSessions, id])];
+      currentSession = id;
+      sessionStorage.setItem("examRunnerSession", currentSession);
+      renderSessions();
+      result.textContent = `Session ${id} selected. Click Connect tab to open its own browser window.`;
+      refreshStatus();
+      refreshLogs();
+    });
 
     function runOptions() {
       return {
         skipCompleted: Boolean(skipCompleted?.checked),
-        limit: Number(limitInput?.value) || 0
+        limit: Number(limitInput?.value) || 0,
+        submitUnverified: Boolean(submitUnverified?.checked),
+        blind: Boolean(blind?.checked)
       };
     }
 
@@ -106,6 +200,16 @@
         const before = data.progressBefore ? `${data.progressBefore.completed} \u2192 ` : "";
         parts.push(`progress ${before}${data.progressAfter.completed} of ${data.progressAfter.required} required`);
       }
+      const awaiting = (data.results || []).filter((r) => r.status === "filled, awaiting verification").length;
+      if (awaiting) parts.push(`${awaiting} filled but held back as unverified`);
+      if (data.learned?.length) {
+        const solved = data.learned.reduce((t, e) => t + e.questions.filter((q) => q.confirmedAnswers).length, 0);
+        const asked = data.learned.reduce((t, e) => t + e.questions.length, 0);
+        parts.push(`learned ${solved}/${asked} answers`);
+        if (data.report?.learnedFile) parts.push(`written to ${data.report.learnedFile}`);
+      }
+      if (data.chapters?.length) parts.push(`${data.chapters.length} sections walked`);
+      if (data.stillLocked) parts.push(`${data.stillLocked} still locked`);
       return `${parts.join(". ")}.`;
     }
     const result = document.getElementById("result");
@@ -131,17 +235,24 @@
 
     async function refreshStatus() {
       try {
-        const res = await fetch("/api/status");
+        const res = await fetch(api("/api/status"));
         const s = await res.json();
         dot.classList.toggle("on", !!s.connected);
-        statusText.textContent = s.connected ? "Tab connected" : "No tab connected";
+        statusText.textContent = s.connected
+          ? `Session ${currentSession}: tab connected`
+          : `Session ${currentSession}: no tab connected`;
         pageText.textContent = s.connected ? (s.title || s.url || "") : "";
       } catch {}
     }
 
+    // A structure scan puts JSON in the log pane, which the poller would wipe a
+    // second later. Pin it there until the next run starts.
+    let logsPinned = false;
+
     async function refreshLogs() {
+      if (logsPinned) return;
       try {
-        const res = await fetch("/api/logs");
+        const res = await fetch(api("/api/logs"));
         const data = await res.json();
         logs.textContent = data.logs?.length ? data.logs.join("\n") : "Waiting...";
         logs.scrollTop = logs.scrollHeight;
@@ -151,7 +262,7 @@
     async function refreshCaptureCount() {
       if (!captureCount) return;
       try {
-        const res = await fetch("/api/captures");
+        const res = await fetch(api("/api/captures"));
         const data = await res.json();
         captureCount.textContent = `${data.count} exam${data.count === 1 ? "" : "s"} captured`;
       } catch {}
@@ -161,7 +272,7 @@
       connectBtn.disabled = true;
       result.textContent = "Opening a tab...";
       try {
-        const res = await fetch("/api/connect", { method: "POST" });
+        const res = await fetch(api("/api/connect"), { method: "POST" });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to connect tab");
         result.textContent = "Tab connected. In that tab, log in and navigate to the exam; then click Fill exam.";
@@ -179,7 +290,7 @@
       result.textContent = "Identifying the current exam...";
       logs.textContent = "Starting...";
       try {
-        const detectRes = await fetch("/api/detect");
+        const detectRes = await fetch(api("/api/detect"));
         const detected = await detectRes.json();
         if (!detectRes.ok) throw new Error(detected.error || "Could not identify the current exam");
         examSelect.value = detected.id;
@@ -187,7 +298,7 @@
         result.textContent = isDryRun
           ? `Detected ${detected.name}. Running detection only...`
           : `Detected ${detected.name}. Filling answers...`;
-        const res = await fetch("/api/run", {
+        const res = await fetch(api("/api/run"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -214,14 +325,14 @@
       runBtn.disabled = true;
     result.textContent = "Identifying and capturing the current exam...";
     try {
-      const captureRes = await fetch("/api/capture", { method: "POST" });
+      const captureRes = await fetch(api("/api/capture"), { method: "POST" });
       const capture = await captureRes.json();
       if (!captureRes.ok) throw new Error(capture.error || "Could not capture the current exam");
       const title = capture.capture?.title || "Current exam";
       result.textContent = `${capture.replaced ? "Updated" : "Captured"}: ${title}. Downloading JSON...`;
         await refreshCaptureCount();
         await refreshLogs();
-        window.location.href = "/api/captures/download";
+        window.location.href = api("/api/captures/download");
       } catch (e) {
         result.textContent = e.message;
         await refreshLogs();
@@ -235,7 +346,7 @@
       captureBtn.disabled = true;
       result.textContent = "Capturing the current exam...";
       try {
-        const res = await fetch("/api/capture", { method: "POST" });
+        const res = await fetch(api("/api/capture"), { method: "POST" });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Capture failed");
         result.textContent = `${data.replaced ? "Updated" : "Captured"}: ${data.capture.title}. No answers were selected.`;
@@ -249,7 +360,7 @@
     });
 
     downloadBtn?.addEventListener("click", () => {
-      window.location.href = "/api/captures/download";
+      window.location.href = api("/api/captures/download");
     });
 
     chapterBtn.addEventListener("click", async () => {
@@ -257,9 +368,10 @@
       runBtn.disabled = true;
       if (captureBtn) captureBtn.disabled = true;
       result.textContent = "Scanning and processing the current chapter...";
+      logsPinned = false;
       logs.textContent = "Starting chapter automation...";
       try {
-        const res = await fetch("/api/chapter/run", {
+        const res = await fetch(api("/api/chapter/run"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(runOptions())
@@ -281,16 +393,18 @@
 
     forYouBtn.addEventListener("click", async () => {
       forYouBtn.disabled = true;
-      result.textContent = "Opening For You and processing all available content...";
+      result.textContent = "Entering Apple Professional Academy and walking its chapters...";
+      logsPinned = false;
+      logs.textContent = "Starting the Academy walk...";
       try {
-        const response = await fetch("/api/for-you/run", {
+        const response = await fetch(api("/api/academy/run"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(runOptions())
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "For You processing failed");
-        result.textContent = describeRun("For You complete", data);
+        if (!response.ok) throw new Error(data.error || "Academy processing failed");
+        result.textContent = describeRun("Academy run complete", data);
         await refreshLogs();
       } catch (e) {
         result.textContent = e.message;
@@ -300,13 +414,68 @@
       }
     });
 
-    resultsBtn.addEventListener("click", () => {
-      window.location.href = "/api/results/download";
+    // Prints what the collector sees on the connected tab. When the Academy
+    // walk skips a row, this is the output that says which link it missed and
+    // why it was not treated as a chapter.
+    inspectBtn.addEventListener("click", async () => {
+      inspectBtn.disabled = true;
+      result.textContent = "Reading the structure of the connected tab...";
+      try {
+        const response = await fetch(api("/api/inspect"));
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Could not read the page");
+        result.textContent = `${data.counts.containers} sections, ${data.counts.modules} modules, ` +
+          `${data.counts.completed} completed, ${data.counts.locked} locked` +
+          (data.lockedRowsWithoutLinks ? `, ${data.lockedRowsWithoutLinks} locked rows without links` : "") + ".";
+        logs.textContent = JSON.stringify(data, null, 2);
+        logsPinned = true;
+      } catch (e) {
+        result.textContent = e.message;
+      } finally {
+        inspectBtn.disabled = false;
+      }
     });
 
+    // Reads every quiz in the Academy so their questions can be added to
+    // exams.js. It answers nothing and submits nothing.
+    captureAllBtn.addEventListener("click", async () => {
+      captureAllBtn.disabled = true;
+      forYouBtn.disabled = true;
+      logsPinned = false;
+      result.textContent = "Reading every quiz in the Academy. Nothing is answered or submitted...";
+      logs.textContent = "Starting the capture walk...";
+      try {
+        const response = await fetch(api("/api/academy/capture"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ limit: Number(limitInput?.value) || 0 })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Capture failed");
+        const questions = (data.captures || []).reduce((total, capture) => total + (capture.questions?.length || 0), 0);
+        result.textContent = data.files
+          ? `Captured ${data.captures.length} quiz(zes), ${questions} question(s). Written to ${data.files.draft} and ${data.files.json}.`
+          : "No quizzes were found to capture.";
+        await refreshLogs();
+      } catch (e) {
+        result.textContent = e.message;
+        await refreshLogs();
+      } finally {
+        captureAllBtn.disabled = false;
+        forYouBtn.disabled = false;
+      }
+    });
+
+    resultsBtn.addEventListener("click", () => {
+      window.location.href = api("/api/results/download");
+    });
+
+    renderSessions();
+    refreshSessions();
     loadExams();
     refreshStatus();
     refreshCaptureCount();
+    setInterval(refreshSessions, 5000);
     setInterval(refreshStatus, 2500);
     setInterval(refreshLogs, 1200);
   </script>

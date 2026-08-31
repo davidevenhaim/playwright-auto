@@ -3,44 +3,68 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, getLogs, processCurrentChapter, processForYou, runExam } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, processAcademy, processCurrentChapter, runExam, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const capturesPath = path.join(__dirname, "captured-exams.json");
 const legacyExamResultsPath = path.join(__dirname, "exam-results.json");
+
+// Which browser session a request belongs to. Sessions are separate logins, so
+// several accounts can be driven at once; session 1 is the original one and
+// keeps the original file names.
+function sessionOf(req) {
+  return sessionId(req.query?.session || req.body?.session || "1");
+}
+
+// Session 1 writes the file names this project has always written; any other
+// session tags its own so two accounts running at once never overwrite each
+// other's output.
+function tag(session) {
+  return session === "1" ? "" : `-s${session}`;
+}
+
+function capturesPathFor(session) {
+  return path.join(__dirname, `captured-exams${tag(session)}.json`);
+}
 
 // One file per chapter run, named after the moment the run started, so runs
 // accumulate as history instead of overwriting each other.
-function examResultsPathFor(startedAt) {
+function examResultsPathFor(startedAt, session) {
   const stamp = new Date(startedAt || Date.now()).toISOString().slice(0, 19).replace(/:/g, "-");
-  return path.join(__dirname, `exam-results-${stamp}.json`);
+  return path.join(__dirname, `exam-results-${stamp}${tag(session)}.json`);
 }
 
-function listExamResultsFiles() {
-  return fs.readdirSync(__dirname)
+function listExamResultsFiles(session = null) {
+  const all = fs.readdirSync(__dirname)
     .filter((name) => /^exam-results-.+\.json$/.test(name))
     .sort();
+  if (!session) return all;
+  // A session's own runs if it has any; otherwise everything, so the button
+  // still finds the reports written before sessions existed.
+  const mine = all.filter((name) => name.endsWith(`${tag(session)}.json`) &&
+    (session !== "1" || !/-s[A-Za-z0-9_-]+\.json$/.test(name)));
+  return mine.length ? mine : all;
 }
 
-function readCaptures() {
+function readCaptures(session) {
   try {
-    const parsed = JSON.parse(fs.readFileSync(capturesPath, "utf8"));
+    const parsed = JSON.parse(fs.readFileSync(capturesPathFor(session), "utf8"));
     return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
 }
 
-function writeCaptures(captures) {
-  fs.writeFileSync(capturesPath, `${JSON.stringify(captures, null, 2)}\n`);
+function writeCaptures(session, captures) {
+  fs.writeFileSync(capturesPathFor(session), `${JSON.stringify(captures, null, 2)}\n`);
 }
 
-function writeExamResults(scope, run) {
+function writeExamResults(scope, run, session) {
   const quizzes = (run.results || []).filter((item) => item.type === "quiz");
   const report = {
     generatedAt: new Date().toISOString(),
     scope,
+    session,
     startedAt: run.startedAt || null,
     summary: {
       exams: quizzes.length,
@@ -52,22 +76,97 @@ function writeExamResults(scope, run) {
       resourcesRead: run.resourcesRead || 0,
       processingFailures: run.failed || 0
     },
+    // What the walk found level by level, so a chapter it never entered is
+    // visible in the report rather than only in the log.
+    chapters: run.chapters || [],
+    progressBefore: run.progressBefore || null,
+    progressAfter: run.progressAfter || null,
     exams: quizzes.map((item) => ({
       title: item.title,
       module: item.module,
+      chapter: item.chapter || null,
       passed: item.passed,
       status: item.status,
       identified: item.identified !== false,
+      // Answers filled from a best guess rather than a confirmed key.
+      unverified: item.unverified || [],
       // `threshold` is the site's own completionScore; without it a "failed"
       // score cannot be told apart from a merely imperfect one.
       score: { correct: item.correct, total: item.graded, percentage: item.percentage, threshold: item.threshold },
       errors: item.errors || []
     })),
+    resources: (run.results || [])
+      .filter((item) => item.type === "resource")
+      .map((item) => ({ title: item.title, chapter: item.chapter || null, status: item.status })),
+    stillIncomplete: run.stillIncomplete || [],
+    // Per-question grading for every quiz this run submitted: what was chosen,
+    // what the server said about it, and which answers are now settled.
+    learned: run.learned || [],
     processingErrors: (run.results || []).filter((item) => item.status === "failed" && item.type !== "quiz")
   };
-  const target = examResultsPathFor(run.startedAt);
+  const target = examResultsPathFor(run.startedAt, session);
   fs.writeFileSync(target, `${JSON.stringify(report, null, 2)}\n`);
-  return { ...report, file: path.basename(target) };
+
+  const learnedFile = writeLearnedAnswers(run, session);
+  return { ...report, file: path.basename(target), learnedFile };
+}
+
+// A capture run writes two files: the raw JSON, and a draft that can be pasted
+// straight into exams.js once its answers are filled in.
+function writeCaptureFiles(run, session) {
+  const captures = run.captures || [];
+  if (!captures.length) return null;
+  const stamp = new Date(run.startedAt || Date.now()).toISOString().slice(0, 19).replace(/:/g, "-");
+  const jsonName = `academy-captures-${stamp}${tag(session)}.json`;
+  const draftName = `exams-draft-${stamp}${tag(session)}.js`;
+
+  fs.writeFileSync(path.join(__dirname, jsonName), `${JSON.stringify(captures, null, 2)}\n`);
+
+  const header = [
+    "// Draft entries captured from the Academy. Every answer is blank on purpose:",
+    "// the capture reads what each quiz asks, not what the right answer is.",
+    "// Fill the answers in, then move these into exams.js.",
+    "//",
+    `// Captured ${captures.length} quiz(zes) on ${new Date().toISOString()}.`,
+    ""
+  ].join("\n");
+  const body = captures.map((capture) =>
+    `// ---- ${capture.chapter || "?"} / ${capture.module || "?"}\n// ${capture.url}\n${capture.examsJsDraft || ""}`
+  ).join("\n\n");
+  fs.writeFileSync(path.join(__dirname, draftName), `${header}\n${body}\n`);
+
+  return { json: jsonName, draft: draftName };
+}
+
+// What a run's grades revealed, written as entries ready to move into exams.js.
+// A question the server marked correct becomes a real answer; one it rejected
+// is left commented out with the options that are still in play.
+function writeLearnedAnswers(run, session) {
+  const learned = run.learned || [];
+  if (!learned.length) return null;
+  const stamp = new Date(run.startedAt || Date.now()).toISOString().slice(0, 19).replace(/:/g, "-");
+  const name = `exams-learned-${stamp}${tag(session)}.js`;
+
+  const solved = learned.reduce((total, entry) =>
+    total + entry.questions.filter((question) => question.confirmedAnswers).length, 0);
+  const asked = learned.reduce((total, entry) => total + entry.questions.length, 0);
+
+  const header = [
+    "// Answers confirmed by the site's own grading during this run.",
+    `// ${solved} of ${asked} question(s) across ${learned.length} quiz(zes) are settled.`,
+    "//",
+    "// A question the server marked correct is written as a real entry: whatever",
+    "// was selected in it is right. A question it rejected is left commented out",
+    "// with the options that have not been ruled out yet — run again to try",
+    "// another one. Move the settled entries into exams.js.",
+    ""
+  ].join("\n");
+
+  fs.writeFileSync(
+    path.join(__dirname, name),
+    `${header}\n${learned.map(examsJsFromLearned).join("\n\n")}\n`
+  );
+  return name;
 }
 
 const app = express();
@@ -131,39 +230,46 @@ app.get("/api/exams", (_req, res) => {
       id,
       name: exam.name,
       questionCount: exam.questions.length,
-      section: chapterWiseEssentials.has(id) ? "Chapter Wise Essentials" : "Core Exams"
+      section: exam.section || (chapterWiseEssentials.has(id) ? "Chapter Wise Essentials" : "Core Exams")
     }))
   );
 });
 
-app.get("/api/status", async (_req, res) => {
-  res.json(await browserStatus());
+// Which sessions the server knows about and which of them have a live window.
+app.get("/api/sessions", (_req, res) => {
+  res.json({ sessions: listSessions() });
 });
 
-app.get("/api/logs", (_req, res) => {
-  res.json({ logs: getLogs() });
+app.get("/api/status", async (req, res) => {
+  res.json(await withSession(sessionOf(req), () => browserStatus()));
 });
 
-app.get("/api/detect", async (_req, res) => {
+app.get("/api/logs", (req, res) => {
+  res.json({ session: sessionOf(req), logs: withSession(sessionOf(req), () => getLogs()) });
+});
+
+app.get("/api/detect", async (req, res) => {
   try {
-    res.json(await detectCurrentExam());
+    res.json(await withSession(sessionOf(req), () => detectCurrentExam()));
   } catch (error) {
     res.status(404).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
 
-app.get("/api/captures", (_req, res) => {
-  const captures = readCaptures();
+app.get("/api/captures", (req, res) => {
+  const captures = readCaptures(sessionOf(req));
   res.json({ count: captures.length, captures });
 });
 
-app.get("/api/captures/download", (_req, res) => {
-  if (!fs.existsSync(capturesPath)) writeCaptures([]);
-  res.download(capturesPath, "captured-exams.json");
+app.get("/api/captures/download", (req, res) => {
+  const session = sessionOf(req);
+  const target = capturesPathFor(session);
+  if (!fs.existsSync(target)) writeCaptures(session, []);
+  res.download(target, path.basename(target));
 });
 
-app.get("/api/results", (_req, res) => {
-  const files = listExamResultsFiles().reverse();
+app.get("/api/results", (req, res) => {
+  const files = listExamResultsFiles(sessionOf(req)).reverse();
   res.json({ count: files.length, files });
 });
 
@@ -172,7 +278,7 @@ app.get("/api/results/download", (req, res) => {
     error: "No graded exam results are available yet. Run Complete Chapter or Complete For You first."
   };
   const requested = typeof req.query.file === "string" ? path.basename(req.query.file) : null;
-  const files = listExamResultsFiles();
+  const files = listExamResultsFiles(sessionOf(req));
   const name = requested && files.includes(requested) ? requested : files[files.length - 1];
   if (!name) {
     // Fall back to the single-file report written by earlier versions, but only
@@ -198,57 +304,101 @@ app.get("/api/results/download", (req, res) => {
   res.download(target, name);
 });
 
-app.post("/api/capture", async (_req, res) => {
+app.post("/api/capture", async (req, res) => {
+  const session = sessionOf(req);
   try {
-    const capture = await captureCurrentExam();
+    const capture = await withSession(session, () => captureCurrentExam());
     // Keep the capture file fresh: each identification replaces the previous exam.
-    writeCaptures([capture]);
+    writeCaptures(session, [capture]);
     res.json({ capture, count: 1, replaced: true });
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
 
-app.delete("/api/captures", (_req, res) => {
-  writeCaptures([]);
+app.delete("/api/captures", (req, res) => {
+  writeCaptures(sessionOf(req), []);
   res.json({ count: 0 });
 });
 
-app.post("/api/connect", async (_req, res) => {
+app.post("/api/connect", async (req, res) => {
   try {
-    res.json(await connectBrowser());
+    res.json(await withSession(sessionOf(req), () => connectBrowser()));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
 
 app.post("/api/chapter/run", async (req, res) => {
+  const session = sessionOf(req);
   try {
-    const { skipCompleted = true, limit = 0 } = req.body || {};
-    const run = await processCurrentChapter({
+    const { skipCompleted = true, limit = 0, submitUnverified = false, blind = false } = req.body || {};
+    const run = await withSession(session, () => processCurrentChapter({
       skipCompleted: Boolean(skipCompleted),
       limit: Number(limit) || 0,
+      submitUnverified: Boolean(submitUnverified),
+      blind: Boolean(blind),
       // Flush after each item so an interrupted run keeps what it finished.
-      onProgress: (progress) => writeExamResults("chapter", progress)
-    });
-    const report = writeExamResults("chapter", run);
+      onProgress: (progress) => writeExamResults("chapter", progress, session)
+    }));
+    const report = writeExamResults("chapter", run, session);
     res.json({ ...run, report });
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
 
-app.post("/api/for-you/run", async (req, res) => {
+async function runAcademy(req, res) {
+  const session = sessionOf(req);
   try {
-    const { skipCompleted = true, limit = 0 } = req.body || {};
-    const run = await processForYou({
+    const { skipCompleted = true, limit = 0, submitUnverified = false, blind = false } = req.body || {};
+    const run = await withSession(session, () => processAcademy({
       skipCompleted: Boolean(skipCompleted),
       limit: Number(limit) || 0,
+      submitUnverified: Boolean(submitUnverified),
+      blind: Boolean(blind),
       // Flush after each item so an interrupted run keeps what it finished.
-      onProgress: (progress) => writeExamResults("for-you", progress)
-    });
-    const report = writeExamResults("for-you", run);
+      onProgress: (progress) => writeExamResults("academy", progress, session)
+    }));
+    const report = writeExamResults("academy", run, session);
     res.json({ ...run, report });
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+}
+
+app.post("/api/academy/run", runAcademy);
+
+// Reads every quiz in the Academy without answering or submitting one, and
+// writes both the raw captures and a paste-ready exams.js skeleton. This is how
+// exams get added without anyone having to sit them first.
+app.post("/api/academy/capture", async (req, res) => {
+  const session = sessionOf(req);
+  try {
+    const { limit = 0 } = req.body || {};
+    const run = await withSession(session, () => processAcademy({
+      // A capture is for building the answer bank, so it wants every quiz,
+      // including the ones this account has already passed.
+      skipCompleted: false,
+      limit: Number(limit) || 0,
+      mode: "capture",
+      onProgress: (progress) => writeCaptureFiles(progress, session)
+    }));
+    const files = writeCaptureFiles(run, session);
+    res.json({ ...run, files });
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+// The older name for the same run, kept so an open tab of the UI keeps working.
+app.post("/api/for-you/run", runAcademy);
+
+// A structural read of whatever the connected tab is showing. This is the tool
+// to reach for when the Academy walk skips a row: it reports every link on the
+// page and how the collector classified it.
+app.get("/api/inspect", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => inspectPage()));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
@@ -260,7 +410,7 @@ app.post("/api/run", async (req, res) => {
     if (!examId) return res.status(400).json({ error: "examId is required" });
     // The standalone detector is an inspection tool: fill as quickly as the
     // page allows, leave Submit untouched, and let the user review the result.
-    res.json(await runExam(examId, Boolean(dryRun), { immediate: true }));
+    res.json(await withSession(sessionOf(req), () => runExam(examId, Boolean(dryRun), { immediate: true })));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }

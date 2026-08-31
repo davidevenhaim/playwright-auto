@@ -1332,5 +1332,42 @@ export const exams = {
       { type: "single", match: "לליאם יש מאפיינים זמינים שהוא לא יודע על קיומם", answer: "לתאר רגע בחייו שבו המאפיין יועיל לו משמעותית" },
       { type: "single", match: "נראה שדין מתלבט בין שתי אפשרויות", answer: "לא" }
     ]
+  },
+  // Chapter: "סיפור הפלטפורמה של Apple – לפי דרישה". Answers marked
+  // `unverified` were not confirmed by a grade and are a best guess.
+  "why-apple-platform-knowledge-check": {
+    name: "מדוע כדאי לבחור ב-Apple",
+    section: "הסיפור של הפלטפורמה",
+    questions: [
+      { type: "multiple", match: "מה ג'וני אמר שהם שני היתרונות העיקריים עבור הלקוחות בתכנון של החומרה והתוכנה", answers: ["ביצועים", "אמינות"] },
+      { type: "single", match: "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ולעסקים", answer: "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית." }
+    ]
+  },
+  "apple-intelligence-knowledge-check": {
+    name: "Apple Intelligence",
+    section: "הסיפור של הפלטפורמה",
+    questions: [
+      { type: "single", match: "לפי טמזין, לאיזה מאפיין תהיה אחת ההשפעות הגדולות ביותר על הלקוחות", answer: "'כלי כתיבה'", unverified: true },
+      { type: "single", match: "מה Apple עושה עם 'ענן חישוב פרטי' שהוא חדש בתעשייה", answer: "הבטחת פרטיות הניתנת לאימות" },
+      { type: "multiple", match: "אילו מהמכשירים הבאים תומכים ב-Apple Intelligence", answers: ["iPhone 16e", "iPad Air (שבב M3)", "MacBook Air (שבב M1)"] }
+    ]
+  },
+  "best-platform-for-it-knowledge-check": {
+    name: "הפלטפורמה הטובה ביותר ל-IT",
+    section: "הסיפור של הפלטפורמה",
+    questions: [
+      { type: "multiple", match: "מהם המרכיבים העיקריים הדרושים לפעולה של פריסה ללא מגע", answers: ["Apple Business / School Manager", "ניהול מכשירים ניידים", "מכשירי Apple"] },
+      { type: "multiple", match: "מהם היתרונות של פריסת מכשירים ללא מגע", answers: ["מהירה ומאובטחת", "הגדרה אוטומטית", "ניתנת להתאמה אישית במידה רבה"] },
+      { type: "single", match: "באמצעות פריסה ללא מגע, צוותי IT יכולים לפרוס פרופילים מרחוק", answer: "נכון" }
+    ]
+  },
+  "best-platform-for-business-knowledge-check": {
+    name: "הפלטפורמה הטובה ביותר לעסקים",
+    section: "הסיפור של הפלטפורמה",
+    questions: [
+      { type: "selects", match: "התאימו את עקרונות הפרטיות העיקריים להסבר", answers: ["שקיפות ושליטה", "עיבוד במכשיר", "צמצום נתונים", "אמצעי הגנה לאבטחה"] },
+      { type: "multiple", match: "אילו מהמוצרים הבאים הם המוצרים הראשונים שלנו שהם ניטרליים פחמנית", answers: ["Apple Watch Series 10", "Apple Watch Ultra 2", "Mac mini"] },
+      { type: "single", match: "מהו החסכון הכולל לאורך מחזור החיים של כל Mac שנפרס", answer: "$847", unverified: true }
+    ]
   }
 };
