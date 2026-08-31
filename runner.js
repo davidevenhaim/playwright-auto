@@ -2901,12 +2901,36 @@ export async function inspectPage() {
       .filter((row) => row.text);
   }).catch(() => []);
 
+  const lockedRows = [];
+  for (const frame of targetPage.frames()) {
+    const rows = await frame.evaluate(() => {
+      const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+      const LOCK = /(^|[^a-z])lock(ed)?([^a-z]|$)/i;
+      const found = new Set();
+      const result = [];
+      for (const element of document.querySelectorAll("[class], [aria-label], [data-testid]")) {
+        const marks = [element.className, element.getAttribute("aria-label"), element.getAttribute("data-testid")]
+          .filter(Boolean).join(" ");
+        if (!LOCK.test(marks)) continue;
+        const row = element.closest(".entity, [role='listitem'], li, [class*='row' i], [class*='card' i]") || element.parentElement;
+        if (!row || row.querySelector("a[href]") || found.has(row)) continue;
+        const rect = row.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) continue;
+        found.add(row);
+        result.push({ text: tidy(row.innerText).slice(0, 500), className: tidy(row.className).slice(0, 300), marks: tidy(marks).slice(0, 300) });
+      }
+      return result;
+    }).catch(() => []);
+    lockedRows.push(...rows);
+  }
+
   return {
     url: targetPage.url(),
     title: await targetPage.title().catch(() => ""),
     progress: await readChapterProgress(targetPage),
     player: await moduleAssessmentState(targetPage),
     lockedRowsWithoutLinks: await countLockedRows(targetPage),
+    lockedRows,
     counts: {
       modules: nodes.filter((node) => node.kind === "module").length,
       containers: nodes.filter((node) => node.kind === "container").length,

@@ -989,10 +989,10 @@ export const exams = {
   "device-assignment-quiz": {
     name: "הקצאת מכשירים",
     questions: [
-      { type: "single", match: "מתי צריך לשחרר מכשיר מ-Apple Business Manager", answer: "אם המכשיר אבד, הוצא משימוש, נמכר או אינו ניתן לתיקון", unverified: true },
-      { type: "single", match: "קריטריונים ניתן להשתמש לצורך הקצאת מכשירים אוטומטית", answer: "סוג המכשיר", unverified: true },
-      { type: "single", match: "כיצד ניתן להוסיף מחשבי Mac באופן ידני", answer: "באמצעות Apple Configurator ל-iPhone", unverified: true },
-      { type: "single", match: "לכמה פתרונות MDM ניתן להקצות מכשיר", answer: "אחד", unverified: true },
+      { type: "single", match: "מתי צריך לשחרר מכשיר מ-Apple Business Manager", answer: "אם המכשיר אבד, הוצא משימוש, נמכר או אינו ניתן לתיקון" },
+      { type: "single", match: "קריטריונים ניתן להשתמש לצורך הקצאת מכשירים אוטומטית", answer: "סוג המכשיר" },
+      { type: "single", match: "כיצד ניתן להוסיף מחשבי Mac באופן ידני", answer: "באמצעות Apple Configurator ל-iPhone" },
+      { type: "single", match: "לכמה פתרונות MDM ניתן להקצות מכשיר", answer: "אחד" },
       // Confirmed by the server's saved 20% attempt: this was the one question
       // graded correct. Serial number is searchable, but it was not one of the
       // three answers expected by this version of the course.
