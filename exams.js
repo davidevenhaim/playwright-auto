@@ -1428,5 +1428,26 @@ export const exams = {
       { type: "multiple", match: "מה דרוש כדי שיושלם 'גיבוי iCloud' אוטומטי ב-iPad?", answers: ["חיבור לרשת אלחוטית", "מכשיר המחובר לחשמל"] },
       { type: "single", match: "איזה מאפיין מאפשר לכם לסנכרן קבצים ותיקיות בין Mac ל-iPad?", answer: "iCloud Drive" }
     ]
+  },
+  // Sales Coach › Apple Professional Academy › חינוך › יצירת קשר עם מנהיגים
+  // בממשל בתחום החינוך. Captured 2026-08-31; answers reasoned from the module,
+  // never confirmed by a graded attempt yet.
+  "connecting-with-education-government-leaders": {
+    name: "בדקו את הידע שלכם – בנייית קשרים עם מנהיגים בממשל בתחום החינוך",
+    section: "חינוך",
+    questions: [
+      { type: "single", match: "מגלה עניין בטכנולוגיית החינוך של Apple, אך מעלה חששות לגבי העלות", answer: "בקשת פגישה נוספת כדי להבין את סדר העדיפויות הדיגיטלי של ד\"ר בוהם ואת המצב של בעלי העניין.", unverified: true },
+      // The five stages in page order: stakeholder map, vision workshop, TCO,
+      // customer stories, tender review.
+      { type: "selects", match: "התאמת הפעולות לשלב בניית הקשר", answers: ["חשיפת צורכי הלקוחות", "חזון", "הצגה", "השראה", "הצעת מחיר"], unverified: true },
+      { type: "single", match: "במה כדאי להתמקד כדי להיות יעילים כשבונים קשרים עם גורמי ממשל", answer: "בניית מערכת יחסים מהימנה המפגינה את האמינות שלכם ואת ההבנה העמוקה של הצרכים של בעלי העניין.", unverified: true },
+      { type: "multiple", match: "אילו מהאפשרויות הבאות הן הערכים של Apple", answers: ["סביבה", "אחריות ספקים", "פרטיות ואבטחה", "נגישות"], unverified: true },
+      { type: "single", match: "חושש לגבי ניהול מכשירי Apple במערכת שכבר משתמשת", answer: "\"מכשירי Apple משתלבים בצורה חלקה עם הכלים של Microsoft ו-Google שבתי ספר רבים משתמשים בהם היום.\"", unverified: true },
+      { type: "multiple", match: "את מי כדאי להזמין לסדנאות חזון", answers: ["מורים", "מנהיגי תוכנית הלימודים", "בעלי תקציב", "מדריכי מורים", "צוותי IT"], unverified: true },
+      { type: "single", match: "שהיו להם בעבר בעיות בניהול מכשירים בבתי ספר רבים", answer: "הראו לו את מודל התמיכה והכלים לניהול מחזור החיים של Apple, כמו Apple School Manager.", unverified: true },
+      { type: "multiple", match: "מהם המרכיבים של בניית קשרים אסטרטגיים", answers: ["ערך חשוב", "הצטרפות לשיחה בשלב מוקדם"], unverified: true },
+      { type: "multiple", match: "כיצד תוכלו להשפיע על התנאים של RFP זה", answers: ["שיתוף סיפורי הצלחה של רכש והמלצות של לקוחות.", "מתן הנחיות בכתב מראש לגבי מפרטים טכניים שמדגישות את הערך הייחודי של Apple.", "בדיקות שוטפות כדי לטפל בחששות ובמחסומים."], unverified: true },
+      { type: "multiple", match: "אילו מהפעולות הבאות עליכם לעשות כדי להשלים את השליחה", answers: ["הקמת צוות תגובה למכרז.", "עיון בדרישות המכרז."], unverified: true }
+    ]
   }
 };

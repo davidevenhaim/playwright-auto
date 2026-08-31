@@ -463,6 +463,20 @@ async function moduleAssessmentState(targetPage) {
   return null;
 }
 
+// Not every module is a SEED package. A good many are a plain video the site
+// plays itself, in the main frame, with no SeedInterface anywhere on the page.
+// Waiting for a player that is never coming is what reported those as "the SEED
+// content player never loaded" and failed them again on every pass.
+async function readNativeVideoState(targetPage) {
+  return targetPage.mainFrame().evaluate(() => {
+    const videos = Array.from(document.querySelectorAll("video"));
+    // Metadata is what says the video is really there rather than an empty
+    // element the page put in ahead of its source.
+    if (!videos.some((video) => video.readyState > 0 || Number.isFinite(video.duration))) return null;
+    return { videos: videos.length, textLength: (document.body?.innerText || "").length };
+  }).catch(() => null);
+}
+
 async function waitForModuleReady(targetPage, timeoutMs = MODULE_READY_TIMEOUT_MS) {
   const deadline = Date.now() + timeoutMs;
   let last = null;
@@ -482,10 +496,47 @@ async function waitForModuleReady(targetPage, timeoutMs = MODULE_READY_TIMEOUT_M
       }
       if (state.hasAssessments === false && state.textLength > 0) return last;
     }
+
+    // No SEED package has turned up. A video the site plays itself is ready as
+    // soon as its own element has metadata, and it is finished the same way any
+    // other resource is: play it through.
+    if (!last) {
+      const native = await readNativeVideoState(targetPage);
+      if (native) {
+        log("This module is a video page rather than a SEED package; playing it in the page itself.");
+        return {
+          frame: targetPage.mainFrame(),
+          hasAssessments: false,
+          questions: 0,
+          submitButtons: 0,
+          native: true,
+          ...native
+        };
+      }
+    }
+
     await targetPage.waitForTimeout(500);
   }
 
   return last;
+}
+
+// The site regularly serves a module whose player frame died on load: the
+// iframe lands on chrome-error and nothing ever appears inside it. Reloading
+// clears it, so a module gets a few goes at loading before the run gives up.
+const MODULE_LOAD_ATTEMPTS = 3;
+const MODULE_ATTEMPT_TIMEOUT_MS = 45000;
+
+async function loadModulePlayer(itemPage) {
+  for (let attempt = 1; attempt <= MODULE_LOAD_ATTEMPTS; attempt++) {
+    const ready = await waitForModuleReady(itemPage, MODULE_ATTEMPT_TIMEOUT_MS);
+    if (ready) return ready;
+    if (attempt === MODULE_LOAD_ATTEMPTS) break;
+    log(`Nothing has loaded in ${Math.round(MODULE_ATTEMPT_TIMEOUT_MS / 1000)}s; reloading this module (attempt ${attempt + 1} of ${MODULE_LOAD_ATTEMPTS}).`);
+    await itemPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS }).catch(() => {});
+    await itemPage.waitForTimeout(2500 * attempt);
+  }
+  return null;
 }
 
 // The player decides completion from the scroll position of its own window, so
@@ -793,11 +844,16 @@ async function fillBlindly(frame, known = {}) {
           chosen.push(tidy(select.options[select.selectedIndex]?.textContent || ""));
         }
       } else if (boxes.length) {
-        const checked = boxes.filter((box) => box.checked);
-        if (checked.length !== want) {
-          // Clicking a checked box clears it; start from empty so exactly the
-          // asked-for number ends up selected.
-          for (const box of checked) box.click();
+        // Anything already ticked was put there deliberately, by a stored answer
+        // or by one this run has confirmed, and it is right far more often than
+        // a guess is. Only a question with nothing on it is guessed at.
+        //
+        // Clearing those to fit `want` is what made a nearly-right quiz
+        // unsubmittable: `want` is 1 unless the question says otherwise, so
+        // every correctly filled two-answer question came back down to one
+        // selection, and the player counts a half-answered question as
+        // unanswered and refuses the submission.
+        if (!boxes.some((box) => box.checked)) {
           for (const box of boxes.slice(0, Math.min(want, boxes.length))) box.click();
         }
         chosen.push(...boxes.filter((box) => box.checked).map((box) => labelOf(box, question)));
@@ -944,9 +1000,10 @@ async function openAllAccordions(targetPage) {
   if (opened) log(`Opened ${opened} accordion section${opened === 1 ? "" : "s"}.`);
 }
 
+// The main frame is searched too: a module the site plays itself has its Play
+// control on the page rather than inside a package iframe.
 async function startVisibleVideoControls(targetPage) {
   for (const frame of targetPage.frames()) {
-    if (frame === targetPage.mainFrame()) continue;
     const buttons = frame.locator('button, [role="button"]');
     const count = await buttons.count().catch(() => 0);
     for (let index = 0; index < count; index++) {
@@ -966,13 +1023,12 @@ async function startVisibleVideoControls(targetPage) {
 
 async function playAllVideos(targetPage) {
   const initialVideoCount = (await Promise.all(targetPage.frames().map((frame) =>
-    frame === targetPage.mainFrame() ? 0 : frame.locator("video").count().catch(() => 0)
+    frame.locator("video").count().catch(() => 0)
   ))).reduce((total, count) => total + count, 0);
   if (!initialVideoCount) await startVisibleVideoControls(targetPage);
   let played = 0;
 
   for (const frame of targetPage.frames()) {
-    if (frame === targetPage.mainFrame()) continue;
     const videos = frame.locator("video");
     const count = await videos.count().catch(() => 0);
 
@@ -1138,8 +1194,8 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
     session().page = itemPage;
     await openModule(itemPage, item.url);
 
-    const ready = await waitForModuleReady(itemPage);
-    if (!ready) throw new Error("The SEED content player never loaded for this module.");
+    const ready = await loadModulePlayer(itemPage);
+    if (!ready) throw new Error(`No content player loaded for this module after ${MODULE_LOAD_ATTEMPTS} attempts.`);
 
     // Accordions hide quiz content, so they are opened either way. Videos are
     // only worth sitting through on a real run: a capture is reading the
@@ -1546,6 +1602,34 @@ async function revealListing(targetPage) {
 
 // How long the item count has to hold still before a listing counts as loaded.
 const LISTING_SETTLE_MS = 2500;
+// How long a page that has painted but listed nothing is given before it is
+// called a leaf. The Academy program page paints its header and back button
+// seconds before its card rails arrive, so anything still building gets the
+// longer grace rather than the short one.
+const EMPTY_LISTING_MS = 4000;
+const BUILDING_LISTING_MS = 20000;
+
+// Is this page still assembling its listing? A spinner, a skeleton, or a
+// card-shaped row that has not yet grown the link inside it all mean the cards
+// are on their way and an empty read says nothing yet.
+async function listingStillBuilding(targetPage) {
+  return targetPage.evaluate(() => {
+    const visible = (element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return false;
+      const style = getComputedStyle(element);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    const busy = document.querySelector(
+      "[aria-busy='true'], [class*='spinner' i], [class*='loading' i], [class*='skeleton' i], [class*='shimmer' i]"
+    );
+    if (busy && visible(busy)) return true;
+    for (const row of document.querySelectorAll(".entity, [role='listitem'], [class*='card' i]")) {
+      if (visible(row) && row.innerText.trim()) return true;
+    }
+    return false;
+  }).catch(() => false);
+}
 
 async function waitForChapterItems(targetPage, timeoutMs = EXAM_LOAD_TIMEOUT_MS) {
   const deadline = Date.now() + timeoutMs;
@@ -1573,17 +1657,52 @@ async function waitForChapterItems(targetPage, timeoutMs = EXAM_LOAD_TIMEOUT_MS)
 
     // A page that has already painted its own copy and still lists nothing is
     // a leaf, not a slow load. Waiting out the full timeout on every one of
-    // those adds up across a whole program.
+    // those adds up across a whole program. The header of a listing page paints
+    // first, though, so "there is text on screen" on its own used to end the
+    // wait four seconds into a load and report the Academy as empty.
     const rendered = clean(await targetPage.locator("body").innerText().catch(() => "")).length > 40;
     if (rendered) {
       if (renderedSince === null) renderedSince = Date.now();
-      if (Date.now() - renderedSince > 4000) return nodes;
+      const grace = await listingStillBuilding(targetPage) ? BUILDING_LISTING_MS : EMPTY_LISTING_MS;
+      if (Date.now() - renderedSince > grace) return nodes;
     } else {
       renderedSince = null;
     }
     await targetPage.waitForTimeout(500);
   }
   return nodes;
+}
+
+// A listing page that lists nothing is far more often a lost race than a page
+// with nothing on it: the rails arrive well after the header, and a section the
+// account has only just unlocked can take a reload or two to admit it. So an
+// empty read is reloaded rather than believed the first time.
+const LISTING_LOAD_ATTEMPTS = 3;
+
+async function loadListingItems(listPage, url, { attempts = LISTING_LOAD_ATTEMPTS, indent = "" } = {}) {
+  let nodes = [];
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    if (attempt === 1) {
+      await openListing(listPage, url);
+    } else {
+      log(`${indent}Nothing listed yet; reloading (attempt ${attempt} of ${attempts}).`);
+      await listPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS }).catch(() => {});
+      await listPage.waitForTimeout(2000 * attempt);
+      await openAllAccordions(listPage).catch(() => {});
+    }
+    nodes = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
+    if (nodes.length) return nodes;
+  }
+  return nodes;
+}
+
+// Re-reads a listing the run has just changed underneath itself. The page is
+// opened from scratch, because a section whose first module has only just been
+// finished keeps serving its old locked state for a few seconds afterwards.
+async function reopenListing(listPage, url, indent = "") {
+  log(`${indent}Re-reading the section to see what has unlocked.`);
+  await listPage.waitForTimeout(3000);
+  return loadListingItems(listPage, url, { indent }).catch(() => []);
 }
 
 const ACADEMY_NAMES = ["apple professional academy", "professional academy"];
@@ -1628,14 +1747,22 @@ async function openAcademy(listPage) {
   }
 
   log(`Opening Apple Professional Academy: ${link.url}`);
-  await openListing(listPage, link.url);
-  const nodes = await waitForChapterItems(listPage);
+  // Same treatment every other listing gets: this page loses the race often
+  // enough that one empty read is not an answer.
+  const nodes = await loadListingItems(listPage, link.url, { indent: "  " });
   if (!nodes.length) {
     throw new Error("Apple Professional Academy opened, but nothing was listed on it. Wait for the page to finish loading and try again.");
   }
   log(`Apple Professional Academy is ready with ${nodes.length} listed item${nodes.length === 1 ? "" : "s"}.`);
   return { id: `container:${link.url}`, url: link.url, title: link.title || "Apple Professional Academy" };
 }
+
+// A section hands its modules out one at a time: the introduction is open and
+// everything after it is locked until that one is finished, and the listing
+// keeps saying "locked" for a while afterwards. So a section is swept more than
+// once, reloading between sweeps, rather than leaving the rest of it to a whole
+// extra pass over the site.
+const CONTAINER_UNLOCK_ROUNDS = 4;
 
 // Depth-first through chapters and collections, running every module it reaches.
 async function walkContainer(listPage, container, state, depth = 0) {
@@ -1650,8 +1777,9 @@ async function walkContainer(listPage, container, state, depth = 0) {
   if (limitReached(state)) return;
 
   log(`${indent}Entering "${container.title || container.url}".`);
+  let children;
   try {
-    await openListing(listPage, container.url);
+    children = await loadListingItems(listPage, container.url, { indent: `${indent}  ` });
   } catch (error) {
     log(`${indent}Could not open "${container.title}": ${error instanceof Error ? error.message : String(error)}`);
     return;
@@ -1667,70 +1795,95 @@ async function walkContainer(listPage, container, state, depth = 0) {
     log(`${indent}${blocked} row(s) inside "${container.title}" are still locked and carry no link.`);
   }
 
-  let children = await waitForChapterItems(listPage, 30000);
-  if (!children.length) {
-    // This site is slow enough that a program page regularly loses the race.
-    // An empty listing is a reload away from a full one far more often than it
-    // is genuinely empty.
-    log(`${indent}Nothing listed yet inside "${container.title}"; reloading and waiting again.`);
-    await listPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS }).catch(() => {});
-    await listPage.waitForTimeout(2000);
-    await openAllAccordions(listPage).catch(() => {});
-    children = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
-  }
   if (!children.length) {
     log(`${indent}Nothing is listed inside "${container.title}".`);
     return;
   }
 
-  const modules = children.filter((child) => child.kind === "module");
-  const subContainers = children.filter((child) => child.kind === "container");
-  log(`${indent}${modules.length} module(s) and ${subContainers.length} sub-section(s) inside.`);
-  // Keyed by URL so a section walked again on a later pass is updated in place
-  // rather than reported twice.
-  state.chapters.set(container.url, {
-    title: container.title,
-    url: container.url,
-    depth,
-    progress,
-    modules: modules.length,
-    subSections: subContainers.length
-  });
+  // Sub-sections are gathered across every sweep, because one of them can be
+  // locked on the first read and listed on a later one.
+  const subContainers = new Map();
+  let announced = false;
 
-  let index = 0;
-  for (const module of modules) {
-    if (state.processedModules.has(module.id)) continue;
-    if (module.locked) {
-      state.deferred.set(module.id, { ...module, chapter: container.title });
-      log(`${indent}  Locked for now: "${module.title}".`);
-      continue;
-    }
-    if (state.skipCompleted && module.completed) {
-      state.processedModules.add(module.id);
-      state.skipped++;
-      continue;
-    }
-    if (limitReached(state)) {
-      log(`${indent}Reached the ${state.limit}-module limit for this run.`);
-      return;
-    }
-
-    state.processedModules.add(module.id);
-    state.pending = state.pending + 1;
-    if (index > 0) await waitRandom(listPage, 1, 3, "Between modules");
-    index++;
-    await processModule({ ...module, chapter: container.title }, state, {
-      label: `${indent}  [${state.modulesProcessed + 1}] `,
-      listPage
-    });
-    // Each module ran in its own tab; come back to the listing for the next one.
-    if (!listPage.isClosed()) {
-      await listPage.bringToFront().catch(() => {});
+  for (let round = 1; round <= CONTAINER_UNLOCK_ROUNDS; round++) {
+    if (round > 1) {
+      children = await reopenListing(listPage, container.url, `${indent}  `);
       session().page = listPage;
+      if (!children.length) break;
+    }
+
+    const modules = children.filter((child) => child.kind === "module");
+    for (const child of children) {
+      if (child.kind === "container" && !subContainers.has(child.id)) subContainers.set(child.id, child);
+    }
+
+    if (!announced) {
+      log(`${indent}${modules.length} module(s) and ${subContainers.size} sub-section(s) inside.`);
+      announced = true;
+      // Keyed by URL so a section walked again on a later pass is updated in
+      // place rather than reported twice.
+      state.chapters.set(container.url, {
+        title: container.title,
+        url: container.url,
+        depth,
+        progress,
+        modules: modules.length,
+        subSections: subContainers.size
+      });
+    }
+
+    let ran = 0;
+    let locked = 0;
+    let index = 0;
+
+    for (const module of modules) {
+      if (state.processedModules.has(module.id)) continue;
+      if (module.locked) {
+        locked++;
+        state.deferred.set(module.id, { ...module, chapter: container.title });
+        if (round === 1) log(`${indent}  Locked for now: "${module.title}".`);
+        continue;
+      }
+      if (state.skipCompleted && module.completed) {
+        state.processedModules.add(module.id);
+        state.skipped++;
+        continue;
+      }
+      if (limitReached(state)) {
+        log(`${indent}Reached the ${state.limit}-module limit for this run.`);
+        return;
+      }
+
+      // It is open now, so it is no longer something the run is waiting on.
+      state.deferred.delete(module.id);
+      state.processedModules.add(module.id);
+      state.pending = state.pending + 1;
+      if (index > 0) await waitRandom(listPage, 1, 3, "Between modules");
+      index++;
+      ran++;
+      await processModule({ ...module, chapter: container.title }, state, {
+        label: `${indent}  [${state.modulesProcessed + 1}] `,
+        listPage
+      });
+      // Each module ran in its own tab; come back to the listing for the next.
+      if (!listPage.isClosed()) {
+        await listPage.bringToFront().catch(() => {});
+        session().page = listPage;
+      }
+    }
+
+    // Nothing here is waiting on a lock, so a re-read has nothing to add.
+    if (!locked) break;
+    if (!ran) {
+      log(`${indent}${locked} module(s) in "${container.title}" are still locked, and this sweep opened nothing.`);
+      break;
+    }
+    if (round === CONTAINER_UNLOCK_ROUNDS) {
+      log(`${indent}${locked} module(s) in "${container.title}" are still locked; leaving them for the next pass.`);
     }
   }
 
-  for (const child of subContainers) {
+  for (const child of subContainers.values()) {
     if (limitReached(state)) return;
     if (state.visitedContainers.has(child.id)) continue;
     if (child.locked) {
@@ -1828,7 +1981,9 @@ export async function processAcademy({ skipCompleted = true, limit = 0, onProgre
 // Destinations that are account tools rather than learning content, matched on
 // the path: the For You link's own text reads "For You 1 unread alerts", so
 // matching link text would throw away the main tab.
-const SITE_HUB_SKIP = /^\/home\/(profile|account|settings?|manage|alerts?|notifications?|saved(-content)?|search|help|support|feedback|sign-?out|log-?out)$/i;
+// Achievements and Events belong here too: one is a wall of badges and the
+// other a list of invitations, and neither holds a module to run.
+const SITE_HUB_SKIP = /^\/home\/(profile|account|settings?|manage|alerts?|notifications?|saved(-content)?|achievements?|events?|search|help|support|feedback|sign-?out|log-?out)$/i;
 
 function hubPath(url) {
   try {
@@ -1896,6 +2051,28 @@ function hubTitle(link) {
   return link.title;
 }
 
+// The sidebar is rendered a second or two after the page's own content, so a
+// read taken straight after the navigation finds only the tab already on
+// screen — which is why a whole-site run used to report a single tab to walk.
+async function readNavLinksSettled(targetPage, timeoutMs = 15000) {
+  const deadline = Date.now() + timeoutMs;
+  let best = [];
+  let steadySince = null;
+
+  while (Date.now() < deadline) {
+    const links = await readNavLinks(targetPage);
+    if (links.length > best.length) {
+      best = links;
+      steadySince = Date.now();
+    } else if (best.length && steadySince && Date.now() - steadySince >= 2000) {
+      break;
+    }
+    await targetPage.waitForTimeout(500);
+  }
+
+  return best;
+}
+
 export async function readNavHubs(targetPage) {
   const links = await readNavLinks(targetPage);
   return links
@@ -1949,7 +2126,7 @@ async function collectHubs(listPage) {
   const home = siteHome(listPage);
   await openListing(listPage, home);
 
-  const links = await readNavLinks(listPage);
+  const links = await readNavLinksSettled(listPage);
   // For You is always walked, whether or not the sidebar names it.
   const hubs = new Map([[hubPath(home), { url: home, title: "For You" }]]);
   for (const link of links) {
@@ -2000,31 +2177,60 @@ async function findCardTargets(listPage, hubUrl, max = 20) {
   return [...found.values()];
 }
 
+// Apple Professional Academy is where nearly all of an account's work lives,
+// and it is reached from the For You tab. Its card is classified as a section
+// on most builds but not on all of them, so on For You it is also looked up by
+// name, and either way it is put at the front: everything else on that tab is a
+// shortcut into it.
+async function withAcademy(listPage, hub, nodes) {
+  if (!/\/home\/for-you$/i.test(hubPath(hub.url))) return nodes;
+
+  const link = await findLinkMatching(listPage, ACADEMY_NAMES);
+  if (!link) {
+    log("Apple Professional Academy is not linked from For You on this account.");
+    return nodes;
+  }
+
+  const listed = nodes.find((node) => hubPath(node.url) === hubPath(link.url));
+  if (listed) {
+    log(`Walking Apple Professional Academy first: ${listed.url}`);
+    return [listed, ...nodes.filter((node) => node !== listed)];
+  }
+
+  log(`Apple Professional Academy was not listed as a section; opening it from its own link: ${link.url}`);
+  return [{
+    kind: "container",
+    id: `container:${link.url}`,
+    url: link.url,
+    title: "Apple Professional Academy",
+    completed: false,
+    locked: false
+  }, ...nodes];
+}
+
 // One hub page: everything listed on it is a root to walk into, and anything
 // that is already a module is run right there.
 async function walkHub(listPage, hub, state) {
   log(`Hub "${hub.title}": opening ${hub.url}`);
+  let nodes;
   try {
-    await openListing(listPage, hub.url);
+    nodes = await loadListingItems(listPage, hub.url);
   } catch (error) {
     log(`Could not open "${hub.title}": ${error instanceof Error ? error.message : String(error)}`);
     return;
   }
   session().page = listPage;
 
-  let nodes = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
-  if (!nodes.length) {
-    log(`Hub "${hub.title}" listed nothing; reloading it once.`);
-    await listPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS }).catch(() => {});
-    await listPage.waitForTimeout(2000);
-    nodes = await waitForChapterItems(listPage, EXAM_LOAD_TIMEOUT_MS);
-  }
   if (!nodes.length) nodes = await findCardTargets(listPage, hub.url);
+  nodes = await withAcademy(listPage, hub, nodes);
 
   const containers = nodes.filter((node) => node.kind === "container");
   const modules = nodes.filter((node) => node.kind === "module");
   log(`Hub "${hub.title}": ${containers.length} section(s) and ${modules.length} module(s) listed.`);
-  if (!nodes.length) return;
+  if (!nodes.length) {
+    log(`Hub "${hub.title}" has nothing on it to walk.`);
+    return;
+  }
 
   state.chapters.set(hub.url, {
     title: hub.title,
