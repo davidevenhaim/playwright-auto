@@ -1,80 +1,4 @@
 {
-  "apple": {
-    "name": "בוחן – ניהול מכשירי Apple בעבודה",
-    "examId": null,
-    "section": "Collection Apple Business Manager עם MDM מפשט את הפריסה 􀍠",
-    "url": "https://salescoach.apple.com/home/content/view/462089?backTo=%2Fhome%2Fcollection%2F88300",
-    "questions": [
-      {
-        "type": "single",
-        "match": "מהו אחד מהמאפיינים העיקריים של Apple Business המסייע בפריסה",
-        "answer": "רישום מכשירים אוטומטי"
-      },
-      {
-        "type": "multiple",
-        "match": "אילו שאלות עליכם לשאול כדי להבין את צורכי הפריסה של הלקוחות?",
-        "answers": [
-          "\"איך אתם מנהלים את מכשירי ה-iPhone שלכם?\"",
-          "\"מה מחלקת ה‐IT צריכה לעשות כדי שהמכשירים יהיו מוכנים לשימוש על ידי המשתמשים?\"",
-          "\"מה העובדים צריכים לעשות כדי להגדיר את המכשירים שלהם?\""
-        ]
-      },
-      {
-        "type": "multiple",
-        "match": "כיצד Apple תומכת בארגונים בתהליכי הפריסה ובשירותים הטכנולוגי",
-        "answers": [
-          "Apple מספקת תוכנה שעובדת עם שירותי ניהול המכשירים.",
-          "Apple מספקת תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה שלה.",
-          "Apple מציעה הכשרה בנושא ניהול מכשירים."
-        ]
-      },
-      {
-        "type": "multiple",
-        "match": "מה ג'וני אמר שהם שני היתרונות העיקריים עבור הלקוחות בתכנון ש",
-        "answers": [
-          "ביצועים",
-          "אמינות"
-        ]
-      },
-      {
-        "type": "single",
-        "match": "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ול",
-        "answer": "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית."
-      },
-      {
-        "type": "multiple",
-        "match": "כיצד Apple מיישמת את הערכים שלה בפועל?",
-        "answers": [
-          "בניית מאפייני נגישות במוצרי Apple ללא עלות נוספת",
-          "יצירת תוכנית שמטרתה להביא את Apple לניטרליות פחמנית בכל טביעת הרגל הגלובלית שלה עד 2030",
-          "עיצוב מוצרי Apple כך שיגנו על פרטי הלקוחות"
-        ]
-      }
-    ]
-  },
-  "apple-business-manager": {
-    "name": "התמצאות ב-Apple Business Manager",
-    "examId": null,
-    "section": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
-    "url": "https://salescoach.apple.com/home/content/view/467844?backTo=%2Fhome%2Fcollection%2F225054",
-    "questions": [
-      {
-        "type": "single",
-        "match": "היכן ב-Apple Business Manager אתם מוסיפים את שרת ה-MDM שלכם?",
-        "answer": "עליכם להקליק על השם שלכם בתחתית סרגל הצד, לבחור ב'העדפות' ולהקליק על הכפתור 'הוספה' ב-Your MDM Servers (שרתי MDM שלך)."
-      },
-      {
-        "type": "single",
-        "match": "מה עושה המאפיין Directory Sync (סנכרון ספריות) ב-Apple Busin",
-        "answer": "מייבא משתמשים באמצעות Google Workspace Sync, Microsoft Entra ID Sync או ספק זהות אחר (IdP)"
-      },
-      {
-        "type": "single",
-        "match": "כיצד הארגון שלכם יכול לבדוק מאפיינים בגרסת בטא עבור Apple Bu",
-        "answer": "עליכם להקליק על השם שלכם בתחתית סרגל הצד, לבחור ב'העדפות' ולבחור באפשרות Beta Features (מאפייני בטא)."
-      }
-    ]
-  },
   "apple-intelligence": {
     "name": "Apple Intelligence",
     "examId": null,
@@ -111,7 +35,7 @@
       }
     ]
   },
-  "apple-studio-display-xdr": {
+  "apple-studio-display-xdr-מבט-ראשון": {
     "name": "Apple Studio Display XDR – מבט ראשון",
     "examId": null,
     "section": "התכונות הבסיסיות של Mac",
@@ -128,7 +52,7 @@
       }
     ]
   },
-  "iphone-ipad": {
+  "בוחן-יסודות-ה-iphone-וה-ipad": {
     "name": "בוחן — יסודות ה—iPhone וה—iPad",
     "examId": null,
     "section": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
@@ -159,7 +83,86 @@
       }
     ]
   },
-  "it": {
+  "בוחן-ניהול-מכשירי-apple-בעבודה": {
+    "name": "בוחן – ניהול מכשירי Apple בעבודה",
+    "examId": null,
+    "section": "Collection Apple Business Manager עם MDM מפשט את הפריסה 􀍠",
+    "url": "https://salescoach.apple.com/home/content/view/462089?backTo=%2Fhome%2Fcollection%2F88300",
+    "questions": [
+      {
+        "type": "single",
+        "match": "מהו אחד מהמאפיינים העיקריים של Apple Business המסייע בפריסה",
+        "answer": "רישום מכשירים אוטומטי"
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שאלות עליכם לשאול כדי להבין את צורכי הפריסה של הלקוחות?",
+        "answers": [
+          "\"איך אתם מנהלים את מכשירי ה-iPhone שלכם?\"",
+          "\"מה מחלקת ה‐IT צריכה לעשות כדי שהמכשירים יהיו מוכנים לשימוש על ידי המשתמשים?\"",
+          "\"מה העובדים צריכים לעשות כדי להגדיר את המכשירים שלהם?\""
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "כיצד Apple תומכת בארגונים בתהליכי הפריסה ובשירותים הטכנולוגי",
+        "answers": [
+          "Apple מספקת תוכנה שעובדת עם שירותי ניהול המכשירים.",
+          "Apple מספקת תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה שלה.",
+          "Apple מציעה הכשרה בנושא ניהול מכשירים."
+        ]
+      }
+    ]
+  },
+  "בחירת-פתרון-mdm": {
+    "name": "בחירת פתרון MDM",
+    "examId": null,
+    "section": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/475854?backTo=%2Fhome%2Fcollection%2F225054",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "אילו שלוש שאלות עיקריות צריכות לסייע לשיקולים שלכם בבחירת פת",
+        "answers": [
+          "כמה מכשירים ינוהלו?",
+          "האם תנהלו רק מכשירים חדשים או רק מכשירים מדור קודם, או את שני הסוגים?",
+          "מהן היכולות של המכשירים שברצונכם לנהל?"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איזה מהמשפטים הבאים לגבי בחירת פתרון MDM הוא נכון?",
+        "answer": "ספקי MDM נבדלים אלה מאלה בהתייחסותם לארכיטקטורה מארחת, לקונסולות ניהול, לתהליכי עבודה ולדיווח."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שלוש יכולות יש לפתרונות MDM?",
+        "answers": [
+          "בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.",
+          "הפצת יישומים וספרים למכשירים או למשתמשים.",
+          "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."
+        ]
+      }
+    ]
+  },
+  "הכירו-את-הערכים-של-apple": {
+    "name": "הכירו את הערכים של Apple",
+    "examId": null,
+    "section": "הערכים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "כיצד Apple מיישמת את הערכים שלה בפועל?",
+        "answers": [
+          "בניית מאפייני נגישות במוצרי Apple ללא עלות נוספת",
+          "יצירת תוכנית שמטרתה להביא את Apple לניטרליות פחמנית בכל טביעת הרגל הגלובלית שלה עד 2030",
+          "עיצוב מוצרי Apple כך שיגנו על פרטי הלקוחות"
+        ]
+      }
+    ]
+  },
+  "הפלטפורמה-הטובה-ביותר-ל-it": {
     "name": "הפלטפורמה הטובה ביותר ל-IT",
     "examId": null,
     "section": "סיפור הפלטפורמה של Apple – לפי דרישה",
@@ -190,7 +193,7 @@
       }
     ]
   },
-  "learned-exam": {
+  "הקצאת-מכשירים": {
     "name": "הקצאת מכשירים",
     "examId": null,
     "section": "For You",
@@ -224,7 +227,81 @@
           "גודל האחסון",
           "מספר הזמנה"
         ]
+      }
+    ]
+  },
+  "התמצאות-ב-apple-business-manager": {
+    "name": "התמצאות ב-Apple Business Manager",
+    "examId": null,
+    "section": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/467844?backTo=%2Fhome%2Fcollection%2F225054",
+    "questions": [
+      {
+        "type": "single",
+        "match": "היכן ב-Apple Business Manager אתם מוסיפים את שרת ה-MDM שלכם?",
+        "answer": "עליכם להקליק על השם שלכם בתחתית סרגל הצד, לבחור ב'העדפות' ולהקליק על הכפתור 'הוספה' ב-Your MDM Servers (שרתי MDM שלך)."
       },
+      {
+        "type": "single",
+        "match": "מה עושה המאפיין Directory Sync (סנכרון ספריות) ב-Apple Busin",
+        "answer": "מייבא משתמשים באמצעות Google Workspace Sync, Microsoft Entra ID Sync או ספק זהות אחר (IdP)"
+      },
+      {
+        "type": "single",
+        "match": "כיצד הארגון שלכם יכול לבדוק מאפיינים בגרסת בטא עבור Apple Bu",
+        "answer": "עליכם להקליק על השם שלכם בתחתית סרגל הצד, לבחור ב'העדפות' ולבחור באפשרות Beta Features (מאפייני בטא)."
+      }
+    ]
+  },
+  "כמה-ידוע-לכם-על-הערכים-של-apple": {
+    "name": "כמה ידוע לכם על הערכים של Apple?",
+    "examId": null,
+    "section": "הערכים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872",
+    "questions": [
+      {
+        "type": "single",
+        "match": "איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את הקו",
+        "answer": "קול אישי"
+      },
+      {
+        "type": "single",
+        "match": "Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון או",
+        "answer": "נכון"
+      },
+      {
+        "type": "single",
+        "match": "Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק",
+        "answer": "נכון"
+      }
+    ]
+  },
+  "מדוע-כדאי-לבחור-ב-apple": {
+    "name": "מדוע כדאי לבחור ב-Apple",
+    "examId": null,
+    "url": "https://salescoach.apple.com/home/content/view/474914?backTo=%2Fhome%2Fcollection%2F239414&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "מה ג'וני אמר שהם שני היתרונות העיקריים עבור הלקוחות בתכנון ש",
+        "answers": [
+          "ביצועים",
+          "אמינות"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ול",
+        "answer": "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית."
+      }
+    ]
+  },
+  "רישום-הארגון": {
+    "name": "רישום הארגון",
+    "examId": null,
+    "section": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/475861?backTo=%2Fhome%2Fcollection%2F225054",
+    "questions": [
       {
         "type": "multiple",
         "match": "מבין הבאות, ציינו שתי דרישות לרישום הארגון ב-Apple Business",
@@ -242,37 +319,6 @@
         "type": "single",
         "match": "איזה מהשלבים הבאים מומלץ לבצע בעת הגדרת Apple Business Manag",
         "answer": "יצירת חשבון נוסף של מנהל מערכת."
-      }
-    ]
-  },
-  "mdm": {
-    "name": "בחירת פתרון MDM",
-    "examId": null,
-    "section": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
-    "url": "https://salescoach.apple.com/home/content/view/475854?backTo=%2Fhome%2Fcollection%2F225054",
-    "questions": [
-      {
-        "type": "multiple",
-        "match": "אילו שלוש שאלות עיקריות צריכות לסייע לשיקולים שלכם בבחירת פת",
-        "answers": [
-          "כמה מכשירים ינוהלו?",
-          "האם תנהלו רק מכשירים חדשים או רק מכשירים מדור קודם, או את שני הסוגים?",
-          "מהן היכולות של המכשירים שברצונכם לנהל?"
-        ]
-      },
-      {
-        "type": "single",
-        "match": "איזה מהמשפטים הבאים לגבי בחירת פתרון MDM הוא נכון?",
-        "answer": "ספקי MDM נבדלים אלה מאלה בהתייחסותם לארכיטקטורה מארחת, לקונסולות ניהול, לתהליכי עבודה ולדיווח."
-      },
-      {
-        "type": "multiple",
-        "match": "אילו שלוש יכולות יש לפתרונות MDM?",
-        "answers": [
-          "בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.",
-          "הפצת יישומים וספרים למכשירים או למשתמשים.",
-          "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."
-        ]
       }
     ]
   }

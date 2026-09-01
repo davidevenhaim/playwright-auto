@@ -1281,11 +1281,17 @@ function loadLearnedExamBank() {
   }
 }
 
+// Keeping only a-z threw away the whole of a Hebrew title, so every quiz with
+// "Apple" anywhere in its name became the same entry: three unrelated quizzes
+// merged into one under the id "apple", and a title with no Latin letters at
+// all became "learned-exam" along with every other one. The slug keeps any
+// letter or digit, in any script, which is what makes it the quiz's own name.
 function examIdFrom(title) {
-  return clean(title || "").toLowerCase()
+  const slug = clean(title || "").toLowerCase()
     .replace(/\s*\|.*$/, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "") || "learned-exam";
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-|-$/g, "");
+  return slug || "learned-exam";
 }
 
 // The opening of the question, which is what exams.js matches on. The leading
