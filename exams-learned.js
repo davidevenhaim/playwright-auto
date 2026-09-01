@@ -5,9 +5,11 @@
 // hand-maintained bank is exams.js, which merges this in: a question confirmed
 // here replaces the stored answer for that question, and a quiz that was not in
 // the bank at all is added whole.
-// 12 exam(s), last written 2026-09-01T05:58:35.721Z.
+// 14 exam(s), last written 2026-09-01T06:04:54.360Z.
 export const learnedExams = {
   // https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368
+  //   NOT SOLVED (single): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
+  //     12 attempt(s) already ruled out.
   "apple-intelligence": {
     name: "Apple Intelligence",
     section: "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
@@ -27,17 +29,36 @@ export const learnedExams = {
     ]
   },
   // https://salescoach.apple.com/home/content/view/475567?backTo=%2Fhome%2Fcollection%2F222222
+  //   NOT SOLVED (single): איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום
+  //     still in play: 1408323 | 1408326
+  //     2 attempt(s) already ruled out.
+  //   NOT SOLVED (single): היכן ניתן לשנות את הגדרות המיקום של יישום?
+  //     still in play: 'הגדרות' > 'פרטיות ואבטחה' > 'שירותי מיקום' | 'הגדרות' > 'שירותי מיקום' > 'פרטיות ואבטחה'
+  //     2 attempt(s) already ruled out.
+  //   NOT SOLVED (single): היכן מפעילים עדכוני תוכנה אוטומטיים?
+  //     still in play: 'הגדרות' > 'עדכון תוכנה' | 'הגדרות' > 'כללי' > 'עדכון תוכנה'
+  //     2 attempt(s) already ruled out.
+  //   NOT SOLVED (single): כיצד אפשר לבדוק את השימוש בסוללה ב-iPhone שלכם?
+  //     still in play: עוברים אל 'הגדרות' > 'סוללה' כדי להציג מידע על השימוש בסוללה. | עוברים אל 'הגדרות' > 'סוללה', ואחר מכך מקישים על 'שימוש' כדי להציג מידע על השימוש בסוללה.
+  //     2 attempt(s) already ruled out.
+  //   NOT SOLVED (single): איך יוצרים תיקייה לארגון יישומים ב-iPhone?
+  //     still in play: נוגעים נגיעה ממושכת ברקע של מסך הבית עד שהיישומים יתחילו להתנועע, ואז גוררים יישום על גבי יישום אחר. | עוברים אל 'ספריית היישומים' ומקישים על 'תיקייה חדשה', ואז גוררים יישומים לתיקייה.
+  //     2 attempt(s) already ruled out.
   "בוחן-יסודות-ה-iphone-וה-ipad": {
     name: "בוחן — יסודות ה—iPhone וה—iPad",
     section: "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
     questions: [
       { type: "single", match: "איזו קטגוריית נגישות מכילה תכונות שמקלות על הצגת הטקסט ב-iPa", answer: "חזות" },
       { type: "single", match: "שטח האחסון ב-iPad Pro כמעט מלא. איך אפשר להציג את זמינות האח", answer: "עוברים אל 'הגדרות' > 'כללי' > 'אחסון ב-iPad'." },
+      { type: "single", match: "איך מסירים יישום?", answer: "נוגעים נגיעה ממושכת ביישום כדי לפתוח תפריט אפשרויות מהיר, ואחר כך בוחרים באפשרות 'הסרת היישום'." },
       { type: "single", match: "איך מוסיפים חשבון לוח שנה ב-iPad?", answer: "עוברים ל'הגדרות' > 'יישומים' > 'לוח שנה' > 'חשבונות לוח שנה'." },
       { type: "multiple", match: "עליכם להעביר את היישומים והמידע מה-iPhone הקודם ל-iPhone חדש", answers: ["לקרב את שני המכשירים, ואחר כך לפעול לפי ההוראות שעל המסך.", "במכשיר הקודם, לעבור אל 'הגדרות'> 'כללי', להקיש על 'העברה או איפוס של ה-iPhone', ואחר כך לפעול לפי ההוראות שעל המסך."] },
     ]
   },
   // https://salescoach.apple.com/home/content/view/462089?backTo=%2Fhome%2Fcollection%2F88300
+  //   NOT SOLVED (single): כיצד Apple Business מפריד בין נתונים בעבודה לבין נתונים אישי
+  //     still in play: מדריך הגדרות מותאם אישית | אימות מאוחד | חשבונות Apple מנוהלים
+  //     1 attempt(s) already ruled out.
   "בוחן-ניהול-מכשירי-apple-בעבודה": {
     name: "בוחן – ניהול מכשירי Apple בעבודה",
     section: "Collection Apple Business Manager עם MDM מפשט את הפריסה 􀍠",
@@ -55,6 +76,15 @@ export const learnedExams = {
       { type: "multiple", match: "אילו שלוש שאלות עיקריות צריכות לסייע לשיקולים שלכם בבחירת פת", answers: ["כמה מכשירים ינוהלו?", "האם תנהלו רק מכשירים חדשים או רק מכשירים מדור קודם, או את שני הסוגים?", "מהן היכולות של המכשירים שברצונכם לנהל?"] },
       { type: "single", match: "איזה מהמשפטים הבאים לגבי בחירת פתרון MDM הוא נכון?", answer: "ספקי MDM נבדלים אלה מאלה בהתייחסותם לארכיטקטורה מארחת, לקונסולות ניהול, לתהליכי עבודה ולדיווח." },
       { type: "multiple", match: "אילו שלוש יכולות יש לפתרונות MDM?", answers: ["בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.", "הפצת יישומים וספרים למכשירים או למשתמשים.", "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."] },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956
+  //   NOT SOLVED (single): התאימו כל משפט של לקוח ליתרון של Apple.
+  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
+    name: "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+    section: "הכירו את Apple",
+    questions: [
+
     ]
   },
   // https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872
@@ -88,6 +118,9 @@ export const learnedExams = {
     ]
   },
   // https://salescoach.apple.com/home/content/view/467844?backTo=%2Fhome%2Fcollection%2F225054
+  //   NOT SOLVED (multiple): אילו מבין הבאים הם שני סוגים של קבוצות שניתן ליצור ב-Apple B
+  //     still in play: Smart User Group (קבוצת משתמשים חכמים) | Managed Group (קבוצה מנוהלת) | Access Group (קבוצת גישה) | Dynamic User Group (קבוצת משתמשים דינמיים) | User Group (קבוצת משתמשים) | Device Group (קבוצת מכשירים)
+  //     3 attempt(s) already ruled out.
   "התמצאות-ב-apple-business-manager": {
     name: "התמצאות ב-Apple Business Manager",
     section: "הכנה לפריסה מוצלחת של הפתרונות של Apple",
@@ -98,6 +131,35 @@ export const learnedExams = {
     ]
   },
   // https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
+  //   NOT SOLVED (multiple): המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן
+  //     still in play: שמיעה | תנועה | קוגניציה | ראייה | דיבור | מוטוריקה
+  //     6 attempt(s) already ruled out.
+  //   NOT SOLVED (multiple): אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע
+  //     still in play: עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. | שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. | מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב. | העסקת אנשים בעלי מוגבלויות.
+  //     4 attempt(s) already ruled out.
+  //   NOT SOLVED (selects): Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.
+  //     1 attempt(s) already ruled out.
+  //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי
+  //     still in play: כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד. Apple מתכננת להפוך את כל המוצרים שלה לניטרליים פחמנית עד 2030. | הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן. | Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015. | החזו
+  //     4 attempt(s) already ruled out.
+  //   NOT SOLVED (single): Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה
+  //     3 attempt(s) already ruled out.
+  //   NOT SOLVED (multiple): אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו
+  //     still in play: הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.
+  //     4 attempt(s) already ruled out.
+  //   NOT SOLVED (selects): השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'
+  //     7 attempt(s) already ruled out.
+  //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל
+  //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.
+  //     3 attempt(s) already ruled out.
+  //   NOT SOLVED (single): כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח
+  //     2 attempt(s) already ruled out.
+  //   NOT SOLVED (multiple): Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם
+  //     still in play: הנדסה | רפורמה בצדק הפלילי | העצמה כלכלית | חינוך
+  //     4 attempt(s) already ruled out.
+  //   NOT SOLVED (multiple): אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה
+  //     still in play: Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. | Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. | Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple. | Apple מתעדפת בריאות ובטיחות
+  //     4 attempt(s) already ruled out.
   "כמה-ידוע-לכם-על-הערכים-של-apple": {
     name: "כמה ידוע לכם על הערכים של Apple?",
     section: "הערכים של Apple",
@@ -116,6 +178,9 @@ export const learnedExams = {
     ]
   },
   // https://salescoach.apple.com/home/content/view/475861?backTo=%2Fhome%2Fcollection%2F225054
+  //   NOT SOLVED (single): 'רישום מכשירים' – מה הוא בעצם עושה?
+  //     still in play: הוא מאפשר הקצאה אוטומטית של מכשירים שנרכשו לשרת MDM | הוא רושם בשרת MDM מכשירים שנרכשו והוגדרו בעבר
+  //     2 attempt(s) already ruled out.
   "רישום-הארגון": {
     name: "רישום הארגון",
     section: "הכנה לפריסה מוצלחת של הפתרונות של Apple",
@@ -123,6 +188,16 @@ export const learnedExams = {
       { type: "multiple", match: "מבין הבאות, ציינו שתי דרישות לרישום הארגון ב-Apple Business", answers: ["מספר לקוח Apple", "מספר D-U-N-S"] },
       { type: "single", match: "מה צריך להוסיף ל-Apple Business Manager אם הארגון רוכש מכשיר", answer: "מספר משווק" },
       { type: "single", match: "איזה מהשלבים הבאים מומלץ לבצע בעת הגדרת Apple Business Manag", answer: "יצירת חשבון נוסף של מנהל מערכת." },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/532276?backTo=%2Fhome%2Fcollection%2F292368
+  //   NOT SOLVED (selects): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
+  //     12 attempt(s) already ruled out.
+  "שיתוף-המאפיינים-החדשים-לבטיחות-ילדים": {
+    name: "שיתוף המאפיינים החדשים לבטיחות ילדים",
+    section: "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
+    questions: [
+
     ]
   },
 };

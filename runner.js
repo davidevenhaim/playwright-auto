@@ -1320,9 +1320,56 @@ function matchTextFor(question) {
 // are kept — a guess that has not been confirmed has no business in an answer
 // bank — and a question already there is overwritten, because the newest
 // confirmation is the one the site just agreed with.
+// Two answer texts are the same answer when one is a whole-word prefix of the
+// other: what comes back out of a grade carries the player's verdict stuck on
+// the end of the option it revealed.
+function sameAnswerText(one, other) {
+  const a = clean(one);
+  const b = clean(other);
+  if (!a || !b) return false;
+  if (a === b) return true;
+  const [longer, shorter] = a.length >= b.length ? [a, b] : [b, a];
+  return shorter.length >= 2 && longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
+}
+
+// A single-answer question the server never marked correct can still be
+// answered: once it has rejected every option but one, the one left is the only
+// one it can be. Six attempts at a four-option question leave that knowledge
+// lying around, and banking only what was confirmed threw it away — the next
+// run started from nothing and rejected the same three options again.
+function deduceByElimination(question) {
+  if (question.type !== "single") return null;
+  const options = (question.options || [])
+    .map((option) => clean(typeof option === "string" ? option : option?.text))
+    .filter(Boolean);
+  if (options.length < 2) return null;
+
+  const refused = rejectedAnswers.get(answerKeyOf(question.question));
+  if (!refused?.options?.length) return null;
+
+  const left = options.filter((option) => !refused.options.some((wrong) => sameAnswerText(wrong, option)));
+  return left.length === 1 ? [left[0]] : null;
+}
+
 function rememberLearnedExam(learned, examId = null) {
-  const confirmed = (learned.questions || []).filter((question) => question.confirmedAnswers?.length);
-  if (!confirmed.length) return false;
+  // What the server confirmed, plus what it has ruled out everything else
+  // against. Both are answers; only the first is an answer it stated outright.
+  const confirmed = (learned.questions || []).map((question) => {
+    if (question.confirmedAnswers?.length) return question;
+    const deduced = deduceByElimination(question);
+    if (!deduced) return null;
+    log(`Answered by elimination: every other option for "${clean(question.question).slice(0, 50)}" has been rejected.`);
+    return { ...question, confirmedAnswers: deduced };
+  }).filter(Boolean);
+
+  // A quiz that confirmed nothing at all still belongs in the bank. Returning
+  // early here is why an exam that failed outright left no trace: no answers, so
+  // no entry, so nothing recording that the exam exists or what it is still
+  // asking. What it asks and what is left in play is worth keeping even when
+  // none of it can be answered yet.
+  const anyUnsolved = (learned.questions || []).some((question) =>
+    !question.confirmedAnswers?.length && !deduceByElimination(question));
+  if (!confirmed.length && !anyUnsolved) return false;
 
   const id = examId || examIdFrom(learned.exam || learned.module);
   const existing = learnedExamBank.get(id) || {
@@ -1336,6 +1383,7 @@ function rememberLearnedExam(learned, examId = null) {
 
   let changed = false;
   for (const question of confirmed) {
+    if (!question.confirmedAnswers?.length) continue;
     const match = matchTextFor(question.question);
     if (!match) continue;
     const answers = question.confirmedAnswers.map(withoutFeedback).filter(Boolean);
@@ -1350,6 +1398,31 @@ function rememberLearnedExam(learned, examId = null) {
     else existing.questions.push(entry);
     if (before !== JSON.stringify(entry)) changed = true;
   }
+
+  // A question still unsolved is worth recording too. It will not be answered
+  // from the bank — a guess in an answer bank is worse than a gap — but a failed
+  // exam that leaves no trace at all is a failed exam nobody can finish by hand,
+  // so what it asks and what is left in play is written alongside it as a note.
+  const unsolved = (learned.questions || [])
+    .filter((question) => !question.confirmedAnswers?.length && !deduceByElimination(question))
+    .map((question) => {
+      const refused = rejectedAnswers.get(answerKeyOf(question.question));
+      const options = (question.options || [])
+        .map((option) => clean(typeof option === "string" ? option : option?.text))
+        .filter(Boolean)
+        .map(withoutFeedback);
+      const ruledOut = (refused?.options || []).map(withoutFeedback);
+      return {
+        match: matchTextFor(question.question),
+        type: question.type,
+        remaining: options.filter((option) => !ruledOut.some((wrong) => sameAnswerText(wrong, option))),
+        ruledOut: (refused?.sets || []).length || ruledOut.length
+      };
+    })
+    .filter((question) => question.match);
+  const unsolvedBefore = JSON.stringify(existing.unsolved || []);
+  existing.unsolved = unsolved.length ? unsolved : undefined;
+  if (JSON.stringify(existing.unsolved || []) !== unsolvedBefore) changed = true;
 
   if (!changed) return false;
   learnedExamBank.set(id, existing);
@@ -1379,8 +1452,17 @@ function writeLearnedExamsModule(bank) {
     const lines = exam.questions.map((question) => (question.type === "single"
       ? `      { type: "single", match: ${quote(question.match)}, answer: ${quote(question.answer)} },`
       : `      { type: ${quote(question.type)}, match: ${quote(question.match)}, answers: [${question.answers.map(quote).join(", ")}] },`));
+    // Questions this exam has not given up yet, as a note rather than an answer.
+    const open = (exam.unsolved || []).map((question) =>
+      `  //   NOT SOLVED (${question.type}): ${question.match}` +
+      (question.remaining?.length
+        ? `\n  //     still in play: ${question.remaining.join(" | ").slice(0, 300)}`
+        : "") +
+      (question.ruledOut ? `\n  //     ${question.ruledOut} attempt(s) already ruled out.` : ""));
+
     return [
       exam.url ? `  // ${exam.url}` : null,
+      open.length ? open.join("\n") : null,
       `  ${quote(id)}: {`,
       `    name: ${quote(exam.name)},`,
       exam.examId ? `    examId: ${quote(exam.examId)},` : null,
