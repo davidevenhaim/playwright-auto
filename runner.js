@@ -1134,6 +1134,11 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
     // page is offering. Reported so a key that silently stops applying shows up
     // instead of looking like a run that simply keeps guessing wrong.
     const unmatched = [];
+    // Questions the memory has no answer for under the key this page produces.
+    // When the run has just confirmed an answer for a question and still cannot
+    // find it a moment later, the key is what has gone wrong, and the key is
+    // what this reports.
+    const unresolved = [];
 
     const labelOf = (input, question) => {
       const label = input.labels?.[0] ||
@@ -1199,6 +1204,15 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
 
       const chosen = [];
       const settled = knownFor(question);
+      if (!settled && (boxes.length || radios.length || selects.length)) {
+        const heading = question.querySelector(
+          ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
+        );
+        unresolved.push({
+          key: keyOf(heading?.innerText || question.innerText),
+          text: tidy(heading?.innerText || question.innerText).slice(0, 120)
+        });
+      }
       // Everything the server has already rejected for this question. Picking
       // around it is what turns a second attempt into a different guess rather
       // than the same one.
@@ -1436,18 +1450,25 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
       picked.push({ question: tidy(heading?.innerText || question.innerText).slice(0, 300), chosen });
     }
 
-    picked.unmatchedLearned = unmatched;
-    return picked;
+    // Returned as an object: a property hung off the array would be dropped by
+    // the structured clone that carries this back out of the page.
+    return { picked, unmatched, unresolved };
   }, [known, rejected]);
 }
 
 // An answer the server confirmed that no longer matches anything on the page is
 // a key the run is throwing away on every retry, and it looks from the outside
 // like a quiz that simply refuses to be solved. Say so.
-function reportUnmatchedLearned(picks) {
-  for (const miss of picks?.unmatchedLearned || []) {
+function reportUnmatchedLearned(filled) {
+  for (const miss of filled?.unmatched || []) {
     log(`A confirmed answer no longer matches this question: "${miss.question}" wants ` +
       `[${miss.wanted.join(" | ")}] but the page offers [${miss.offered.join(" | ")}].`);
+  }
+  for (const miss of filled?.unresolved || []) {
+    // Only worth saying when the memory does hold this question under some
+    // other key; a question nobody has ever answered is simply unknown.
+    if (!learnedAnswers.has(miss.key)) continue;
+    log(`Key mismatch: this page reads the question as "${miss.key}", which is not the key its confirmed answer was filed under.`);
   }
 }
 
@@ -2021,16 +2042,17 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     }
 
     if (answeredBlind) {
-      const picks = await fillBlindly(
+      const filled = await fillBlindly(
         ready.frame,
         Object.fromEntries(learnedAnswers),
         Object.fromEntries(rejectedAnswers)
       );
+      const picks = filled.picked;
       if (!picks.length) throw new Error("Nothing on this quiz could be answered blind.");
       const settled = picks.filter((pick) => pick.fromLearned).length;
       log(`Answered ${picks.length} question(s) blind` +
         (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
-      reportUnmatchedLearned(picks);
+      reportUnmatchedLearned(filled);
     }
     state.examsFilled++;
 
@@ -2141,12 +2163,28 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         break;
       }
 
+      // Put the answer bank back first. The player wipes every selection when it
+      // offers another attempt, so a quiz that scored 9 of 10 from exams.js
+      // starts the retry blank, and rebuilding it only from what this run has
+      // confirmed threw away every stored answer — which is how a 90% attempt
+      // was followed by a 40% one. Refilling from the same key that scored 90%
+      // and only then taking out what the grade rejected keeps each attempt at
+      // least as good as the one before it.
+      if (detected?.matchedQuestions) {
+        const refilled = await runExam(detected.id, false, { preserveLogs: true, immediate: true })
+          .catch((error) => {
+            log(`Could not re-apply the stored answers: ${error instanceof Error ? error.message : String(error)}`);
+            return null;
+          });
+        if (refilled) log(`Re-applied ${refilled.success} stored answer(s) before this attempt.`);
+      }
       const cleared = await clearRejectedQuestions(ready.frame, graded);
-      const picks = await fillBlindly(
+      const filled = await fillBlindly(
         ready.frame,
         Object.fromEntries(learnedAnswers),
         Object.fromEntries(rejectedAnswers)
       );
+      const picks = filled.picked;
       if (!picks.length) {
         log("Nothing could be filled in for another attempt.");
         break;
@@ -2156,7 +2194,7 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       const settled = picks.filter((pick) => pick.fromLearned).length;
       log(`Attempt ${attempt} at "${quizName || item.title}": cleared ${cleared} rejected answer(s), ` +
         `kept ${settled} confirmed one(s), guessed the rest around what the last grade refused.`);
-      reportUnmatchedLearned(picks);
+      reportUnmatchedLearned(filled);
     }
 
     recordResult(state, item, {
