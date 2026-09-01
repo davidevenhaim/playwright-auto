@@ -1273,6 +1273,35 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
       return tidy(label?.innerText || input.value);
     };
 
+    // Changing a dropdown is not the same as telling the player it changed. The
+    // content player is a jQuery application and some of its handlers are bound
+    // through jQuery rather than to the element, so a plain assignment left the
+    // accessible dropdowns of a drag-and-drop question looking answered on the
+    // page while the player still counted the question as blank and refused the
+    // whole submission. Set the option every way it can be read, and announce it
+    // both natively and through jQuery.
+    const chooseOption = (select, index) => {
+      if (index == null || index < 0 || index >= select.options.length) return false;
+      for (const option of select.options) {
+        option.selected = option.index === index;
+        if (option.index === index) option.setAttribute("selected", "selected");
+        else option.removeAttribute("selected");
+      }
+      select.selectedIndex = index;
+      select.value = select.options[index].value;
+      select.dispatchEvent(new Event("input", { bubbles: true }));
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+      const jq = window.jQuery || window.$;
+      if (jq) {
+        try {
+          jq(select).val(select.options[index].value).trigger("change");
+        } catch {
+          // The player may not have jQuery data bound to this element.
+        }
+      }
+      return true;
+    };
+
     const keyOf = (text) => tidy(String(text).normalize("NFKC"))
       .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, " ")
       .replace(/^\d+[\s.)]*/, "")
@@ -1380,9 +1409,7 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
           const option = Array.from(select.options).find((candidate) =>
             tidy(candidate.textContent) === answer || isPrefixAnswer(tidy(candidate.textContent), answer));
           if (!option) return;
-          select.selectedIndex = option.index;
-          select.dispatchEvent(new Event("change", { bubbles: true }));
-          applied++;
+          if (chooseOption(select, option.index)) applied++;
         });
         if (applied === selects.length) {
           picked.push({
@@ -1498,15 +1525,10 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
         selects.forEach((select, position) => {
           const option = assignment?.[position];
           if (!option) return;
-          if (select.selectedIndex === option.index) return;
-          select.selectedIndex = option.index;
-          select.dispatchEvent(new Event("change", { bubbles: true }));
+          chooseOption(select, option.index);
         });
         for (const select of selects) {
-          if (select.selectedIndex <= 0 && select.options.length > 1) {
-            select.selectedIndex = 1;
-            select.dispatchEvent(new Event("change", { bubbles: true }));
-          }
+          if (select.selectedIndex <= 0 && select.options.length > 1) chooseOption(select, 1);
           chosen.push(tidy(select.options[select.selectedIndex]?.textContent || ""));
         }
       } else if (boxes.length) {
@@ -3618,6 +3640,49 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
 // is only ever the way in to the Academy.
 export async function processForYou(options = {}) {
   return processAcademy(options);
+}
+
+// The markup of whatever the player is refusing to accept. A quiz that will not
+// submit reports a count and a control list; when that is not enough to see what
+// the question wants, this returns the question's own HTML.
+export async function probeUnanswered() {
+  const targetPage = await connectedPage();
+  for (const frame of targetPage.frames()) {
+    const found = await frame.evaluate(() => {
+      const jq = window.jQuery || window.$;
+      if (!jq || typeof SeedInterface === "undefined" || !SeedInterface.QSP?.buildReturnJSON) return null;
+      let unanswered = [];
+      try {
+        unanswered = Array.from(SeedInterface.QSP.buildReturnJSON(jq("form[assessmentId]").first()).$unansweredQuestions);
+      } catch {
+        return null;
+      }
+      return {
+        unanswered: unanswered.length,
+        questions: unanswered.slice(0, 3).map((element) => {
+          const node = element.closest?.(".question") || element;
+          return {
+            classes: node.className,
+            html: node.outerHTML.slice(0, 12000),
+            selects: Array.from(node.querySelectorAll("select")).map((select) => ({
+              name: select.name,
+              id: select.id,
+              selectedIndex: select.selectedIndex,
+              value: select.value,
+              options: Array.from(select.options).map((option) => ({
+                index: option.index,
+                value: option.value,
+                text: (option.textContent || "").trim().slice(0, 60),
+                selected: option.selected
+              }))
+            }))
+          };
+        })
+      };
+    }).catch(() => null);
+    if (found) return found;
+  }
+  return { unanswered: null, questions: [], reason: "No SEED assessment frame is on this page." };
 }
 
 // A structural dump of whatever the connected tab is showing. When the walk

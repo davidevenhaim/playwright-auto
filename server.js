@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, screenshotPage, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -455,6 +455,16 @@ app.get("/api/screenshot", async (req, res) => {
     const png = await withSession(sessionOf(req), () =>
       screenshotPage({ fullPage: req.query.full === "1" }));
     res.type("png").send(png);
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+// What the player is refusing to accept, in its own markup. The run log says
+// which question and what controls it holds; this says exactly what is in it.
+app.get("/api/probe", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => probeUnanswered()));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
