@@ -1,8 +1,92 @@
 {
-  "updatedAt": "2026-09-01T06:52:02.452Z",
-  "stillFailing": 15,
+  "updatedAt": "2026-09-01T07:23:42.670Z",
+  "stillFailing": 19,
   "resolved": 12,
   "exams": {
+    "https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054": {
+      "title": "יצירת חשבונות Apple מנוהלים",
+      "module": "יצירת חשבונות Apple מנוהלים",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054",
+      "firstSeen": "2026-09-01T07:23:42.670Z",
+      "occurrences": 1,
+      "sessions": [
+        "aviv"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T07:23:42.670Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Could not identify this exam. Make sure the exam questions are visible in the connected tab."
+      ]
+    },
+    "https://salescoach.apple.com/home/content/view/475875?backTo=%2Fhome%2Fcollection%2F225054": {
+      "title": "תכנון עבור הארגון שלכם",
+      "module": "תכנון עבור הארגון שלכם",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/475875?backTo=%2Fhome%2Fcollection%2F225054",
+      "firstSeen": "2026-09-01T07:23:10.056Z",
+      "occurrences": 1,
+      "sessions": [
+        "aviv"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T07:23:10.056Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Could not identify this exam. Make sure the exam questions are visible in the connected tab."
+      ]
+    },
+    "https://salescoach.apple.com/home/content/view/475873?backTo=%2Fhome%2Fcollection%2F225054": {
+      "title": "מידע על אימות דומיין",
+      "module": "מידע על אימות דומיין",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/475873?backTo=%2Fhome%2Fcollection%2F225054",
+      "firstSeen": "2026-09-01T07:22:20.695Z",
+      "occurrences": 1,
+      "sessions": [
+        "aviv"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T07:22:20.695Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Could not identify this exam. Make sure the exam questions are visible in the connected tab."
+      ]
+    },
+    "https://salescoach.apple.com/home/content/view/475868?backTo=%2Fhome%2Fcollection%2F225054": {
+      "title": "התחברות ל-MDM",
+      "module": "התחברות ל-MDM",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/475868?backTo=%2Fhome%2Fcollection%2F225054",
+      "firstSeen": "2026-09-01T07:21:44.671Z",
+      "occurrences": 1,
+      "sessions": [
+        "aviv"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T07:21:44.671Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Could not identify this exam. Make sure the exam questions are visible in the connected tab."
+      ]
+    },
     "https://salescoach.apple.com/home/content/view/447596?backTo=%2Fhome%2Fcollection%2F57570": {
       "title": "אתגר מהיר – Apple Intelligence ופרטיות",
       "module": "אתגר מהיר – Apple Intelligence ופרטיות",

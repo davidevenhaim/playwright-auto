@@ -4,9 +4,49 @@ Written by the runner as each failure happens, so this is current even while
 a run is still going. It accumulates across runs and across accounts; an exam
 that later passes moves to the bottom rather than disappearing.
 
-Updated 2026-09-01T06:52:02.453Z — **15 still failing**, 12 since fixed.
+Updated 2026-09-01T07:23:42.671Z — **19 still failing**, 12 since fixed.
 
 ## Still failing
+
+### יצירת חשבונות Apple מנוהלים
+
+- **What happened:** never reached a grade
+- **Chapter:** הכנה לפריסה מוצלחת של הפתרונות של Apple
+- **Identified:** no — no entry in the answer bank matched it
+- **Seen:** 1 time(s), last 2026-09-01T07:23:42.670Z (session aviv)
+- **Module:** https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054
+- **Reported:**
+  - Could not identify this exam. Make sure the exam questions are visible in the connected tab.
+
+### תכנון עבור הארגון שלכם
+
+- **What happened:** never reached a grade
+- **Chapter:** הכנה לפריסה מוצלחת של הפתרונות של Apple
+- **Identified:** no — no entry in the answer bank matched it
+- **Seen:** 1 time(s), last 2026-09-01T07:23:10.056Z (session aviv)
+- **Module:** https://salescoach.apple.com/home/content/view/475875?backTo=%2Fhome%2Fcollection%2F225054
+- **Reported:**
+  - Could not identify this exam. Make sure the exam questions are visible in the connected tab.
+
+### מידע על אימות דומיין
+
+- **What happened:** never reached a grade
+- **Chapter:** הכנה לפריסה מוצלחת של הפתרונות של Apple
+- **Identified:** no — no entry in the answer bank matched it
+- **Seen:** 1 time(s), last 2026-09-01T07:22:20.695Z (session aviv)
+- **Module:** https://salescoach.apple.com/home/content/view/475873?backTo=%2Fhome%2Fcollection%2F225054
+- **Reported:**
+  - Could not identify this exam. Make sure the exam questions are visible in the connected tab.
+
+### התחברות ל-MDM
+
+- **What happened:** never reached a grade
+- **Chapter:** הכנה לפריסה מוצלחת של הפתרונות של Apple
+- **Identified:** no — no entry in the answer bank matched it
+- **Seen:** 1 time(s), last 2026-09-01T07:21:44.671Z (session aviv)
+- **Module:** https://salescoach.apple.com/home/content/view/475868?backTo=%2Fhome%2Fcollection%2F225054
+- **Reported:**
+  - Could not identify this exam. Make sure the exam questions are visible in the connected tab.
 
 ### אתגר מהיר – Apple Intelligence ופרטיות
 
