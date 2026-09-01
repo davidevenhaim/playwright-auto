@@ -5,7 +5,7 @@
 // hand-maintained bank is exams.js, which merges this in: a question confirmed
 // here replaces the stored answer for that question, and a quiz that was not in
 // the bank at all is added whole.
-// 14 exam(s), last written 2026-09-01T06:30:57.865Z.
+// 16 exam(s), last written 2026-09-01T06:52:49.851Z.
 export const learnedExams = {
   // https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368
   //   NOT SOLVED (single): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
@@ -26,6 +26,17 @@ export const learnedExams = {
     section: "התכונות הבסיסיות של Mac",
     questions: [
       { type: "multiple", match: "אילו מהמשפטים על Studio Display XDR נכונים?", answers: ["זהו הצג היחיד במשפחת Studio Display עם קצב רענון של 120Hz ו‐Adaptive Sync. מושלם.", "הוא מגיע עם אפשרות אחרת למעמד שניתן לכוונן גם את ההטיה וגם את הגובה שלו. מעולה.", "הוא כולל את אותן מצלמות מתקדמות ומיקרופונים באיכות אולפן כמו Studio Display. יפה מאוד."] },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/499819?backTo=%2Fhome%2Fcollection%2F57570
+  //   NOT SOLVED (single): כמה מצלמות Fusion ברזולוציה של 48MP יש בדגמי iPhone 17 Pro?
+  //     still in play: שתיים | שלושה | ארבע
+  //     1 attempt(s) already ruled out.
+  "iphone-17-pro-מבט-ראשון": {
+    name: "iPhone 17 Pro – מבט ראשון",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "single", match: "נכון או לא נכון: הלקוחות יכולים לצלם תמונות עם זום של עד פי", answer: "לא נכון" },
     ]
   },
   // https://salescoach.apple.com/home/content/view/475567?backTo=%2Fhome%2Fcollection%2F222222
@@ -121,6 +132,15 @@ export const learnedExams = {
       { type: "single", match: "כיצד הארגון שלכם יכול לבדוק מאפיינים בגרסת בטא עבור Apple Bu", answer: "עליכם להקליק על השם שלכם בתחתית סרגל הצד, לבחור ב'העדפות' ולבחור באפשרות Beta Features (מאפייני בטא)." },
     ]
   },
+  // https://salescoach.apple.com/home/content/view/500628?backTo=%2Fhome%2Fcollection%2F57570
+  "זרקור-על-המצלמה-הקדמית-עם-מרכז-הבמה-ב-iphone": {
+    name: "זרקור על המצלמה הקדמית עם 'מרכז הבמה' ב-iPhone",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "single", match: "נכון או לא נכון: הלקוחות יכולים לצלם סרטונים במצלמה הקדמית ו", answer: "נכון יפה מאוד." },
+      { type: "single", match: "מה עליכם לומר ללקוחות על צילום תמונות סלפי באמצעות המצלמה הק", answer: "\"אפשר למסגר תמונה בקלות ולהכניס יותר אנשים לתמונת סלפי קבוצתית.\"" },
+    ]
+  },
   // https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
   //   NOT SOLVED (multiple): המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן
   //     still in play: קוגניציה | דיבור | מוטוריקה | תנועה | ראייה | שמיעה
@@ -138,6 +158,8 @@ export const learnedExams = {
   //   NOT SOLVED (multiple): אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו
   //     still in play: הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.
   //     4 attempt(s) already ruled out.
+  //   NOT SOLVED (selects): השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'
+  //     15 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל
   //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.
   //     3 attempt(s) already ruled out.
@@ -168,17 +190,6 @@ export const learnedExams = {
       { type: "single", match: "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ול", answer: "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית." },
     ]
   },
-  // https://salescoach.apple.com/home/content/view/283335?backTo=%2Fhome%2Fcollection%2F69411
-  //   NOT SOLVED (multiple): לאילו מחויבויות סביבתיות התחייבה Apple?
-  //     still in play: להשיג ניטרליות פחמנית מלאה עד 2035 כל הפעילות של Apple תגיע לאפס פליטת פחמן עד 2030, לא עד 2035. | להשקיע בפתרונות שמבוססים על הטבע | שימוש בחומרים ממוחזרים Apple משתמשת בחומרים ממוחזרים ובוחנת אותם לאיכות ולעמידות. | הסרת פלסטיק מהאריזה Apple פועלת להפסקת השימוש בפלסטיק ולשימוש מופחת בחומרי אריזה ב
-  //     3 attempt(s) already ruled out.
-  "מידע-על-המחויבות-של-apple-לכדור-הארץ": {
-    name: "מידע על המחויבות של Apple לכדור הארץ",
-    section: "הסביבה",
-    questions: [
-
-    ]
-  },
   // https://salescoach.apple.com/home/content/view/475861?backTo=%2Fhome%2Fcollection%2F225054
   //   NOT SOLVED (single): 'רישום מכשירים' – מה הוא בעצם עושה?
   //     still in play: הוא מאפשר הקצאה אוטומטית של מכשירים שנרכשו לשרת MDM | הוא רושם בשרת MDM מכשירים שנרכשו והוגדרו בעבר
@@ -198,6 +209,16 @@ export const learnedExams = {
     section: "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
     questions: [
       { type: "selects", match: "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.", answers: ["בקשת אישור לרכישה", "Ask to Browse", "בטיחות בתקשורת", "הקצבות זמן", "זמן מסך"] },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/519205?backTo=%2Fhome%2Fcollection%2F57570
+  //   NOT SOLVED (selects): התאימו את המאפיינים הבאים של iPhone 17e לצורך של לקוחות.
+  //     1 attempt(s) already ruled out.
+  "שתפו-את-הסיבות-האלו-לרכישת-iphone-17e-עוד-היום": {
+    name: "שתפו את הסיבות האלו לרכישת iPhone 17e עוד היום",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+
     ]
   },
 };

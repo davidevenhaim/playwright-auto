@@ -1,8 +1,243 @@
 {
-  "updatedAt": "2026-09-01T06:32:38.865Z",
-  "stillFailing": 11,
-  "resolved": 10,
+  "updatedAt": "2026-09-01T06:52:02.452Z",
+  "stillFailing": 15,
+  "resolved": 12,
   "exams": {
+    "https://salescoach.apple.com/home/content/view/447596?backTo=%2Fhome%2Fcollection%2F57570": {
+      "title": "אתגר מהיר – Apple Intelligence ופרטיות",
+      "module": "אתגר מהיר – Apple Intelligence ופרטיות",
+      "chapter": "התכונות הבסיסיות של iPhone",
+      "url": "https://salescoach.apple.com/home/content/view/447596?backTo=%2Fhome%2Fcollection%2F57570",
+      "firstSeen": "2026-09-01T06:52:02.452Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:52:02.452Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "This module has a quiz, but its questions never rendered. It may be locked or out of attempts."
+      ]
+    },
+    "https://salescoach.apple.com/home/content/view/448612?backTo=%2Fhome%2Fcollection%2F57570": {
+      "title": "התאימו את המאפיינים של Apple Intelligence ב-iPhone למה שחשוב ללקוחות",
+      "module": "התאימו את המאפיינים של Apple Intelligence ב-iPhone למה שחשוב ללקוחות",
+      "chapter": "התכונות הבסיסיות של iPhone",
+      "url": "https://salescoach.apple.com/home/content/view/448612?backTo=%2Fhome%2Fcollection%2F57570",
+      "firstSeen": "2026-09-01T06:51:07.126Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:51:07.126Z",
+      "lastSeen": "2026-09-01T06:51:07.126Z",
+      "lastOutcome": "submitted; the server recorded it without grading",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/519205?backTo=%2Fhome%2Fcollection%2F57570": {
+      "title": "שתפו את הסיבות האלו לרכישת iPhone 17e עוד היום",
+      "module": "שתפו את הסיבות האלו לרכישת iPhone 17e עוד היום",
+      "chapter": "התכונות הבסיסיות של iPhone",
+      "url": "https://salescoach.apple.com/home/content/view/519205?backTo=%2Fhome%2Fcollection%2F57570",
+      "firstSeen": "2026-09-01T06:49:32.708Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:49:32.708Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 100% threshold after 3 attempt(s)",
+      "unsolved": [
+        {
+          "match": "התאימו את המאפיינים הבאים של iPhone 17e לצורך של לקוחות.",
+          "type": "selects",
+          "remaining": [],
+          "ruledOut": 1
+        }
+      ],
+      "reasons": []
+    },
+    "https://salescoach.apple.com/home/content/view/500628?backTo=%2Fhome%2Fcollection%2F57570": {
+      "title": "זרקור על המצלמה הקדמית עם 'מרכז הבמה' ב-iPhone",
+      "module": "זרקור על המצלמה הקדמית עם 'מרכז הבמה' ב-iPhone",
+      "chapter": "התכונות הבסיסיות של iPhone",
+      "url": "https://salescoach.apple.com/home/content/view/500628?backTo=%2Fhome%2Fcollection%2F57570",
+      "firstSeen": "2026-09-01T06:48:30.870Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:48:30.870Z",
+      "lastSeen": "2026-09-01T06:48:30.870Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/346046?backTo=%2Fhome%2Fcollection%2F68600": {
+      "title": "אתגר מהיר – נגישות",
+      "module": "אתגר מהיר – נגישות",
+      "chapter": "נגישות",
+      "url": "https://salescoach.apple.com/home/content/view/346046?backTo=%2Fhome%2Fcollection%2F68600",
+      "firstSeen": "2026-09-01T06:44:44.092Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:44:44.092Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "This module has a quiz, but its questions never rendered. It may be locked or out of attempts."
+      ]
+    },
+    "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872": {
+      "title": "כמה ידוע לכם על הערכים של Apple?",
+      "module": "כמה ידוע לכם על הערכים של Apple?",
+      "chapter": "הערכים של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872",
+      "firstSeen": "2026-09-01T06:25:13.208Z",
+      "occurrences": 2,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:42:19.782Z",
+      "exam": "כמה ידוע לכם על הערכים של Apple?",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 21% against a 100% threshold after 6 attempt(s)",
+      "unsolved": [
+        {
+          "match": "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן",
+          "type": "multiple",
+          "remaining": [
+            "קוגניציה",
+            "דיבור",
+            "מוטוריקה",
+            "תנועה",
+            "ראייה",
+            "שמיעה"
+          ],
+          "ruledOut": 6
+        },
+        {
+          "match": "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע",
+          "type": "multiple",
+          "remaining": [
+            "העסקת אנשים בעלי מוגבלויות.",
+            "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
+            "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
+            "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב."
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.",
+          "type": "selects",
+          "remaining": [],
+          "ruledOut": 1
+        },
+        {
+          "match": "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי",
+          "type": "multiple",
+          "remaining": [
+            "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.",
+            "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
+            "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
+            "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015."
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה",
+          "type": "single",
+          "remaining": [],
+          "ruledOut": 3
+        },
+        {
+          "match": "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו",
+          "type": "multiple",
+          "remaining": [
+            "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
+            "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
+            "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
+            "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים."
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'",
+          "type": "selects",
+          "remaining": [],
+          "ruledOut": 15
+        },
+        {
+          "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
+          "type": "multiple",
+          "remaining": [
+            "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
+            "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.",
+            "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם."
+          ],
+          "ruledOut": 3
+        },
+        {
+          "match": "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח",
+          "type": "single",
+          "remaining": [],
+          "ruledOut": 2
+        },
+        {
+          "match": "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם",
+          "type": "multiple",
+          "remaining": [
+            "הנדסה",
+            "רפורמה בצדק הפלילי",
+            "העצמה כלכלית",
+            "חינוך"
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה",
+          "type": "multiple",
+          "remaining": [
+            "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
+            "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.",
+            "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
+            "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple."
+          ],
+          "ruledOut": 4
+        }
+      ],
+      "reasons": []
+    },
+    "https://salescoach.apple.com/home/content/view/286648?backTo=%2Fhome%2Fcollection%2F68600": {
+      "title": "הציגו תכונות נגישות עבור למידה",
+      "module": "הציגו תכונות נגישות עבור למידה",
+      "chapter": "נגישות",
+      "url": "https://salescoach.apple.com/home/content/view/286648?backTo=%2Fhome%2Fcollection%2F68600",
+      "firstSeen": "2026-09-01T06:33:48.057Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:33:48.057Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 80% threshold after 1 attempt(s)",
+      "unsolved": [],
+      "reasons": []
+    },
     "https://salescoach.apple.com/home/content/view/286530?backTo=%2Fhome%2Fcollection%2F68600": {
       "title": "הציגו את תכונות הנגישות לאפילו עוד יותר לקוחות",
       "module": "הציגו את תכונות הנגישות לאפילו עוד יותר לקוחות",
@@ -70,122 +305,6 @@
       "kind": "quiz",
       "lastOutcome": "scored 0% against a 80% threshold after 1 attempt(s)",
       "unsolved": [],
-      "reasons": []
-    },
-    "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872": {
-      "title": "כמה ידוע לכם על הערכים של Apple?",
-      "module": "כמה ידוע לכם על הערכים של Apple?",
-      "chapter": "הערכים של Apple",
-      "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872",
-      "firstSeen": "2026-09-01T06:25:13.208Z",
-      "occurrences": 1,
-      "sessions": [
-        "1"
-      ],
-      "resolvedAt": null,
-      "lastSeen": "2026-09-01T06:25:13.208Z",
-      "exam": "כמה ידוע לכם על הערכים של Apple?",
-      "identified": true,
-      "kind": "quiz",
-      "lastOutcome": "scored 29% against a 100% threshold after 6 attempt(s)",
-      "unsolved": [
-        {
-          "match": "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן",
-          "type": "multiple",
-          "remaining": [
-            "קוגניציה",
-            "דיבור",
-            "מוטוריקה",
-            "תנועה",
-            "ראייה",
-            "שמיעה"
-          ],
-          "ruledOut": 6
-        },
-        {
-          "match": "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע",
-          "type": "multiple",
-          "remaining": [
-            "העסקת אנשים בעלי מוגבלויות.",
-            "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
-            "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
-            "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב."
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.",
-          "type": "selects",
-          "remaining": [],
-          "ruledOut": 1
-        },
-        {
-          "match": "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי",
-          "type": "multiple",
-          "remaining": [
-            "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.",
-            "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
-            "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
-            "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015."
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה",
-          "type": "single",
-          "remaining": [],
-          "ruledOut": 3
-        },
-        {
-          "match": "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו",
-          "type": "multiple",
-          "remaining": [
-            "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
-            "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
-            "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
-            "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים."
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
-          "type": "multiple",
-          "remaining": [
-            "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
-            "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.",
-            "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם."
-          ],
-          "ruledOut": 3
-        },
-        {
-          "match": "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח",
-          "type": "single",
-          "remaining": [],
-          "ruledOut": 2
-        },
-        {
-          "match": "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם",
-          "type": "multiple",
-          "remaining": [
-            "הנדסה",
-            "רפורמה בצדק הפלילי",
-            "העצמה כלכלית",
-            "חינוך"
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה",
-          "type": "multiple",
-          "remaining": [
-            "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
-            "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.",
-            "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
-            "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple."
-          ],
-          "ruledOut": 4
-        }
-      ],
       "reasons": []
     },
     "שיתוף המאפיינים החדשים לבטיחות ילדים": {

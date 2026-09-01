@@ -611,9 +611,46 @@ async function waitForModuleReady(targetPage, timeoutMs = MODULE_READY_TIMEOUT_M
 const MODULE_LOAD_ATTEMPTS = 3;
 const MODULE_ATTEMPT_TIMEOUT_MS = 45000;
 
+// Some quizzes open on a title card with a Start button and build their
+// questions only once it is pressed — the "quick challenge" modules do, and
+// every one of them was reported as "locked or out of attempts" because the run
+// waited for questions that were never going to render on their own.
+const QUIZ_START_LABELS = /^(התחילו|התחל|בואו נתחיל|start|begin|get started|start quiz|take the quiz|let's go)$/i;
+
+async function startQuizIfWaiting(targetPage, frame) {
+  const clicked = await frame.evaluate((pattern) => {
+    const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+    const labels = new RegExp(pattern.source, pattern.flags);
+    const visible = (element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return false;
+      const style = getComputedStyle(element);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    for (const element of document.querySelectorAll("button, a, [role='button'], input[type='button'], input[type='submit']")) {
+      const text = tidy(element.innerText || element.value || element.getAttribute("aria-label"));
+      if (!labels.test(text) || !visible(element)) continue;
+      element.click();
+      return text;
+    }
+    return null;
+  }, { source: QUIZ_START_LABELS.source, flags: QUIZ_START_LABELS.flags }).catch(() => null);
+
+  if (clicked) log(`This quiz opens behind a start screen; pressed "${clicked}".`);
+  return Boolean(clicked);
+}
+
 async function loadModulePlayer(itemPage) {
   for (let attempt = 1; attempt <= MODULE_LOAD_ATTEMPTS; attempt++) {
     const ready = await waitForModuleReady(itemPage, MODULE_ATTEMPT_TIMEOUT_MS);
+    // A quiz whose player is up but whose questions are not may simply be
+    // waiting behind its own start button. Press it and give the questions
+    // another chance before calling the module broken.
+    if (ready?.hasAssessments && !ready.questions && await startQuizIfWaiting(itemPage, ready.frame)) {
+      const started = await waitForModuleReady(itemPage, MODULE_ATTEMPT_TIMEOUT_MS);
+      if (started?.questions) return started;
+      if (started) return started;
+    }
     if (ready) return ready;
     if (attempt === MODULE_LOAD_ATTEMPTS) break;
     log(`Nothing has loaded in ${Math.round(MODULE_ATTEMPT_TIMEOUT_MS / 1000)}s; reloading this module (attempt ${attempt + 1} of ${MODULE_LOAD_ATTEMPTS}).`);
@@ -4454,8 +4491,14 @@ async function fillMatchingQuestions(frame) {
 // find out which.
 export async function fillCurrentQuizBlind() {
   const targetPage = await connectedPage();
-  const ready = await waitForModuleReady(targetPage);
+  let ready = await waitForModuleReady(targetPage);
   if (!ready?.hasAssessments) throw new Error("There is no quiz on this page.");
+  // The same start screen a run has to get past, so this reports on the quiz
+  // rather than on the title card in front of it.
+  if (!ready.questions && await startQuizIfWaiting(targetPage, ready.frame)) {
+    ready = await waitForModuleReady(targetPage) || ready;
+  }
+  if (!ready.questions) throw new Error("This module has a quiz, but its questions have not rendered.");
 
   const before = await unansweredCount(ready.frame);
   const filled = await fillBlindly(
