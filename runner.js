@@ -1,5 +1,6 @@
 import { chromium } from "playwright";
 import { AsyncLocalStorage } from "node:async_hooks";
+import fs from "node:fs";
 import { exams } from "./exams.js";
 
 // Every run belongs to a session, and a session is a whole browser of its own:
@@ -160,6 +161,36 @@ export async function browserStatus() {
   } catch {
     return { connected: false, session: current.id };
   }
+}
+
+// A run is worthless once the account is signed out: every module load lands on
+// the sign-in page, so the walk churns through the whole site failing. Detect it
+// once and stop with an answer the user can act on.
+export function looksSignedOut(url = "") {
+  return /salescoach\.apple\.com\/(signin|login|registration)\b/i.test(String(url));
+}
+
+// Thrown rather than reported per module: once the account is signed out every
+// remaining module would fail the same way, so this unwinds the whole walk.
+export class SignedOutError extends Error {
+  constructor() {
+    super("Signed out of Sales Coach: the page redirected to the sign-in screen. Log in again in this session's window, then start the run.");
+    this.name = "SignedOutError";
+    this.signedOut = true;
+  }
+}
+
+export async function assertSignedIn(targetPage) {
+  if (!looksSignedOut(targetPage.url())) return true;
+  throw new SignedOutError();
+}
+
+// A picture of whatever the connected tab is showing. The structural inspector
+// says what the page offers; this says what it looks like, which is the only way
+// to tell a stalled load apart from a page that rendered something unexpected.
+export async function screenshotPage({ fullPage = false } = {}) {
+  const targetPage = await connectedPage();
+  return targetPage.screenshot({ fullPage: Boolean(fullPage), timeout: 20000 });
 }
 
 // Debugging a missing answer should not require another whole-site walk just
@@ -779,6 +810,44 @@ async function submitAssessment(targetPage, frame) {
 // and a "try again" control is only looked for when it does not arrive.
 const QUIZ_RETRY_READY_MS = 20000;
 
+// What the player says about how many goes this quiz still has. The SEED
+// assessment object carries the real numbers, and reading them is the
+// difference between a retry loop that stops when the site says stop and one
+// that keeps clicking at a quiz that is already locked out.
+async function readAttemptState(frame) {
+  return frame.evaluate(() => {
+    if (typeof SeedInterface === "undefined" || !SeedInterface.QSP) return null;
+    const found = [];
+    try {
+      for (const element of document.querySelectorAll("[assessmentId]")) {
+        const id = element.getAttribute("assessmentId");
+        const assessment = SeedInterface.QSP.getAssessmentWithID?.(id);
+        if (!assessment) continue;
+        found.push({
+          id,
+          remainingAttempts: Number.isFinite(assessment.remainingAttempts) ? assessment.remainingAttempts : null,
+          numberOfAttempts: Number.isFinite(assessment.numberOfAttempts) ? assessment.numberOfAttempts : null,
+          limitedAttempts: Boolean(assessment.limitedAttempts),
+          multipleAttemptsAllowed: Boolean(assessment.multipleAttemptsAllowed),
+          tryAgainEnabled: Boolean(assessment.tryAgainEnabled),
+          lockedOut: Boolean(assessment.lockedOut)
+        });
+      }
+    } catch {
+      return null;
+    }
+    if (!found.length) return null;
+    // A module can hold more than one assessment; the run is bounded by the
+    // tightest of them.
+    return found.reduce((tightest, entry) => {
+      if (!tightest) return entry;
+      const a = entry.remainingAttempts ?? Infinity;
+      const b = tightest.remainingAttempts ?? Infinity;
+      return a < b ? entry : tightest;
+    }, null);
+  }).catch(() => null);
+}
+
 async function quizIsAnswerable(frame) {
   return frame.evaluate(() => {
     const button = document.querySelector(".submitAssessmentButton");
@@ -881,6 +950,70 @@ async function clearRejectedQuestions(frame, graded) {
 // questions, and the next attempt keeps them and guesses only the rest.
 const learnedAnswers = new Map();
 
+// Everything a grade teaches has to outlive the process. The answer bank in
+// exams.js is hand-maintained and always behind the site; what the server
+// confirms during a run is the only key that grows on its own, and holding it
+// in memory meant every restart threw it away and the next run guessed the same
+// wrong options again. Persisted here, each run starts from every answer every
+// earlier run settled, which is what lets a fresh account converge instead of
+// re-rolling the same dice.
+const ANSWER_MEMORY_PATH = new URL("./answer-memory.json", import.meta.url);
+let answerMemoryDirty = false;
+let answerMemoryTimer = null;
+
+function loadAnswerMemory() {
+  try {
+    const saved = JSON.parse(fs.readFileSync(ANSWER_MEMORY_PATH, "utf8"));
+    for (const [key, answers] of Object.entries(saved.learned || {})) {
+      if (Array.isArray(answers) && answers.length) learnedAnswers.set(key, answers);
+    }
+    for (const [key, entry] of Object.entries(saved.rejected || {})) {
+      rejectedAnswers.set(key, {
+        options: Array.isArray(entry?.options) ? entry.options : [],
+        sets: Array.isArray(entry?.sets) ? entry.sets : [],
+        orders: Array.isArray(entry?.orders) ? entry.orders : []
+      });
+    }
+    console.log(`Answer memory: ${learnedAnswers.size} confirmed answer(s) and ${rejectedAnswers.size} narrowed question(s) carried over from earlier runs.`);
+  } catch {
+    // No file yet, or an unreadable one. Either way this run starts empty and
+    // writes a fresh file the first time a grade settles something.
+  }
+}
+
+function saveAnswerMemory() {
+  answerMemoryDirty = false;
+  try {
+    fs.writeFileSync(ANSWER_MEMORY_PATH, `${JSON.stringify({
+      savedAt: new Date().toISOString(),
+      learned: Object.fromEntries(learnedAnswers),
+      rejected: Object.fromEntries(rejectedAnswers)
+    }, null, 2)}\n`);
+  } catch (error) {
+    console.log(`Could not save the answer memory: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+// A run submits a quiz every couple of minutes, so the write is coalesced
+// rather than repeated per question; it is also flushed on exit so a run that
+// is stopped mid-walk still keeps what it learned.
+function queueAnswerMemorySave() {
+  answerMemoryDirty = true;
+  if (answerMemoryTimer) return;
+  answerMemoryTimer = setTimeout(() => {
+    answerMemoryTimer = null;
+    if (answerMemoryDirty) saveAnswerMemory();
+  }, 2000);
+  answerMemoryTimer.unref?.();
+}
+
+for (const signal of ["exit", "SIGINT", "SIGTERM"]) {
+  process.on(signal, () => {
+    if (answerMemoryDirty) saveAnswerMemory();
+    if (signal !== "exit") process.exit(0);
+  });
+}
+
 function answerKeyOf(questionText) {
   return clean(questionText).normalize("NFKC")
     .replace(/^\d+[\s.)]*/, "")
@@ -896,8 +1029,11 @@ function answerKeyOf(questionText) {
 const rejectedAnswers = new Map();
 
 function rejectionsFor(key) {
-  if (!rejectedAnswers.has(key)) rejectedAnswers.set(key, { options: [], sets: [] });
-  return rejectedAnswers.get(key);
+  if (!rejectedAnswers.has(key)) rejectedAnswers.set(key, { options: [], sets: [], orders: [] });
+  const entry = rejectedAnswers.get(key);
+  // Older memory files predate `orders`.
+  if (!entry.orders) entry.orders = [];
+  return entry;
 }
 
 function rememberLearned(learned) {
@@ -916,6 +1052,16 @@ function rememberLearned(learned) {
       if (!rejected.sets.some((set) => set.join("\u0000") === combination.join("\u0000"))) {
         rejected.sets.push(combination);
       }
+      // A matching question's answer is an assignment, not a set: "A to 1, B to
+      // 2" and "A to 2, B to 1" are different attempts that sort to the same
+      // thing. Sorted sets alone would rule out both after trying one, so the
+      // order the dropdowns were left in is kept as well.
+      if (question.type === "selects") {
+        const order = [...question.chose];
+        if (!rejected.orders.some((tried) => tried.join("\u0000") === order.join("\u0000"))) {
+          rejected.orders.push(order);
+        }
+      }
       // Only a single-answer question convicts the option itself: one wrong
       // option in a three-answer set says nothing about the other two.
       if (question.type === "single") {
@@ -929,13 +1075,23 @@ function rememberLearned(learned) {
     if (!learnedAnswers.has(key)) remembered++;
     learnedAnswers.set(key, question.confirmedAnswers);
   }
+  queueAnswerMemorySave();
   return remembered;
 }
 
 export function clearLearnedAnswers() {
   learnedAnswers.clear();
   rejectedAnswers.clear();
+  saveAnswerMemory();
 }
+
+// How much the run already knows before it starts, so the log says whether a
+// pass is guessing from nothing or building on what earlier runs settled.
+export function answerMemoryStats() {
+  return { confirmed: learnedAnswers.size, narrowed: rejectedAnswers.size };
+}
+
+loadAnswerMemory();
 
 async function fillBlindly(frame, known = {}, rejected = {}) {
   return frame.evaluate(([knownAnswers, rejectedAnswersByKey]) => {
@@ -973,7 +1129,7 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
         const hit = rejectedAnswersByKey[keyOf(source || "")];
         if (hit) return hit;
       }
-      return { options: [], sets: [] };
+      return { options: [], sets: [], orders: [] };
     };
 
     const knownFor = (question) => {
@@ -1014,6 +1170,32 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
 
       // Everything this run already knows about this question goes in first;
       // only what is left over is guessed.
+      // A matching question is a set of dropdowns, and its confirmed answer is
+      // the option each one should end on, in order. Excluding selects from
+      // this block meant a matching question that had already been solved was
+      // re-guessed from scratch on every visit.
+      if (settled && selects.length && !boxes.length && !radios.length) {
+        let applied = 0;
+        selects.forEach((select, position) => {
+          const answer = settled[position];
+          if (!answer) return;
+          const option = Array.from(select.options).find((candidate) =>
+            tidy(candidate.textContent) === answer || isPrefixAnswer(tidy(candidate.textContent), answer));
+          if (!option) return;
+          select.selectedIndex = option.index;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+          applied++;
+        });
+        if (applied === selects.length) {
+          picked.push({
+            question: tidy((question.querySelector(".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4") || question).innerText).slice(0, 300),
+            chosen: selects.map((select) => tidy(select.options[select.selectedIndex]?.textContent || "")),
+            fromLearned: true
+          });
+          continue;
+        }
+      }
+
       if (settled && (boxes.length || radios.length)) {
         const inputs = boxes.length ? boxes : radios;
         const rows = inputs.map((input) => ({ input, text: labelOf(input, question) }));
@@ -1038,6 +1220,79 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
       }
 
       if (selects.length) {
+        // Leaving every dropdown on its first real option is one guess, and
+        // repeating it is what made a matching question unsolvable: each retry
+        // sent the attempt the server had just rejected. Instead the possible
+        // assignments are enumerated in a fixed order and the first one that
+        // has not already come back wrong is used.
+        //
+        // Matching questions are bijections — the same option list in every
+        // dropdown, one option per row — so permutations are tried first and
+        // the general case falls back to counting through the combinations.
+        const choicesFor = (select) => Array.from(select.options)
+          .map((option, index) => ({ index, text: tidy(option.textContent) }))
+          // A leading blank or "choose one" row is a placeholder, not an answer.
+          .filter((option) => option.index > 0 || (option.text && !/^(select|choose|בחר|בחרו)\b/i.test(option.text)));
+
+        // Anything already chosen was put there by a stored key or by an
+        // answer this run confirmed, and must not be overwritten by a guess;
+        // only a question left on its placeholder is enumerated.
+        const untouched = selects.every((select) => select.selectedIndex <= 0);
+        const pools = untouched ? selects.map(choicesFor) : [];
+        const tried = (refused.orders || []).map((order) => order.join("\u0000"));
+        const asText = (assignment) => assignment.map((option) => option.text).join("\u0000");
+
+        let assignment = null;
+        const first = pools[0] || [];
+        const bijection = pools.length > 1 && pools.length <= 8 &&
+          pools.every((pool) => pool.length === first.length) &&
+          first.length === pools.length;
+
+        if (bijection) {
+          // Every ordering of the shared option list, generated in one fixed
+          // sequence so successive attempts walk through it rather than
+          // re-rolling.
+          const walk = (remaining, sofar) => {
+            if (assignment) return;
+            if (!remaining.length) {
+              if (!tried.includes(asText(sofar))) assignment = [...sofar];
+              return;
+            }
+            for (let index = 0; index < remaining.length && !assignment; index++) {
+              sofar.push(remaining[index]);
+              walk(remaining.filter((_, at) => at !== index), sofar);
+              sofar.pop();
+            }
+          };
+          walk(first, []);
+        }
+
+        if (!assignment) {
+          // Not a bijection, or every ordering has been refused: count through
+          // the independent combinations instead, skipping the tried ones.
+          const total = pools.reduce((count, pool) => count * Math.max(pool.length, 1), 1);
+          for (let n = 0; n < Math.min(total, 5000); n++) {
+            let rest = n;
+            const candidate = pools.map((pool) => {
+              if (!pool.length) return { index: 0, text: "" };
+              const option = pool[rest % pool.length];
+              rest = Math.floor(rest / pool.length);
+              return option;
+            });
+            if (!tried.includes(asText(candidate))) {
+              assignment = candidate;
+              break;
+            }
+          }
+        }
+
+        selects.forEach((select, position) => {
+          const option = assignment?.[position];
+          if (!option) return;
+          if (select.selectedIndex === option.index) return;
+          select.selectedIndex = option.index;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+        });
         for (const select of selects) {
           if (select.selectedIndex <= 0 && select.options.length > 1) {
             select.selectedIndex = 1;
@@ -1187,8 +1442,10 @@ async function openModule(itemPage, url) {
       await itemPage.goto(url, { waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS });
       await itemPage.bringToFront().catch(() => {});
       await itemPage.waitForTimeout(1500);
+      await assertSignedIn(itemPage);
       return;
     } catch (error) {
+      if (error?.signedOut) throw error;
       lastError = error;
       const message = error instanceof Error ? error.message.split("\n")[0] : String(error);
       log(`Navigation attempt ${attempt} of 3 failed: ${message}`);
@@ -1349,12 +1606,20 @@ async function playAllVideos(targetPage) {
 
 // One run's tally, shared by the flat chapter runner and the Academy walk so
 // both write the same report shape and both flush after every module.
-function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mode = "run", submitUnverified = false, blind = false } = {}) {
+function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mode = "run", submitUnverified = false, blind = false, targetXp = 0, xpPages = [] } = {}) {
   return {
     startedAt: new Date(),
     onProgress,
     skipCompleted,
     limit,
+    // The XP the run is working towards, and the pages it is read from. Both
+    // are held on the state so the walk can stop the moment it is reached
+    // rather than at the end of a pass that may still have hours left in it.
+    targetXp,
+    xpPages,
+    targetReached: false,
+    sinceXpCheck: 0,
+    xpLatest: null,
     // "run" completes modules; "capture" only reads their quizzes and leaves
     // the account's progress alone.
     mode,
@@ -1383,6 +1648,10 @@ function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mo
     // `visitedContainers` this survives between passes, so a later pass spends
     // its page loads on the sections that are still missing something.
     exhaustedContainers: new Set(),
+    // Sections a pass opened and found nothing at all in. Kept across passes so
+    // one that reads empty twice is written off rather than re-opened on each
+    // of the run's remaining passes.
+    emptyContainers: new Set(),
     deferred: new Map(),
     blocked: 0,
     chapters: new Map(),
@@ -1465,8 +1734,33 @@ function flush(state) {
   }
 }
 
+// How many modules go by between XP readings during a walk. A pass over the
+// whole site takes hours, so a target checked only between passes is a target
+// the run blows straight past; checked here, the walk stops within a module or
+// two of reaching it. The read costs one background tab, which is why it is not
+// done after every single module.
+const XP_CHECK_EVERY = 8;
+
 function limitReached(state) {
-  return state.limit > 0 && state.modulesProcessed >= state.limit;
+  if (state.limit > 0 && state.modulesProcessed >= state.limit) return true;
+  return Boolean(state.targetReached);
+}
+
+// Read the total mid-walk and stop the run the moment the target is in hand.
+async function checkXpTarget(state, { force = false } = {}) {
+  if (!state.targetXp || state.targetReached) return;
+  state.sinceXpCheck = (state.sinceXpCheck || 0) + 1;
+  if (!force && state.sinceXpCheck < XP_CHECK_EVERY) return;
+  state.sinceXpCheck = 0;
+
+  const xp = await readXpAside(state.xpPages || []).catch(() => null);
+  if (xp === null) return;
+  state.xpLatest = xp;
+  const short = state.targetXp - xp;
+  log(short > 0
+    ? `XP now ${xp.toLocaleString()}; ${short.toLocaleString()} short of the ${state.targetXp.toLocaleString()} target.`
+    : `XP now ${xp.toLocaleString()}: the ${state.targetXp.toLocaleString()} target is reached.`);
+  if (short <= 0) state.targetReached = true;
 }
 
 // Nothing inside a module is allowed to hold the whole run. Every wait in here
@@ -1680,6 +1974,15 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     let learned = null;
     let attempt = 1;
 
+    const budget = await readAttemptState(ready.frame);
+    if (budget) {
+      if (budget.lockedOut) {
+        log(`The player reports this quiz as locked out; no further attempt can be made at it.`);
+      } else if (budget.limitedAttempts && Number.isFinite(budget.remainingAttempts)) {
+        log(`This quiz allows ${budget.remainingAttempts} more attempt(s)${budget.numberOfAttempts ? ` of ${budget.numberOfAttempts}` : ""}.`);
+      }
+    }
+
     while (true) {
       await waitRandom(itemPage, 3, 8, `Before submitting the quiz${attempt > 1 ? ` (attempt ${attempt})` : ""}`);
       graded = await submitAssessment(itemPage, ready.frame);
@@ -1725,6 +2028,21 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       // A run that was told not to spend attempts on guesses does not spend
       // them here either.
       if (!state.blind && !state.submitUnverified) break;
+
+      // The site's own attempt counter, not the retry heuristics, is the last
+      // word: a quiz that says it is out of attempts is not clicked at again,
+      // and one that is locked out is left for good rather than re-opened on
+      // every remaining pass.
+      const left = await readAttemptState(ready.frame);
+      if (left?.lockedOut) {
+        log("The player has locked this quiz out; leaving it.");
+        break;
+      }
+      if (left?.limitedAttempts && Number.isFinite(left.remainingAttempts) && left.remainingAttempts <= 0) {
+        log("The player reports no attempts left at this quiz; leaving it.");
+        break;
+      }
+
       if (!await startAnotherAttempt(itemPage, ready.frame)) {
         log("The player is not offering another attempt at this quiz.");
         break;
@@ -1785,6 +2103,13 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       type: "resource",
       status: scrolledEnough ? "read" : "partially read"
     });
+    // A resource that never reached the player's threshold earns no XP, so it
+    // is not finished work. Marking it retryable is what brings a later pass
+    // back to it instead of leaving it silently short in the report.
+    if (!scrolledEnough) {
+      markRetryable(state, item);
+      log("This reading module did not reach the completion threshold; a later pass will try it again.");
+    }
   }
 
   // Completion is reported to the server from the page; give that call time to
@@ -1808,6 +2133,11 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
       `This module was still going after ${Math.round(MODULE_WATCHDOG_MS / 60000)} minutes and was abandoned so the run could carry on.`
     );
   } catch (error) {
+    if (error?.signedOut) {
+      log(error.message);
+      if (held.page && !held.page.isClosed()) await held.page.close().catch(() => {});
+      throw error;
+    }
     state.failed++;
     const message = error instanceof Error ? error.message : String(error);
     log(`Failed: ${item.title || item.url}: ${message}`);
@@ -1833,6 +2163,7 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
   }
 
   state.modulesProcessed++;
+  await checkXpTarget(state).catch(() => {});
   if (listPage && !listPage.isClosed()) session().page = listPage;
   flush(state);
 }
@@ -1997,6 +2328,7 @@ async function openListing(listPage, url) {
   await listPage.goto(url, { waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS });
   await listPage.bringToFront().catch(() => {});
   await listPage.waitForTimeout(1500);
+  await assertSignedIn(listPage);
   await openAllAccordions(listPage).catch(() => {});
   await listPage.waitForTimeout(500);
 }
@@ -2208,6 +2540,7 @@ async function walkContainer(listPage, container, state, depth = 0) {
   try {
     children = await loadListingItems(listPage, container.url, { indent: `${indent}  ` });
   } catch (error) {
+    if (error?.signedOut) throw error;
     log(`${indent}Could not open "${container.title}": ${error instanceof Error ? error.message : String(error)}`);
     return false;
   }
@@ -2227,9 +2560,29 @@ async function walkContainer(listPage, container, state, depth = 0) {
   let unfinished = blocked;
 
   if (!children.length) {
+    // A course page that holds an instructor-led workshop really does list
+    // nothing, and treating that as unfinished work kept every section above it
+    // unfinished too, which is what made each of the run's later passes re-walk
+    // the entire tree to re-read the same empty pages. Nothing locked is
+    // showing here, so there is nothing to come back for — but one empty read
+    // could still be a listing that failed to build, so it is only written off
+    // the second time a pass finds it empty.
+    if (blocked) {
+      log(`${indent}Nothing is listed inside "${container.title}" yet; ${blocked} row(s) are still locked.`);
+      return false;
+    }
+    if (state.emptyContainers.has(container.id)) {
+      log(`${indent}"${container.title}" is empty again; not opening it for the rest of this run.`);
+      state.exhaustedContainers.add(container.id);
+      return true;
+    }
+    state.emptyContainers.add(container.id);
     log(`${indent}Nothing is listed inside "${container.title}".`);
     return false;
   }
+  // It has content after all, so an earlier empty read was a listing that had
+  // not finished building.
+  state.emptyContainers.delete(container.id);
 
   // Sub-sections are gathered across every sweep, because one of them can be
   // locked on the first read and listed on a later one.
@@ -2555,9 +2908,15 @@ export async function readNavHubs(targetPage) {
 // XP is the number the account is judged on, so a run reports what it moved.
 // It is read off whatever the page shows rather than from a known element:
 // nothing in the player exposes it, and the wording differs by locale.
+// The profile header reads "Level 40 \u2022 11,225 XP", so the level-and-total
+// form is tried first: it is the only one on the site that is certainly the
+// account's own total. The looser forms below it match a bare "11,225 XP" on
+// builds that omit the level, and are only reached on a page that has no
+// level line at all.
 const XP_PATTERNS = [
-  /\b(?:xp|points?|נקודות)\s*[:\-]?\s*([\d][\d.,]*)/i,
-  /([\d][\d.,]*)\s*(?:xp|points|נקודות)\b/i
+  /(?:level|רמה)\s*\d+\s*[^\d]{0,4}\s*([\d][\d.,]*)\s*(?:xp|points|נקודות)\b/i,
+  /([\d][\d.,]*)\s*(?:xp|points|נקודות)\b/i,
+  /\b(?:xp|points?|נקודות)\s*[:\-]\s*([\d][\d.,]*)/i
 ];
 
 async function readXpFrom(targetPage) {
@@ -2571,9 +2930,47 @@ async function readXpFrom(targetPage) {
   return null;
 }
 
+// Where this account shows its total, once it has been found. Every later read
+// goes straight there instead of hunting again.
+const PROFILE_URLS = ["https://salescoach.apple.com/home/profile", "https://salescoach.apple.com/home/achievements"];
+
+// The total read without disturbing the walk. The listing page a run is in the
+// middle of must not be navigated away from — doing that costs a reload of the
+// section and, on a slow build, loses the walk's place — so the profile is
+// opened in a tab of its own and closed again.
+async function readXpAside(xpPages = []) {
+  const current = session();
+  if (!current.context) return null;
+  const candidates = [...new Set([...xpPages, ...PROFILE_URLS])];
+  let aside = null;
+  try {
+    aside = await current.context.newPage();
+    for (const url of candidates) {
+      try {
+        await aside.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+        if (looksSignedOut(aside.url())) return null;
+        await aside.waitForTimeout(2500);
+        const value = await readXpFrom(aside);
+        if (value !== null) return value;
+      } catch {
+        // Try the next candidate page.
+      }
+    }
+    return null;
+  } finally {
+    if (aside && !aside.isClosed()) await aside.close().catch(() => {});
+  }
+}
+
 // The total is read wherever this account happens to show it: the page in front
 // of us first, then Achievements and Profile.
 async function readXp(listPage, xpPages = []) {
+  // The account's own page first: a listing page can carry an "XP" label of its
+  // own on a card, and reading that as the account total is worse than reading
+  // nothing. Only if no profile page answers is the page in front of us used.
+  const aside = await readXpAside(xpPages);
+  if (aside !== null) return aside;
+
   const here = await readXpFrom(listPage);
   if (here !== null) return here;
 
@@ -2688,6 +3085,7 @@ async function walkHub(listPage, hub, state) {
   try {
     nodes = await loadListingItems(listPage, hub.url);
   } catch (error) {
+    if (error?.signedOut) throw error;
     log(`Could not open "${hub.title}": ${error instanceof Error ? error.message : String(error)}`);
     return;
   }
@@ -2773,9 +3171,13 @@ async function walkHub(listPage, hub, state) {
 export async function processSite({ skipCompleted = true, limit = 0, onProgress = null, mode = "run", submitUnverified = false, blind = false, targetXp = 0 } = {}) {
   const listPage = await connectedPage();
   resetLogs();
-  const state = createRunState({ onProgress, skipCompleted, limit, mode, submitUnverified, blind });
+  const state = createRunState({ onProgress, skipCompleted, limit, mode, submitUnverified, blind, targetXp });
 
   log("Whole-site run: walking every tab this account can reach, not just the Academy.");
+  const memory = answerMemoryStats();
+  if (memory.confirmed || memory.narrowed) {
+    log(`Starting from ${memory.confirmed} answer(s) earlier runs confirmed and ${memory.narrowed} question(s) they narrowed down.`);
+  }
   if (blind && mode !== "capture") {
     log("Blind mode: a quiz with no stored answers is still answered and submitted, and its grade is reported back as an answer key.");
   }
@@ -2783,6 +3185,7 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
   if (limit > 0) log(`Stopping after ${limit} module(s).`);
 
   const { hubs, xpPages } = await collectHubs(listPage);
+  state.xpPages = xpPages;
   log(`Found ${hubs.length} tab(s) to walk: ${hubs.map((hub) => hub.title).join(", ")}.`);
 
   const xpBefore = await readXp(listPage, xpPages);
@@ -2811,9 +3214,21 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
     }
     state.retryable = new Map();
 
+    let signedOut = false;
     for (const hub of hubs) {
       if (limitReached(state)) break;
-      await walkHub(listPage, hub, state);
+      try {
+        await walkHub(listPage, hub, state);
+      } catch (error) {
+        if (!error?.signedOut) throw error;
+        log(error.message);
+        signedOut = true;
+        break;
+      }
+    }
+    if (signedOut) {
+      log("Stopping this run: nothing can be completed while the account is signed out. Everything learned so far has been kept.");
+      break;
     }
 
     const gained = state.modulesProcessed - processedBefore;
@@ -2831,6 +3246,10 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
       log(`XP after pass ${pass}: ${xpAfter.toLocaleString()}${moved === null ? "" : ` (${moved >= 0 ? "+" : ""}${moved.toLocaleString()})`}.`);
     }
 
+    if (state.targetReached) {
+      log(`Target of ${targetXp.toLocaleString()} XP reached mid-walk; stopping.`);
+      break;
+    }
     if (limitReached(state)) {
       log(`Stopping: the ${limit}-module limit for this run was reached.`);
       break;

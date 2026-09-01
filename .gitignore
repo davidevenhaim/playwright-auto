@@ -11,3 +11,4 @@ exam-results-*.json
 academy-captures-*.json
 exams-draft-*.js
 exams-learned-*.js
+answer-memory.json

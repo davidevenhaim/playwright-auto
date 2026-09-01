@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, screenshotPage, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -442,6 +442,19 @@ app.post("/api/for-you/run", runAcademy);
 app.get("/api/inspect", async (req, res) => {
   try {
     res.json(await withSession(sessionOf(req), () => inspectPage()));
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+// A picture of the connected tab. The structural scan says what the page
+// offers; this says what it actually looks like, which is what tells a stalled
+// load apart from a page that rendered something the collector did not expect.
+app.get("/api/screenshot", async (req, res) => {
+  try {
+    const png = await withSession(sessionOf(req), () =>
+      screenshotPage({ fullPage: req.query.full === "1" }));
+    res.type("png").send(png);
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
