@@ -286,6 +286,21 @@
         const data = await res.json();
         logs.textContent = data.logs?.length ? data.logs.join("\n") : "Waiting...";
         logs.scrollTop = logs.scrollHeight;
+        if (data.run?.active) {
+          const failed = data.run.failedExams || [];
+          const captured = data.run.captures || [];
+          const progress = `${data.run.modulesProcessed || 0} modules, ${data.run.examsSubmitted || 0} quizzes submitted`;
+          if (failed.length) {
+            const names = failed.map((exam) => exam.percentage === null
+              ? exam.title
+              : `${exam.title} (${exam.percentage}%, needs ${exam.threshold}%)`);
+            result.textContent = `Running: ${progress}. Failed exams so far: ${names.join("; ")}.`;
+          } else if (captured.length) {
+            result.textContent = `Running: ${progress}. Unknown exams captured so far: ${captured.join("; ")}.`;
+          } else {
+            result.textContent = `Running: ${progress}. No failed exams so far.`;
+          }
+        }
       } catch {}
     }
 

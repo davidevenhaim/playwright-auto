@@ -8,6 +8,7 @@ import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, e
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const legacyExamResultsPath = path.join(__dirname, "exam-results.json");
+const liveRuns = new Map();
 
 // Which browser session a request belongs to. Sessions are separate logins, so
 // several accounts can be driven at once; session 1 is the original one and
@@ -120,6 +121,38 @@ function writeExamResults(scope, run, session) {
 
   const learnedFile = writeLearnedAnswers(run, session);
   return { ...report, file: path.basename(target), learnedFile };
+}
+
+// Keep a small, queryable view of the current run. The full report is already
+// flushed to disk after every module; this summary lets the UI surface failed
+// quiz names immediately instead of making the user wait for the request to
+// finish and download its JSON.
+function liveRunSummary(scope, run, active = true) {
+  const failedExams = (run.results || [])
+    .filter((item) => item.type === "quiz" && item.passed === false)
+    .map((item) => ({
+      title: item.title || item.module,
+      percentage: item.percentage ?? null,
+      threshold: item.threshold ?? null,
+      errors: item.errors || []
+    }));
+  return {
+    active,
+    scope,
+    startedAt: run.startedAt || null,
+    modulesProcessed: run.modulesProcessed || 0,
+    examsSubmitted: run.examsSubmitted || 0,
+    resourcesRead: run.resourcesRead || 0,
+    failedExams,
+    captures: (run.captures || []).map((capture) => capture.title || capture.module).filter(Boolean)
+  };
+}
+
+function progressWriter(scope, session) {
+  return (progress) => {
+    const report = writeExamResults(scope, progress, session);
+    liveRuns.set(session, { ...liveRunSummary(scope, progress, true), reportFile: report.file });
+  };
 }
 
 // A capture run writes two files: the raw JSON, and a draft that can be pasted
@@ -256,7 +289,8 @@ app.get("/api/status", async (req, res) => {
 });
 
 app.get("/api/logs", (req, res) => {
-  res.json({ session: sessionOf(req), logs: withSession(sessionOf(req), () => getLogs()) });
+  const session = sessionOf(req);
+  res.json({ session, logs: withSession(session, () => getLogs()), run: liveRuns.get(session) || null });
 });
 
 app.get("/api/detect", async (req, res) => {
@@ -352,17 +386,20 @@ app.post("/api/chapter/run", async (req, res) => {
   const session = sessionOf(req);
   try {
     const { skipCompleted = true, limit = 0, submitUnverified = false, blind = false } = req.body || {};
+    liveRuns.set(session, { active: true, scope: "chapter", failedExams: [], captures: [] });
     const run = await withSession(session, () => processCurrentChapter({
       skipCompleted: Boolean(skipCompleted),
       limit: Number(limit) || 0,
       submitUnverified: Boolean(submitUnverified),
       blind: Boolean(blind),
       // Flush after each item so an interrupted run keeps what it finished.
-      onProgress: (progress) => writeExamResults("chapter", progress, session)
+      onProgress: progressWriter("chapter", session)
     }));
     const report = writeExamResults("chapter", run, session);
+    liveRuns.set(session, { ...liveRunSummary("chapter", run, false), reportFile: report.file });
     res.json({ ...run, report });
   } catch (error) {
+    liveRuns.set(session, { ...(liveRuns.get(session) || {}), active: false, error: error instanceof Error ? error.message : String(error) });
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
@@ -371,17 +408,20 @@ async function runAcademy(req, res) {
   const session = sessionOf(req);
   try {
     const { skipCompleted = true, limit = 0, submitUnverified = false, blind = false } = req.body || {};
+    liveRuns.set(session, { active: true, scope: "academy", failedExams: [], captures: [] });
     const run = await withSession(session, () => processAcademy({
       skipCompleted: Boolean(skipCompleted),
       limit: Number(limit) || 0,
       submitUnverified: Boolean(submitUnverified),
       blind: Boolean(blind),
       // Flush after each item so an interrupted run keeps what it finished.
-      onProgress: (progress) => writeExamResults("academy", progress, session)
+      onProgress: progressWriter("academy", session)
     }));
     const report = writeExamResults("academy", run, session);
+    liveRuns.set(session, { ...liveRunSummary("academy", run, false), reportFile: report.file });
     res.json({ ...run, report });
   } catch (error) {
+    liveRuns.set(session, { ...(liveRuns.get(session) || {}), active: false, error: error instanceof Error ? error.message : String(error) });
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
 }
@@ -396,6 +436,7 @@ app.post("/api/site/run", async (req, res) => {
   const session = sessionOf(req);
   try {
     const { skipCompleted = true, limit = 0, submitUnverified = false, blind = false, targetXp = 0 } = req.body || {};
+    liveRuns.set(session, { active: true, scope: "site", failedExams: [], captures: [] });
     const run = await withSession(session, () => processSite({
       skipCompleted: Boolean(skipCompleted),
       limit: Number(limit) || 0,
@@ -403,11 +444,13 @@ app.post("/api/site/run", async (req, res) => {
       blind: Boolean(blind),
       targetXp: Number(targetXp) || 0,
       // Flush after each item so an interrupted run keeps what it finished.
-      onProgress: (progress) => writeExamResults("site", progress, session)
+      onProgress: progressWriter("site", session)
     }));
     const report = writeExamResults("site", run, session);
+    liveRuns.set(session, { ...liveRunSummary("site", run, false), reportFile: report.file });
     res.json({ ...run, report });
   } catch (error) {
+    liveRuns.set(session, { ...(liveRuns.get(session) || {}), active: false, error: error instanceof Error ? error.message : String(error) });
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
 });
