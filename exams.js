@@ -1704,6 +1704,17 @@ const authored = {
       { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות", answer: "לא נכון" }
     ]
   },
+  "התחברות-ל-mdm": {
+    name: "התחברות ל-MDM",
+    section: "Apple Professional Academy",
+    questions: [
+      {
+        type: "single",
+        match: "מה עליכם להעלות לפתרון ה-MDM שלכם כדי להקצות יישומים וספרים שנרכשו ב-Apple Business Manager",
+        answer: "אסימון תוכן"
+      }
+    ]
+  },
 };
 
 // Two questions are the same question when one of their stored match texts is a
