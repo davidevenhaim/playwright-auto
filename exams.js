@@ -1710,9 +1710,57 @@ const authored = {
     questions: [
       {
         type: "single",
+        match: "מה ניתן לעשות ב'הקצאת שרת MDM' ב-Apple Business Manager",
+        answer: "לנהל את ההקצאה האוטומטית של מכשירים."
+      },
+      {
+        type: "single",
         match: "מה עליכם להעלות לפתרון ה-MDM שלכם כדי להקצות יישומים וספרים שנרכשו ב-Apple Business Manager",
         answer: "אסימון תוכן"
-      }
+      },
+      { type: "single", match: "באיזו תדירות עליכם להחליף את האסימון של שרת ה-MDM", answer: "פעם בשנה." },
+      { type: "single", match: "איזה סוג הרשמה יכול לרשום באופן אוטומטי מכשירים בפתרון MDM", answer: "הרשמה אוטומטית למכשיר" },
+      { type: "single", match: "מהו השלב הראשון שעליכם לבצע כדי לקשר בין Apple Business Manager לפתרון ה-MDM שלכם", answer: "להוריד את המפתח הציבורי של שרת ה-MDM." },
+      { type: "multiple", match: "אילו שניים מהבאים דרושים לכם כדי ליצור אישור APNs", answers: ["בקשה לחתימת אישורים (CSR) מפתרון ה-MDM", "חשבון Apple מנוהל"] }
+    ]
+  },
+  "מידע-על-אימות-דומיין": {
+    name: "מידע על אימות דומיין",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "מה תוכלו לעשות אחרי שהדומיין שלכם אומת ב-Apple Business Manager", answer: "ליצור חשבונות Apple מנוהלים בתוך הדומיין שלכם" },
+      { type: "single", match: "מה משמש לאימות דומיין של ארגון", answer: "רשומות TXT של DNS" },
+      { type: "single", match: "מה עושה אימות דומיין ב-Apple Business Manager", answer: "מאמת בעלות על הדומיין שלכם באמצעות Apple" },
+      { type: "single", match: "כמה ימים יש לכם כדי להשלים את אימות הדומיין ב-Apple Business Manager", answer: "14 ימים" },
+      { type: "single", match: "מה קורה לחשבונות Apple אישיים בדומיין המאומת", answer: "המשתמשים מקבלים הודעת דוא\"ל שבה נאמר שהם חייבים לשנות את חשבון Apple שלהם בתוך 30 יום." }
+    ]
+  },
+  "תכנון-עבור-הארגון-שלכם": {
+    name: "תכנון עבור הארגון שלכם",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "מיהו הבעלים של חשבון Apple מנוהל", answer: "הארגון שיצר אותם" },
+      { type: "multiple", match: "אילו שתי הרשאות תפקידים ב-Apple Business Manager יכולות להקצות תפקידים", answers: ["מנהל/ת כח אדם", "מנהל/ת מערכת"] },
+      { type: "single", match: "היכן ב-Apple Business Manager אתם מגדירים את היכולת של משתמש להשתמש בשירותי Apple", answer: "ניהול גישה" }
+    ]
+  },
+  "יצירת-חשבונות-apple-מנוהלים": {
+    name: "יצירת חשבונות Apple מנוהלים",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "איך אתם יוצרים חשבון משתמש ב-Apple Business Manager שמוקצה לו תפקיד של 'מנהל/ת מערכת'", answer: "יש ליצור את החשבון באופן ידני ולהקצות לו את התפקיד 'מנהל/ת מערכת'." },
+      { type: "single", match: "משתמש שיש לו את התפקיד 'מנהל/ת רישום המכשיר' ב-Apple Business Manager", answer: "להוסיף את התפקיד 'מנהל/ת תוכן' לחשבון המשתמש." },
+      { type: "multiple", match: "באילו שתי דרכים ניתן ליצור חשבון Apple מנוהל", answers: ["באופן ידני ב-Apple Business Manager", "באופן אוטומטי באמצעות איחוד עם ספק זהות (IdP)"] }
+    ]
+  },
+  "אימות-מאוחד": {
+    name: "אימות מאוחד",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "מה עליכם לעשות ב-Apple Business Manager לאחר שהוספתם את רשומת TXT", answer: "להקליק על הכפתור Check Now (בדיקה כעת) עבור הדומיין ב'העדפות' > 'חשבונות'." },
+      { type: "single", match: "איזה תהליך מקשר את ה-IdP של ארגון ל-Apple Business Manager", answer: "אימות מאוחד" },
+      { type: "single", match: "כשאתם מאחדים את Apple Business Manager עם Microsoft Entra ID", answer: "את האישורים של מנהל מערכת גלובלי, מנהל יישומים או חשבון מנהל מערכת של יישום ענן של Microsoft Entra ID שקיימים בדומיין" },
+      { type: "single", match: "מה אתם חייבים לעשות לפני שאתם מקשרים את ספק הזהות", answer: "להשלים את תהליך אימות הדומיין." }
     ]
   },
   "שילוב-apple-business-manager-עם-directory-sync": {
