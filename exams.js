@@ -1715,6 +1715,43 @@ const authored = {
       }
     ]
   },
+  "שילוב-apple-business-manager-עם-directory-sync": {
+    name: "שילוב Apple Business Manager עם Directory Sync",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "בעת הגדרת התצורה של Directory Sync", answer: "את האסימון שהורד מ-Apple Business Manager" },
+      { type: "single", match: "במה ניתן להשתמש כדי להפוך לאוטומטי את הסנכרון של נתוני חשבון", answer: "Directory Sync" },
+      { type: "single", match: "מה קורה לחשבונות משתמשים קיימים ב-Apple Business Manager אם אתם מנתקים את Directory Sync", answer: "החשבונות הופכים לחשבונות ידניים." }
+    ]
+  },
+  "איך-זה-עובד": {
+    name: "איך זה עובד",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "אילו מבין הבאים ניתן להפעיל רק במחשבי Mac ובמכשירי iPhone או iPad מנוהלים בבעלות ארגונית", answer: "פיקוח" },
+      { type: "multiple", match: "אילו מהבאים הם שלושה סוגים של רישום מכשירי Apple", answers: ["רישום משתמשים מבוסס-חשבון", "רישום מכשירים מבוסס-חשבון", "רישום מכשירים אוטומטי"] },
+      { type: "single", match: "על איזה מכשיר של Apple תוכלו לפקח באמצעות 'רישום מכשירים אוטומטי' או 'רישום מכשירים מבוסס-חשבון'", answer: "Mac" },
+      { type: "multiple", match: "אילו סוגי מכשירים של Apple תומכים ב'רישום משתמשים מבוסס-חשבון'", answers: ["Apple Vision Pro", "Mac", "iPhone"] }
+    ]
+  },
+  "קביעת-תצורה-של-מכשירים": {
+    name: "קביעת תצורה של מכשירים",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "איזה מדריך מפרט את כל האפשרויות של מנות תוכן", answer: "הגדרות 'ניהול מכשירים ניידים'" },
+      { type: "multiple", match: "מבין המרכיבים המרכזיים הללו, ציינו שניים שבהם נעשה שימוש על ידי MDM כדי לתקשר עם מכשירים", answers: ["הגדרות", "פקודות"] },
+      { type: "multiple", match: "מבין המשפטים הבאים, ציינו שלושה נכונים לגבי שיטות מומלצות לעבודה עם פרופילי תצורה", answers: ["פרופיל תצורה יחיד יכול להכיל מנות תוכן מרובות.", "יש להשתמש במנת תוכן אחת בלבד לכל פרופיל, מכיוון שניתן להתקין במכשיר יותר מפרופיל תצורה אחד.", "אם מתקינים שני פרופילי תצורה עם הגבלות סותרות, מנת התוכן המגבילה יותר תשמש עבור המכשיר."] }
+    ]
+  },
+  "חזרה-מהירה-לשירות": {
+    name: "חזרה מהירה לשירות",
+    section: "Apple Professional Academy",
+    questions: [
+      { type: "single", match: "ישנם שלושה שלבים בתהליך של החזרת מכשירים שנפרסו בעבר לשירות", answer: "העברת הנתונים של המשתמש או הנתונים הארגוניים לארכיון." },
+      { type: "multiple", match: "ישנן ארבע שיטות עיקריות להחזרת Mac להגדרות היצרן", answers: ["שורת הפקודה", "פקודה דרך MDM"] },
+      { type: "single", match: "באילו מבין הבאים ניתן להשתמש כדי להכין iPhone או iPad לפריסה מחדש", answer: "הפעלת הפקודה 'מחיקת כל התוכן וההגדרות' דרך MDM." }
+    ]
+  },
 };
 
 // Two questions are the same question when one of their stored match texts is a
