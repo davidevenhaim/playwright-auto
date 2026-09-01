@@ -2824,7 +2824,15 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       // Sales Coach quizzes pass on a threshold (completionScore, 80 on the
       // WISE modules), not on a perfect score. A quiz whose answers were
       // already recorded server-side comes back ungraded, which is not a fail.
-      percentage = graded.total > 0 ? Math.round((graded.correct / graded.total) * 100) : null;
+      // A percentage needs a question the server actually marked. `total` counts
+      // every question on the page and `graded` only the ones carrying a verdict,
+      // so a quiz the player recorded without grading — no verdict on anything —
+      // came out as 0 correct of N, which reads as a flat 0% and a failed exam.
+      // Those modules may well have been completed; they were being marked
+      // failed, retried on every pass, and reported as broken.
+      percentage = graded.graded > 0 && graded.total > 0
+        ? Math.round((graded.correct / graded.total) * 100)
+        : null;
       // Some packages omit completionScore from their runtime state even though
       // the results UI still applies the threshold, so do not require 100%.
       threshold = Number.isFinite(graded.completionScore) ? graded.completionScore : 80;

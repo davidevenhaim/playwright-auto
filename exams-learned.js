@@ -5,7 +5,7 @@
 // hand-maintained bank is exams.js, which merges this in: a question confirmed
 // here replaces the stored answer for that question, and a quiz that was not in
 // the bank at all is added whole.
-// 14 exam(s), last written 2026-09-01T06:15:54.879Z.
+// 14 exam(s), last written 2026-09-01T06:30:57.865Z.
 export const learnedExams = {
   // https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368
   //   NOT SOLVED (single): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
@@ -78,15 +78,6 @@ export const learnedExams = {
       { type: "multiple", match: "אילו שלוש יכולות יש לפתרונות MDM?", answers: ["בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.", "הפצת יישומים וספרים למכשירים או למשתמשים.", "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."] },
     ]
   },
-  // https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956
-  //   NOT SOLVED (single): התאימו כל משפט של לקוח ליתרון של Apple.
-  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
-    name: "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
-    section: "הכירו את Apple",
-    questions: [
-
-    ]
-  },
   // https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872
   "הכירו-את-הערכים-של-apple": {
     name: "הכירו את הערכים של Apple",
@@ -132,25 +123,23 @@ export const learnedExams = {
   },
   // https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
   //   NOT SOLVED (multiple): המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן
-  //     still in play: שמיעה | תנועה | קוגניציה | ראייה | דיבור | מוטוריקה
+  //     still in play: קוגניציה | דיבור | מוטוריקה | תנועה | ראייה | שמיעה
   //     6 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע
-  //     still in play: עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. | שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. | מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב. | העסקת אנשים בעלי מוגבלויות.
+  //     still in play: העסקת אנשים בעלי מוגבלויות. | עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. | שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. | מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (selects): Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.
   //     1 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי
-  //     still in play: כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד. Apple מתכננת להפוך את כל המוצרים שלה לניטרליים פחמנית עד 2030. | הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן. | Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015. | החזו
+  //     still in play: הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן. | החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple. | כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד. | Apple מתכננת להשיג את היעד שלה על ידי ה
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (single): Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה
   //     3 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו
   //     still in play: הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.
   //     4 attempt(s) already ruled out.
-  //   NOT SOLVED (selects): השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'
-  //     10 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל
-  //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.
+  //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.
   //     3 attempt(s) already ruled out.
   //   NOT SOLVED (single): כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח
   //     2 attempt(s) already ruled out.
@@ -158,15 +147,17 @@ export const learnedExams = {
   //     still in play: הנדסה | רפורמה בצדק הפלילי | העצמה כלכלית | חינוך
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה
-  //     still in play: Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. | Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. | Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple. | Apple מתעדפת בריאות ובטיחות
+  //     still in play: Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. | Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים. | Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. | Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכני
   //     4 attempt(s) already ruled out.
   "כמה-ידוע-לכם-על-הערכים-של-apple": {
     name: "כמה ידוע לכם על הערכים של Apple?",
+    examId: "כמה-ידוע-לכם-על-הערכים-של-apple",
     section: "הערכים של Apple",
     questions: [
       { type: "single", match: "איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את הקו", answer: "קול אישי" },
       { type: "single", match: "Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון או", answer: "נכון" },
       { type: "single", match: "Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק", answer: "נכון" },
+      { type: "selects", match: "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'", answers: ["שוויון שכר מגדרי", "העובדים", "מנהלים"] },
     ]
   },
   // https://salescoach.apple.com/home/content/view/474914?backTo=%2Fhome%2Fcollection%2F239414&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
@@ -175,6 +166,17 @@ export const learnedExams = {
     questions: [
       { type: "multiple", match: "מה ג'וני אמר שהם שני היתרונות העיקריים עבור הלקוחות בתכנון ש", answers: ["ביצועים", "אמינות"] },
       { type: "single", match: "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ול", answer: "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית." },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/283335?backTo=%2Fhome%2Fcollection%2F69411
+  //   NOT SOLVED (multiple): לאילו מחויבויות סביבתיות התחייבה Apple?
+  //     still in play: להשיג ניטרליות פחמנית מלאה עד 2035 כל הפעילות של Apple תגיע לאפס פליטת פחמן עד 2030, לא עד 2035. | להשקיע בפתרונות שמבוססים על הטבע | שימוש בחומרים ממוחזרים Apple משתמשת בחומרים ממוחזרים ובוחנת אותם לאיכות ולעמידות. | הסרת פלסטיק מהאריזה Apple פועלת להפסקת השימוש בפלסטיק ולשימוש מופחת בחומרי אריזה ב
+  //     3 attempt(s) already ruled out.
+  "מידע-על-המחויבות-של-apple-לכדור-הארץ": {
+    name: "מידע על המחויבות של Apple לכדור הארץ",
+    section: "הסביבה",
+    questions: [
+
     ]
   },
   // https://salescoach.apple.com/home/content/view/475861?backTo=%2Fhome%2Fcollection%2F225054

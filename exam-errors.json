@@ -1,8 +1,193 @@
 {
-  "updatedAt": "2026-09-01T06:19:02.918Z",
-  "stillFailing": 7,
+  "updatedAt": "2026-09-01T06:32:38.865Z",
+  "stillFailing": 11,
   "resolved": 10,
   "exams": {
+    "https://salescoach.apple.com/home/content/view/286530?backTo=%2Fhome%2Fcollection%2F68600": {
+      "title": "הציגו את תכונות הנגישות לאפילו עוד יותר לקוחות",
+      "module": "הציגו את תכונות הנגישות לאפילו עוד יותר לקוחות",
+      "chapter": "נגישות",
+      "url": "https://salescoach.apple.com/home/content/view/286530?backTo=%2Fhome%2Fcollection%2F68600",
+      "firstSeen": "2026-09-01T06:32:38.865Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:32:38.865Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 80% threshold after 1 attempt(s)",
+      "unsolved": [],
+      "reasons": []
+    },
+    "https://salescoach.apple.com/home/content/view/283335?backTo=%2Fhome%2Fcollection%2F69411": {
+      "title": "מידע על המחויבות של Apple לכדור הארץ",
+      "module": "מידע על המחויבות של Apple לכדור הארץ",
+      "chapter": "הסביבה",
+      "url": "https://salescoach.apple.com/home/content/view/283335?backTo=%2Fhome%2Fcollection%2F69411",
+      "firstSeen": "2026-09-01T06:30:57.888Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:30:57.888Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 80% threshold after 3 attempt(s)",
+      "unsolved": [
+        {
+          "match": "לאילו מחויבויות סביבתיות התחייבה Apple?",
+          "type": "multiple",
+          "remaining": [
+            "להשיג ניטרליות פחמנית מלאה עד 2035 כל הפעילות של Apple תגיע לאפס פליטת פחמן עד 2030, לא עד 2035.",
+            "להשקיע בפתרונות שמבוססים על הטבע",
+            "שימוש בחומרים ממוחזרים Apple משתמשת בחומרים ממוחזרים ובוחנת אותם לאיכות ולעמידות.",
+            "הסרת פלסטיק מהאריזה Apple פועלת להפסקת השימוש בפלסטיק ולשימוש מופחת בחומרי אריזה באופן כללי."
+          ],
+          "ruledOut": 3
+        }
+      ],
+      "reasons": []
+    },
+    "https://salescoach.apple.com/home/content/view/503262?backTo=%2Fhome%2Fcollection%2F69411": {
+      "title": "גלו כיצד Apple מתכננת את המוצרים שלה תוך התחשבות בכדור הארץ",
+      "module": "גלו כיצד Apple מתכננת את המוצרים שלה תוך התחשבות בכדור הארץ",
+      "chapter": "הסביבה",
+      "url": "https://salescoach.apple.com/home/content/view/503262?backTo=%2Fhome%2Fcollection%2F69411",
+      "firstSeen": "2026-09-01T06:30:06.987Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:30:06.987Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 80% threshold after 1 attempt(s)",
+      "unsolved": [],
+      "reasons": []
+    },
+    "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872": {
+      "title": "כמה ידוע לכם על הערכים של Apple?",
+      "module": "כמה ידוע לכם על הערכים של Apple?",
+      "chapter": "הערכים של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872",
+      "firstSeen": "2026-09-01T06:25:13.208Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:25:13.208Z",
+      "exam": "כמה ידוע לכם על הערכים של Apple?",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 29% against a 100% threshold after 6 attempt(s)",
+      "unsolved": [
+        {
+          "match": "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן",
+          "type": "multiple",
+          "remaining": [
+            "קוגניציה",
+            "דיבור",
+            "מוטוריקה",
+            "תנועה",
+            "ראייה",
+            "שמיעה"
+          ],
+          "ruledOut": 6
+        },
+        {
+          "match": "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע",
+          "type": "multiple",
+          "remaining": [
+            "העסקת אנשים בעלי מוגבלויות.",
+            "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
+            "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
+            "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב."
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.",
+          "type": "selects",
+          "remaining": [],
+          "ruledOut": 1
+        },
+        {
+          "match": "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי",
+          "type": "multiple",
+          "remaining": [
+            "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.",
+            "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
+            "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
+            "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015."
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה",
+          "type": "single",
+          "remaining": [],
+          "ruledOut": 3
+        },
+        {
+          "match": "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו",
+          "type": "multiple",
+          "remaining": [
+            "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
+            "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
+            "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
+            "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים."
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
+          "type": "multiple",
+          "remaining": [
+            "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
+            "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.",
+            "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם."
+          ],
+          "ruledOut": 3
+        },
+        {
+          "match": "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח",
+          "type": "single",
+          "remaining": [],
+          "ruledOut": 2
+        },
+        {
+          "match": "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם",
+          "type": "multiple",
+          "remaining": [
+            "הנדסה",
+            "רפורמה בצדק הפלילי",
+            "העצמה כלכלית",
+            "חינוך"
+          ],
+          "ruledOut": 4
+        },
+        {
+          "match": "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה",
+          "type": "multiple",
+          "remaining": [
+            "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
+            "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.",
+            "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
+            "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple."
+          ],
+          "ruledOut": 4
+        }
+      ],
+      "reasons": []
+    },
     "שיתוף המאפיינים החדשים לבטיחות ילדים": {
       "title": "שיתוף המאפיינים החדשים לבטיחות ילדים",
       "module": "שיתוף המאפיינים החדשים לבטיחות ילדים",
