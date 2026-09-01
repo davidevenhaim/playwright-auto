@@ -1,0 +1,334 @@
+{
+  "updatedAt": "2026-09-01T06:19:02.918Z",
+  "stillFailing": 7,
+  "resolved": 10,
+  "exams": {
+    "שיתוף המאפיינים החדשים לבטיחות ילדים": {
+      "title": "שיתוף המאפיינים החדשים לבטיחות ילדים",
+      "module": "שיתוף המאפיינים החדשים לבטיחות ילדים",
+      "chapter": "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.915Z",
+      "occurrences": 10,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": "2026-09-01T06:19:02.918Z",
+      "lastSeen": "2026-09-01T06:19:02.918Z",
+      "exam": "שיתוף המאפיינים החדשים לבטיחות ילדים",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "passed at 100%",
+      "unsolved": [],
+      "reasons": [
+        "1 question(s) are still unanswered; not submitting.",
+        "1 התאימו כל מאפיין של בטיחות ילדים לתיאור שלו."
+      ]
+    },
+    "כמה ידוע לכם על הערכים של Apple?": {
+      "title": "כמה ידוע לכם על הערכים של Apple?",
+      "module": "כמה ידוע לכם על הערכים של Apple?",
+      "chapter": "הערכים של Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.918Z",
+      "occurrences": 2,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.918Z",
+      "exam": "כמה ידוע לכם על הערכים של Apple?",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 21% against a 100% threshold",
+      "unsolved": [],
+      "reasons": [
+        "1 המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן 5 הקטגוריות של מוגבלות שמאפייני הנגישות של Apple מכסים? יש לבחור את כל האפשרויות המתאימות.",
+        "3 אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו על צורכי קהלים מגוונים של משתמשים? יש לבחור את כל האפשרויות המתאימות.",
+        "4 Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה. השלימו את המשפטים הבאים ביוזמות החינוך הנכונות ש-Apple מובילה. יש להשלים את החסר.",
+        "5 אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סביבתיות? יש לבחור את כל האפשרויות המתאימות.",
+        "6 Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת הסביבה. שני התחומים הראשונים שבהם יש להתמקד הם 'שינויי אקלים' ו'משאבים'. מהו השלישי? יש לבחור אפשרות אחת.",
+        "7 אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיוון? יש לבחור את כל האפשרויות המתאימות.",
+        "9 השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון' שנוקטת Apple. יש להשלים את החסר.",
+        "10 אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש לבחור את כל האפשרויות המתאימות."
+      ]
+    },
+    "הקדישו מחשבה לחוויות שלכם עם Apple": {
+      "title": "הקדישו מחשבה לחוויות שלכם עם Apple",
+      "module": "הקדישו מחשבה לחוויות שלכם עם Apple",
+      "chapter": "הכירו את Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.917Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.917Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Submit was clicked, but the server never returned a graded attempt."
+      ]
+    },
+    "הכירו את הערכים של Apple": {
+      "title": "הכירו את הערכים של Apple",
+      "module": "הכירו את הערכים של Apple",
+      "chapter": "הערכים של Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.917Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:19:02.917Z",
+      "lastSeen": "2026-09-01T06:19:02.917Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "Apple Intelligence": {
+      "title": "Apple Intelligence",
+      "module": "בוחן – מה חדש ב‐WWDC26",
+      "chapter": "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.915Z",
+      "occurrences": 3,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": "2026-09-01T06:19:02.916Z",
+      "lastSeen": "2026-09-01T06:19:02.916Z",
+      "exam": "Apple Intelligence",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "passed at 80%",
+      "unsolved": [],
+      "reasons": [
+        "1 question(s) are still unanswered; not submitting."
+      ]
+    },
+    "גלו את החדשנות של Apple ביצירת מוצרים נהדרים": {
+      "title": "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+      "module": "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+      "chapter": "הכירו את Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.916Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.916Z",
+      "exam": "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 80% threshold",
+      "unsolved": [],
+      "reasons": [
+        "1 התאימו כל משפט של לקוח ליתרון של Apple."
+      ]
+    },
+    "תראו מה מוצרי Apple יכולים לעשות (סרטונים)": {
+      "title": "תראו מה מוצרי Apple יכולים לעשות (סרטונים)",
+      "module": "תראו מה מוצרי Apple יכולים לעשות (סרטונים)",
+      "chapter": "הכירו את Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.916Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.916Z",
+      "exam": "תראו מה מוצרי Apple יכולים לעשות (סרטונים)",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 0% against a 80% threshold",
+      "unsolved": [],
+      "reasons": []
+    },
+    "בוחן — יסודות ה—iPhone וה—iPad": {
+      "title": "בוחן — יסודות ה—iPhone וה—iPad",
+      "module": "בוחן — יסודות ה—iPhone וה—iPad",
+      "chapter": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.914Z",
+      "occurrences": 1,
+      "sessions": [
+        "aviv"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.914Z",
+      "exam": "בוחן — יסודות ה—iPhone וה—iPad",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 40% against a 100% threshold",
+      "unsolved": [],
+      "reasons": [
+        "3 איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום?",
+        "4 איך מסירים יישום?",
+        "6 היכן ניתן לשנות את הגדרות המיקום של יישום?",
+        "7 היכן מפעילים עדכוני תוכנה אוטומטיים?",
+        "8 כיצד אפשר לבדוק את השימוש בסוללה ב-iPhone שלכם?",
+        "10 איך יוצרים תיקייה לארגון יישומים ב-iPhone?"
+      ]
+    },
+    "בחירת פתרון MDM": {
+      "title": "בחירת פתרון MDM",
+      "module": "בחירת פתרון MDM",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.914Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:19:02.914Z",
+      "lastSeen": "2026-09-01T06:19:02.914Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "רישום הארגון": {
+      "title": "רישום הארגון",
+      "module": "רישום הארגון",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.914Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:19:02.914Z",
+      "lastSeen": "2026-09-01T06:19:02.914Z",
+      "lastOutcome": "passed at 75%",
+      "unsolved": []
+    },
+    "התמצאות ב-Apple Business Manager": {
+      "title": "התמצאות ב-Apple Business Manager",
+      "module": "התמצאות ב-Apple Business Manager",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.914Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:19:02.914Z",
+      "lastSeen": "2026-09-01T06:19:02.914Z",
+      "lastOutcome": "passed at 75%",
+      "unsolved": []
+    },
+    "הקצאת מכשירים": {
+      "title": "הקצאת מכשירים",
+      "module": "הקצאת מכשירים",
+      "chapter": "For You",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.907Z",
+      "occurrences": 2,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": "2026-09-01T06:19:02.913Z",
+      "lastSeen": "2026-09-01T06:19:02.913Z",
+      "exam": "הקצאת מכשירים",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "passed at 100%",
+      "unsolved": [],
+      "reasons": [
+        "1 מתי צריך לשחרר מכשיר מ-Apple Business Manager?",
+        "2 באילו קריטריונים ניתן להשתמש לצורך הקצאת מכשירים אוטומטית לשרת MDM ב-Apple Business Manager?",
+        "3 לכמה פתרונות MDM ניתן להקצות מכשיר ב-Apple Business Manager בכל פעם?",
+        "4 כיצד ניתן להוסיף מחשבי Mac באופן ידני ל-Apple Business Manager?",
+        "5 באילו אפשרויות סינון תוכלו להשתמש כדי לחפש מכשירים ב-Apple Business Manager?",
+        "1 question(s) are still unanswered; not submitting."
+      ]
+    },
+    "עזרו ללקוחות לבחור בין MacBook Neo לבין MacBook Air": {
+      "title": "עזרו ללקוחות לבחור בין MacBook Neo לבין MacBook Air",
+      "module": "עזרו ללקוחות לבחור בין MacBook Neo לבין MacBook Air",
+      "chapter": "התכונות הבסיסיות של Mac",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.913Z",
+      "occurrences": 2,
+      "sessions": [
+        "1",
+        "aviv"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.913Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Could not identify this exam. Make sure the exam questions are visible in the connected tab.",
+        "1 question(s) are still unanswered; not submitting."
+      ]
+    },
+    "Apple Studio Display XDR – מבט ראשון": {
+      "title": "Apple Studio Display XDR – מבט ראשון",
+      "module": "Apple Studio Display XDR – מבט ראשון",
+      "chapter": "התכונות הבסיסיות של Mac",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.913Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": "2026-09-01T06:19:02.913Z",
+      "lastSeen": "2026-09-01T06:19:02.913Z",
+      "exam": null,
+      "identified": false,
+      "kind": "quiz",
+      "lastOutcome": "passed at 100%",
+      "unsolved": [],
+      "reasons": [
+        "Could not identify this exam. Make sure the exam questions are visible in the connected tab."
+      ]
+    },
+    "מדוע כדאי לבחור ב-Apple": {
+      "title": "מדוע כדאי לבחור ב-Apple",
+      "module": "מדוע כדאי לבחור ב-Apple",
+      "chapter": null,
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.912Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:19:02.912Z",
+      "lastSeen": "2026-09-01T06:19:02.912Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "הפלטפורמה הטובה ביותר ל-IT": {
+      "title": "הפלטפורמה הטובה ביותר ל-IT",
+      "module": "הפלטפורמה הטובה ביותר ל-IT",
+      "chapter": "סיפור הפלטפורמה של Apple – לפי דרישה",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.912Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T06:19:02.912Z",
+      "lastSeen": "2026-09-01T06:19:02.912Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "בוחן – ניהול מכשירי Apple בעבודה": {
+      "title": "בוחן – ניהול מכשירי Apple בעבודה",
+      "module": "בוחן – ניהול מכשירי Apple בעבודה",
+      "chapter": "Collection Apple Business Manager עם MDM מפשט את הפריסה 􀍠",
+      "url": null,
+      "firstSeen": "2026-09-01T06:19:02.907Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T06:19:02.907Z",
+      "exam": "בוחן – ניהול מכשירי Apple בעבודה",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 75% against a 100% threshold",
+      "unsolved": [],
+      "reasons": [
+        "2 כיצד Apple Business מפריד בין נתונים בעבודה לבין נתונים אישיים במכשיר?"
+      ]
+    }
+  }
+}

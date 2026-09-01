@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, examErrorReport, runExam, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -450,6 +450,22 @@ app.get("/api/inspect", async (req, res) => {
 // A picture of the connected tab. The structural scan says what the page
 // offers; this says what it actually looks like, which is what tells a stalled
 // load apart from a page that rendered something the collector did not expect.
+// Which exams have gone wrong, as of this second. The runner writes the file
+// the moment a quiz fails, so this answers the question during a run rather
+// than after it.
+app.get("/api/errors", (_req, res) => {
+  res.json(examErrorReport());
+});
+
+// The same thing as the report a person reads.
+app.get("/api/errors/download", (_req, res) => {
+  const target = path.join(__dirname, "exam-errors.md");
+  if (!fs.existsSync(target)) {
+    return res.status(404).json({ error: "No exam has gone wrong yet, so there is no report to download." });
+  }
+  res.download(target, "exam-errors.md");
+});
+
 app.get("/api/screenshot", async (req, res) => {
   try {
     const png = await withSession(sessionOf(req), () =>

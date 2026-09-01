@@ -1533,6 +1533,193 @@ export function rememberLearnedExamFromReport(learned) {
   return rememberLearnedExam(learned, null);
 }
 
+// Every exam that has gone wrong, written the moment it goes wrong.
+//
+// A run's own report is flushed after each module, but it is one file per run,
+// stamped with the moment that run started, and it holds everything the run did.
+// Wanting to know what is broken meant reading the newest of two dozen files and
+// filtering it. This is that answer on its own, it accumulates across runs and
+// accounts, and it is on disk before the run has moved to the next module.
+const EXAM_ERRORS_JSON = new URL("./exam-errors.json", import.meta.url);
+const EXAM_ERRORS_MD = new URL("./exam-errors.md", import.meta.url);
+const examErrors = new Map();
+
+function loadExamErrors() {
+  try {
+    const saved = JSON.parse(fs.readFileSync(EXAM_ERRORS_JSON, "utf8"));
+    for (const [key, entry] of Object.entries(saved.exams || {})) examErrors.set(key, entry);
+    const open = [...examErrors.values()].filter((entry) => !entry.resolvedAt).length;
+    if (examErrors.size) console.log(`Exam errors: ${open} still failing of ${examErrors.size} on record.`);
+  } catch {
+    // Nothing has gone wrong yet, or the file is not readable.
+  }
+}
+
+// Called when a quiz fails and when one finally passes, so the report says what
+// is broken now rather than what was ever broken.
+function recordExamError({ title, module, chapter, url, exam, identified, kind, outcome, reasons = [], unsolved = [], passed = false }, sessionOverride = null) {
+  const key = clean(url || title || module || "");
+  if (!key) return;
+
+  const now = new Date().toISOString();
+  const entry = examErrors.get(key) || {
+    title: clean(title || module || url),
+    module: clean(module || ""),
+    chapter: clean(chapter || "") || null,
+    url: url || null,
+    firstSeen: now,
+    occurrences: 0,
+    sessions: []
+  };
+
+  if (passed) {
+    // It works now. Kept rather than deleted: an exam that used to fail is
+    // worth being able to look back at, and the report separates the two.
+    if (!entry.resolvedAt) entry.resolvedAt = now;
+    entry.lastSeen = now;
+    entry.lastOutcome = outcome || "passed";
+    entry.unsolved = [];
+    examErrors.set(key, entry);
+    saveExamErrors();
+    return;
+  }
+
+  entry.resolvedAt = null;
+  entry.lastSeen = now;
+  entry.occurrences++;
+  entry.exam = exam || entry.exam || null;
+  entry.identified = identified ?? entry.identified ?? false;
+  entry.kind = kind || entry.kind || "quiz";
+  entry.lastOutcome = outcome || entry.lastOutcome || "failed";
+  entry.chapter = entry.chapter || clean(chapter || "") || null;
+  entry.url = entry.url || url || null;
+  entry.unsolved = unsolved;
+
+  const session = sessionOverride || currentSessionId();
+  if (session && !entry.sessions.includes(session)) entry.sessions.push(session);
+
+  entry.reasons = [...new Set([...(entry.reasons || []), ...reasons.map((reason) => clean(reason).slice(0, 200))])].slice(0, 8);
+
+  examErrors.set(key, entry);
+  saveExamErrors();
+}
+
+function currentSessionId() {
+  try {
+    return session().id;
+  } catch {
+    return null;
+  }
+}
+
+function saveExamErrors() {
+  const entries = [...examErrors.entries()].sort((a, b) => (b[1].lastSeen || "").localeCompare(a[1].lastSeen || ""));
+  const open = entries.filter(([, entry]) => !entry.resolvedAt);
+  const fixed = entries.filter(([, entry]) => entry.resolvedAt);
+
+  try {
+    fs.writeFileSync(EXAM_ERRORS_JSON, `${JSON.stringify({
+      updatedAt: new Date().toISOString(),
+      stillFailing: open.length,
+      resolved: fixed.length,
+      exams: Object.fromEntries(entries)
+    }, null, 2)}\n`);
+  } catch (error) {
+    console.log(`Could not write exam-errors.json: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  const describe = ([, entry]) => {
+    const lines = [
+      `### ${entry.title}`,
+      "",
+      `- **What happened:** ${entry.lastOutcome}`,
+      entry.chapter ? `- **Chapter:** ${entry.chapter}` : null,
+      entry.exam && entry.exam !== entry.title ? `- **Identified as:** ${entry.exam}` : null,
+      entry.identified === false ? "- **Identified:** no — no entry in the answer bank matched it" : null,
+      `- **Seen:** ${entry.occurrences} time(s), last ${entry.lastSeen}` +
+        (entry.sessions?.length ? ` (session ${entry.sessions.join(", ")})` : ""),
+      entry.url ? `- **Module:** ${entry.url}` : null
+    ];
+    if (entry.reasons?.length) {
+      lines.push("- **Reported:**");
+      for (const reason of entry.reasons) lines.push(`  - ${reason}`);
+    }
+    if (entry.unsolved?.length) {
+      lines.push("- **Still unanswered:**");
+      for (const question of entry.unsolved) {
+        lines.push(`  - (${question.type}) ${question.match}`);
+        if (question.remaining?.length) {
+          lines.push(`    - still in play: ${question.remaining.join(" | ").slice(0, 300)}`);
+        }
+        if (question.ruledOut) lines.push(`    - ${question.ruledOut} attempt(s) already ruled out`);
+      }
+    }
+    lines.push("");
+    return lines.filter((line) => line !== null).join("\n");
+  };
+
+  const report = [
+    "# Exams that went wrong",
+    "",
+    "Written by the runner as each failure happens, so this is current even while",
+    "a run is still going. It accumulates across runs and across accounts; an exam",
+    "that later passes moves to the bottom rather than disappearing.",
+    "",
+    `Updated ${new Date().toISOString()} — **${open.length} still failing**, ${fixed.length} since fixed.`,
+    "",
+    open.length ? "## Still failing" : "## Nothing is failing right now",
+    "",
+    ...open.map(describe),
+    fixed.length ? "## Fixed since" : "",
+    "",
+    ...fixed.map(([, entry]) => `- ${entry.title} — ${entry.lastOutcome} (${entry.resolvedAt})`)
+  ].join("\n");
+
+  try {
+    fs.writeFileSync(EXAM_ERRORS_MD, `${report}\n`);
+  } catch (error) {
+    console.log(`Could not write exam-errors.md: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+// The same record, taken from a run's own report rather than seen live. Used to
+// fill the error file in from the runs made before it existed.
+export function recordExamErrorFromReport(exam, sessionId = null) {
+  if (!exam?.title) return false;
+  const passed = exam.passed === true;
+  // A quiz the server recorded without grading is not a failure.
+  if (exam.passed === null || exam.passed === undefined) return false;
+
+  const score = exam.score || {};
+  recordExamError({
+    title: exam.title,
+    module: exam.module,
+    chapter: exam.chapter,
+    url: exam.url || null,
+    exam: exam.identified === false ? null : exam.title,
+    identified: exam.identified !== false,
+    kind: "quiz",
+    passed,
+    outcome: passed
+      ? `passed at ${score.percentage ?? "?"}%`
+      : (score.percentage != null
+          ? `scored ${score.percentage}% against a ${score.threshold ?? "?"}% threshold`
+          : "never reached a grade"),
+    reasons: (exam.errors || []).map((error) => error.reason || error.question || "").filter(Boolean),
+    unsolved: []
+  }, sessionId);
+  return true;
+}
+
+export function examErrorReport() {
+  const entries = [...examErrors.values()];
+  return {
+    stillFailing: entries.filter((entry) => !entry.resolvedAt).length,
+    resolved: entries.filter((entry) => entry.resolvedAt).length,
+    exams: entries
+  };
+}
+
 export function learnedExamStats() {
   let questions = 0;
   for (const exam of learnedExamBank.values()) questions += exam.questions.length;
@@ -1545,6 +1732,7 @@ export function answerMemoryStats() {
 
 loadAnswerMemory();
 loadLearnedExamBank();
+loadExamErrors();
 
 async function fillBlindly(frame, known = {}, rejected = {}) {
   return frame.evaluate(([knownAnswers, rejectedAnswersByKey]) => {
@@ -2773,6 +2961,35 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       attempts: attempt,
       ...run
     });
+    // Written here rather than at the end of the run: a failure is on disk
+    // before the walk has moved to the next module.
+    recordExamError({
+      title: item.title || item.url,
+      module: item.title,
+      chapter: item.chapter,
+      url: item.url,
+      exam: quizName,
+      identified: Boolean(quizName),
+      kind: "quiz",
+      passed: passed !== false,
+      outcome: passed === false
+        ? `scored ${percentage}% against a ${threshold}% threshold after ${attempt} attempt(s)`
+        : (passed === null ? "submitted; the server recorded it without grading" : `passed at ${percentage}%`),
+      unsolved: passed === false && learned
+        ? learned.questions.filter((question) => !question.confirmedAnswers).map((question) => {
+            const refused = rejectedAnswers.get(answerKeyOf(question.question));
+            const ruledOut = (refused?.options || []).map(withoutFeedback);
+            const options = (question.options || []).map(withoutFeedback).filter(Boolean);
+            return {
+              match: matchTextFor(question.question),
+              type: question.type,
+              remaining: options.filter((option) => !ruledOut.some((wrong) => sameAnswerText(wrong, option))),
+              ruledOut: (refused?.sets || []).length || ruledOut.length
+            };
+          })
+        : []
+    });
+
     if (passed === false) {
       markRetryable(state, item);
       // In blind mode this is the expected outcome of a first attempt, not a
@@ -2832,6 +3049,19 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
     state.failed++;
     const message = error instanceof Error ? error.message : String(error);
     log(`Failed: ${item.title || item.url}: ${message}`);
+    // A quiz that broke before it could be graded is an exam that went wrong
+    // too, and it is the kind that leaves no score to look at afterwards.
+    recordExamError({
+      title: item.title || item.url,
+      module: item.title,
+      chapter: item.chapter,
+      url: item.url,
+      exam: held.quizName,
+      identified: Boolean(held.quizName),
+      kind: held.isQuiz || held.quizName ? "quiz" : "module",
+      outcome: "never reached a grade",
+      reasons: [message]
+    });
     // Every quiz module belongs in the report, including the ones that never
     // reached grading, so a whole chapter's answer problems land in one file.
     markRetryable(state, item);
