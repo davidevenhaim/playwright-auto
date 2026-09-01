@@ -893,6 +893,47 @@ async function readAttemptState(frame) {
   }).catch(() => null);
 }
 
+// What the player itself counts as still unanswered. This is the only
+// authority: a question can look filled in the DOM and still be missing from
+// the payload the player would post.
+async function unansweredCount(frame) {
+  return frame.evaluate(() => {
+    const jq = window.jQuery || window.$;
+    if (!jq || typeof SeedInterface === "undefined" || !SeedInterface.QSP?.buildReturnJSON) return null;
+    try {
+      return SeedInterface.QSP.buildReturnJSON(jq("form[assessmentId]").first()).$unansweredQuestions.length;
+    } catch {
+      return null;
+    }
+  }).catch(() => null);
+}
+
+// A drag-and-drop question renders its accessible dropdowns after the rest of
+// the quiz has painted, so a fill that ran once can miss a question whose
+// controls did not exist yet — and one unfilled question makes the player
+// refuse the whole submission, taking every other answer on the quiz with it.
+// Fill again while the number the player is unhappy about is still falling.
+async function fillUntilAnswered(targetPage, frame, { rounds = 3 } = {}) {
+  let previous = await unansweredCount(frame);
+  for (let round = 1; round <= rounds && previous > 0; round++) {
+    log(`The player still counts ${previous} question(s) as unanswered; filling again (round ${round} of ${rounds}).`);
+    await targetPage.waitForTimeout(2000);
+    const filled = await fillBlindly(
+      frame,
+      Object.fromEntries(learnedAnswers),
+      Object.fromEntries(rejectedAnswers)
+    );
+    reportUnmatchedLearned(filled);
+    const now = await unansweredCount(frame);
+    if (now === null || now >= previous) {
+      previous = now;
+      break;
+    }
+    previous = now;
+  }
+  return previous;
+}
+
 async function quizIsAnswerable(frame) {
   return frame.evaluate(() => {
     const button = document.querySelector(".submitAssessmentButton");
@@ -2207,6 +2248,7 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
 
     while (true) {
       await waitRandom(itemPage, 3, 8, `Before submitting the quiz${attempt > 1 ? ` (attempt ${attempt})` : ""}`);
+      await fillUntilAnswered(itemPage, ready.frame).catch(() => {});
       graded = await submitAssessment(itemPage, ready.frame);
       state.examsSubmitted++;
       // Sales Coach quizzes pass on a threshold (completionScore, 80 on the
