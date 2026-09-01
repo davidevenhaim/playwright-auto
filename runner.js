@@ -533,6 +533,10 @@ async function readPlayerState(frame) {
     return {
       hasAssessments: SeedInterface.hasAssessments,
       questions: document.querySelectorAll(".question").length,
+      // A quick challenge reports assessments and renders none of that HTML;
+      // this is what tells it apart from a quiz whose questions are still
+      // coming, which is the wait that used to fail every one of them.
+      quickChallenge: Boolean(document.querySelector(".app-quick-challenge")),
       submitButtons: document.querySelectorAll(".submitAssessmentButton").length,
       textLength: (document.body?.innerText || "").length
     };
@@ -571,6 +575,8 @@ async function waitForModuleReady(targetPage, timeoutMs = MODULE_READY_TIMEOUT_M
       const state = await readPlayerState(frame);
       if (!state) continue;
       last = { frame, ...state };
+      // Its cards are the questions, so there is nothing further to wait for.
+      if (state.hasAssessments === true && state.quickChallenge) return last;
       if (state.hasAssessments === true && state.questions > 0) {
         if (state.submitButtons > 0) return last;
         // A quiz whose answers are already recorded renders without a Submit
@@ -612,9 +618,11 @@ const MODULE_LOAD_ATTEMPTS = 3;
 const MODULE_ATTEMPT_TIMEOUT_MS = 45000;
 
 // Some quizzes open on a title card with a Start button and build their
-// questions only once it is pressed — the "quick challenge" modules do, and
-// every one of them was reported as "locked or out of attempts" because the run
-// waited for questions that were never going to render on their own.
+// questions only once it is pressed, and were reported as "locked or out of
+// attempts" because the run waited for questions that were never going to
+// render on their own. (The "quick challenge" modules also open this way, but
+// what is behind their start button is cards rather than a quiz; they are
+// played by completeQuickChallenge.)
 const QUIZ_START_LABELS = /^(התחילו|התחל|בואו נתחיל|start|begin|get started|start quiz|take the quiz|let's go)$/i;
 
 async function startQuizIfWaiting(targetPage, frame) {
@@ -646,7 +654,11 @@ async function loadModulePlayer(itemPage) {
     // A quiz whose player is up but whose questions are not may simply be
     // waiting behind its own start button. Press it and give the questions
     // another chance before calling the module broken.
-    if (ready?.hasAssessments && !ready.questions && await startQuizIfWaiting(itemPage, ready.frame)) {
+    // A quick challenge has its own start button, but it is played by the
+    // handler that knows what to do with the cards behind it rather than by
+    // pressing it here and waiting for quiz questions that never come.
+    if (ready?.hasAssessments && !ready.questions && !ready.quickChallenge &&
+      await startQuizIfWaiting(itemPage, ready.frame)) {
       const started = await waitForModuleReady(itemPage, MODULE_ATTEMPT_TIMEOUT_MS);
       if (started?.questions) return started;
       if (started) return started;
@@ -980,6 +992,298 @@ async function completeInteractiveDeck(targetPage, frame) {
   const finished = percent >= DECK_PERCENT_COMPLETE;
   log(`Deck reached ${percent}% after ${checks} knowledge check(s)${finished ? "" : "; it did not reach the end"}.`);
   return { finished, percent, checks };
+}
+
+// "אתגר מהיר" modules look like a quiz from the outside — SeedInterface reports
+// assessments — but they render none of the quiz HTML the rest of this file
+// knows: no `.question`, no Submit button. They are app-quick-challenge, a
+// swiper of true/false cards, and every one of them was failing the run as
+// "this module has a quiz, but its questions never rendered". What the app
+// puts in the package frame:
+//
+//   .app-quick-challenge     the app; .qc-slider is the carousel of cards
+//   button.startBttn         the intro screen's "התחילו". Pressing it adds
+//                            `show-slider` to the body and deals the cards
+//   .swiper-slide-active     the card on screen; its aria-label is "2 / 5"
+//   nav button[optionid]     the two answers, "נכון" first and "לא נכון" second
+//   .flipcard.answered       set the moment the card has been answered, and
+//                            its back section is then marked correct/incorrect
+//   button.nextBttn          replaces the answers once the card is answered
+//   button.doneBttn          the last card's button; submits the whole set
+//   .scoreCardContainer      the result, with button.tryAgainBttn underneath
+//
+// An answer is graded on the spot and cannot be taken back, so a wrong pick
+// costs that card — but the challenge itself may be taken again as often as it
+// likes, and the card that was wrong says so, which on a true/false question
+// names the right answer outright. That is the fallback. What is tried first is
+// the answer key itself: the app asks ALPService for its own questions with a
+// `showanswers` header, and the reply says which option of each pair is the
+// correct one, so a run that was listening while the module loaded answers the
+// whole thing without spending an attempt on guesses.
+const QC_MAX_ATTEMPTS = 3;
+// Four steps per card — the answer, the flip, the step to the next one and a
+// spare — over a challenge longer than any of these has been seen to be.
+const QC_STEP_LIMIT = 80;
+const QC_STEP_PAUSE_MS = 900;
+const QC_VERDICT_TIMEOUT_MS = 8000;
+const QC_KEY_TIMEOUT_MS = 8000;
+const QC_DEAL_TIMEOUT_MS = 10000;
+const QC_SUBMIT_TIMEOUT_MS = 30000;
+const ASSESSMENT_KEY_URL = /\/ALPService\/assessments\//;
+
+// The key crosses the wire once, while the module is loading, so the listener
+// has to be on the page before it is navigated. All that is kept is the set of
+// option ids that are right answers: the buttons carry those ids, so nothing
+// has to be matched by its text.
+function watchAssessmentAnswers(targetPage) {
+  const key = { correct: new Set(), questions: 0 };
+  targetPage.on("response", (response) => {
+    if (!ASSESSMENT_KEY_URL.test(response.url())) return;
+    response.json().then((body) => {
+      for (const entry of Object.values(body?.assessments || {})) {
+        for (const category of entry?.assessment?.categories || []) {
+          for (const question of category?.questions || []) {
+            const right = (question.options || []).filter((option) => option.correctAnswer === true);
+            if (!right.length) continue;
+            key.questions++;
+            for (const option of right) key.correct.add(String(option.questionOptionId));
+          }
+        }
+      }
+    }).catch(() => {});
+  });
+  return key;
+}
+
+// The key is fetched while the module builds itself, but the site serves it
+// from its own cache whenever it has one, so there is no telling in advance
+// whether one is coming at all. Waiting a few seconds for it costs far less
+// than the extra attempt its absence turns into, and the cards themselves are
+// what the wait falls back on.
+async function waitForAssessmentKey(targetPage, key) {
+  const deadline = Date.now() + QC_KEY_TIMEOUT_MS;
+  while (Date.now() < deadline && !key.correct.size) await targetPage.waitForTimeout(250);
+  return key.correct.size > 0;
+}
+
+async function readQuickChallengeState(frame) {
+  return frame.evaluate(() => {
+    const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+    const visible = (element) => {
+      if (!element) return false;
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return false;
+      const style = getComputedStyle(element);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    if (!document.querySelector(".app-quick-challenge, .qc-slider")) return null;
+
+    const board = document.querySelector(".scoreCardContainer");
+    // The wheel carries the app's own verdict on the attempt, which is the one
+    // to report: a challenge with a passing criterion wants every card right.
+    const wheel = board?.querySelector("[class*='scoreWheel']") || null;
+    const scoreCard = board && visible(board) ? {
+      tally: tidy(board.querySelector(".numOfCorrectQuestions")?.innerText).slice(0, 80),
+      passed: Boolean(wheel?.classList.contains("pass")),
+      tryAgain: Boolean(board.querySelector("button.tryAgainBttn"))
+    } : null;
+
+    const slide = document.querySelector(".swiper-slide-active");
+    const card = slide?.querySelector(".flipcard") || null;
+    const answered = Boolean(card?.classList.contains("answered"));
+    const done = slide?.querySelector("button.doneBttn") || null;
+    const active = slide ? {
+      label: tidy(slide.getAttribute("aria-label")),
+      text: tidy(slide.querySelector(".typography-callout, .typography-tout")?.innerText).slice(0, 200),
+      answered,
+      verdict: answered
+        ? (slide.querySelector("section.back")?.classList.contains("correct") ? "correct" : "incorrect")
+        : null,
+      options: Array.from(slide.querySelectorAll("nav button[optionid]")).map((button) => ({
+        optionId: String(button.getAttribute("optionid")),
+        text: tidy(button.innerText).slice(0, 40)
+      })),
+      next: Boolean(slide.querySelector("button.nextBttn")),
+      done: Boolean(done),
+      // The app disables Done while it is submitting, and while any card is
+      // still unanswered; either way it is not to be pressed again.
+      doneReady: Boolean(done && !done.disabled)
+    } : null;
+
+    return {
+      // The intro screen and the cards share the DOM; the body class is what
+      // says which of them is on screen. It is dropped again by "try again".
+      start: Boolean(document.querySelector("button.startBttn")) &&
+        !document.body.classList.contains("show-slider"),
+      slides: document.querySelectorAll(".swiper-slide").length,
+      active,
+      scoreCard
+    };
+  }).catch(() => null);
+}
+
+async function clickQuickChallenge(frame, selector) {
+  return frame.evaluate((target) => {
+    const element = document.querySelector(target);
+    if (!element || element.disabled) return false;
+    element.click();
+    return true;
+  }, selector).catch(() => false);
+}
+
+// What the card made of the answer it was just given. The flip is animated and
+// the verdict arrives with it, so this waits for the card to say it has been
+// answered rather than reading whatever the back section says a moment early.
+async function gradeQuickChallengeCard(targetPage, frame) {
+  const deadline = Date.now() + QC_VERDICT_TIMEOUT_MS;
+  while (Date.now() < deadline) {
+    const state = await readQuickChallengeState(frame);
+    if (!state) return null;
+    if (state.active?.answered) return state.active.verdict;
+    await targetPage.waitForTimeout(250);
+  }
+  return null;
+}
+
+// One card. The answer key decides it where there is one; failing that, what a
+// previous attempt at this same card gave away; failing that, the first option,
+// which is a guess that the attempt after this one will not have to repeat.
+async function answerQuickChallengeCard(targetPage, frame, card, key, learned) {
+  const pick = card.options.find((option) => key.correct.has(option.optionId))
+    || card.options.find((option) => option.optionId === learned.get(card.text))
+    || card.options[0];
+  if (!pick) return null;
+
+  if (!await clickQuickChallenge(frame, `.swiper-slide-active nav button[optionid="${pick.optionId}"]`)) return null;
+  const verdict = await gradeQuickChallengeCard(targetPage, frame);
+  // A true/false card that refuses one option has named the other one, so even
+  // a wrong guess leaves the next attempt at this challenge knowing the answer.
+  if (verdict === "correct") learned.set(card.text, pick.optionId);
+  if (verdict === "incorrect" && card.options.length === 2) {
+    const other = card.options.find((option) => option.optionId !== pick.optionId);
+    if (other) learned.set(card.text, other.optionId);
+  }
+  return verdict;
+}
+
+async function waitForQuickChallengeCards(targetPage, frame) {
+  const deadline = Date.now() + QC_DEAL_TIMEOUT_MS;
+  let state = null;
+  while (Date.now() < deadline) {
+    state = await readQuickChallengeState(frame);
+    if (!state || state.slides > 0) break;
+    await targetPage.waitForTimeout(250);
+  }
+  return state;
+}
+
+async function waitForQuickChallengeScore(targetPage, frame) {
+  const deadline = Date.now() + QC_SUBMIT_TIMEOUT_MS;
+  while (Date.now() < deadline) {
+    const state = await readQuickChallengeState(frame);
+    if (!state) return null;
+    if (state.scoreCard) return state.scoreCard;
+    await targetPage.waitForTimeout(500);
+  }
+  return null;
+}
+
+// Returns null when the frame holds no quick challenge, which is what tells the
+// caller this module is something else and to carry on as before.
+async function completeQuickChallenge(targetPage, frame, key = { correct: new Set() }) {
+  let state = await readQuickChallengeState(frame);
+  if (!state) return null;
+
+  // The app boots a moment before it deals its cards, and they wait behind the
+  // intro screen until it is dismissed. Both are waited out here so that what
+  // follows — the count in the log included — is looking at the whole deck.
+  state = await waitForQuickChallengeCards(targetPage, frame) || state;
+  if (state.start) {
+    await clickQuickChallenge(frame, "button.startBttn");
+    state = await waitForQuickChallengeCards(targetPage, frame) || state;
+  }
+  if (!key.correct.size) await waitForAssessmentKey(targetPage, key);
+
+  log(key.correct.size
+    ? `Module is a quick challenge of ${state.slides} card(s); its answer key came back with the module.`
+    : `Module is a quick challenge of ${state.slides} card(s); no answer key was seen, so the cards are answered from what each one gives away.`);
+
+  const learned = new Map();
+  let result = null;
+
+  for (let attempt = 1; attempt <= QC_MAX_ATTEMPTS; attempt++) {
+    let answered = 0;
+    let correct = 0;
+
+    for (let step = 1; step <= QC_STEP_LIMIT; step++) {
+      state = await readQuickChallengeState(frame);
+      if (!state || state.scoreCard) break;
+
+      if (state.start) {
+        await clickQuickChallenge(frame, "button.startBttn");
+        await waitForQuickChallengeCards(targetPage, frame);
+        continue;
+      }
+
+      const card = state.active;
+      if (!card) {
+        await targetPage.waitForTimeout(QC_STEP_PAUSE_MS);
+        continue;
+      }
+
+      if (!card.answered) {
+        const verdict = await answerQuickChallengeCard(targetPage, frame, card, key, learned);
+        if (!verdict) {
+          log(`Card ${card.label || "?"} of this quick challenge did not take an answer.`);
+          break;
+        }
+        answered++;
+        if (verdict === "correct") correct++;
+        continue;
+      }
+
+      if (card.doneReady) {
+        await clickQuickChallenge(frame, ".swiper-slide-active button.doneBttn");
+        await waitForQuickChallengeScore(targetPage, frame);
+        continue;
+      }
+      if (card.next) {
+        await clickQuickChallenge(frame, ".swiper-slide-active button.nextBttn");
+        await targetPage.waitForTimeout(QC_STEP_PAUSE_MS);
+        continue;
+      }
+      await targetPage.waitForTimeout(QC_STEP_PAUSE_MS);
+    }
+
+    const board = (await readQuickChallengeState(frame))?.scoreCard || null;
+    result = {
+      passed: Boolean(board?.passed),
+      submitted: Boolean(board),
+      correct,
+      answered,
+      cards: state?.slides || answered,
+      unanswered: Math.max((state?.slides || 0) - answered, 0),
+      tally: board?.tally || "",
+      attempts: attempt
+    };
+
+    if (!board) {
+      log(`This quick challenge never reached its score card; ${correct} of ${answered} card(s) were answered correctly.`);
+      break;
+    }
+    log(`Quick challenge attempt ${attempt}: ${board.tally || `${correct} of ${answered}`}${board.passed ? " — passed." : " — not passed."}`);
+    if (board.passed) break;
+    if (attempt >= QC_MAX_ATTEMPTS || !board.tryAgain) break;
+
+    // Every card that was wrong has just named its right answer, so the next
+    // attempt is not another guess: it is the same challenge answered from what
+    // this one was told.
+    await clickQuickChallenge(frame, "button.tryAgainBttn");
+    await targetPage.waitForTimeout(QC_STEP_PAUSE_MS * 2);
+    state = await readQuickChallengeState(frame) || state;
+  }
+
+  return result;
 }
 
 // A click on Submit proves nothing: the player blocks the button while any
@@ -2939,6 +3243,9 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
   itemPage = await session().context.newPage();
   held.page = itemPage;
   session().page = itemPage;
+  // Attached before the module is opened, because the one thing it listens for
+  // — a quick challenge's answer key — crosses the wire while the module loads.
+  const assessmentKey = watchAssessmentAnswers(itemPage);
   await openModule(itemPage, item.url);
 
   const ready = await loadModulePlayer(itemPage);
@@ -2972,6 +3279,17 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         type: "resource",
         status: "skipped in capture mode"
       });
+    } else if (ready.quickChallenge) {
+      // A quick challenge holds nothing exams.js wants: its cards are graded
+      // one at a time in the page, and answering them is exactly what a capture
+      // run must not do.
+      log("Quick challenge; there is nothing to capture, so its cards are left alone.");
+      recordResult(state, item, {
+        title: item.title || item.url,
+        chapter: item.chapter || null,
+        type: "quiz",
+        status: "skipped in capture mode"
+      });
     } else if (!ready.questions) {
       throw new Error("This module has a quiz, but its questions never rendered.");
     } else {
@@ -2995,7 +3313,47 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     return;
   }
 
-  if (ready.hasAssessments) {
+  // A quick challenge reports assessments and renders no quiz at all, so it is
+  // asked about first: it hands the module straight back when this frame holds
+  // something else, and only a module it recognises skips the quiz path.
+  const challenge = ready.hasAssessments && !ready.questions
+    ? await completeQuickChallenge(itemPage, ready.frame, assessmentKey)
+    : null;
+
+  if (challenge) {
+    if (challenge.submitted) state.examsSubmitted++;
+    state.examsFilled++;
+    quizName = item.title;
+    held.quizName = quizName;
+    recordResult(state, item, {
+      title: item.title || item.url,
+      module: item.title,
+      chapter: item.chapter || null,
+      type: "quiz",
+      status: challenge.passed ? "passed" : (challenge.submitted ? "failed" : "not submitted"),
+      passed: challenge.passed,
+      correct: challenge.correct,
+      graded: challenge.answered,
+      percentage: challenge.answered ? Math.round((challenge.correct / challenge.answered) * 100) : 0,
+      attempts: challenge.attempts
+    });
+    recordExamError({
+      title: item.title || item.url,
+      module: item.title,
+      chapter: item.chapter,
+      url: item.url,
+      exam: item.title,
+      identified: true,
+      kind: "quiz",
+      passed: challenge.passed,
+      outcome: challenge.submitted
+        ? `${challenge.tally || `${challenge.correct} of ${challenge.answered} card(s) correct`} after ${challenge.attempts} attempt(s)`
+        : "the challenge never reached its score card"
+    });
+    // Not passing is not a broken answer key here — every card grades itself as
+    // it is answered — so it is only worth another pass if it never submitted.
+    if (!challenge.submitted) markRetryable(state, item);
+  } else if (ready.hasAssessments) {
     if (!ready.questions) {
       throw new Error("This module has a quiz, but its questions never rendered. It may be locked or out of attempts.");
     }
@@ -4824,6 +5182,21 @@ export async function fillCurrentQuizBlind() {
 // The markup of whatever the player is refusing to accept. A quiz that will not
 // submit reports a count and a control list; when that is not enough to see what
 // the question wants, this returns the question's own HTML.
+// Playing one quick challenge in the connected tab, without waiting for a walk
+// to reach it again. The tab is reloaded first because the answer key is only
+// on the wire while the module loads, and a tab that is already sitting on the
+// challenge has long since missed it.
+export async function runQuickChallengeHere() {
+  const targetPage = await connectedPage();
+  const key = watchAssessmentAnswers(targetPage);
+  await targetPage.reload({ waitUntil: "domcontentloaded", timeout: EXAM_LOAD_TIMEOUT_MS });
+  const ready = await loadModulePlayer(targetPage);
+  if (!ready) throw new Error("No content player loaded in this tab.");
+  const result = await completeQuickChallenge(targetPage, ready.frame, key);
+  if (!result) throw new Error("This tab is not showing a quick challenge.");
+  return result;
+}
+
 export async function probeUnanswered() {
   const targetPage = await connectedPage();
   for (const frame of targetPage.frames()) {

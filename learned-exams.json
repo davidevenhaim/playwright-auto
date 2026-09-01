@@ -1,7 +1,187 @@
 {
+  "airpods-4-מבט-ראשון": {
+    "name": "AirPods 4 – מבט ראשון",
+    "examId": null,
+    "section": "המאפיינים הבסיסיים של AirPods",
+    "url": "https://salescoach.apple.com/home/content/view/448522?backTo=%2Fhome%2Fcollection%2F60751",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על AirPods 4?",
+        "answers": [
+          "\"אפשר להשתמש בחיישן הכוח שבבסיס כל אחת מה-AirPods כדי לשלוט בהפעלת מדיה ובשיחות.\"",
+          "\"אפשר ליהנות מצלילים שמקיפים אותך במשחקים, בסרטים, בתוכניות ובשיחות.\" כל הכבוד.",
+          "\"הן יכולות לבודד ולהגביר את הקול שלך, כך שהשיחות נשמעות צלולות יותר.\" יפה מאוד."
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "מה עליכם לומר ללקוחות על AirPods 4?",
+        "type": "multiple",
+        "remaining": [
+          "\"אפשר להשתמש בחיישן הכוח שבבסיס כל אחת מה-AirPods כדי לשלוט בהפעלת מדיה ובשיחות.\"",
+          "\"המארז תומך ב-MagSafe, כך שיהיו לך דרכים אפילו נוחות יותר לטעון אותן.\" זה משהו שאפשר לומר ללקוחות על AirPods Pro 2, אבל לא על AirPods 4.",
+          "\"אפשר לבחור בין ארבעה גדלים של קצוות להתאמה אישית.\" זה משהו שאפשר לומר ללקוחות על AirPods Pro 2, אבל לא על AirPods 4.",
+          "\"אפשר ליהנות מצלילים שמקיפים אותך במשחקים, בסרטים, בתוכניות ובשיחות.\"",
+          "\"הן יכולות לבודד ולהגביר את הקול שלך, כך שהשיחות נשמעות צלולות יותר.\""
+        ],
+        "ruledOut": 6
+      }
+    ]
+  },
+  "airpods-4-עם-צמצום-רעשים-פעיל-מבט-ראשון": {
+    "name": "AirPods 4 עם 'צמצום רעשים פעיל' – מבט ראשון",
+    "examId": null,
+    "section": "המאפיינים הבסיסיים של AirPods",
+    "url": "https://salescoach.apple.com/home/content/view/448473?backTo=%2Fhome%2Fcollection%2F60751",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "הלקוחה שלכם מתלבטת אם לבחור ב-AirPods 4 או ב-AirPods 4 עם 'צ",
+        "answers": [
+          "'חדירת רעשי רקע' ו'שמע מותאם'",
+          "מודעות לשיחות",
+          "מארז לטעינה אלחוטית טוב מאוד. הלקוחות יוכלו לטעון את ה-AirPods 4 עם 'צמצום רעשים פעיל' באמצעות המארז לטעינה אלחוטית עם מטען בחיבור USB-C, מטען אלחוטי בתקן Qi או מטען Apple Watch."
+        ]
+      }
+    ]
+  },
+  "airpods-pro-3-מבט-ראשון": {
+    "name": "AirPods Pro 3 – מבט ראשון",
+    "examId": null,
+    "section": "המאפיינים הבסיסיים של AirPods",
+    "url": "https://salescoach.apple.com/home/content/view/500909?backTo=%2Fhome%2Fcollection%2F60751",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים ליהנות מהתאמה אישית ובטוחה י",
+        "answer": "נכון יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "אחרי אילו דברים יכולים הלקוחות לעקוב עם AirPods Pro 3 ויישום",
+        "answers": [
+          "שריפת קלוריות יפה מאוד.",
+          "קצב לב יפה מאוד.",
+          "ההתקדמות בטבעת התנועה יפה מאוד."
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "אחרי אילו דברים יכולים הלקוחות לעקוב עם AirPods Pro 3 ויישום",
+        "type": "multiple",
+        "remaining": [
+          "שריפת קלוריות יפה מאוד.",
+          "לחץ דם הלקוחות לא יכולים לעקוב אחר הנושא הזה באמצעות AirPods Pro 3.",
+          "קצב לב",
+          "משך השינה",
+          "ההתקדמות בטבעת התנועה יפה מאוד."
+        ],
+        "ruledOut": 8
+      }
+    ]
+  },
+  "apple-account-icloud-fundamentals-quiz": {
+    "name": "בוחן — היסודות של חשבון Apple ו—iCloud",
+    "examId": "apple-account-icloud-fundamentals-quiz",
+    "section": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
+    "url": "https://salescoach.apple.com/home/content/view/475579?backTo=%2Fhome%2Fcollection%2F222222",
+    "questions": [
+      {
+        "type": "single",
+        "match": "איזה מאפיין מאפשר לכם לסנכרן קבצים ותיקיות בין Mac ל-iPad?",
+        "answer": "iCloud Drive"
+      },
+      {
+        "type": "single",
+        "match": "איזה יישום של iPad מכיל קבצים ותיקיות שסונכרנו מ-iCloud Driv",
+        "answer": "היישום 'קבצים'"
+      },
+      {
+        "type": "multiple",
+        "match": "מה דרוש כדי שיושלם 'גיבוי iCloud' אוטומטי ב-iPad?",
+        "answers": [
+          "מכשיר המחובר לחשמל",
+          "חיבור לרשת אלחוטית"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "שכחתם את הסיסמה לחשבון Apple, אך באפשרותכם להשתמש באימות בשנ",
+        "answers": [
+          "מספר טלפון מהימן",
+          "מכשיר Apple מהימן"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו פריטים מאוחסנים ב'סיסמאות של iCloud'?",
+        "answers": [
+          "שמות משתמשים וסיסמאות של Safari",
+          "מפתחות התחברות"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איזה מהבאים דרוש כדי שמאפייני 'המשכיות' יפעלו במכשירי Apple",
+        "answer": "חשבון Apple"
+      },
+      {
+        "type": "single",
+        "match": "באיזה מאפיין של iCloud תוכלו להשתמש כדי לאתר iPhone שאבד?",
+        "answer": "איתור"
+      },
+      {
+        "type": "multiple",
+        "match": "מה דרוש כדי להשבית את האפשרויות 'איתור' ו'נעילת ההפעלה'?",
+        "answers": [
+          "אישורי חשבון Apple",
+          "קוד גישה למכשיר"
+        ]
+      }
+    ]
+  },
+  "apple-device-management-at-work-quiz": {
+    "name": "בוחן – ניהול מכשירי Apple בעבודה",
+    "examId": "apple-device-management-at-work-quiz",
+    "section": "Apple Business Manager עם MDM מפשט את הפריסה",
+    "url": "https://salescoach.apple.com/home/content/view/462089?backTo=%2Fhome%2Fcollection%2F88300",
+    "questions": [
+      {
+        "type": "single",
+        "match": "מהו אחד מהמאפיינים העיקריים של Apple Business המסייע בפריסה",
+        "answer": "רישום מכשירים אוטומטי"
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שאלות עליכם לשאול כדי להבין את צורכי הפריסה של הלקוחות?",
+        "answers": [
+          "\"מה העובדים צריכים לעשות כדי להגדיר את המכשירים שלהם?\"",
+          "\"מה מחלקת ה‐IT צריכה לעשות כדי שהמכשירים יהיו מוכנים לשימוש על ידי המשתמשים?\"",
+          "\"איך אתם מנהלים את מכשירי ה-iPhone שלכם?\""
+        ]
+      },
+      {
+        "type": "single",
+        "match": "כיצד Apple Business מפריד בין נתונים בעבודה לבין נתונים אישי",
+        "answer": "חשבונות Apple מנוהלים"
+      },
+      {
+        "type": "multiple",
+        "match": "כיצד Apple תומכת בארגונים בתהליכי הפריסה ובשירותים הטכנולוגי",
+        "answers": [
+          "Apple מציעה הכשרה בנושא ניהול מכשירים.",
+          "Apple מספקת תוכנה שעובדת עם שירותי ניהול המכשירים.",
+          "Apple מספקת תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה שלה."
+        ]
+      }
+    ]
+  },
   "apple-intelligence": {
     "name": "Apple Intelligence",
-    "examId": null,
+    "examId": "apple-intelligence",
     "section": "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
     "url": "https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368",
     "questions": [
@@ -10,17 +190,17 @@
         "match": "אילו מבין המחוות הבאות עוזרות ללקוחות לשלוט ב‐Apple Watch כש",
         "answers": [
           "הקשה כפולה של אצבע המורה והאגודל כדי לגלול ב'ערמה חכמה' נהדר.",
-          "היפוך מהיר של פרק כף היד כדי לחזור לעיצוב השעון",
-          "הקשה יחידה חדשה של אצבע המורה והאגודל לבחירת וידג'ט ב'ערמה חכמה'"
+          "הקשה יחידה חדשה של אצבע המורה והאגודל לבחירת וידג'ט ב'ערמה חכמה'",
+          "היפוך מהיר של פרק כף היד כדי לחזור לעיצוב השעון"
         ]
       },
       {
         "type": "multiple",
         "match": "אילו מבין המאפיינים הבאים של watchOS 27 יהיו חדשים עבור הלקו",
         "answers": [
-          "תמיכה בטרום גיל המעבר ובגיל המעבר ביישום 'בריאות'",
           "גישה מהירה ליישומים שנמצאים בשימוש לעיתים קרובות ברשת היישומים הדינמיים נהדר.",
-          "גישה נוחה לברקודים או לקודי QR עבור כרטיסים או מינויים ב'ערמה חכמה'"
+          "גישה נוחה לברקודים או לקודי QR עבור כרטיסים או מינויים ב'ערמה חכמה'",
+          "תמיכה בטרום גיל המעבר ובגיל המעבר ביישום 'בריאות'"
         ]
       },
       {
@@ -37,15 +217,15 @@
     "unsolved": [
       {
         "match": "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.",
-        "type": "single",
+        "type": "selects",
         "remaining": [],
-        "ruledOut": 14
+        "ruledOut": 16
       }
     ]
   },
   "apple-studio-display-xdr-מבט-ראשון": {
     "name": "Apple Studio Display XDR – מבט ראשון",
-    "examId": null,
+    "examId": "apple-studio-display-xdr-מבט-ראשון",
     "section": "התכונות הבסיסיות של Mac",
     "url": "https://salescoach.apple.com/home/content/view/519740?backTo=%2Fhome%2Fcollection%2F57585",
     "questions": [
@@ -53,16 +233,237 @@
         "type": "multiple",
         "match": "אילו מהמשפטים על Studio Display XDR נכונים?",
         "answers": [
-          "זהו הצג היחיד במשפחת Studio Display עם קצב רענון של 120Hz ו‐Adaptive Sync. מושלם.",
           "הוא מגיע עם אפשרות אחרת למעמד שניתן לכוונן גם את ההטיה וגם את הגובה שלו. מעולה.",
-          "הוא כולל את אותן מצלמות מתקדמות ומיקרופונים באיכות אולפן כמו Studio Display. יפה מאוד."
+          "הוא כולל את אותן מצלמות מתקדמות ומיקרופונים באיכות אולפן כמו Studio Display. יפה מאוד.",
+          "זהו הצג היחיד במשפחת Studio Display עם קצב רענון של 120Hz ו‐Adaptive Sync. מושלם."
+        ]
+      }
+    ]
+  },
+  "apple-tv-4k-מבט-ראשון": {
+    "name": "Apple TV 4K – מבט ראשון",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Apple TV",
+    "url": "https://salescoach.apple.com/home/content/view/360107?backTo=%2Fhome%2Fcollection%2F57588",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: ה-Apple TV Remote כולל מחבר Lightning שהלקו",
+        "answer": "לא נכון ה-Apple TV Remote כולל USB-C לטעינה, לא מחבר Lightning."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מהדברים הבאים יכולים לקוחות לעשות רק בדגמי Wi-Fi + Ethe",
+        "answers": [
+          "להתחבר ישירות למכשירי בית חכם באמצעות Thread נפלא.",
+          "לאחסן אפליקציות ומשחקים בנפח של עד 128GB טוב מאוד."
+        ]
+      }
+    ]
+  },
+  "apple-values-knowledge-check": {
+    "name": "הכירו את הערכים של Apple",
+    "examId": "apple-values-knowledge-check",
+    "section": "הערכים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "כיצד Apple מיישמת את הערכים שלה בפועל?",
+        "answers": [
+          "בניית מאפייני נגישות במוצרי Apple ללא עלות נוספת",
+          "יצירת תוכנית שמטרתה להביא את Apple לניטרליות פחמנית בכל טביעת הרגל הגלובלית שלה עד 2030",
+          "עיצוב מוצרי Apple כך שיגנו על פרטי הלקוחות"
+        ]
+      }
+    ]
+  },
+  "apple-watch-se-3-gps-cellular-מבט-ראשון": {
+    "name": "Apple Watch SE 3 (GPS + Cellular) – מבט ראשון",
+    "examId": null,
+    "section": "מה חדש ב-Apple Watch בעבודה",
+    "url": "https://salescoach.apple.com/home/content/view/500309?backTo=%2Fhome%2Fcollection%2F220022",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "אילו מהמאפיינים הבאים הלקוחות מקבלים עם Apple Watch SE 3?",
+        "answers": [
+          "מאפייני בריאות מתקדמים כמו ציון השינה וחישת טמפרטורה יפה מאוד.",
+          "צג פעיל תמיד",
+          "זכוכית קדמית חסינה יותר שעמידה פי ארבעה יותר בפני סדקים יפה מאוד."
+        ]
+      }
+    ]
+  },
+  "apple-watch-se-3-gps-מבט-ראשון": {
+    "name": "Apple Watch SE 3 (GPS) – מבט ראשון",
+    "examId": null,
+    "section": "מה חדש ב-Apple Watch בעבודה",
+    "url": "https://salescoach.apple.com/home/content/view/501254?backTo=%2Fhome%2Fcollection%2F220022",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "אילו מהמאפיינים הבאים הלקוחות מקבלים עם Apple Watch SE 3?",
+        "answers": [
+          "מאפייני בריאות מתקדמים כמו ציון השינה וחישת טמפרטורה יפה מאוד.",
+          "זכוכית קדמית חסינה יותר שעמידה פי ארבעה יותר בפני סדקים יפה מאוד.",
+          "צג פעיל תמיד"
+        ]
+      }
+    ]
+  },
+  "apple-watch-series-11-gps-cellular-מבט-ראשון": {
+    "name": "Apple Watch Series 11 (GPS + Cellular) – מבט ראשון",
+    "examId": null,
+    "section": "מה חדש ב-Apple Watch בעבודה",
+    "url": "https://salescoach.apple.com/home/content/view/499839?backTo=%2Fhome%2Fcollection%2F220022",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים לקבל ציון שינה ב‐Apple Watch",
+        "answer": "נכון יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על Apple Watch Series 11?",
+        "answers": [
+          "\"זכוכית Ion-X בהתאמה אישית בדגמי האלומיניום היא הזכוכית הקשה ביותר בתעשייה.\" יפה מאוד.",
+          "\"זהו דגם Apple Watch הדק ביותר במערך המוצרים.\" מעולה.",
+          "\"אפשר להשתמש במחוות כמו היפוך מהיר של פרק כף היד כדי להסיר עדכונים, להשתיק שיחות ועוד בלי לגעת בצג.\" יפה מאוד."
+        ]
+      }
+    ]
+  },
+  "apple-watch-series-11-gps-מבט-ראשון": {
+    "name": "Apple Watch Series 11 (GPS) – מבט ראשון",
+    "examId": null,
+    "section": "מה חדש ב-Apple Watch בעבודה",
+    "url": "https://salescoach.apple.com/home/content/view/500328?backTo=%2Fhome%2Fcollection%2F220022",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים לקבל ציון שינה ב‐Apple Watch",
+        "answer": "נכון יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על Apple Watch Series 11?",
+        "answers": [
+          "\"זהו דגם Apple Watch הדק ביותר במערך המוצרים.\" מעולה.",
+          "\"זכוכית Ion-X בהתאמה אישית בדגמי האלומיניום היא הזכוכית הקשה ביותר בתעשייה.\" יפה מאוד.",
+          "\"אפשר להשתמש במחוות כמו היפוך מהיר של פרק כף היד כדי להסיר עדכונים, להשתיק שיחות ועוד בלי לגעת בצג.\" יפה מאוד."
+        ]
+      }
+    ]
+  },
+  "applecare-for-business-quiz": {
+    "name": "בוחן – מוצרי AppleCare לעסקים",
+    "examId": "applecare-for-business-quiz",
+    "section": "מוצרי AppleCare לעסקים",
+    "url": "https://salescoach.apple.com/home/content/view/461915?backTo=%2Fhome%2Fcollection%2F68762",
+    "questions": [
+      {
+        "type": "single",
+        "match": "מהי המטרה של האפשרויות Service Pool ו-Service Pool+ ב-AppleC",
+        "answer": "לאפשר תיקונים והחלפות של מכשירים מכל סיבה שהיא, כולל נזק מקרי האפשרויות Service Pool ו-Service Pool+ מאפשרות תיקונים והחלפות מכל סיבה שהיא, כולל נזק מקרי."
+      },
+      {
+        "type": "single",
+        "match": "איזו תוכנית של תמיכת OS של AppleCare כוללת מספר בלתי מוגבל ש",
+        "answer": "Alliance התוכנית מכסה מספר בלתי מוגבל של אירועים ברמת הארגון במיקומים מרובים ומגיבה לבעיות בעדיפות גבוהה תוך שעה – והיא זמינה 24 שעות ביממה, 7 ימים בשבוע. היא כוללת גם מנהלי הצלחת לקוחות ייעודיים וסקירה באתר הלקוח על ידי מהנדסי תמיכה טכנית של Apple."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שאלות תוכלו לשאול את הלקוחות כדי להבין טוב יותר את החשש",
+        "answers": [
+          "\"האם אתם צריכים להגדיל את צוות התמיכה ב-IT כדי לתמוך בפרויקט?\" הבינו את צורכי התמיכה של הלקוחות ב-IT כדי שתוכלו לעזור להם בתכנון המשאבים. AppleCare מציעה פתרונות מדרגיים שמתאימים לשינויים באיוש העובדים.",
+          "\"מה אתם עושים אם מכשיר מתקלקל?\" הבינו את נוהלי תיקוני המכשירים ללקוחות. לאחר מכן, תוכלו להתאים את ההצעות לצרכים הספציפיים של אותם לקוחות.",
+          "\"מאיפה תשיגו מכשירים חלופיים?\" למדו מהו מקור המכשירים של הלקוחות ובאיזו המהירות יקבלו מכשירים חלופיים. AppleCare for Enterprise כולל אפשרויות שירות גמישות ותיקון או החלפה של מכשיר כבר ביום העסקים הבא."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "מהם היתרונות העיקריים של AppleCare for Enterprise עבור הלקוח",
+        "answers": [
+          "תמיכה טכנית ממומחים העובדים מקבלים תמיכה טכנית ללא הגבלה של 24 שעות ביממה, 7 ימים בשבוע בטלפון. הם יכולים לקבל עזרה בנושא החומרה, מערכות ההפעלה, החשבונות האישיים או ההגדרות של Apple. בנוסף, AppleCare תומך ביישומים של Apple – כמו Keynote , Pages ו-Numbers.",
+          "מאגר שירות הלקוחות משתמשים ב-Service Pool כדי להחליף מכשירי iPhone או iPad ולתקן מחשבי Mac. בזכות האפשרויות, אפשר לקזז את העלויות של נזק מקרי.",
+          "תיקון מכשירים בעדיפות השירות מתבצע במהלך יום העסקים הבא, כדי לקצר את זמן ההשבתה. כיסוי השירות לחומרה זמין גם באתר."
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "התאימו את מוצרי AppleCare הבאים לתכונות שלהם.",
+        "type": "single",
+        "remaining": [],
+        "ruledOut": 0
+      }
+    ]
+  },
+  "imac-מבט-ראשון": {
+    "name": "iMac – מבט ראשון",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/457475?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: שבב M4 כולל Neural Engine מהיר יותר שמספק ק",
+        "answer": "נכון כל הכבוד."
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "מה עליכם לומר ללקוחות על ה-iMac החדש?",
+        "type": "multiple",
+        "remaining": [
+          "\"תוכל להשתמש בשלוש יציאות Thunderbolt 4 עם כל הדגמים האחרונים של iMac.\" דגמי iMac מגיעים עם שתי יציאות Thunderbolt / USB 4 או ארבע יציאות Thunderbolt 4, לא שלוש.",
+          "\"שיחות ועידה בווידאו טובות אפילו יותר עם מצלמת 'מרכז הבמה' ברזולוציה של 12MP.\"",
+          "\"הוא מתוכנן עבור Apple Intelligence כדי לעזור לכם לכתוב, לבטא את עצמכם ולבצע משימות.\" יפה מאוד.",
+          "\"ניתן לבחור צג במרקם ננו להפחתת השתקפויות ובוהק\". כל הכבוד.",
+          "\"אפשר לבחור מתוך שבעה צבעים מלאי חיים.\""
+        ],
+        "ruledOut": 4
+      }
+    ]
+  },
+  "ipad-pro-first-look": {
+    "name": "iPad Pro ‒ מבט ראשון",
+    "examId": "ipad-pro-first-look",
+    "section": "התכונות הבסיסיות של iPad",
+    "url": "https://salescoach.apple.com/home/content/view/505226?backTo=%2Fhome%2Fcollection%2F57576",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "איזה מהמאפיינים הלקוחות מקבלים בזכות שבב M5 ב-iPad Pro?",
+        "answers": [
+          "חיסכון בצריכת חשמל לחיי סוללה שמספיקים לכל היום",
+          "רוחב פס זיכרון מהיר יותר",
+          "ביצועים טובים יותר למשימות AI יפה מאוד."
+        ]
+      }
+    ]
+  },
+  "ipad-pro-מבט-ראשון": {
+    "name": "iPad Pro ‒ מבט ראשון",
+    "examId": null,
+    "section": "התכונות הבסיסיות של iPad",
+    "url": "https://salescoach.apple.com/home/content/view/505226?backTo=%2Fhome%2Fcollection%2F57576",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "איזה מהמאפיינים הלקוחות מקבלים בזכות שבב M5 ב-iPad Pro?",
+        "answers": [
+          "חיסכון בצריכת חשמל לחיי סוללה שמספיקים לכל היום",
+          "רוחב פס זיכרון מהיר יותר",
+          "ביצועים טובים יותר למשימות AI יפה מאוד."
         ]
       }
     ]
   },
   "iphone-17-pro-מבט-ראשון": {
     "name": "iPhone 17 Pro – מבט ראשון",
-    "examId": null,
+    "examId": "iphone-17-pro-מבט-ראשון",
     "section": "התכונות הבסיסיות של iPhone",
     "url": "https://salescoach.apple.com/home/content/view/499819?backTo=%2Fhome%2Fcollection%2F57570",
     "questions": [
@@ -70,18 +471,405 @@
         "type": "single",
         "match": "נכון או לא נכון: הלקוחות יכולים לצלם תמונות עם זום של עד פי",
         "answer": "לא נכון"
+      },
+      {
+        "type": "single",
+        "match": "כמה מצלמות Fusion ברזולוציה של 48MP יש בדגמי iPhone 17 Pro?",
+        "answer": "שלושה יפה מאוד. לראשונה במערכת המצלמות הרב-תכליתית של Pro Fusion ברזולוציה של 48MP כל המצלמות האחוריות ברזולוציה של 48MP. כך שהלקוחות יכולים לצלם תמונות נהדרות עם פרטים מדהימים."
+      }
+    ]
+  },
+  "iphone-17-מבט-ראשון": {
+    "name": "iPhone 17 – מבט ראשון",
+    "examId": "iphone-17-מבט-ראשון",
+    "section": "התכונות הבסיסיות של iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/499986?backTo=%2Fhome%2Fcollection%2F57570",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "אילו מהמשפטים על העיצוב של iPhone 17 נכונים?",
+        "answers": [
+          "הוא מגיע בצבעים שחור, לבן, מרווה, כחול-ערפל ולבנדר.",
+          "יש לו צג גדול יותר בגודל 6.3 אינץ' עם גבולות דקים יותר. יפה מאוד."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: ל‐iPhone 17 יש צג שפועל תמיד עם ProMotion.",
+        "answer": "נכון יפה מאוד."
+      }
+    ]
+  },
+  "iphone-17e-מבט-ראשון": {
+    "name": "iPhone 17e – מבט ראשון",
+    "examId": "iphone-17e-מבט-ראשון",
+    "section": "התכונות הבסיסיות של iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/519062?backTo=%2Fhome%2Fcollection%2F57570",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: לקוחות מקבלים חיי סוללה שמספיקים לכל היום ע",
+        "answer": "נכון יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על העמידות של iPhone 17e?",
+        "answers": [
+          "\"חזית ה-Ceramic Shield 2 קשיחה יותר מכל זכוכית אחרת בטלפונים חכמים.\" נהדר.",
+          "\"המסך עמיד פי שלושה יותר בפני שריטות לעומת iPhone 16e.\" יפה מאוד."
+        ]
+      }
+    ]
+  },
+  "iphone-air-מבט-ראשון": {
+    "name": "iPhone Air – מבט ראשון",
+    "examId": "iphone-air-מבט-ראשון",
+    "section": "התכונות הבסיסיות של iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/500110?backTo=%2Fhome%2Fcollection%2F57570",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: iPhone Air מופעל באמצעות שבב A19.",
+        "answer": "לא נכון"
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על העיצוב של iPhone Air?",
+        "answers": [
+          "\"הוא עשוי מטיטניום בדרגה 5, כך שהוא חזק וקל.\" יפה מאוד.",
+          "\"יש לו Ceramic Shield 2 בחזית ו-Ceramic Shield מאחור, כך שהוא עמיד יותר מכל iPhone קודם.\" יפה מאוד.",
+          "\"זה ה‐iPhone הדק ביותר אי‐פעם, כך שהוא נראה ומרגיש נהדר בידיים שלכם.\""
+        ]
+      }
+    ]
+  },
+  "iphone-ipad-fundamentals-quiz": {
+    "name": "בוחן — יסודות ה—iPhone וה—iPad",
+    "examId": "iphone-ipad-fundamentals-quiz",
+    "section": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
+    "url": "https://salescoach.apple.com/home/content/view/475567?backTo=%2Fhome%2Fcollection%2F222222",
+    "questions": [
+      {
+        "type": "single",
+        "match": "היכן מפעילים עדכוני תוכנה אוטומטיים?",
+        "answer": "'הגדרות' > 'כללי' > 'עדכון תוכנה'"
+      },
+      {
+        "type": "single",
+        "match": "שטח האחסון ב-iPad Pro כמעט מלא. איך אפשר להציג את זמינות האח",
+        "answer": "עוברים אל 'הגדרות' > 'כללי' > 'אחסון ב-iPad'."
+      },
+      {
+        "type": "single",
+        "match": "איך מוסיפים חשבון לוח שנה ב-iPad?",
+        "answer": "עוברים ל'הגדרות' > 'יישומים' > 'לוח שנה' > 'חשבונות לוח שנה'."
+      },
+      {
+        "type": "single",
+        "match": "איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום",
+        "answer": "1408323"
+      },
+      {
+        "type": "multiple",
+        "match": "עליכם להעביר את היישומים והמידע מה-iPhone הקודם ל-iPhone חדש",
+        "answers": [
+          "לקרב את שני המכשירים, ואחר כך לפעול לפי ההוראות שעל המסך.",
+          "במכשיר הקודם, לעבור אל 'הגדרות'> 'כללי', להקיש על 'העברה או איפוס של ה-iPhone', ואחר כך לפעול לפי ההוראות שעל המסך."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איך מסירים יישום?",
+        "answer": "נוגעים נגיעה ממושכת ביישום כדי לפתוח תפריט אפשרויות מהיר, ואחר כך בוחרים באפשרות 'הסרת היישום'."
+      },
+      {
+        "type": "single",
+        "match": "איך יוצרים תיקייה לארגון יישומים ב-iPhone?",
+        "answer": "נוגעים נגיעה ממושכת ברקע של מסך הבית עד שהיישומים יתחילו להתנועע, ואז גוררים יישום על גבי יישום אחר."
+      },
+      {
+        "type": "single",
+        "match": "היכן ניתן לשנות את הגדרות המיקום של יישום?",
+        "answer": "'הגדרות' > 'פרטיות ואבטחה' > 'שירותי מיקום'"
+      },
+      {
+        "type": "single",
+        "match": "כיצד אפשר לבדוק את השימוש בסוללה ב-iPhone שלכם?",
+        "answer": "עוברים אל 'הגדרות' > 'סוללה' כדי להציג מידע על השימוש בסוללה."
+      },
+      {
+        "type": "single",
+        "match": "איזו קטגוריית נגישות מכילה תכונות שמקלות על הצגת הטקסט ב-iPa",
+        "answer": "חזות"
+      }
+    ]
+  },
+  "mac-fundamentals-quiz": {
+    "name": "בוחן — היסודות של Mac",
+    "examId": "mac-fundamentals-quiz",
+    "section": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
+    "url": "https://salescoach.apple.com/home/content/view/475559?backTo=%2Fhome%2Fcollection%2F222222",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "כיצד תוכלו למצוא מידע נוסף על ציוד היקפי המחובר ל-Thunderbol",
+        "answers": [
+          "יש לפתוח את Spotlight ולהקליד \"נתוני המערכת\" בשדה החיפוש.",
+          "יש לבחור ב'הגדרות המערכת' > 'כללי' > 'מידע', ואחר כך להקליק על 'נתוני המערכת'."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "יישום הפסיק להגיב. איך תאכפו סיום מיידי של היישום?",
+        "answers": [
+          "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'סיום מיידי'.",
+          "יש ללחוץ על Option-Command-Escape כדי לפתוח את החלון 'סיום מיידי', ואחר כך יש לבחור ביישום שאינו מגיב."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איך יש להפעיל מחדש את ה-Mac?",
+        "answer": "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'הפעלה מחדש'."
+      },
+      {
+        "type": "multiple",
+        "match": "מה מהדברים הבאים נכון לגבי משתמשים רגילים?",
+        "answers": [
+          "יכולים לשנות את ההגדרות שלהם",
+          "יכולים להתקין יישומים"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מאפייני נגישוּת זמינים ב-macOS?",
+        "answers": [
+          "דיבור",
+          "ראייה"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "אתם משתמשים ב-macOS Sonoma ואתם מוכנים להתקין את macOS Sequo",
+        "answer": "יש לפתוח את 'הגדרות המערכת', להקליק על 'כללי' ולאחר מכן להקליק על 'עדכון תוכנה'."
+      },
+      {
+        "type": "single",
+        "match": "עליכם לבטל גישה של יישום לתיקיה 'מסמכים'. איזו הגדרת מערכת מ",
+        "answer": "'פרטיות ואבטחה' > 'קבצים ותיקיות'"
+      },
+      {
+        "type": "single",
+        "match": "איזה סוג של חשבון מאפשר לכם להשתמש ב-Mac באופן זמני מבלי ליצ",
+        "answer": "אורח"
+      },
+      {
+        "type": "single",
+        "match": "ה-Mac מציג התראה לאחר ניסיון לפתוח יישום שהותקן מהאינטרנט. מ",
+        "answer": "לבחור ב'הגדרות המערכת' > 'פרטיות ואבטחה', ואחר כך להקליק על 'פתיחה בכל זאת' מתחת ל'אבטחה'."
+      },
+      {
+        "type": "multiple",
+        "match": "FileVault מופעל ב-Mac. במה תוכלו להשתמש כדי לפתוח את הנעילה",
+        "answers": [
+          "מפתח שחזור",
+          "חשבון iCloud"
+        ]
+      }
+    ]
+  },
+  "macbook-air-first-look": {
+    "name": "MacBook Air – מבט ראשון",
+    "examId": "macbook-air-first-look",
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/519429?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: שבב M5 ב-MacBook Air כולל מעבד גרפי מהדור ה",
+        "answer": "נכון"
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: ב-MacBook Air, הלקוחות יכולים לקבל אחסון מה",
+        "answer": "לא נכון"
+      }
+    ]
+  },
+  "macbook-air-מבט-ראשון": {
+    "name": "MacBook Air – מבט ראשון",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/519429?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: שבב M5 ב-MacBook Air כולל מעבד גרפי מהדור ה",
+        "answer": "נכון"
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: ב-MacBook Air, הלקוחות יכולים לקבל אחסון מה",
+        "answer": "לא נכון"
+      }
+    ]
+  },
+  "macbook-neo-מבט-ראשון": {
+    "name": "MacBook Neo – מבט ראשון",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/519307?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על הביצועים של MacBook Neo?",
+        "answers": [
+          "\"הוא נהדר למשימות יומיומיות, למתן ביטוי ליצירתיות שלכם ולבינה מלאכותית.\" מעולה.",
+          "\"הוא מופעל באמצעות שבב A18 Pro.\" יפה."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו המשפטים על העיצוב של MacBook Neo נכונים?",
+        "answers": [
+          "הוא כולל Magic Keyboard עם מקש נעילה או Touch ID כדי שהלקוחות יוכלו לנעול בקלות את ה‐MacBook Neo, או להדליק או לכבות אותו. נהדר.",
+          "הוא עשוי מאלומיניום עמיד ויש לו עיצוב ללא מאוורר. יפה."
+        ]
+      }
+    ]
+  },
+  "macbook-pro-first-look": {
+    "name": "MacBook Pro – מבט ראשון",
+    "examId": "macbook-pro-first-look",
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/520307?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: השבב M5 Max הוא השבב המתקדם ביותר של Apple",
+        "answer": "נכון כל הכבוד."
+      }
+    ]
+  },
+  "macbook-pro-מבט-ראשון": {
+    "name": "MacBook Pro – מבט ראשון",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/520307?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: השבב M5 Max הוא השבב המתקדם ביותר של Apple",
+        "answer": "נכון כל הכבוד."
+      }
+    ]
+  },
+  "task-management-essentials": {
+    "name": "Task management essentials",
+    "examId": "task-management-essentials",
+    "section": "WISE Essentials",
+    "url": "https://salescoach.apple.com/home/content/view/327528?backTo=%2Fhome%2Fcollection%2F65561",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "Which of the following are major challenges in task manageme",
+        "answers": [
+          "Consistency",
+          "Employee turnover",
+          "Constantly changing processes"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "Which of these benefits can be achieved by implementing a ta",
+        "answers": [
+          "Accelerated onboarding",
+          "Increased operational efficiency",
+          "Task calendars"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "Why is manual task management, such as using paper checklist",
+        "answers": [
+          "Takes more time",
+          "Requires checking on employees",
+          "No way to ensure consistency"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "True or false. Many task management solutions can use photo",
+        "answer": "True"
       }
     ],
     "unsolved": [
       {
-        "match": "כמה מצלמות Fusion ברזולוציה של 48MP יש בדגמי iPhone 17 Pro?",
+        "match": "Match the questions to different opportunities for task mana",
+        "type": "single",
+        "remaining": [],
+        "ruledOut": 0
+      }
+    ]
+  },
+  "warehousing-and-logistics-is-modernising": {
+    "name": "Warehousing and logistics is modernising",
+    "examId": "warehousing-and-logistics-is-modernising",
+    "section": "WISE Essentials",
+    "url": "https://salescoach.apple.com/home/content/view/279748?backTo=%2Fhome%2Fcollection%2F65561",
+    "questions": [
+      {
+        "type": "single",
+        "match": "True or false. Every organisation manages some form of logis",
+        "answer": "True"
+      },
+      {
+        "type": "multiple",
+        "match": "According to the \"Roles\" section, what tasks are performed i",
+        "answers": [
+          "Labelling goods",
+          "Storing goods",
+          "Packaging goods"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "Which of the following are major trends that are affecting t",
+        "answers": [
+          "Increasingly complex processes",
+          "Attracting and keeping a strong workforce",
+          "Limited operational visibility",
+          "The rise of third-party logistics"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "Which warehousing and logistics champion is responsible for",
+        "answer": "Chief operations officer"
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "How much money did PepsiCo save in the first year after swit",
         "type": "single",
         "remaining": [
-          "שתיים",
-          "שלושה",
-          "ארבע"
+          "US$1.6 million",
+          "US$5.2 million",
+          "US$7.8 million"
         ],
         "ruledOut": 1
+      }
+    ]
+  },
+  "אביזרי-mac-שאפשר-להראות-ללקוחות": {
+    "name": "אביזרי Mac שאפשר להראות ללקוחות",
+    "examId": null,
+    "section": "התחילו למכור אביזרים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/479544?backTo=%2Fhome%2Fcollection%2F244452",
+    "questions": [
+      {
+        "type": "single",
+        "match": "באיזה אביזר של Apple יכולים הלקוחות להשתמש באמצעות כבל HDMI",
+        "answer": "מתאם USB-C Digital AV Multiport"
       }
     ]
   },
@@ -147,6 +935,782 @@
       }
     ]
   },
+  "בוחן-בנו-מומחיות-ב-iphone": {
+    "name": "בוחן – בנו מומחיות ב-iPhone",
+    "examId": null,
+    "section": "בוחן – בנו מומחיות ב-iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/461867?backTo=%2Fhome%2Fcollection%2F234323",
+    "questions": [
+      {
+        "type": "single",
+        "match": "מהם היתרונות הכספיים של ליסינג של iPhone לעומת רכישתו?",
+        "answer": "הוא מאפשר תשלומים חודשיים קטנים יותר שקל לנהל וכן תקצוב צפוי. ליסינג עוזר ללקוחות לבצע תשלומים קטנים יותר ולנהל את התקציב שלהם באופן צפוי."
+      },
+      {
+        "type": "multiple",
+        "match": "מהם היתרונות העיקריים של תוכנית Business Upgrader עבור iPhon",
+        "answers": [
+          "היא עוזרת ללקוחות לחסוך כסף. התוכנית Business Upgrader חוסכת ללקוחות כסף באמצעות עסקאות טרייד-אין, תשלומים גמישים ותשלומים נמוכים תוך ניהול מחזור החיים של המכשירים שלהם.",
+          "היא עוזרת ללקוחות להשיג את יעדי הקיימות שלהם. מכשירי ה-iPhone החדשים תוכננו עם חומרים ממוחזרים וחומרים אחרים דלי פחמן. כך שחברות יכולות לרענן מכשירים תוך כדי חתירה למימוש יעדי הקיימות שלהן.",
+          "היא מגבירה את האבטחה ואת התאימות. התוכנית Business Upgrader עוזרת ללקוחות להתעדכן בתכונות האבטחה החדישות ביותר ולציית לתקנות ולתקנים בתעשייה."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "מהו היתרון העיקרי של ה-iPhone בתחום הקמעונאות?",
+        "answer": "נקודת מכירה ניידת בעזרת iPhone, העובדים יכולים לתמוך בתשלום של הלקוחות מכל מקום בחנות, ובמקביל לשפר את הדיווח והלוגיסטיקה בחנות."
+      },
+      {
+        "type": "single",
+        "match": "איזו שאלה תעזור ללקוחות להבין את ההשפעה הכספית לטווח ארוך של",
+        "answer": "\"האם הבאתם בחשבון את עלות הבעלות הכוללת (TCO) של iPhone?\" ה-iPhone שומר על ערכים שיוריים מהגבוהים בתעשייה. לכן הוא מעולה למימון. ו-Apple מבטיחה את הערך השיורי של ה-iPhone מראש, מה שמפחית את עלות השדרוג."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שאלות עליכם לשאול כדי להבין את החששות של הלקוחות לגבי נ",
+        "answers": [
+          "\"כמה זמן לוקח לבדוק עדכונים חדשים לפני פריסתם?\" ההבנה כמה זמן לוקח לבדוק עדכונים לפני פריסתם עוזרת לכם להדגיש את האמינות של iPhone.",
+          "\"כמה זמן לוקח לפרוס את המכשירים לעובדים?\" הידיעה כמה זמן נדרש לפריסת מכשירים עוזרת לכם להדגיש את היתרונות הפוטנציאליים לחיסכון בזמן של פריסת iPhone.",
+          "“כיצד אתם מנהלים את המכשירים שלכם?\" הבנת האופן שבו הלקוח שלכם מנהל מכשירים ניידים מאפשרת לכם להתאים את מצגת המכירה שלכם. פתרונות רבים של ניהול מכשירים ניידים (MDM) של צד שלישי משתלבים במסגרת הניהול של Apple."
+        ]
+      }
+    ]
+  },
+  "בוחן-בניית-מומחיות-ב-mac": {
+    "name": "בוחן – בניית מומחיות ב-Mac",
+    "examId": "בוחן-בניית-מומחיות-ב-mac",
+    "section": "תג Specialist ל-Mac",
+    "url": "https://salescoach.apple.com/home/content/view/461965?backTo=%2Fhome%2Fcollection%2F245262",
+    "questions": [
+      {
+        "type": "single",
+        "match": "כיצד מצליח מנוע Dynamic TEI של Forrester Consulting לשפר את",
+        "answer": "באמצעות האפשרות שניתנת ללקוחות להציג ולהתאים אישית נתוני TEI (השפעה כלכלית כוללת) באופן מקוון הלקוחות יכולים להציג את נתוני TEI המוגדרים כברירת מחדל, להתאים אותם אישית באמצעות הנתונים הספציפיים שלהם ולהוריד סקירה טכנית מותאמת עם הנתונים החדשים."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו תועלות נרשמו ב-Cisco מ\"תוכנית הבחירה של העובדים ב-Mac\"",
+        "answers": [
+          "פרודוקטיביות מוגברת בקרב אנשי מכירות ב-Cisco דווח על פרודוקטיביות מוגברת בקרב אנשי מכירות המשתמשים ב-Mac.",
+          "פחות בעיות חומרה בקרב משתמשי Mac ב-Cisco דיווחו על מספר קטן יותר של בעיות חומרה בקרב משתמשי Mac בהשוואה למשתמשי PC.",
+          "צורך מופחת בתמיכה ממערך ה-IT ב-Cisco נרשמה הפחתה בדרישה לתמיכה ממערך ה-IT וירידה במספר כרטיסי התמיכה למשתמשי Mac."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "מהו הצעד הראשון בשכנוע של לקוחות לאמץ את MacBook Air לעובדיה",
+        "answer": "אפיון הלקוח/ה לקוחות אידיאליים כבר ממילא תומכים ב-MacBook Pro או ב-iPhone."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שאלות תוכלו להציג כדי להבין טוב יותר את החששות של הלקוח",
+        "answers": [
+          "\"כמה זמן לוקח לפרוס את המחשבים לעובדים?\" הדגישו עד כמה קל ויעיל תהליך השילוב של ה-Mac בתהליכי העבודה של ארגונים.",
+          "\"האם השווית את עלות הבעלות הכוללת של Mac לזו של מחשבים אחרים?\" סייעו ללקוחות לשקול גורמים שמעבר לעלויות ראשוניות, כמו למשל תחזוקה, תמיכה, רישוי תוכנה ופרודוקטיביות מוגברת.",
+          "\"בכמה מחשבי Windows יכול חבר אחד בצוות ה-IT לתמוך כיום?\" הדגישו עד כמה קל לעובדים להשתמש במחשבי Mac וציינו את הדרישה הנמוכה יותר לסיוע ממערך ה-IT."
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "כיצד תוכלו לסייע בהגברת המודעות של לקוחות ל-MacBook Air?",
+        "type": "single",
+        "remaining": [
+          "השיגו חסות ניהולית לתוכנית \"הבחירה של העובדים ב-Mac\".",
+          "אפשר לקיים פגישה עם הנהלת המחלקה.",
+          "מקדו את מאמצי השיווק ב-MacBook Air."
+        ],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "בוחן-היסודות-של-mac": {
+    "name": "בוחן — היסודות של Mac",
+    "examId": null,
+    "section": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
+    "url": "https://salescoach.apple.com/home/content/view/475559?backTo=%2Fhome%2Fcollection%2F222222",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "כיצד תוכלו למצוא מידע נוסף על ציוד היקפי המחובר ל-Thunderbol",
+        "answers": [
+          "יש לפתוח את Spotlight ולהקליד \"נתוני המערכת\" בשדה החיפוש.",
+          "יש לבחור ב'הגדרות המערכת' > 'כללי' > 'מידע', ואחר כך להקליק על 'נתוני המערכת'."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "יישום הפסיק להגיב. איך תאכפו סיום מיידי של היישום?",
+        "answers": [
+          "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'סיום מיידי'.",
+          "יש ללחוץ על Option-Command-Escape כדי לפתוח את החלון 'סיום מיידי', ואחר כך יש לבחור ביישום שאינו מגיב."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איך יש להפעיל מחדש את ה-Mac?",
+        "answer": "יש להקליק על תפריט Apple, ואחר כך לבחור באפשרות 'הפעלה מחדש'."
+      },
+      {
+        "type": "multiple",
+        "match": "מה מהדברים הבאים נכון לגבי משתמשים רגילים?",
+        "answers": [
+          "יכולים לשנות את ההגדרות שלהם",
+          "יכולים להתקין יישומים"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מאפייני נגישוּת זמינים ב-macOS?",
+        "answers": [
+          "דיבור",
+          "ראייה"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "אתם משתמשים ב-macOS Sonoma ואתם מוכנים להתקין את macOS Sequo",
+        "answer": "יש לפתוח את 'הגדרות המערכת', להקליק על 'כללי' ולאחר מכן להקליק על 'עדכון תוכנה'."
+      },
+      {
+        "type": "single",
+        "match": "עליכם לבטל גישה של יישום לתיקיה 'מסמכים'. איזו הגדרת מערכת מ",
+        "answer": "'פרטיות ואבטחה' > 'קבצים ותיקיות'"
+      },
+      {
+        "type": "single",
+        "match": "איזה סוג של חשבון מאפשר לכם להשתמש ב-Mac באופן זמני מבלי ליצ",
+        "answer": "אורח"
+      },
+      {
+        "type": "single",
+        "match": "ה-Mac מציג התראה לאחר ניסיון לפתוח יישום שהותקן מהאינטרנט. מ",
+        "answer": "לבחור ב'הגדרות המערכת' > 'פרטיות ואבטחה', ואחר כך להקליק על 'פתיחה בכל זאת' מתחת ל'אבטחה'."
+      },
+      {
+        "type": "multiple",
+        "match": "FileVault מופעל ב-Mac. במה תוכלו להשתמש כדי לפתוח את הנעילה",
+        "answers": [
+          "מפתח שחזור",
+          "חשבון iCloud"
+        ]
+      }
+    ]
+  },
+  "בוחן-היסודות-של-חשבון-apple-ו-icloud": {
+    "name": "בוחן — היסודות של חשבון Apple ו—iCloud",
+    "examId": null,
+    "section": "הכנה לקורסים Apple Device Support ו-Apple Deployment and Management",
+    "url": "https://salescoach.apple.com/home/content/view/475579?backTo=%2Fhome%2Fcollection%2F222222",
+    "questions": [
+      {
+        "type": "single",
+        "match": "איזה מאפיין מאפשר לכם לסנכרן קבצים ותיקיות בין Mac ל-iPad?",
+        "answer": "iCloud Drive"
+      },
+      {
+        "type": "single",
+        "match": "איזה יישום של iPad מכיל קבצים ותיקיות שסונכרנו מ-iCloud Driv",
+        "answer": "היישום 'קבצים'"
+      },
+      {
+        "type": "multiple",
+        "match": "מה דרוש כדי שיושלם 'גיבוי iCloud' אוטומטי ב-iPad?",
+        "answers": [
+          "מכשיר המחובר לחשמל",
+          "חיבור לרשת אלחוטית"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "שכחתם את הסיסמה לחשבון Apple, אך באפשרותכם להשתמש באימות בשנ",
+        "answers": [
+          "מספר טלפון מהימן",
+          "מכשיר Apple מהימן"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו פריטים מאוחסנים ב'סיסמאות של iCloud'?",
+        "answers": [
+          "שמות משתמשים וסיסמאות של Safari",
+          "מפתחות התחברות"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איזה מהבאים דרוש כדי שמאפייני 'המשכיות' יפעלו במכשירי Apple",
+        "answer": "חשבון Apple"
+      },
+      {
+        "type": "single",
+        "match": "באיזה מאפיין של iCloud תוכלו להשתמש כדי לאתר iPhone שאבד?",
+        "answer": "איתור"
+      },
+      {
+        "type": "multiple",
+        "match": "מה דרוש כדי להשבית את האפשרויות 'איתור' ו'נעילת ההפעלה'?",
+        "answers": [
+          "אישורי חשבון Apple",
+          "קוד גישה למכשיר"
+        ]
+      }
+    ]
+  },
+  "בוחן-התחילו-למכור-apple-watch": {
+    "name": "בוחן – התחילו למכור Apple Watch",
+    "examId": null,
+    "section": "התחילו למכור Apple Watch",
+    "url": "https://salescoach.apple.com/home/content/view/503229?backTo=%2Fhome%2Fcollection%2F224853",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "אילו נתוני בריאות הלקוחות יכולים לראות במהירות ביישום ‘מדדים",
+        "answers": [
+          "קצב לב",
+          "משך השינה כל הכבוד.",
+          "קצב נשימות"
+        ]
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הצג של Apple Watch Series 11 עמיד יותר בפני",
+        "answer": "נכון כל הכבוד."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו אוזניות יכולים הלקוחות להטעין באמצעות המטען של ה-Apple",
+        "answers": [
+          "AirPods Pro 3",
+          "AirPods 4 עם 'צמצום רעשים פעיל' יפה מאוד."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "מה תוכלו לומר ללקוחות בנוגע ל’עדכון שהכול בסדר’ ב‐Apple Watc",
+        "answer": "\"אפשר להודיע באופן אוטומטי לחבר או לאדם אהוב כשהגעתם ליעד\"."
+      },
+      {
+        "type": "selects",
+        "match": "התאימו כל מאפיין של watchOS לתיאור שלו.",
+        "answers": [
+          "היישום 'פעילות'",
+          "היישום 'אימון'",
+          "הודעות"
+        ]
+      },
+      {
+        "type": "selects",
+        "match": "התאימו כל תכונת בריאות ב-Apple Watch לתיאור שלה.",
+        "answers": [
+          "היישום 'מעקב אחר המחזור'",
+          "היישום 'מודעות קשובה'",
+          "היישום 'קצב לב'"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "הלקוחה רוצה להשתמש ב-Apple Watch שלה כדי לעקוב אחרי האימונים",
+        "answers": [
+          "1464953",
+          "1464955"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "מה הלקוחות יכולים לעשות עם Apple Watch SE 3?",
+        "answers": [
+          "להתחיל שחייה בבריכה ביישום 'אימון'",
+          "לעקוב אחרי קצב הלב ביישום 'קצב לב' יפה מאוד.",
+          "היפוך מהיר של פרק כף היד כדי להשתיק שיחות נכנסות יפה מאוד."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "הלקוח מתלבט בין Apple Watch Series 11 ל-Apple Watch SE 3. אי",
+        "answers": [
+          "חיישן חמצן בדם",
+          "מארז בגודל 46 מ\"מ יפה מאוד."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו פעולות ‘זיהוי תאונת דרכים' יכול לבצע כשמזוהה תאונת דרכי",
+        "answers": [
+          "להתקשר לשירותי החירום ולשתף איתם מיקום יפה מאוד.",
+          "לשלוח הודעה לאנשי קשר לשעת חירום"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "אילו אוזניות יכולים הלקוחות להטעין באמצעות המטען של ה-Apple",
+        "type": "multiple",
+        "remaining": [
+          "AirPods Pro 3",
+          "AirPods 4 הלקוחות יכולים להטעין את ה-AirPods 4 באמצעות כבל USB-C, לא באמצעות המטען של ה-Apple Watch.",
+          "AirPods Max",
+          "AirPods 4 עם 'צמצום רעשים פעיל'"
+        ],
+        "ruledOut": 2
+      }
+    ]
+  },
+  "בוחן-התחילו-למכור-mac": {
+    "name": "בוחן – התחילו למכור Mac",
+    "examId": null,
+    "section": "התחילו למכור Mac",
+    "url": "https://salescoach.apple.com/home/content/view/521331?backTo=%2Fhome%2Fcollection%2F286200",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "איזה משפט נכון לגבי הצג של MacBook Pro שכדאי להגיד ללקוחות?",
+        "answers": [
+          "\"הוא הצג הבהיר ביותר במחשב Mac נייד.\"",
+          "\"יש אפשרות לבחור צג במרקם ננו להפחתת השתקפויות ובוהק.\""
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מהמשפטים הבאים לגבי macOS נכונים?",
+        "answers": [
+          "הלקוחות יכולים להוסיף וידג'טים למכתבה כדי לגשת למידע. יפה מאוד.",
+          "היישומים של macOS ייתנו תחושה מוכרת ללקוחות שמשתמשים ב-iPhone או ב-iPad. נהדר."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "מגיע אליכם לקוח שיש לו iPad והוא מעוניין ב-Mac. מה כדאי לכם",
+        "answers": [
+          "\"אתה יכול להשתמש ב-iPad כצג שני ל-Mac.\" נהדר.",
+          "\"אפשר לגרור תוכן מה-Mac ל-iPad ולסמן עליו עם ה-Apple Pencil.\""
+        ]
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים לענות לשיחות ולשלוח הודעות ט",
+        "answer": "נכון כל הכבוד."
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: שבב M5 Pro תומך בעד 48GB של זיכרון אחיד, כך",
+        "answer": "לא נכון"
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים לפתוח, לערוך ולייצא פרויקטים",
+        "answer": "נכון כל הכבוד."
+      },
+      {
+        "type": "multiple",
+        "match": "הלקוחות שלכם מתלבטים בין Mac Studio עם שבב M4 Max או M3 Ultr",
+        "answers": [
+          "זיכרון אחיד של עד 96GB",
+          "תמיכה בעד שמונה צגים יפה מאוד."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "על אילו אביזרים כדאי להמליץ ללקוח שרוצה להשתמש ב-Mac mini במ",
+        "answers": [
+          "Studio Display יפה מאוד.",
+          "מדפסת אלחוטית"
+        ]
+      },
+      {
+        "type": "selects",
+        "match": "התאימו כל מאפיין של השבבים מסדרת M לתיאור שלו.",
+        "answers": [
+          "זיכרון אחיד",
+          "מעבד גרפי",
+          "מנוע מדיה",
+          "Neural Engine"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "התאימו בין כל דגם Mac לבין המאפיינים שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "בוחן-התחילו-למכור-אביזרים-של-apple": {
+    "name": "בוחן – התחילו למכור אביזרים של Apple",
+    "examId": null,
+    "section": "התחילו למכור אביזרים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/522759?backTo=%2Fhome%2Fcollection%2F244452",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: האביזרים של Apple תוכננו על פי אותם תקני אי",
+        "answer": "נכון יפה מאוד."
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים לקשר שני רמקולים של HomePod",
+        "answer": "נכון"
+      },
+      {
+        "type": "single",
+        "match": "באיזה דגם של Beats יכולים הלקוחות להשתמש כדי להאזין למוזיקה",
+        "answer": "Powerbeats Pro 2 כל הכבוד."
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות צריכים להסיר את כיסוי MagSafe כדי ל",
+        "answer": "לא נכון"
+      },
+      {
+        "type": "multiple",
+        "match": "מה כדאי לספר ללקוחות על Magic Keyboard Folio ל-iPad?",
+        "answers": [
+          "\"האביזר מעוצב בשני חלקים, כך שניתן לנתק את המקלדת כשאין בה צורך.\" יפה מאוד.",
+          "\"יש לו מקשי פונקציה לצורך גישה מהירה לכפתורים נוחים כמו 'הכתבה'.\""
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "איזה מהדגמים הבאים של AirPods תומך ב'שמע מותאם'?",
+        "answers": [
+          "AirPods 4 עם 'צמצום רעשים פעיל'",
+          "AirPods Max 2 נהדר.",
+          "AirPods Pro 3 יפה מאוד."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "מה כדאי לומר ללקוחות על האביזרים ל-Apple Watch?",
+        "answers": [
+          "\"אפשר לבחור רצועה שעשויה מחומרים ממוחזרים.\" כל הכבוד.",
+          "\"אפשר להאזין למוזיקה ב-Apple Watch עם אוזניות אלחוטיות מסוג AirPods או Beats.\""
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "הלקוחות שלכם מתלבטים בין Apple Pencil Pro לבין Apple Pencil",
+        "answers": [
+          "רגישות ללחיצה",
+          "הקשה כפולה למעבר בין כלים",
+          "קישור וטעינה אלחוטיים טוב מאוד."
+        ]
+      },
+      {
+        "type": "selects",
+        "match": "התאימו את האביזר של Apple ל-Mac לתיאור שלו.",
+        "answers": [
+          "כבלי Thunderbolt",
+          "Magic Trackpad",
+          "מתאם USB-C ל-USB"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "על אילו אביזרים כדאי להמליץ ללקוחות שיש להם iPhone 17 ו-iPho",
+        "answers": [
+          "מתאם מתח USB-C כל הכבוד.",
+          "מטען MagSafe טוב מאוד.",
+          "AirPods"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "על אילו אביזרים כדאי להמליץ ללקוחות שיש להם iPhone 17 ו-iPho",
+        "type": "multiple",
+        "remaining": [
+          "כבל MagSafe 3 כבל MagSafe 3 פועל עם דגמי Mac ולא עם iPhone.",
+          "Magic Keyboard דגמי Magic Keyboard פועלים עם הדגמים החדשים של Mac ו-iPad, ולא עם iPhone.",
+          "מתאם מתח USB-C",
+          "AirPods",
+          "מטען MagSafe"
+        ],
+        "ruledOut": 9
+      }
+    ]
+  },
+  "בוחן-התחילו-למכור-מכשירי-ipad": {
+    "name": "בוחן – התחילו למכור מכשירי iPad",
+    "examId": null,
+    "section": "התחילו למכור מכשירי iPad",
+    "url": "https://salescoach.apple.com/home/content/view/521862?backTo=%2Fhome%2Fcollection%2F211852",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "מה כדאי לומר על ה-iPad Pro?",
+        "answers": [
+          "\"תקבלו זיכרון רב יותר שיאפשר ריבוי משימות ועוצמה שתספיק ליישומים ולמשחקים תובעניים.\"",
+          "\"עם מערכת המצלמות המקצועית, תוכלו לצלם תמונות יפות וסרטוני ProRes מפורטים באיכות 4K.\" יפה מאוד.",
+          "\"יש לו צג Ultra Retina XDR, כך שתקבלו צג בהיר, תמונות מפורטות וגוני שחור נאמנים יותר למציאות.\" יפה מאוד."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "אילו דגמי Apple Pencil תואמים ל-iPad Air?",
+        "answer": "Apple Pencil Pro ו-Apple Pencil (USB-C) יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר על השבבים מסדרה M ב-iPad?",
+        "answers": [
+          "\"תיהנו מאותה רמת ביצועים, לא משנה אם ה-iPad מחובר לחשמל או אם הוא פועל באמצעות סוללה.\"",
+          "\"תבחינו בכך שהכול מהיר וזורם הודות לזיכרון האחיד.\"",
+          "\"תקבלו גרפיקה מהירה, כך שהם מצוינים עבור משחקים ומשימות יצירתיות.\" טוב מאוד."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "על מה עליכם להמליץ ללקוחות שזקוקים למתאם מתח וכבל נוספים כדי",
+        "answer": "מתאם מתח USB-C בהספק 20 ואט של Apple וכבל טעינה USB-C של Apple"
+      },
+      {
+        "type": "multiple",
+        "match": "מה צריך לספר ללקוחות על ההגדרה של תוכנית נתונים סלולריים ב-i",
+        "answers": [
+          "\"אפשר לבחור תוכניות לפי כמות הנתונים הדרושה לך.\"",
+          "\"אפשר לרכוש תוכנית ישירות ב-iPad.\" יפה מאוד.",
+          "\"אפשר לשלם בהתאם לצורך, כך שלא תצטרכו להתחייב לחוזה ארוך טווח.\" יפה מאוד."
+        ]
+      },
+      {
+        "type": "single",
+        "match": "מה כדאי לומר ללקוחות על ה-iPad Air?",
+        "answer": "\"עם המצלמה הקדמית הממוקמת בקצה הרחב ו'מרכז הבמה', ועם 'הפרדת קול' במיקרופונים, תיראו ותישמעו נהדר בשיחות וידאו.\" יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו דגמי iPad תואמים ל-Magic Keyboard?",
+        "answers": [
+          "iPad Pro יפה מאוד.",
+          "iPad Air"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "התאימו את צורכי הלקוחות למאפיין של iPadOS שכדאי לספר להם עלי",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 8
+      },
+      {
+        "match": "אילו דגמי iPad תואמים ל-Magic Keyboard?",
+        "type": "multiple",
+        "remaining": [
+          "iPad Air",
+          "iPad mini",
+          "iPad iPad עובד עם Magic Keyboard Folio.",
+          "iPad Pro"
+        ],
+        "ruledOut": 5
+      },
+      {
+        "match": "איך כדאי לתאר ללקוחות כל אחד מהמאפיינים של iPadOS?",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 6
+      },
+      {
+        "match": "התאימו בין כל דגם iPad לבין המאפיינים שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "בוחן-התחילו-למכור-מכשירי-iphone": {
+    "name": "בוחן – התחילו למכור מכשירי iPhone",
+    "examId": "בוחן-התחילו-למכור-מכשירי-iphone",
+    "section": "התחילו למכור iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/521884?backTo=%2Fhome%2Fcollection%2F208920",
+    "questions": [
+      {
+        "type": "single",
+        "match": "כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'?",
+        "answer": "\"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\" יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17 ו-iPhon",
+        "answers": [
+          "מטען MagSafe יפה מאוד.",
+          "מתאם מתח וכבל בחיבור USB-C",
+          "מטען אלחוטי בתקן Qi2 כל הכבוד."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud?",
+        "answers": [
+          "לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם יפה מאוד.",
+          "לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד"
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו אמירות נכונות לגבי מצלמת Center Stage הקדמית?",
+        "answers": [
+          "הלקוחות יכולים להשתמש במאפיין 'צילום כפול' כדי להקליט בו-זמנית את עצמם ואת העולם שסביבם.",
+          "היא מעולה למסגור של תמונות סלפי קבוצתיות ושל סרטונים."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר ללקוחות על ה-iPhone 17 Pro?",
+        "answers": [
+          "\"העיצוב שלו עשוי גוף אלומיניום אחיד (unibody) שממקסם את הביצועים, את קיבולת הסוללה ואת העמידות.\" יפה מאוד.",
+          "\"השבב A19 Pro מספק מהירות ויעילות יוצאות מהכלל, וזה מושלם למשחקים מתקדמים ולמשימות תובעניות.\""
+        ]
+      },
+      {
+        "type": "single",
+        "match": "איזה מאפיין יכול ליידע את שירותי החירום ואת אנשי הקשר לשעת ח",
+        "answer": "זיהוי תאונת דרכים יפה מאוד."
+      },
+      {
+        "type": "multiple",
+        "match": "מה עליכם לומר על המצלמות ב-iPhone 17?",
+        "answers": [
+          "\"יש לו מצלמת Center Stage קדמית ברזולוציה של 18MP לצילום וידאו יציב במיוחד.\"",
+          "\"הודות למערכת המצלמות Dual Fusion ברזולוציה של 48MP, תהיה לך אפשרות לצלם תמונות מדהימות עם פרטים מהממים.\" יפה מאוד."
+        ]
+      },
+      {
+        "type": "selects",
+        "match": "התאימו כל דגם של iPhone למאפיינים שלו.",
+        "answers": [
+          "iPhone 17",
+          "iPhone Air",
+          "iPhone 17 Pro",
+          "iPhone 17e"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "התאימו כל מאפיין של iPhone לתיאור שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 4
+      },
+      {
+        "match": "התאימו כל דגם של iPhone למאפיינים שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 2
+      },
+      {
+        "match": "התאימו כל מאפיין של iOS לתיאור שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 15
+      }
+    ]
+  },
+  "בוחן-התכונות-הבסיסיות-של-apple-tv": {
+    "name": "בוחן – התכונות הבסיסיות של Apple TV",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Apple TV",
+    "url": "https://salescoach.apple.com/home/content/view/461824?backTo=%2Fhome%2Fcollection%2F159021",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון. ארגונים יכולים לנהל את Apple TV באמצעות פתר",
+        "answer": "נכון הלקוחות יכולים להשתמש בפתרון ניהול מכשירים ניידים (MDM) אחד כדי לנהל את כל מכשירי Apple שברשותם, כולל Apple TV."
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון. Apple TV תומכת ביישומים בהתאמה אישית.",
+        "answer": "נכון הלקוחות יכולים לשפר את הפרודוקטיביות באמצעות Apple TV והיכולת שלה להפעיל יישומים בהתאמה אישית."
+      },
+      {
+        "type": "single",
+        "match": "לפני ש-Queensway Automotive השתמשה ב-Apple TV, כיצד היא הציג",
+        "answer": "היא השתמשה בלוחות מחיקים. הסוכנות עברה מלוחות מחיקים ל-Apple TV כדי שהעובדים יוכלו לראות נתוני מכירות חשובים בזמן אמת."
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "כיצד ארגונים משתמשים ב-Apple TV?",
+        "type": "multiple",
+        "remaining": [
+          "בידור חברות אירוח משתמשות ב-Apple TV כחלק מפתרונות האירוח והבידור בחדרים.",
+          "שירות בשטח iPad , iPhone ו-Apple Watch מתאימים יותר לשירות בשטח.",
+          "שילוט דיגיטלי תוכן דינמי מספק לעובדים וללקוחות לוח מידע מרכזי להצגת מידע מוגבל בזמן.",
+          "שיתוף פעולה ושיחות ועידה בווידאו"
+        ],
+        "ruledOut": 2
+      },
+      {
+        "match": "מהם חלק מהמאפיינים הזמינים עבור Apple TV?",
+        "type": "multiple",
+        "remaining": [
+          "ספריית תמונות משותפת ב-iCloud הלקוחות יכולים להציג תמונות של אתרי עבודה או מיקומי חנויות ולהציג את התמונות של אנשים אחרים על המסך באמצעות 'ספריית התמונות המשותפת ב‐iCloud'.",
+          "SharePlay באמצעות SharePlay ב-Apple TV, אנשים יכולים לצפות בסרטונים, להאזין למוזיקה או לשתף חוויות באמצעות FaceTime.",
+          "חיי סוללה שמספיקים ליום שלם Apple TV אינה מכשיר המופעל באמצעות סוללה.",
+          "AirPlay"
+        ],
+        "ruledOut": 2
+      },
+      {
+        "match": "לפני ש-Queensway Automotive השתמשה ב-Apple TV, כיצד היא הציג",
+        "type": "single",
+        "remaining": [
+          "היא הדפיסה עלונים מדי שבוע.",
+          "היא השתמשה בלוחות מחיקים.",
+          "הסוכנים עיינו בנתונים ממערכת ניהול קשרי הלקוחות (CRM) במחשבים הניידים שלהם."
+        ],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "בוחן-התכונות-הבסיסיות-של-apple-watch": {
+    "name": "בוחן – התכונות הבסיסיות של Apple Watch",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Apple Watch",
+    "url": "https://salescoach.apple.com/home/content/view/461781?backTo=%2Fhome%2Fcollection%2F159127",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון. Apple Watch יכול להגן על השמיעה של העובדים",
+        "answer": "נכון היישום 'רעש' מנטר צלילים ומודיע לעובד אם הרעש בסביבה מגיע לרמה שעלולה להשפיע על השמיעה שלו לאורך זמן."
+      },
+      {
+        "type": "single",
+        "match": "נכון או לא נכון. צוות ה-IT נדרש להגדיר את ה-Apple Watch על י",
+        "answer": "לא נכון העובדים מגדירים את ה-Apple Watch שלהם בעצמם על ידי קישורו ל-iPhone מנוהל."
+      },
+      {
+        "type": "single",
+        "match": "מהי אחת מתכונות האבטחה העיקריות של Apple Watch שמגנה על הנתו",
+        "answer": "הגבלות קישור מ-iPhone מנוהל כדי להגן על הנתונים של הארגון, Apple Watch מקושר ישקף את ההגבלה מה-iPhone שלו."
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "אילו מהתכונות הבאות הן תכונות 'המשכיות' שעוזרות לעובדים להשל",
+        "type": "multiple",
+        "remaining": [
+          "Force Wrist Detection זוהי אינה תכונת 'המשכיות'.",
+          "ביטול נעילה אוטומטי ניתן לבטל באופן אוטומטי את נעילת מחשב ה-Mac באמצעות Apple Watch ולאשר בקשות אחרות להזנת סיסמה של מנהל מערכת.",
+          "שיחות טלפון",
+          "Handoff עובדים יכולים להתחיל משימה ב-Apple Watch ולסיים אותה ב-iPhone בלי לאבד את הריכוז."
+        ],
+        "ruledOut": 2
+      },
+      {
+        "match": "איזה יישום ב-Apple Watch מאפשר ללקוחות להקליט הערות קוליות כ",
+        "type": "single",
+        "remaining": [
+          "דואר",
+          "תזכורות קוליות"
+        ],
+        "ruledOut": 2
+      }
+    ]
+  },
   "בוחן-יסודות-ה-iphone-וה-ipad": {
     "name": "בוחן — יסודות ה—iPhone וה—iPad",
     "examId": null,
@@ -180,53 +1744,80 @@
           "לקרב את שני המכשירים, ואחר כך לפעול לפי ההוראות שעל המסך.",
           "במכשיר הקודם, לעבור אל 'הגדרות'> 'כללי', להקיש על 'העברה או איפוס של ה-iPhone', ואחר כך לפעול לפי ההוראות שעל המסך."
         ]
+      },
+      {
+        "type": "single",
+        "match": "איך מסירים יישום?",
+        "answer": "נוגעים נגיעה ממושכת ביישום כדי לפתוח תפריט אפשרויות מהיר, ואחר כך בוחרים באפשרות 'הסרת היישום'."
+      },
+      {
+        "type": "single",
+        "match": "היכן מפעילים עדכוני תוכנה אוטומטיים?",
+        "answer": "'הגדרות' > 'כללי' > 'עדכון תוכנה'"
+      },
+      {
+        "type": "single",
+        "match": "איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום",
+        "answer": "1408323"
+      },
+      {
+        "type": "single",
+        "match": "איך יוצרים תיקייה לארגון יישומים ב-iPhone?",
+        "answer": "נוגעים נגיעה ממושכת ברקע של מסך הבית עד שהיישומים יתחילו להתנועע, ואז גוררים יישום על גבי יישום אחר."
+      },
+      {
+        "type": "single",
+        "match": "היכן ניתן לשנות את הגדרות המיקום של יישום?",
+        "answer": "'הגדרות' > 'פרטיות ואבטחה' > 'שירותי מיקום'"
+      },
+      {
+        "type": "single",
+        "match": "כיצד אפשר לבדוק את השימוש בסוללה ב-iPhone שלכם?",
+        "answer": "עוברים אל 'הגדרות' > 'סוללה' כדי להציג מידע על השימוש בסוללה."
+      }
+    ]
+  },
+  "בוחן-מוצרי-applecare-לעסקים": {
+    "name": "בוחן – מוצרי AppleCare לעסקים",
+    "examId": null,
+    "section": "מוצרי AppleCare לעסקים",
+    "url": "https://salescoach.apple.com/home/content/view/461915?backTo=%2Fhome%2Fcollection%2F68762",
+    "questions": [
+      {
+        "type": "single",
+        "match": "מהי המטרה של האפשרויות Service Pool ו-Service Pool+ ב-AppleC",
+        "answer": "לאפשר תיקונים והחלפות של מכשירים מכל סיבה שהיא, כולל נזק מקרי האפשרויות Service Pool ו-Service Pool+ מאפשרות תיקונים והחלפות מכל סיבה שהיא, כולל נזק מקרי."
+      },
+      {
+        "type": "single",
+        "match": "איזו תוכנית של תמיכת OS של AppleCare כוללת מספר בלתי מוגבל ש",
+        "answer": "Alliance התוכנית מכסה מספר בלתי מוגבל של אירועים ברמת הארגון במיקומים מרובים ומגיבה לבעיות בעדיפות גבוהה תוך שעה – והיא זמינה 24 שעות ביממה, 7 ימים בשבוע. היא כוללת גם מנהלי הצלחת לקוחות ייעודיים וסקירה באתר הלקוח על ידי מהנדסי תמיכה טכנית של Apple."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו שאלות תוכלו לשאול את הלקוחות כדי להבין טוב יותר את החשש",
+        "answers": [
+          "\"האם אתם צריכים להגדיל את צוות התמיכה ב-IT כדי לתמוך בפרויקט?\" הבינו את צורכי התמיכה של הלקוחות ב-IT כדי שתוכלו לעזור להם בתכנון המשאבים. AppleCare מציעה פתרונות מדרגיים שמתאימים לשינויים באיוש העובדים.",
+          "\"מה אתם עושים אם מכשיר מתקלקל?\" הבינו את נוהלי תיקוני המכשירים ללקוחות. לאחר מכן, תוכלו להתאים את ההצעות לצרכים הספציפיים של אותם לקוחות.",
+          "\"מאיפה תשיגו מכשירים חלופיים?\" למדו מהו מקור המכשירים של הלקוחות ובאיזו המהירות יקבלו מכשירים חלופיים. AppleCare for Enterprise כולל אפשרויות שירות גמישות ותיקון או החלפה של מכשיר כבר ביום העסקים הבא."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "מהם היתרונות העיקריים של AppleCare for Enterprise עבור הלקוח",
+        "answers": [
+          "תמיכה טכנית ממומחים העובדים מקבלים תמיכה טכנית ללא הגבלה של 24 שעות ביממה, 7 ימים בשבוע בטלפון. הם יכולים לקבל עזרה בנושא החומרה, מערכות ההפעלה, החשבונות האישיים או ההגדרות של Apple. בנוסף, AppleCare תומך ביישומים של Apple – כמו Keynote , Pages ו-Numbers.",
+          "מאגר שירות הלקוחות משתמשים ב-Service Pool כדי להחליף מכשירי iPhone או iPad ולתקן מחשבי Mac. בזכות האפשרויות, אפשר לקזז את העלויות של נזק מקרי.",
+          "תיקון מכשירים בעדיפות השירות מתבצע במהלך יום העסקים הבא, כדי לקצר את זמן ההשבתה. כיסוי השירות לחומרה זמין גם באתר."
+        ]
       }
     ],
     "unsolved": [
       {
-        "match": "איזה סמל בשורת המצב ב-iPhone מעיד שיישום משתמש בשירותי מיקום",
+        "match": "התאימו את מוצרי AppleCare הבאים לתכונות שלהם.",
         "type": "single",
-        "remaining": [
-          "1408323",
-          "1408326"
-        ],
-        "ruledOut": 2
-      },
-      {
-        "match": "היכן ניתן לשנות את הגדרות המיקום של יישום?",
-        "type": "single",
-        "remaining": [
-          "'הגדרות' > 'פרטיות ואבטחה' > 'שירותי מיקום'",
-          "'הגדרות' > 'שירותי מיקום' > 'פרטיות ואבטחה'"
-        ],
-        "ruledOut": 2
-      },
-      {
-        "match": "היכן מפעילים עדכוני תוכנה אוטומטיים?",
-        "type": "single",
-        "remaining": [
-          "'הגדרות' > 'עדכון תוכנה'",
-          "'הגדרות' > 'כללי' > 'עדכון תוכנה'"
-        ],
-        "ruledOut": 2
-      },
-      {
-        "match": "כיצד אפשר לבדוק את השימוש בסוללה ב-iPhone שלכם?",
-        "type": "single",
-        "remaining": [
-          "עוברים אל 'הגדרות' > 'סוללה' כדי להציג מידע על השימוש בסוללה.",
-          "עוברים אל 'הגדרות' > 'סוללה', ואחר מכך מקישים על 'שימוש' כדי להציג מידע על השימוש בסוללה."
-        ],
-        "ruledOut": 2
-      },
-      {
-        "match": "איך יוצרים תיקייה לארגון יישומים ב-iPhone?",
-        "type": "single",
-        "remaining": [
-          "נוגעים נגיעה ממושכת ברקע של מסך הבית עד שהיישומים יתחילו להתנועע, ואז גוררים יישום על גבי יישום אחר.",
-          "עוברים אל 'ספריית היישומים' ומקישים על 'תיקייה חדשה', ואז גוררים יישומים לתיקייה."
-        ],
-        "ruledOut": 2
+        "remaining": [],
+        "ruledOut": 0
       }
     ]
   },
@@ -245,31 +1836,24 @@
         "type": "multiple",
         "match": "אילו שאלות עליכם לשאול כדי להבין את צורכי הפריסה של הלקוחות?",
         "answers": [
-          "\"איך אתם מנהלים את מכשירי ה-iPhone שלכם?\"",
+          "\"מה העובדים צריכים לעשות כדי להגדיר את המכשירים שלהם?\"",
           "\"מה מחלקת ה‐IT צריכה לעשות כדי שהמכשירים יהיו מוכנים לשימוש על ידי המשתמשים?\"",
-          "\"מה העובדים צריכים לעשות כדי להגדיר את המכשירים שלהם?\""
+          "\"איך אתם מנהלים את מכשירי ה-iPhone שלכם?\""
         ]
       },
       {
         "type": "multiple",
         "match": "כיצד Apple תומכת בארגונים בתהליכי הפריסה ובשירותים הטכנולוגי",
         "answers": [
+          "Apple מציעה הכשרה בנושא ניהול מכשירים.",
           "Apple מספקת תוכנה שעובדת עם שירותי ניהול המכשירים.",
-          "Apple מספקת תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה שלה.",
-          "Apple מציעה הכשרה בנושא ניהול מכשירים."
+          "Apple מספקת תמיכה בטלפון ובדוא\"ל לפריסת מערכות ההפעלה שלה."
         ]
-      }
-    ],
-    "unsolved": [
+      },
       {
-        "match": "כיצד Apple Business מפריד בין נתונים בעבודה לבין נתונים אישי",
         "type": "single",
-        "remaining": [
-          "מדריך הגדרות מותאם אישית",
-          "אימות מאוחד",
-          "חשבונות Apple מנוהלים"
-        ],
-        "ruledOut": 1
+        "match": "כיצד Apple Business מפריד בין נתונים בעבודה לבין נתונים אישי",
+        "answer": "חשבונות Apple מנוהלים"
       }
     ]
   },
@@ -304,6 +1888,21 @@
       }
     ]
   },
+  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
+    "name": "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+    "examId": null,
+    "section": "הכירו את Apple",
+    "url": "https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו כל משפט של לקוח ליתרון של Apple.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 1
+      }
+    ]
+  },
   "הכירו-את-הערכים-של-apple": {
     "name": "הכירו את הערכים של Apple",
     "examId": null,
@@ -318,6 +1917,121 @@
           "יצירת תוכנית שמטרתה להביא את Apple לניטרליות פחמנית בכל טביעת הרגל הגלובלית שלה עד 2030",
           "עיצוב מוצרי Apple כך שיגנו על פרטי הלקוחות"
         ]
+      }
+    ]
+  },
+  "הכירו-את-מערך-המוצרים-של-apple-watch": {
+    "name": "הכירו את מערך המוצרים של Apple Watch",
+    "examId": null,
+    "section": "התחילו למכור Apple Watch",
+    "url": "https://salescoach.apple.com/home/content/view/456147?backTo=%2Fhome%2Fcollection%2F224853",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: Apple Watch Series 11 הוא ה-Apple Watch הדק",
+        "answer": "נכון כל הכבוד."
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "מה הלקוחות יכולים לעשות עם Apple Watch SE 3?",
+        "type": "multiple",
+        "remaining": [
+          "להתחיל שחייה בבריכה ביישום 'אימון'",
+          "לעקוב אחרי קצב הלב ביישום 'קצב לב'",
+          "לקבל עדכון אם ה-Apple Watch מזהה דפוסים של יתר לחץ דם",
+          "לעקוב אחר שינויי חום הגוף במהלך הלילה באמצעות חישת טמפרטורה"
+        ],
+        "ruledOut": 6
+      }
+    ]
+  },
+  "הכירו-את-מערך-המוצרים-של-mac": {
+    "name": "הכירו את מערך המוצרים של Mac",
+    "examId": null,
+    "section": "התחילו למכור Mac",
+    "url": "https://salescoach.apple.com/home/content/view/521317?backTo=%2Fhome%2Fcollection%2F286200",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו בין כל דגם Mac לבין המאפיינים שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "הכירו-את-מערך-המוצרים-של-ה-ipad": {
+    "name": "הכירו את מערך המוצרים של ה-iPad",
+    "examId": null,
+    "section": "התחילו למכור מכשירי iPad",
+    "url": "https://salescoach.apple.com/home/content/view/507040?backTo=%2Fhome%2Fcollection%2F211852",
+    "questions": [
+      {
+        "type": "selects",
+        "match": "התאימו בין כל דגם iPad לבין המאפיינים שלו.",
+        "answers": [
+          "iPad Air",
+          "iPad",
+          "iPad Pro",
+          "iPad mini"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "התאימו בין כל דגם iPad לבין המאפיינים שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "הכירו-את-מערך-המוצרים-של-ה-iphone": {
+    "name": "הכירו את מערך המוצרים של ה-iPhone",
+    "examId": null,
+    "section": "התחילו למכור iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/504056?backTo=%2Fhome%2Fcollection%2F208920",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו כל דגם של iPhone למאפיינים שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 2
+      }
+    ]
+  },
+  "המליצו-על-האביזרים-הבסיסיים-ל-mac": {
+    "name": "המליצו על האביזרים הבסיסיים ל-Mac",
+    "examId": null,
+    "section": "התחילו למכור Mac",
+    "url": "https://salescoach.apple.com/home/content/view/460540?backTo=%2Fhome%2Fcollection%2F286200",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "על אילו אביזרים עליכם להמליץ ללקוחה שקונה את מחשב ה-Mac השול",
+        "type": "multiple",
+        "remaining": [
+          "כבל טעינה זאת לא ההמלצה הכי טובה למחשב Mac שולחני.",
+          "צג חיצוני יפה מאוד.",
+          "שלט משחק",
+          "מדפסת אלחוטית"
+        ],
+        "ruledOut": 3
+      }
+    ]
+  },
+  "המליצו-על-מוצרי-apple-למוזיקה-ולבידור": {
+    "name": "המליצו על מוצרי Apple למוזיקה ולבידור",
+    "examId": null,
+    "section": "התחילו למכור אביזרים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/479865?backTo=%2Fhome%2Fcollection%2F244452",
+    "questions": [
+      {
+        "type": "single",
+        "match": "מה עליכם לומר ללקוחות על 'צמצום רעשים פעיל'?",
+        "answer": "\"תוכלו לחסום רעשים לא רצויים וליהנות מחוויית האזנה סוחפת באמת.\" יפה מאוד."
       }
     ]
   },
@@ -469,7 +2183,7 @@
   },
   "זרקור-על-המצלמה-הקדמית-עם-מרכז-הבמה-ב-iphone": {
     "name": "זרקור על המצלמה הקדמית עם 'מרכז הבמה' ב-iPhone",
-    "examId": null,
+    "examId": "זרקור-על-המצלמה-הקדמית-עם-מרכז-הבמה-ב-iphone",
     "section": "התכונות הבסיסיות של iPhone",
     "url": "https://salescoach.apple.com/home/content/view/500628?backTo=%2Fhome%2Fcollection%2F57570",
     "questions": [
@@ -574,6 +2288,52 @@
         "type": "single",
         "match": "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח",
         "answer": "לא נכון למשתמשים מוצג מידע ברור ובולט לגבי הסיבות לאיסוף הנתונים."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי",
+        "answers": [
+          "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
+          "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו",
+        "answers": [
+          "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
+          "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.",
+          "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
+          "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
+        "answers": [
+          "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.",
+          "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
+          "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף."
+        ]
+      },
+      {
+        "type": "multiple",
+        "match": "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם",
+        "answers": [
+          "חינוך",
+          "העצמה כלכלית",
+          "רפורמה בצדק הפלילי"
+        ]
+      },
+      {
+        "type": "selects",
+        "match": "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.",
+        "answers": [
+          "Apple Education Community",
+          "Apple Developer Academy",
+          "Apple Distinguished Educators",
+          "Community Education Initiative"
+        ]
       }
     ],
     "unsolved": [
@@ -581,25 +2341,25 @@
         "match": "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן",
         "type": "multiple",
         "remaining": [
-          "ראייה",
           "דיבור",
           "שמיעה",
+          "מוטוריקה",
           "תנועה",
-          "קוגניציה",
-          "מוטוריקה"
+          "ראייה",
+          "קוגניציה"
         ],
-        "ruledOut": 6
+        "ruledOut": 7
       },
       {
         "match": "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע",
         "type": "multiple",
         "remaining": [
+          "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
           "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
           "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.",
-          "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
           "העסקת אנשים בעלי מוגבלויות."
         ],
-        "ruledOut": 4
+        "ruledOut": 5
       },
       {
         "match": "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.",
@@ -608,64 +2368,68 @@
         "ruledOut": 1
       },
       {
-        "match": "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי",
-        "type": "multiple",
-        "remaining": [
-          "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015. Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-75% בהשוואה לפליטות שלה ב-2015.",
-          "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
-          "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
-          "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן."
-        ],
-        "ruledOut": 5
-      },
-      {
-        "match": "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו",
-        "type": "multiple",
-        "remaining": [
-          "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
-          "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.",
-          "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
-          "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג."
-        ],
-        "ruledOut": 4
-      },
-      {
         "match": "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'",
         "type": "selects",
         "remaining": [],
-        "ruledOut": 15
-      },
-      {
-        "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
-        "type": "multiple",
-        "remaining": [
-          "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
-          "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.",
-          "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף."
-        ],
-        "ruledOut": 3
-      },
-      {
-        "match": "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם",
-        "type": "multiple",
-        "remaining": [
-          "חינוך",
-          "העצמה כלכלית",
-          "רפורמה בצדק הפלילי",
-          "הנדסה"
-        ],
-        "ruledOut": 4
+        "ruledOut": 16
       },
       {
         "match": "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה",
         "type": "multiple",
         "remaining": [
-          "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
-          "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
           "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple.",
+          "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
+          "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
           "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים."
         ],
-        "ruledOut": 4
+        "ruledOut": 5
+      }
+    ]
+  },
+  "לספר-כיצד-iphone-פועל-עם-מוצרים-אחרים-של-apple": {
+    "name": "לספר כיצד iPhone פועל עם מוצרים אחרים של Apple",
+    "examId": null,
+    "section": "התחילו למכור iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/439686?backTo=%2Fhome%2Fcollection%2F208920",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו כל תכונה לתיאור שלה.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 5
+      }
+    ]
+  },
+  "מאפיינים-עיקריים-שכדאי-לדעת-על-ios": {
+    "name": "מאפיינים עיקריים שכדאי לדעת על iOS",
+    "examId": null,
+    "section": "התחילו למכור iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/439700?backTo=%2Fhome%2Fcollection%2F208920",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו כל מאפיין של iOS לתיאור שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 15
+      }
+    ]
+  },
+  "מבט-ראשון-apple-watch-ultra-3-gps-cellular": {
+    "name": "מבט ראשון Apple Watch Ultra 3 (GPS + Cellular)",
+    "examId": null,
+    "section": "מה חדש ב-Apple Watch בעבודה",
+    "url": "https://salescoach.apple.com/home/content/view/500788?backTo=%2Fhome%2Fcollection%2F220022",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "מה תוכלו לומר ללקוחות על חיי הסוללה של Apple Watch Ultra 3?",
+        "answers": [
+          "\"הוא מגיע עם מודם 5G חסכוני יותר בצריכת חשמל שמשתמש בפחות סוללה בשימוש בחיבור סלולרי\". מצוין.",
+          "\"תקבלו חיי סוללה של עד 72 שעות במצב ‘סוללה חלשה’\". מעולה.",
+          "\"תקבלו חיי סוללה של עד 42 שעות בטעינה אחת\". יפה מאוד."
+        ]
       }
     ]
   },
@@ -686,6 +2450,27 @@
         "type": "single",
         "match": "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ול",
         "answer": "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית."
+      }
+    ]
+  },
+  "מה-שצריך-לדעת-על-apple-watch-על-האפליקציה-אק-ג-ועל-תכונות-הקשורות-לבריאות": {
+    "name": "מה שצריך לדעת על Apple Watch, על האפליקציה 'אק\"ג' ועל תכונות הקשורות לבריאות",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Apple Watch",
+    "url": "https://salescoach.apple.com/home/content/view/260949?backTo=%2Fhome%2Fcollection%2F57575",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הדגמים החדשים של Apple Watch מזהים פרפור פר",
+        "answer": "לא נכון Apple Watch Series 4 ואילך (לא כולל Apple Watch SE) והאפליקציה 'אק\"ג' יכולים לציין אם קצב הלב של הלקוח מראה סימנים של פרפור פרוזדורים. אך הם לא נועדו לזהות או לאבחן פרפור פרוזדורים ולא לעזור בהתמודדות עם המחלה."
+      },
+      {
+        "type": "multiple",
+        "match": "מה יכולה לציין האפליקציה 'אק\"ג'?",
+        "answers": [
+          "היא יכולה לציין אם קצב הלב של הלקוח מראה סימנים של פרפור פרוזדורים האפליקציה 'אק\"ג' יכולה לציין אם קצב הלב של הלקוח מראה סימנים של פרפור פרוזדורים – הפרעה חמורה בקצב הלב.",
+          "היא יכולה לציין אם קצב הלב של הלקוח מראה סימנים של קצב סינוס האפליקציה 'אק\"ג' יכולה לציין אם קצב הלב של הלקוח מראה סימנים של קצב סינוס, שמשמעו שהדופק תקין."
+        ]
       }
     ]
   },
@@ -725,6 +2510,70 @@
           "המשתמשים מקבלים הודעת דוא\"ל שבה נאמר שהם חייבים לשנות את חשבון Apple שלהם בתוך 60 יום."
         ],
         "ruledOut": 1
+      }
+    ]
+  },
+  "מידע-על-המחויבות-של-apple-לכדור-הארץ": {
+    "name": "מידע על המחויבות של Apple לכדור הארץ",
+    "examId": "מידע-על-המחויבות-של-apple-לכדור-הארץ",
+    "section": "הסביבה",
+    "url": "https://salescoach.apple.com/home/content/view/283335?backTo=%2Fhome%2Fcollection%2F69411",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "לאילו מחויבויות סביבתיות התחייבה Apple?",
+        "answers": [
+          "להשקיע בפתרונות שמבוססים על הטבע Apple משתפת פעולה עם ארגונים סביבתיים כדי לתמוך בפתרונות המבוססים על הטבע, שמסירים פחמן מהאטמוספירה.",
+          "שימוש בחומרים ממוחזרים Apple משתמשת בחומרים ממוחזרים ובוחנת אותם לאיכות ולעמידות.",
+          "הסרת פלסטיק מהאריזה Apple פועלת להפסקת השימוש בפלסטיק ולשימוש מופחת בחומרי אריזה באופן כללי."
+        ]
+      }
+    ]
+  },
+  "ספרו-איך-ה-mac-עובד-עם-מוצרים-אחרים-של-apple": {
+    "name": "ספרו איך ה-Mac עובד עם מוצרים אחרים של Apple",
+    "examId": null,
+    "section": "התחילו למכור Mac",
+    "url": "https://salescoach.apple.com/home/content/view/461611?backTo=%2Fhome%2Fcollection%2F286200",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו כל תכונה לתיאור שלה.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 5
+      }
+    ]
+  },
+  "עזרו-ללקוחות-לבחור-בין-macbook-neo-לבין-macbook-air": {
+    "name": "עזרו ללקוחות לבחור בין MacBook Neo לבין MacBook Air",
+    "examId": null,
+    "section": "התכונות הבסיסיות של Mac",
+    "url": "https://salescoach.apple.com/home/content/view/520303?backTo=%2Fhome%2Fcollection%2F57585",
+    "questions": [
+      {
+        "type": "selects",
+        "match": "התאימו כל דגם של Mac לצרכים של הלקוח.",
+        "answers": [
+          "MacBook Neo",
+          "MacBook Air"
+        ]
+      }
+    ]
+  },
+  "עיינו-במאפייני-המצלמה-של-ה-iphone": {
+    "name": "עיינו במאפייני המצלמה של ה-iPhone",
+    "examId": null,
+    "section": "התחילו למכור iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/438923?backTo=%2Fhome%2Fcollection%2F208920",
+    "questions": [
+      {
+        "type": "multiple",
+        "match": "כיצד עליכם לתאר את מצב 'פורטרט'?",
+        "answers": [
+          "\"הוא מצלם תמונות עם מיקוד חד בנושא ועם רקע מטושטש.\"",
+          "\"ניתן להעביר את המיקוד מנושא אחד לנושא אחר לאחר צילום התמונה.\" כל הכבוד."
+        ]
       }
     ]
   },
@@ -816,9 +2665,31 @@
       }
     ]
   },
+  "שיתוף-אביזרי-iphone-מעולים-שתוכננו-על-ידי-apple": {
+    "name": "שיתוף אביזרי iPhone מעולים שתוכננו על ידי Apple",
+    "examId": null,
+    "section": "התחילו למכור אביזרים של Apple",
+    "url": "https://salescoach.apple.com/home/content/view/479957?backTo=%2Fhome%2Fcollection%2F244452",
+    "questions": [
+      {
+        "type": "single",
+        "match": "לקוחות שרוצים לטעון במהירות את ה-iPhone Air עם כבל USB-C חיי",
+        "answer": "לא נכון"
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מהמשפטים הבאים נכונים לגבי אביזרי MagSafe?",
+        "answers": [
+          "אביזרי MagSafe נבדקים במשך אלפי שעות במהלך תהליך העיצוב והייצור.",
+          "אביזרי MagSafe כוללים מגנטים מובנים חזקים להצמדה לגב ה-iPhone.",
+          "לקוחות יכולים להשתמש ביחד באביזרי MagSafe, כמו כיסויים וארנקים של iPhone."
+        ]
+      }
+    ]
+  },
   "שיתוף-המאפיינים-החדשים-לבטיחות-ילדים": {
     "name": "שיתוף המאפיינים החדשים לבטיחות ילדים",
-    "examId": null,
+    "examId": "שיתוף-המאפיינים-החדשים-לבטיחות-ילדים",
     "section": "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
     "url": "https://salescoach.apple.com/home/content/view/532276?backTo=%2Fhome%2Fcollection%2F292368",
     "questions": [
@@ -831,6 +2702,83 @@
           "בטיחות בתקשורת",
           "הקצבות זמן",
           "זמן מסך"
+        ]
+      }
+    ],
+    "unsolved": [
+      {
+        "match": "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.",
+        "type": "single",
+        "remaining": [],
+        "ruledOut": 16
+      }
+    ]
+  },
+  "שתפו-את-הסיבות-האלו-לרכישת-iphone-17e-עוד-היום": {
+    "name": "שתפו את הסיבות האלו לרכישת iPhone 17e עוד היום",
+    "examId": null,
+    "section": "התכונות הבסיסיות של iPhone",
+    "url": "https://salescoach.apple.com/home/content/view/519205?backTo=%2Fhome%2Fcollection%2F57570",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו את המאפיינים הבאים של iPhone 17e לצורך של לקוחות.",
+        "type": "single",
+        "remaining": [],
+        "ruledOut": 1
+      }
+    ]
+  },
+  "תכונות-עיקריות-שכדאי-לדעת-על-ipados": {
+    "name": "תכונות עיקריות שכדאי לדעת על iPadOS",
+    "examId": null,
+    "section": "התחילו למכור מכשירי iPad",
+    "url": "https://salescoach.apple.com/home/content/view/440681?backTo=%2Fhome%2Fcollection%2F211852",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו בין כל מאפיין של iPadOS לתיאור שלו.",
+        "type": "selects",
+        "remaining": [],
+        "ruledOut": 6
+      }
+    ]
+  },
+  "תכונות-עיקריות-שכדאי-לדעת-על-macos": {
+    "name": "תכונות עיקריות שכדאי לדעת על macOS",
+    "examId": null,
+    "section": "התחילו למכור Mac",
+    "url": "https://salescoach.apple.com/home/content/view/460666?backTo=%2Fhome%2Fcollection%2F286200",
+    "questions": [
+      {
+        "type": "single",
+        "match": "נכון או לא נכון: הלקוחות יכולים לייצא פרויקטים מה-Mac לפורמט",
+        "answer": "נכון כל הכבוד."
+      },
+      {
+        "type": "multiple",
+        "match": "אילו מהמשפטים הבאים נכונים לגבי הקישוריות של macOS?",
+        "answers": [
+          "הלקוחות יכולים לבחור כמה מהנתונים שלהם לשתף עם מפתחי היישומים.",
+          "הלקוחות יכולים להוסיף וידג'טים למכתבה.",
+          "הלקוחות יכולים לגרור תמונות וקבצים בין מכשירים חיצוניים. יפה מאוד."
+        ]
+      }
+    ]
+  },
+  "תכונות-עיקריות-שכדאי-לדעת-על-watchos": {
+    "name": "תכונות עיקריות שכדאי לדעת על watchOS",
+    "examId": null,
+    "section": "התחילו למכור Apple Watch",
+    "url": "https://salescoach.apple.com/home/content/view/456178?backTo=%2Fhome%2Fcollection%2F224853",
+    "questions": [
+      {
+        "type": "selects",
+        "match": "התאימו כל תכונה של watchOS לתיאור שלה.",
+        "answers": [
+          "היישום 'פעילות'",
+          "ערמה חכמה",
+          "עדכון שהכול בסדר"
         ]
       }
     ]

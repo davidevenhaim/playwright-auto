@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, examErrorReport, runExam, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, examErrorReport, runExam, runQuickChallengeHere, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -535,6 +535,16 @@ app.get("/api/probe", async (req, res) => {
 app.post("/api/fill-blind", async (req, res) => {
   try {
     res.json(await withSession(sessionOf(req), () => fillCurrentQuizBlind()));
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+// Play the quick challenge on the connected tab. Same idea as /api/fill-blind:
+// one module, in place, without a walk.
+app.post("/api/quick-challenge", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => runQuickChallengeHere()));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }

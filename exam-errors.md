@@ -4,9 +4,17 @@ Written by the runner as each failure happens, so this is current even while
 a run is still going. It accumulates across runs and across accounts; an exam
 that later passes moves to the bottom rather than disappearing.
 
-Updated 2026-09-01T08:31:39.833Z — **20 still failing**, 21 since fixed.
+Updated 2026-09-01T11:13:26.626Z — **21 still failing**, 21 since fixed.
 
 ## Still failing
+
+### בוחן – בניית מומחיות ב-Mac
+
+- **What happened:** never reached a grade
+- **Seen:** 1 time(s), last 2026-09-01T11:13:26.622Z (session 1)
+- **Module:** https://salescoach.apple.com/home/content/view/461965?backTo=%2Fhome%2Fcollection%2F235252&backTo=%2Fhome%2Fcollection%2F197154&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+- **Reported:**
+  - Submit was clicked, but the server never returned a graded attempt.
 
 ### כמה ידוע לכם על הערכים של Apple?
 

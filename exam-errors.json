@@ -1,8 +1,29 @@
 {
-  "updatedAt": "2026-09-01T08:31:39.833Z",
-  "stillFailing": 20,
+  "updatedAt": "2026-09-01T11:13:26.624Z",
+  "stillFailing": 21,
   "resolved": 21,
   "exams": {
+    "https://salescoach.apple.com/home/content/view/461965?backTo=%2Fhome%2Fcollection%2F235252&backTo=%2Fhome%2Fcollection%2F197154&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "בוחן – בניית מומחיות ב-Mac",
+      "module": "בוחן – בניית מומחיות ב-Mac",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/461965?backTo=%2Fhome%2Fcollection%2F235252&backTo=%2Fhome%2Fcollection%2F197154&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T11:13:26.622Z",
+      "occurrences": 1,
+      "sessions": [
+        "1"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T11:13:26.622Z",
+      "exam": "בוחן – בניית מומחיות ב-Mac",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "Submit was clicked, but the server never returned a graded attempt."
+      ]
+    },
     "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872": {
       "title": "כמה ידוע לכם על הערכים של Apple?",
       "module": "כמה ידוע לכם על הערכים של Apple?",
