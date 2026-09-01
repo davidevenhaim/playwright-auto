@@ -695,6 +695,293 @@ async function completeReadingResource(targetPage, frame) {
   return reached >= SCROLL_PERCENT_REQUIRED_FOR_COMPLETION;
 }
 
+// A good many "reading" modules are nothing of the kind: they are Apple's glee
+// player, a deck of screens inside the SEED package that only ever advances
+// when its own Next button is pressed, and that stops on a knowledge check
+// every few screens. Scrolling one of them does nothing — there is nothing to
+// scroll — so every one was logged as "scrolled to 100%" and left incomplete.
+// The parts of that player worth knowing:
+//
+//   .carousel-screen         one screen; the live one holds .screen-content.shown
+//   button.button-continue   "הבא", the only way forward
+//   button.button-check      "שלחו", enabled again whenever the selection changes
+//   .select / .multi-select  a knowledge check; its options are input.form-choice
+//   .form-element.is-valid   an option the player has accepted
+//   .form-element.is-error   an option it has rejected — and left ticked, which
+//                            is why every attempt has to clear it again
+//   .progress-fill           the width, in per cent, of the whole deck
+//
+// The deck refuses to move on until the check is answered correctly and will
+// not say what the answer is, but it marks each option as it goes, which is
+// what makes the checks solvable without knowing anything: submit the accepted
+// options plus one untried one, and the mark that lands on the new option says
+// whether to keep it or rule it out. A "choose the right answer" needs no
+// Submit at all — picking an option grades it on the spot. None of this is
+// scored; only reaching the end of the deck counts.
+const DECK_STEP_LIMIT = 300;
+const DECK_STEP_PAUSE_MS = 900;
+const DECK_CHECK_PAUSE_MS = 1400;
+// How long the player is given to say something about the option that was just
+// added. A fixed pause was not enough: the verdict fades in over its own
+// transition, and reading too early returned the verdict of the attempt before
+// it, which attributed the last guess's mistake to a perfectly good option.
+const DECK_VERDICT_TIMEOUT_MS = 6000;
+// The deck is finished when its own progress bar says so. A screen or two of
+// slack keeps a player that stops a hair short of the full width from being
+// reported as unfinished work.
+const DECK_PERCENT_COMPLETE = 99;
+
+async function readDeckState(frame) {
+  return frame.evaluate(() => {
+    const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+    const visible = (element) => {
+      if (!element) return false;
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return false;
+      const style = getComputedStyle(element);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    if (!document.querySelector(".glee-app, .carousel")) return null;
+
+    const control = (selector) => {
+      const element = document.querySelector(selector);
+      if (!element || !visible(element)) return null;
+      return {
+        text: tidy(element.innerText).slice(0, 40),
+        enabled: !element.disabled && !element.classList.contains("disabled")
+      };
+    };
+
+    const screen = Array.from(document.querySelectorAll(".carousel-screen"))
+      .find((candidate) => candidate.querySelector(".screen-content.shown")) || null;
+    const select = screen?.querySelector(".select") || null;
+    return {
+      percent: Number.parseFloat(document.querySelector(".progress-fill")?.style.width) || 0,
+      screenText: tidy(screen?.innerText).slice(0, 120),
+      // The player reopens a part-finished deck behind a "carry on or start
+      // again?" dialog, and nothing underneath it can be pressed until it goes.
+      resumeModal: Boolean(document.querySelector(".resume-modal .button.cancel")),
+      next: control("button.button-continue"),
+      check: control("button.button-check"),
+      question: select ? {
+        text: tidy(select.querySelector(".select-text")?.innerText).slice(0, 120),
+        options: Array.from(select.querySelectorAll("input.form-choice")).map((input, index) => {
+          const holder = input.closest(".form-element");
+          return {
+            index,
+            text: tidy(input.value || holder?.innerText).slice(0, 120),
+            checked: input.checked,
+            valid: Boolean(holder?.classList.contains("is-valid")),
+            error: Boolean(holder?.classList.contains("is-error"))
+          };
+        })
+      } : null,
+      // Whatever else the player is offering: after a couple of wrong answers
+      // it puts up "ראו תשובה", which fills the answer in, and some screens
+      // hold cards that have to be opened before Next lights up. Both are the
+      // way past a screen that has no Next and no question.
+      extras: Array.from(document.querySelectorAll(".glee-player-buttons button, .glee-app button"))
+        .filter((element) => visible(element) &&
+          !element.classList.contains("button-continue") &&
+          !element.classList.contains("button-check") &&
+          !element.classList.contains("button-previous"))
+        .map((element, index) => ({ index, text: tidy(element.innerText).slice(0, 40) }))
+    };
+  }).catch(() => null);
+}
+
+async function clickDeckControl(frame, selector) {
+  return frame.evaluate((target) => {
+    const element = document.querySelector(target);
+    if (!element || element.disabled || element.classList.contains("disabled")) return false;
+    element.click();
+    return true;
+  }, selector).catch(() => false);
+}
+
+async function clickDeckExtra(frame, wanted) {
+  return frame.evaluate((index) => {
+    const visible = (element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return false;
+      const style = getComputedStyle(element);
+      return style.display !== "none" && style.visibility !== "hidden";
+    };
+    const element = Array.from(document.querySelectorAll(".glee-player-buttons button, .glee-app button"))
+      .filter((candidate) => visible(candidate) &&
+        !candidate.classList.contains("button-continue") &&
+        !candidate.classList.contains("button-check") &&
+        !candidate.classList.contains("button-previous"))[index];
+    if (!element || element.disabled) return false;
+    element.click();
+    return true;
+  }, wanted).catch(() => false);
+}
+
+// Ticking a box is not enough on its own: Submit stays disabled until the
+// selection has actually changed, so an option that already sits the way it is
+// wanted — and a confirmed one the player has locked — is never clicked.
+async function setDeckOption(frame, wanted, selected) {
+  return frame.evaluate(([index, shouldSelect]) => {
+    const screen = Array.from(document.querySelectorAll(".carousel-screen"))
+      .find((candidate) => candidate.querySelector(".screen-content.shown"));
+    const input = screen?.querySelectorAll("input.form-choice")[index];
+    if (!input || input.disabled || input.checked === shouldSelect) return false;
+    input.click();
+    return true;
+  }, [wanted, selected]).catch(() => false);
+}
+
+// A rejected option is not cleared by the player: it stays ticked, wearing its
+// is-error mark, and while it is ticked no answer can ever come out right — the
+// banner sits on "try again" and Submit stays dead. So each attempt states the
+// whole selection it wants rather than only adding to it: everything the player
+// has accepted, plus the one option being tried, and nothing else.
+async function setDeckSelection(targetPage, frame, wanted) {
+  for (let pass = 1; pass <= 3; pass++) {
+    const state = await readDeckState(frame);
+    if (!state?.question) return;
+    const wrong = state.question.options.filter((option) => option.checked !== wanted.has(option.text));
+    if (!wrong.length) return;
+    for (const option of wrong) {
+      await setDeckOption(frame, option.index, wanted.has(option.text));
+      await targetPage.waitForTimeout(250);
+    }
+    await targetPage.waitForTimeout(400);
+  }
+}
+
+// What the player made of the option that was just added. Its own mark on that
+// option is the reading to trust — is-valid for one it accepts, is-error for
+// one it refuses — because the banner above the question belongs to the whole
+// attempt and lingers from the previous one.
+async function gradeDeckOption(targetPage, frame, index) {
+  const deadline = Date.now() + DECK_VERDICT_TIMEOUT_MS;
+
+  while (Date.now() < deadline) {
+    const state = await readDeckState(frame);
+    // The screen has moved on, which only happens once the question is right.
+    if (!state) return "correct";
+    if (state.next?.enabled || !state.question) return "correct";
+    const option = state.question.options[index];
+    if (option?.error) return "incorrect";
+    if (option?.valid) return "accepted";
+    await targetPage.waitForTimeout(250);
+  }
+  return null;
+}
+
+// One knowledge check, one option at a time. Anything the player has already
+// confirmed stays where it is; each pass adds the next option nothing is known
+// about and reads the verdict, which belongs to that option alone.
+//
+// The two kinds of check are told apart by their Submit button: a "choose all
+// that apply" waits behind one, and a "choose the right answer" has none at all
+// and grades the moment an option is picked.
+async function answerDeckQuestion(targetPage, frame, question) {
+  const ruledOut = new Set();
+  const accepted = new Set();
+
+  for (let attempt = 1; attempt <= question.options.length + 2; attempt++) {
+    let state = await readDeckState(frame);
+    if (!state?.question) return true;
+    if (state.next?.enabled) return true;
+
+    const candidate = state.question.options.find((option) =>
+      !option.valid && !option.error &&
+      !accepted.has(option.text) && !ruledOut.has(option.text));
+    if (!candidate) break;
+
+    await setDeckSelection(targetPage, frame, new Set([...accepted, candidate.text]));
+    await targetPage.waitForTimeout(400);
+    if (state.check && !await clickDeckControl(frame, "button.button-check")) break;
+
+    const verdict = await gradeDeckOption(targetPage, frame, candidate.index);
+    if (verdict === "correct") return true;
+    if (verdict === "incorrect") ruledOut.add(candidate.text);
+    // "Some more are still missing" is the player agreeing to everything that
+    // is ticked, so the option just added belongs in the answer.
+    if (verdict === "accepted") accepted.add(candidate.text);
+  }
+
+  // Out of options to try. The player itself offers a way out once it has seen
+  // enough wrong answers, and taking it costs nothing: these checks are not
+  // scored, and a deck that stops here is a module that stays incomplete.
+  const stuck = await readDeckState(frame);
+  for (const extra of stuck?.extras || []) {
+    if (!await clickDeckExtra(frame, extra.index)) continue;
+    await targetPage.waitForTimeout(DECK_CHECK_PAUSE_MS);
+    const after = await readDeckState(frame);
+    if (after?.next?.enabled) {
+      log(`Took the deck's "${extra.text}" way past a check it could not solve.`);
+      return true;
+    }
+  }
+  return false;
+}
+
+// Returns null when this frame holds no deck at all, which is what tells the
+// caller to fall back to scrolling the page.
+async function completeInteractiveDeck(targetPage, frame) {
+  let state = await readDeckState(frame);
+  if (!state) return null;
+
+  if (state.resumeModal) {
+    // "להמשיך" carries on from where the account left off; "להתחיל מחדש" throws
+    // that progress away, so only the first is ever pressed.
+    await clickDeckControl(frame, ".resume-modal .button.cancel");
+    await targetPage.waitForTimeout(1200);
+    state = await readDeckState(frame) || state;
+  }
+
+  log(`Module is an interactive deck; clicking through it from ${Math.round(state.percent)}%.`);
+  let checks = 0;
+  let lastScreen = null;
+  let tried = new Set();
+  // Pressing Next on the last screen closes the player and sends the tab back
+  // to the site, which takes the frame with it. The furthest the progress bar
+  // ever got is therefore the only reading of how much was done that survives
+  // the end of a deck.
+  let furthest = state.percent;
+
+  for (let step = 1; step <= DECK_STEP_LIMIT; step++) {
+    state = await readDeckState(frame);
+    if (!state) break;
+    furthest = Math.max(furthest, state.percent);
+    if (state.screenText !== lastScreen) {
+      lastScreen = state.screenText;
+      tried = new Set();
+    }
+
+    if (state.next?.enabled) {
+      await clickDeckControl(frame, "button.button-continue");
+      await targetPage.waitForTimeout(DECK_STEP_PAUSE_MS);
+      continue;
+    }
+
+    if (state.question) {
+      checks++;
+      if (await answerDeckQuestion(targetPage, frame, state.question)) continue;
+      log(`Could not get past a knowledge check: "${state.question.text}".`);
+      break;
+    }
+
+    // No Next and no question: a screen that wants something opened first, or
+    // the end of the deck. Press what is on offer once each, and stop when
+    // pressing it changes nothing.
+    const extra = (state.extras || []).find((candidate) => !tried.has(candidate.index));
+    if (!extra) break;
+    tried.add(extra.index);
+    await clickDeckExtra(frame, extra.index);
+    await targetPage.waitForTimeout(DECK_STEP_PAUSE_MS);
+  }
+
+  const percent = Math.round(Math.max(furthest, (await readDeckState(frame))?.percent || 0));
+  const finished = percent >= DECK_PERCENT_COMPLETE;
+  log(`Deck reached ${percent}% after ${checks} knowledge check(s)${finished ? "" : "; it did not reach the end"}.`);
+  return { finished, percent, checks };
+}
+
 // A click on Submit proves nothing: the player blocks the button while any
 // question is unanswered, and only marks the questions correct or incorrect
 // once the server has graded the attempt. Wait for that grade.
@@ -3051,21 +3338,32 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         : `Answer key is wrong for "${quizName || item.title}": scored ${percentage}%, needs ${threshold}%.`);
     }
   } else {
-    log("Module is reading material; scrolling it to the player's completion threshold.");
-    const scrolledEnough = await completeReadingResource(itemPage, ready.frame);
+    // A deck is finished by pressing its way to the end, a page by scrolling;
+    // asking the deck walker first is what tells the two apart, since it hands
+    // the module straight back when the frame holds no deck.
+    const deck = await completeInteractiveDeck(itemPage, ready.frame);
+    let finished;
+    if (deck) {
+      finished = deck.finished;
+    } else {
+      log("Module is reading material; scrolling it to the player's completion threshold.");
+      finished = await completeReadingResource(itemPage, ready.frame);
+    }
     state.resourcesRead++;
     recordResult(state, item, {
       title: item.title || await itemPage.title(),
       chapter: item.chapter || null,
       type: "resource",
-      status: scrolledEnough ? "read" : "partially read"
+      status: finished ? "read" : "partially read"
     });
     // A resource that never reached the player's threshold earns no XP, so it
     // is not finished work. Marking it retryable is what brings a later pass
     // back to it instead of leaving it silently short in the report.
-    if (!scrolledEnough) {
+    if (!finished) {
       markRetryable(state, item);
-      log("This reading module did not reach the completion threshold; a later pass will try it again.");
+      log(deck
+        ? `This deck stopped at ${deck.percent}%; a later pass will try it again.`
+        : "This reading module did not reach the completion threshold; a later pass will try it again.");
     }
   }
 

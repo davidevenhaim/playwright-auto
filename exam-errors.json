@@ -1,8 +1,179 @@
 {
-  "updatedAt": "2026-09-01T07:23:42.670Z",
-  "stillFailing": 19,
-  "resolved": 12,
+  "updatedAt": "2026-09-01T08:31:39.833Z",
+  "stillFailing": 20,
+  "resolved": 21,
   "exams": {
+    "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872": {
+      "title": "כמה ידוע לכם על הערכים של Apple?",
+      "module": "כמה ידוע לכם על הערכים של Apple?",
+      "chapter": "הערכים של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872",
+      "firstSeen": "2026-09-01T06:25:13.208Z",
+      "occurrences": 3,
+      "sessions": [
+        "1",
+        "3"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T08:31:39.833Z",
+      "exam": "כמה ידוע לכם על הערכים של Apple?",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "never reached a grade",
+      "unsolved": [],
+      "reasons": [
+        "1 question(s) are still unanswered; not submitting."
+      ]
+    },
+    "https://salescoach.apple.com/home/content/view/475909?backTo=%2Fhome%2Fcollection%2F225054": {
+      "title": "קביעת תצורה של מכשירים",
+      "module": "קביעת תצורה של מכשירים",
+      "chapter": "הכנה לפריסה מוצלחת של הפתרונות של Apple",
+      "url": "https://salescoach.apple.com/home/content/view/475909?backTo=%2Fhome%2Fcollection%2F225054",
+      "firstSeen": "2026-09-01T08:27:27.990Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T08:27:27.990Z",
+      "lastSeen": "2026-09-01T08:27:27.990Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475916?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "חזרה מהירה לשירות",
+      "module": "חזרה מהירה לשירות",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475916?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T08:06:30.310Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T08:06:30.310Z",
+      "lastSeen": "2026-09-01T08:06:30.310Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475909?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "קביעת תצורה של מכשירים",
+      "module": "קביעת תצורה של מכשירים",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475909?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T08:05:09.956Z",
+      "occurrences": 1,
+      "sessions": [
+        "3"
+      ],
+      "resolvedAt": null,
+      "lastSeen": "2026-09-01T08:05:09.956Z",
+      "exam": "קביעת תצורה של מכשירים",
+      "identified": true,
+      "kind": "quiz",
+      "lastOutcome": "scored 67% against a 70% threshold after 6 attempt(s)",
+      "unsolved": [
+        {
+          "match": "מבין המרכיבים המרכזיים הללו, ציינו שניים שבהם נעשה שימוש על",
+          "type": "multiple",
+          "remaining": [
+            "אבחון",
+            "הגדרות",
+            "פקודות",
+            "פיקוח",
+            "הגבלות"
+          ],
+          "ruledOut": 6
+        }
+      ],
+      "reasons": []
+    },
+    "https://salescoach.apple.com/home/content/view/475903?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "איך זה עובד",
+      "module": "איך זה עובד",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475903?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T08:03:19.149Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T08:03:19.149Z",
+      "lastSeen": "2026-09-01T08:03:19.149Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475893?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "שילוב Apple Business Manager עם Directory Sync",
+      "module": "שילוב Apple Business Manager עם Directory Sync",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475893?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T08:01:57.241Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T08:01:57.241Z",
+      "lastSeen": "2026-09-01T08:01:57.241Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475890?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "אימות מאוחד",
+      "module": "אימות מאוחד",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475890?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T08:01:04.629Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T08:01:04.629Z",
+      "lastSeen": "2026-09-01T08:01:04.629Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "יצירת חשבונות Apple מנוהלים",
+      "module": "יצירת חשבונות Apple מנוהלים",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T07:59:46.694Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T07:59:46.694Z",
+      "lastSeen": "2026-09-01T07:59:46.694Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475875?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "תכנון עבור הארגון שלכם",
+      "module": "תכנון עבור הארגון שלכם",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475875?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T07:58:48.649Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T07:58:48.649Z",
+      "lastSeen": "2026-09-01T07:58:48.649Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475873?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "מידע על אימות דומיין",
+      "module": "מידע על אימות דומיין",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475873?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T07:57:37.461Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T07:57:37.461Z",
+      "lastSeen": "2026-09-01T07:57:37.461Z",
+      "lastOutcome": "passed at 80%",
+      "unsolved": []
+    },
+    "https://salescoach.apple.com/home/content/view/475868?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you": {
+      "title": "התחברות ל-MDM",
+      "module": "התחברות ל-MDM",
+      "chapter": null,
+      "url": "https://salescoach.apple.com/home/content/view/475868?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+      "firstSeen": "2026-09-01T07:56:24.752Z",
+      "occurrences": 0,
+      "sessions": [],
+      "resolvedAt": "2026-09-01T07:56:24.752Z",
+      "lastSeen": "2026-09-01T07:56:24.752Z",
+      "lastOutcome": "passed at 100%",
+      "unsolved": []
+    },
     "https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054": {
       "title": "יצירת חשבונות Apple מנוהלים",
       "module": "יצירת חשבונות Apple מנוהלים",
@@ -180,128 +351,6 @@
       "reasons": [
         "This module has a quiz, but its questions never rendered. It may be locked or out of attempts."
       ]
-    },
-    "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872": {
-      "title": "כמה ידוע לכם על הערכים של Apple?",
-      "module": "כמה ידוע לכם על הערכים של Apple?",
-      "chapter": "הערכים של Apple",
-      "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872",
-      "firstSeen": "2026-09-01T06:25:13.208Z",
-      "occurrences": 2,
-      "sessions": [
-        "1"
-      ],
-      "resolvedAt": null,
-      "lastSeen": "2026-09-01T06:42:19.782Z",
-      "exam": "כמה ידוע לכם על הערכים של Apple?",
-      "identified": true,
-      "kind": "quiz",
-      "lastOutcome": "scored 21% against a 100% threshold after 6 attempt(s)",
-      "unsolved": [
-        {
-          "match": "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן",
-          "type": "multiple",
-          "remaining": [
-            "קוגניציה",
-            "דיבור",
-            "מוטוריקה",
-            "תנועה",
-            "ראייה",
-            "שמיעה"
-          ],
-          "ruledOut": 6
-        },
-        {
-          "match": "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע",
-          "type": "multiple",
-          "remaining": [
-            "העסקת אנשים בעלי מוגבלויות.",
-            "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
-            "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
-            "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב."
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.",
-          "type": "selects",
-          "remaining": [],
-          "ruledOut": 1
-        },
-        {
-          "match": "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי",
-          "type": "multiple",
-          "remaining": [
-            "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.",
-            "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
-            "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
-            "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015."
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה",
-          "type": "single",
-          "remaining": [],
-          "ruledOut": 3
-        },
-        {
-          "match": "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו",
-          "type": "multiple",
-          "remaining": [
-            "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
-            "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
-            "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
-            "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים."
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'",
-          "type": "selects",
-          "remaining": [],
-          "ruledOut": 15
-        },
-        {
-          "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
-          "type": "multiple",
-          "remaining": [
-            "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
-            "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.",
-            "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם."
-          ],
-          "ruledOut": 3
-        },
-        {
-          "match": "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח",
-          "type": "single",
-          "remaining": [],
-          "ruledOut": 2
-        },
-        {
-          "match": "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם",
-          "type": "multiple",
-          "remaining": [
-            "הנדסה",
-            "רפורמה בצדק הפלילי",
-            "העצמה כלכלית",
-            "חינוך"
-          ],
-          "ruledOut": 4
-        },
-        {
-          "match": "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה",
-          "type": "multiple",
-          "remaining": [
-            "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
-            "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.",
-            "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
-            "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple."
-          ],
-          "ruledOut": 4
-        }
-      ],
-      "reasons": []
     },
     "https://salescoach.apple.com/home/content/view/286648?backTo=%2Fhome%2Fcollection%2F68600": {
       "title": "הציגו תכונות נגישות עבור למידה",

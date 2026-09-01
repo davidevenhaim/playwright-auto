@@ -5,7 +5,7 @@
 // hand-maintained bank is exams.js, which merges this in: a question confirmed
 // here replaces the stored answer for that question, and a quiz that was not in
 // the bank at all is added whole.
-// 16 exam(s), last written 2026-09-01T06:52:49.851Z.
+// 24 exam(s), last written 2026-09-01T08:28:57.044Z.
 export const learnedExams = {
   // https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368
   //   NOT SOLVED (single): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
@@ -37,6 +37,28 @@ export const learnedExams = {
     section: "התכונות הבסיסיות של iPhone",
     questions: [
       { type: "single", match: "נכון או לא נכון: הלקוחות יכולים לצלם תמונות עם זום של עד פי", answer: "לא נכון" },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/475903?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "איך-זה-עובד": {
+    name: "איך זה עובד",
+    examId: "איך-זה-עובד",
+    questions: [
+      { type: "single", match: "אילו מבין הבאים ניתן להפעיל רק במחשבי Mac ובמכשירי iPhone או", answer: "פיקוח" },
+      { type: "multiple", match: "אילו מהבאים הם שלושה סוגים של רישום מכשירי Apple?", answers: ["רישום משתמשים מבוסס-חשבון", "רישום מכשירים מבוסס-חשבון", "רישום מכשירים אוטומטי"] },
+      { type: "single", match: "על איזה מכשיר של Apple תוכלו לפקח באמצעות 'רישום מכשירים אוט", answer: "Mac" },
+      { type: "multiple", match: "אילו סוגי מכשירים של Apple תומכים ב'רישום משתמשים מבוסס-חשבו", answers: ["Apple Vision Pro", "Mac", "iPhone"] },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/475890?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "אימות-מאוחד": {
+    name: "אימות מאוחד",
+    examId: "אימות-מאוחד",
+    questions: [
+      { type: "single", match: "מה עליכם לעשות ב-Apple Business Manager לאחר שהוספתם את רשומ", answer: "להקליק על הכפתור Check Now (בדיקה כעת) עבור הדומיין ב'העדפות' > 'חשבונות'." },
+      { type: "single", match: "איזה תהליך מקשר את ה-IdP של ארגון ל-Apple Business Manager ו", answer: "אימות מאוחד" },
+      { type: "single", match: "כשאתם מאחדים את Apple Business Manager עם Microsoft Entra ID", answer: "את האישורים של מנהל מערכת גלובלי, מנהל יישומים או חשבון מנהל מערכת של יישום ענן של Microsoft Entra ID שקיימים בדומיין" },
+      { type: "single", match: "מה אתם חייבים לעשות לפני שאתם מקשרים את ספק הזהות (IdP) של ה", answer: "להשלים את תהליך אימות הדומיין." },
     ]
   },
   // https://salescoach.apple.com/home/content/view/475567?backTo=%2Fhome%2Fcollection%2F222222
@@ -119,6 +141,19 @@ export const learnedExams = {
       { type: "multiple", match: "באילו אפשרויות סינון תוכלו להשתמש כדי לחפש מכשירים ב-Apple B", answers: ["סוג המכשיר", "גודל האחסון", "מספר הזמנה"] },
     ]
   },
+  // https://salescoach.apple.com/home/content/view/475868?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "התחברות-ל-mdm": {
+    name: "התחברות ל-MDM",
+    examId: "התחברות-ל-mdm",
+    questions: [
+      { type: "single", match: "מה ניתן לעשות ב'הקצאת שרת MDM' ב-Apple Business Manager?", answer: "לנהל את ההקצאה האוטומטית של מכשירים." },
+      { type: "single", match: "מה עליכם להעלות לפתרון ה-MDM שלכם כדי להקצות יישומים וספרים", answer: "אסימון תוכן" },
+      { type: "single", match: "באיזו תדירות עליכם להחליף את האסימון של שרת ה-MDM?", answer: "פעם בשנה." },
+      { type: "single", match: "איזה סוג הרשמה יכול לרשום באופן אוטומטי מכשירים בפתרון MDM ל", answer: "הרשמה אוטומטית למכשיר" },
+      { type: "single", match: "מהו השלב הראשון שעליכם לבצע כדי לקשר בין Apple Business Mana", answer: "להוריד את המפתח הציבורי של שרת ה-MDM." },
+      { type: "multiple", match: "אילו שניים מהבאים דרושים לכם כדי ליצור אישור APNs?", answers: ["בקשה לחתימת אישורים (CSR) מפתרון ה-MDM", "חשבון Apple מנוהל"] },
+    ]
+  },
   // https://salescoach.apple.com/home/content/view/467844?backTo=%2Fhome%2Fcollection%2F225054
   //   NOT SOLVED (multiple): אילו מבין הבאים הם שני סוגים של קבוצות שניתן ליצור ב-Apple B
   //     still in play: Smart User Group (קבוצת משתמשים חכמים) | Managed Group (קבוצה מנוהלת) | Access Group (קבוצת גישה) | Dynamic User Group (קבוצת משתמשים דינמיים) | User Group (קבוצת משתמשים) | Device Group (קבוצת מכשירים)
@@ -141,35 +176,51 @@ export const learnedExams = {
       { type: "single", match: "מה עליכם לומר ללקוחות על צילום תמונות סלפי באמצעות המצלמה הק", answer: "\"אפשר למסגר תמונה בקלות ולהכניס יותר אנשים לתמונת סלפי קבוצתית.\"" },
     ]
   },
+  // https://salescoach.apple.com/home/content/view/475916?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "חזרה-מהירה-לשירות": {
+    name: "חזרה מהירה לשירות",
+    examId: "חזרה-מהירה-לשירות",
+    questions: [
+      { type: "single", match: "ישנם שלושה שלבים בתהליך של החזרת מכשירים שנפרסו בעבר לשירות.", answer: "העברת הנתונים של המשתמש או הנתונים הארגוניים לארכיון." },
+      { type: "multiple", match: "ישנן ארבע שיטות עיקריות להחזרת Mac להגדרות היצרן לפני החזרתו", answers: ["שורת הפקודה", "פקודה דרך MDM"] },
+      { type: "single", match: "באילו מבין הבאים ניתן להשתמש כדי להכין iPhone או iPad לפריסה", answer: "הפעלת הפקודה 'מחיקת כל התוכן וההגדרות' דרך MDM." },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/475885?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "יצירת-חשבונות-apple-מנוהלים": {
+    name: "יצירת חשבונות Apple מנוהלים",
+    examId: "יצירת-חשבונות-apple-מנוהלים",
+    questions: [
+      { type: "single", match: "איך אתם יוצרים חשבון משתמש ב-Apple Business Manager שמוקצה ל", answer: "יש ליצור את החשבון באופן ידני ולהקצות לו את התפקיד 'מנהל/ת מערכת'." },
+      { type: "single", match: "משתמש שיש לו את התפקיד 'מנהל/ת רישום המכשיר' ב-Apple Busines", answer: "להוסיף את התפקיד 'מנהל/ת תוכן' לחשבון המשתמש." },
+      { type: "multiple", match: "באילו שתי דרכים ניתן ליצור חשבון Apple מנוהל?", answers: ["באופן ידני ב-Apple Business Manager", "באופן אוטומטי באמצעות איחוד עם ספק זהות (IdP)"] },
+    ]
+  },
   // https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
   //   NOT SOLVED (multiple): המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן
-  //     still in play: קוגניציה | דיבור | מוטוריקה | תנועה | ראייה | שמיעה
+  //     still in play: ראייה | דיבור | שמיעה | תנועה | קוגניציה | מוטוריקה
   //     6 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע
-  //     still in play: העסקת אנשים בעלי מוגבלויות. | עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. | שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. | מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.
+  //     still in play: עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. | מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב. | שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. | העסקת אנשים בעלי מוגבלויות.
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (selects): Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.
   //     1 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי
-  //     still in play: הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן. | החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple. | כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד. | Apple מתכננת להשיג את היעד שלה על ידי ה
-  //     4 attempt(s) already ruled out.
-  //   NOT SOLVED (single): Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה
-  //     3 attempt(s) already ruled out.
+  //     still in play: Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015. Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-75% בהשוואה לפליטות שלה ב-2015. | החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple. 
+  //     5 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו
-  //     still in play: הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.
+  //     still in play: התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (selects): השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'
   //     15 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל
-  //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.
+  //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.
   //     3 attempt(s) already ruled out.
-  //   NOT SOLVED (single): כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח
-  //     2 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם
-  //     still in play: הנדסה | רפורמה בצדק הפלילי | העצמה כלכלית | חינוך
+  //     still in play: חינוך | העצמה כלכלית | רפורמה בצדק הפלילי | הנדסה
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה
-  //     still in play: Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. | Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים. | Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. | Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכני
+  //     still in play: Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. | Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. | Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple. | Apple מתעדפת בריאות ובטיחות
   //     4 attempt(s) already ruled out.
   "כמה-ידוע-לכם-על-הערכים-של-apple": {
     name: "כמה ידוע לכם על הערכים של Apple?",
@@ -180,6 +231,8 @@ export const learnedExams = {
       { type: "single", match: "Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון או", answer: "נכון" },
       { type: "single", match: "Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק", answer: "נכון" },
       { type: "selects", match: "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'", answers: ["שוויון שכר מגדרי", "העובדים", "מנהלים"] },
+      { type: "single", match: "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה", answer: "כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם." },
+      { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח", answer: "לא נכון למשתמשים מוצג מידע ברור ובולט לגבי הסיבות לאיסוף הנתונים." },
     ]
   },
   // https://salescoach.apple.com/home/content/view/474914?backTo=%2Fhome%2Fcollection%2F239414&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
@@ -188,6 +241,30 @@ export const learnedExams = {
     questions: [
       { type: "multiple", match: "מה ג'וני אמר שהם שני היתרונות העיקריים עבור הלקוחות בתכנון ש", answers: ["ביצועים", "אמינות"] },
       { type: "single", match: "מדוע Apple נחשבת לפלטפורמה הטובה ביותר למשתמשים, לאנשי IT ול", answer: "הפלטפורמה של Apple מספקת שילוב חלק בין מכשירים, ומבטיחה חוויית משתמש מגובשת וניהול יעיל עבור מחלקות IT, תוך שהיא מקנה תחושה של יעילות פיננסית." },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/475873?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  //   NOT SOLVED (single): מה קורה לחשבונות Apple אישיים בדומיין המאומת?
+  //     still in play: שום דבר. | חשבונות Apple אישיים עוברים המרה לחשבונות Apple מנוהלים. | המשתמשים מקבלים הודעת דוא"ל שבה נאמר שהם חייבים לשנות את חשבון Apple שלהם בתוך 60 יום.
+  //     1 attempt(s) already ruled out.
+  "מידע-על-אימות-דומיין": {
+    name: "מידע על אימות דומיין",
+    examId: "מידע-על-אימות-דומיין",
+    questions: [
+      { type: "single", match: "מה תוכלו לעשות אחרי שהדומיין שלכם אומת ב-Apple Business Mana", answer: "ליצור חשבונות Apple מנוהלים בתוך הדומיין שלכם" },
+      { type: "single", match: "מה משמש לאימות דומיין של ארגון?", answer: "רשומות TXT של DNS" },
+      { type: "single", match: "מה עושה אימות דומיין ב-Apple Business Manager?", answer: "מאמת בעלות על הדומיין שלכם באמצעות Apple" },
+      { type: "single", match: "כמה ימים יש לכם כדי להשלים את אימות הדומיין ב-Apple Business", answer: "14 ימים" },
+    ]
+  },
+  // https://salescoach.apple.com/home/content/view/475909?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "קביעת-תצורה-של-מכשירים": {
+    name: "קביעת תצורה של מכשירים",
+    examId: "קביעת-תצורה-של-מכשירים",
+    questions: [
+      { type: "multiple", match: "מבין המשפטים הבאים, ציינו שלושה נכונים לגבי שיטות מומלצות לע", answers: ["אם מתקינים שני פרופילי תצורה עם הגבלות סותרות, מנת התוכן המגבילה יותר תשמש עבור המכשיר.", "פרופיל תצורה יחיד יכול להכיל מנות תוכן מרובות.", "יש להשתמש במנת תוכן אחת בלבד לכל פרופיל, מכיוון שניתן להתקין במכשיר יותר מפרופיל תצורה אחד."] },
+      { type: "single", match: "איזה מדריך מפרט את כל האפשרויות של מנות תוכן (payload) לפי מ", answer: "פריסת פלטפורמת Apple" },
+      { type: "multiple", match: "מבין המרכיבים המרכזיים הללו, ציינו שניים שבהם נעשה שימוש על", answers: ["הגבלות", "פקודות"] },
     ]
   },
   // https://salescoach.apple.com/home/content/view/475861?backTo=%2Fhome%2Fcollection%2F225054
@@ -203,6 +280,16 @@ export const learnedExams = {
       { type: "single", match: "איזה מהשלבים הבאים מומלץ לבצע בעת הגדרת Apple Business Manag", answer: "יצירת חשבון נוסף של מנהל מערכת." },
     ]
   },
+  // https://salescoach.apple.com/home/content/view/475893?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "שילוב-apple-business-manager-עם-directory-sync": {
+    name: "שילוב Apple Business Manager עם Directory Sync",
+    examId: "שילוב-apple-business-manager-עם-directory-sync",
+    questions: [
+      { type: "single", match: "בעת הגדרת התצורה של Directory Sync, מה אתם חייבים להוסיף ל-M", answer: "את האסימון שהורד מ-Apple Business Manager" },
+      { type: "single", match: "במה ניתן להשתמש כדי להפוך לאוטומטי את הסנכרון של נתוני חשבון", answer: "Directory Sync" },
+      { type: "single", match: "מה קורה לחשבונות משתמשים קיימים ב-Apple Business Manager אם", answer: "החשבונות הופכים לחשבונות ידניים." },
+    ]
+  },
   // https://salescoach.apple.com/home/content/view/532276?backTo=%2Fhome%2Fcollection%2F292368
   "שיתוף-המאפיינים-החדשים-לבטיחות-ילדים": {
     name: "שיתוף המאפיינים החדשים לבטיחות ילדים",
@@ -211,14 +298,14 @@ export const learnedExams = {
       { type: "selects", match: "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.", answers: ["בקשת אישור לרכישה", "Ask to Browse", "בטיחות בתקשורת", "הקצבות זמן", "זמן מסך"] },
     ]
   },
-  // https://salescoach.apple.com/home/content/view/519205?backTo=%2Fhome%2Fcollection%2F57570
-  //   NOT SOLVED (selects): התאימו את המאפיינים הבאים של iPhone 17e לצורך של לקוחות.
-  //     1 attempt(s) already ruled out.
-  "שתפו-את-הסיבות-האלו-לרכישת-iphone-17e-עוד-היום": {
-    name: "שתפו את הסיבות האלו לרכישת iPhone 17e עוד היום",
-    section: "התכונות הבסיסיות של iPhone",
+  // https://salescoach.apple.com/home/content/view/475875?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+  "תכנון-עבור-הארגון-שלכם": {
+    name: "תכנון עבור הארגון שלכם",
+    examId: "תכנון-עבור-הארגון-שלכם",
     questions: [
-
+      { type: "single", match: "מיהו הבעלים של חשבון Apple מנוהל?", answer: "הארגון שיצר אותם" },
+      { type: "multiple", match: "אילו שתי הרשאות תפקידים ב-Apple Business Manager יכולות להקצ", answers: ["מנהל/ת כח אדם", "מנהל/ת מערכת"] },
+      { type: "single", match: "היכן ב-Apple Business Manager אתם מגדירים את היכולת של משתמש", answer: "ניהול גישה" },
     ]
   },
 };

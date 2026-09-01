@@ -1701,7 +1701,36 @@ const authored = {
     questions: [
       { type: "single", match: "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם", answer: "כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם." },
       // The attached run explicitly graded "נכון" incorrect.
-      { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות", answer: "לא נכון" }
+      { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות", answer: "לא נכון" },
+      // The five categories Apple's own accessibility pages are organised by.
+      // The sixth option on the page splits mobility in two — "תנועה" and
+      // "מוטוריקה" — and Apple names that category מוטוריקה.
+      { type: "multiple", match: "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן", answers: ["ראייה", "שמיעה", "דיבור", "מוטוריקה", "קוגניציה"] },
+      // Accepting every volunteer who asks to beta test is the one option that
+      // is not something Apple says it does; the other three are.
+      { type: "multiple", match: "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע", answers: ["עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.", "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.", "העסקת אנשים בעלי מוגבלויות."] },
+      // Apple 2030 is net zero across the supply chain and product life, and
+      // Apple's own corporate operations have been carbon neutral since 2020.
+      // The page's own feedback rules out the "50% against 2015" option (the
+      // figure is 75%), and no product line is yet made only of recycled and
+      // renewable material — that is the goal, not the state of things.
+      { type: "multiple", match: "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי", answers: ["החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.", "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן."] },
+      // Four options, four things Apple reports doing; the question asks for
+      // all that apply and four separate attempts at subsets were rejected.
+      { type: "multiple", match: "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו", answers: ["התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.", "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.", "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.", "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג."] },
+      // The three pillars of the Racial Equity and Justice Initiative;
+      // engineering is not one of them.
+      { type: "multiple", match: "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם", answers: ["חינוך", "העצמה כלכלית", "רפורמה בצדק הפלילי"] },
+      // How Apple supports the people in its supply chain: the health and
+      // safety standards it holds suppliers to, and the education and
+      // leadership opportunities it offers their staff. Carbon neutrality is a
+      // commitment to the planet rather than to those people, and Apple does
+      // not brief them on its product line-up.
+      { type: "multiple", match: "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה", answers: ["Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.", "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים."] },
+      // Privacy as a fundamental human right, features built not to need the
+      // data, and the user deciding what is shared: all three are Apple's own
+      // wording of its privacy approach.
+      { type: "multiple", match: "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות", answers: ["Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.", "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.", "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף."] }
     ]
   },
   "התחברות-ל-mdm": {
@@ -1798,6 +1827,53 @@ const authored = {
       { type: "single", match: "ישנם שלושה שלבים בתהליך של החזרת מכשירים שנפרסו בעבר לשירות", answer: "העברת הנתונים של המשתמש או הנתונים הארגוניים לארכיון." },
       { type: "multiple", match: "ישנן ארבע שיטות עיקריות להחזרת Mac להגדרות היצרן", answers: ["שורת הפקודה", "פקודה דרך MDM"] },
       { type: "single", match: "באילו מבין הבאים ניתן להשתמש כדי להכין iPhone או iPad לפריסה מחדש", answer: "הפעלת הפקודה 'מחיקת כל התוכן וההגדרות' דרך MDM." }
+    ]
+  },
+  // Graded 20% on 2026-09-01 (content/view/461965, passes only at 100%). That
+  // attempt confirmed question 4 and rejected one option on each of the other
+  // four, so every answer below either survived the grade or replaces one the
+  // server had already refused:
+  //   1 rejected "התמקדות בלעדית בתוכניות הדרכה" — Dynamic TEI is the online
+  //     calculator customers adjust with their own numbers, which is what the
+  //     remaining option describes.
+  //   2 rejected the set holding "TCO גבוהה יותר": a higher total cost of
+  //     ownership is the opposite of what Cisco reported, so the three benefits
+  //     are the other three options.
+  //   3 rejected "חסות ניהולית" — that is the employee-choice programme, a
+  //     later step than awareness; showing the machine to the next team is the
+  //     awareness step.
+  //   5 rejected the set holding "מרוצים מהמכשירים שיש לכם כרגע": that asks
+  //     about today's devices rather than a concern about Mac, and the other
+  //     three ask about deployment time, total cost and the IT support ratio.
+  "בוחן-בניית-מומחיות-ב-mac": {
+    name: "בוחן – בניית מומחיות ב-Mac",
+    questions: [
+      { type: "single", match: "כיצד מצליח מנוע Dynamic TEI של Forrester Consulting לשפר", answer: "באמצעות האפשרות שניתנת ללקוחות להציג ולהתאים אישית נתוני TEI" },
+      { type: "multiple", match: "אילו תועלות נרשמו ב-Cisco", answers: ["פרודוקטיביות מוגברת בקרב אנשי מכירות", "פחות בעיות חומרה בקרב משתמשי Mac", "צורך מופחת בתמיכה ממערך ה-IT"] },
+      { type: "single", match: "כיצד תוכלו לסייע בהגברת המודעות של לקוחות ל-MacBook Air", answer: "הציגו את MacBook Air לצוות הבא שתפגשו." },
+      { type: "single", match: "מהו הצעד הראשון בשכנוע של לקוחות לאמץ את MacBook Air", answer: "אפיון הלקוח/ה" },
+      { type: "multiple", match: "אילו שאלות תוכלו להציג כדי להבין טוב יותר את החששות של הלקוחות", answers: ["כמה זמן לוקח לפרוס את המחשבים לעובדים?", "האם השווית את עלות הבעלות הכוללת של Mac לזו של מחשבים אחרים?", "בכמה מחשבי Windows יכול חבר אחד בצוות ה-IT לתמוך כיום?"] }
+    ]
+  },
+  // Two of Apple Business Manager's own group types. The grade rejected "Device
+  // Group", "Dynamic User Group" and "Managed Group" one after another, each
+  // with "לא נכון. לא ניתן ליצור קבוצה מסוג זה", and confirmed both of the
+  // pair below — which is the one combination six attempts never tried.
+  "התמצאות-ב-apple-business-manager": {
+    name: "התמצאות ב-Apple Business Manager",
+    questions: [
+      { type: "multiple", match: "אילו מבין הבאים הם שני סוגים של קבוצות שניתן ליצור", answers: ["Smart User Group (קבוצת משתמשים חכמים)", "User Group (קבוצת משתמשים)"] }
+    ]
+  },
+  // Device Enrolment is what hands a purchased device to an MDM server on its
+  // own. The grade ruled out both of the alternatives that had it e-mailing a
+  // link to users and pushing serial numbers to MDM, and of the two answers
+  // left, the other one describes devices that were set up first — which is the
+  // manual route, not what enrolment does.
+  "רישום-הארגון": {
+    name: "רישום הארגון",
+    questions: [
+      { type: "single", match: "מה הוא בעצם עושה", answer: "הוא מאפשר הקצאה אוטומטית של מכשירים שנרכשו לשרת MDM" }
     ]
   },
 };

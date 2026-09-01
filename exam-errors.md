@@ -4,9 +4,28 @@ Written by the runner as each failure happens, so this is current even while
 a run is still going. It accumulates across runs and across accounts; an exam
 that later passes moves to the bottom rather than disappearing.
 
-Updated 2026-09-01T07:23:42.671Z — **19 still failing**, 12 since fixed.
+Updated 2026-09-01T08:31:39.833Z — **20 still failing**, 21 since fixed.
 
 ## Still failing
+
+### כמה ידוע לכם על הערכים של Apple?
+
+- **What happened:** never reached a grade
+- **Chapter:** הערכים של Apple
+- **Seen:** 3 time(s), last 2026-09-01T08:31:39.833Z (session 1, 3)
+- **Module:** https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
+- **Reported:**
+  - 1 question(s) are still unanswered; not submitting.
+
+### קביעת תצורה של מכשירים
+
+- **What happened:** scored 67% against a 70% threshold after 6 attempt(s)
+- **Seen:** 1 time(s), last 2026-09-01T08:05:09.956Z (session 3)
+- **Module:** https://salescoach.apple.com/home/content/view/475909?backTo=%2Fhome%2Fcollection%2F225054&backTo=%2Fhome%2Fcurriculum%2F109689&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you
+- **Still unanswered:**
+  - (multiple) מבין המרכיבים המרכזיים הללו, ציינו שניים שבהם נעשה שימוש על
+    - still in play: אבחון | הגדרות | פקודות | פיקוח | הגבלות
+    - 6 attempt(s) already ruled out
 
 ### יצירת חשבונות Apple מנוהלים
 
@@ -78,43 +97,6 @@ Updated 2026-09-01T07:23:42.671Z — **19 still failing**, 12 since fixed.
 - **Module:** https://salescoach.apple.com/home/content/view/346046?backTo=%2Fhome%2Fcollection%2F68600
 - **Reported:**
   - This module has a quiz, but its questions never rendered. It may be locked or out of attempts.
-
-### כמה ידוע לכם על הערכים של Apple?
-
-- **What happened:** scored 21% against a 100% threshold after 6 attempt(s)
-- **Chapter:** הערכים של Apple
-- **Seen:** 2 time(s), last 2026-09-01T06:42:19.782Z (session 1)
-- **Module:** https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
-- **Still unanswered:**
-  - (multiple) המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן
-    - still in play: קוגניציה | דיבור | מוטוריקה | תנועה | ראייה | שמיעה
-    - 6 attempt(s) already ruled out
-  - (multiple) אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע
-    - still in play: העסקת אנשים בעלי מוגבלויות. | עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. | שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. | מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.
-    - 4 attempt(s) already ruled out
-  - (selects) Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה.
-    - 1 attempt(s) already ruled out
-  - (multiple) אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי
-    - still in play: הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן. | החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple. | כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד. | Apple מתכננת להשיג את היעד שלה על ידי ה
-    - 4 attempt(s) already ruled out
-  - (single) Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת ה
-    - 3 attempt(s) already ruled out
-  - (multiple) אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו
-    - still in play: הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.
-    - 4 attempt(s) already ruled out
-  - (selects) השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'
-    - 15 attempt(s) already ruled out
-  - (multiple) אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל
-    - still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.
-    - 3 attempt(s) already ruled out
-  - (single) כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח
-    - 2 attempt(s) already ruled out
-  - (multiple) Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם
-    - still in play: הנדסה | רפורמה בצדק הפלילי | העצמה כלכלית | חינוך
-    - 4 attempt(s) already ruled out
-  - (multiple) אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה
-    - still in play: Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. | Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים. | Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. | Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכני
-    - 4 attempt(s) already ruled out
 
 ### הציגו תכונות נגישות עבור למידה
 
@@ -223,6 +205,15 @@ Updated 2026-09-01T07:23:42.671Z — **19 still failing**, 12 since fixed.
 
 ## Fixed since
 
+- קביעת תצורה של מכשירים — passed at 100% (2026-09-01T08:27:27.990Z)
+- חזרה מהירה לשירות — passed at 100% (2026-09-01T08:06:30.310Z)
+- איך זה עובד — passed at 100% (2026-09-01T08:03:19.149Z)
+- שילוב Apple Business Manager עם Directory Sync — passed at 100% (2026-09-01T08:01:57.241Z)
+- אימות מאוחד — passed at 100% (2026-09-01T08:01:04.629Z)
+- יצירת חשבונות Apple מנוהלים — passed at 100% (2026-09-01T07:59:46.694Z)
+- תכנון עבור הארגון שלכם — passed at 100% (2026-09-01T07:58:48.649Z)
+- מידע על אימות דומיין — passed at 80% (2026-09-01T07:57:37.461Z)
+- התחברות ל-MDM — passed at 100% (2026-09-01T07:56:24.752Z)
 - התאימו את המאפיינים של Apple Intelligence ב-iPhone למה שחשוב ללקוחות — submitted; the server recorded it without grading (2026-09-01T06:51:07.126Z)
 - זרקור על המצלמה הקדמית עם 'מרכז הבמה' ב-iPhone — passed at 100% (2026-09-01T06:48:30.870Z)
 - שיתוף המאפיינים החדשים לבטיחות ילדים — passed at 100% (2026-09-01T06:19:02.918Z)
