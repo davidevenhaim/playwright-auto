@@ -2718,7 +2718,11 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     try {
       detected = await detectCurrentExam();
     } catch (error) {
-      if (!state.blind) throw error;
+      // Identification failure is exactly when the conservative path needs a
+      // capture. Throwing here made the capture branch below unreachable and
+      // mislabeled every new quiz as a generic module failure. Keep going with
+      // `detected === null`: blind runs may answer it, while conservative runs
+      // save its full questions/options without submitting.
       log(`Could not identify this quiz: ${error instanceof Error ? error.message : String(error)}`);
     }
 
