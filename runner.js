@@ -1684,10 +1684,27 @@ function learnFromGrading(graded, { exam, module, chapter, url, percentage, thre
   if (matchingFill?.size) {
     const byKey = new Map();
     for (const [text, chosen] of matchingFill) byKey.set(answerKeyOf(text), chosen);
+    // The same prefix tolerance the answer lookup uses: the graded page can
+    // append the player's feedback to a short question, which moves the 64
+    // characters the key is cut from.
+    const find = (key) => {
+      if (!key) return null;
+      if (byKey.has(key)) return byKey.get(key);
+      let best = null;
+      for (const [candidate, chosen] of byKey) {
+        const overlap = Math.min(candidate.length, key.length);
+        if (overlap < 24) continue;
+        if (!candidate.startsWith(key) && !key.startsWith(candidate)) continue;
+        if (!best || overlap > best.overlap) best = { chosen, overlap };
+      }
+      return best?.chosen || null;
+    };
     for (const question of questions) {
-      if (question.selectedAnswers?.length) continue;
-      const chosen = byKey.get(answerKeyOf(question.question));
+      const chosen = find(answerKeyOf(question.question));
       if (!chosen?.length) continue;
+      // What the fill put there is what was submitted, whatever the graded page
+      // now shows — it rebuilds a matching question without its dropdowns, and
+      // what is left reads as either nothing or the placeholder.
       question.selectedAnswers = chosen;
       question.type = "selects";
     }
