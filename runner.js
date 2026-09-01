@@ -669,7 +669,36 @@ async function submitAssessment(targetPage, frame) {
       }
       if (jq && SeedInterface.QSP?.buildReturnJSON) {
         const result = SeedInterface.QSP.buildReturnJSON(jq("form[assessmentId]").first());
-        built = { unanswered: result.$unansweredQuestions.length, answers: result.postObj.answers.length };
+        const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+        // "1 unanswered" on its own says nothing about what the question is,
+        // and a blind fill only knows radios, checkboxes and dropdowns. What
+        // the player refused to accept is described here so an unhandled
+        // control type shows up in the log rather than as a silent failure.
+        const unansweredDetail = Array.from(result.$unansweredQuestions).slice(0, 5).map((element) => {
+          const node = element.closest?.(".question") || element;
+          const heading = node.querySelector?.(
+            ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
+          );
+          const controls = {};
+          for (const input of node.querySelectorAll?.("input, select, textarea, [contenteditable='true']") || []) {
+            const kind = input.tagName === "INPUT" ? `input[${input.type || "text"}]` : input.tagName.toLowerCase();
+            controls[kind] = (controls[kind] || 0) + 1;
+          }
+          return {
+            text: tidy(heading?.innerText || node.innerText).slice(0, 200),
+            classes: tidy(node.className).slice(0, 160),
+            controls,
+            // A drag-and-drop or hotspot question carries neither an input nor a
+            // select, so the tag names inside it are the only clue to what it is.
+            tags: [...new Set(Array.from(node.querySelectorAll?.("*") || [])
+              .map((child) => child.tagName.toLowerCase()))].slice(0, 20).join(",")
+          };
+        });
+        built = {
+          unanswered: result.$unansweredQuestions.length,
+          answers: result.postObj.answers.length,
+          unansweredDetail
+        };
       }
     } catch {}
 
@@ -758,6 +787,9 @@ async function submitAssessment(targetPage, frame) {
   if (!before) throw new Error("The quiz frame went away before it could be submitted.");
   if (before.built) log(`Pre-flight: ${before.built.answers} answers built, ${before.built.unanswered} unanswered.`);
   if (before.built && before.built.unanswered > 0) {
+    for (const detail of before.built.unansweredDetail || []) {
+      log(`Unanswered question: "${detail.text}" — controls ${JSON.stringify(detail.controls)}, classes "${detail.classes}", tags ${detail.tags}.`);
+    }
     throw new Error(`${before.built.unanswered} question(s) are still unanswered; not submitting.`);
   }
 
@@ -1098,6 +1130,10 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
     const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
     const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
     const picked = [];
+    // Questions whose confirmed answer could not be matched to anything the
+    // page is offering. Reported so a key that silently stops applying shows up
+    // instead of looking like a run that simply keeps guessing wrong.
+    const unmatched = [];
 
     const labelOf = (input, question) => {
       const label = input.labels?.[0] ||
@@ -1205,7 +1241,7 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
             rows.find((candidate) => isPrefixAnswer(candidate.text, answer));
           if (row) wanted.add(row.input);
         }
-        if (wanted.size) {
+        if (wanted.size === settled.length) {
           for (const input of inputs) {
             const shouldSelect = wanted.has(input);
             if (input.checked !== shouldSelect) input.click();
@@ -1217,6 +1253,17 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
           });
           continue;
         }
+        // A confirmed answer that names an option this question does not
+        // appear to have. Applying only the half that matched would send a
+        // half-answered question, which the player counts as unanswered, so
+        // the question is guessed at instead — and the mismatch is reported,
+        // because it means an answer the server confirmed is being thrown
+        // away on every retry.
+        unmatched.push({
+          question: tidy((question.querySelector(".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4") || question).innerText).slice(0, 160),
+          wanted: settled.slice(0, 6),
+          offered: rows.map((row) => row.text).slice(0, 8)
+        });
       }
 
       if (selects.length) {
@@ -1355,7 +1402,32 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
         }
         chosen.push(...radios.filter((radio) => radio.checked).map((radio) => labelOf(radio, question)));
       } else {
-        continue;
+        // Neither a choice nor a dropdown. A free-text or scale question still
+        // has to carry something or the player counts the whole quiz as
+        // unanswered and refuses the submission, taking every other question on
+        // it down with one it could not fill.
+        const texts = Array.from(question.querySelectorAll('textarea, input[type="text"], input[type="email"], input[type="number"], [contenteditable="true"]'));
+        const ranges = Array.from(question.querySelectorAll('input[type="range"]'));
+        if (!texts.length && !ranges.length) continue;
+
+        for (const field of texts) {
+          if (tidy(field.value || field.innerText)) continue;
+          const answer = field.tagName === "INPUT" && field.type === "number" ? "1" : "N/A";
+          if (field.isContentEditable) field.innerText = answer;
+          else field.value = answer;
+          field.dispatchEvent(new Event("input", { bubbles: true }));
+          field.dispatchEvent(new Event("change", { bubbles: true }));
+          chosen.push(answer);
+        }
+        for (const slider of ranges) {
+          const min = Number(slider.min || 0);
+          const max = Number(slider.max || 100);
+          slider.value = String(Math.round((min + max) / 2));
+          slider.dispatchEvent(new Event("input", { bubbles: true }));
+          slider.dispatchEvent(new Event("change", { bubbles: true }));
+          chosen.push(slider.value);
+        }
+        if (!chosen.length) continue;
       }
 
       const heading = question.querySelector(
@@ -1364,8 +1436,19 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
       picked.push({ question: tidy(heading?.innerText || question.innerText).slice(0, 300), chosen });
     }
 
+    picked.unmatchedLearned = unmatched;
     return picked;
   }, [known, rejected]);
+}
+
+// An answer the server confirmed that no longer matches anything on the page is
+// a key the run is throwing away on every retry, and it looks from the outside
+// like a quiz that simply refuses to be solved. Say so.
+function reportUnmatchedLearned(picks) {
+  for (const miss of picks?.unmatchedLearned || []) {
+    log(`A confirmed answer no longer matches this question: "${miss.question}" wants ` +
+      `[${miss.wanted.join(" | ")}] but the page offers [${miss.offered.join(" | ")}].`);
+  }
 }
 
 // A question the server marked correct is a confirmed answer: whatever was
@@ -1652,6 +1735,15 @@ function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mo
     // one that reads empty twice is written off rather than re-opened on each
     // of the run's remaining passes.
     emptyContainers: new Set(),
+    // Sections that read as fully completed and were passed over on the first
+    // pass. They are only worth opening for the optional modules a completion
+    // badge does not count, and doing that before any of the unfinished work
+    // spends the first hours of a run inside material the account has already
+    // finished. They are walked from the second pass onwards.
+    deferredCompleted: new Set(),
+    // Which pass of the site the run is on. The first one goes after work that
+    // is visibly outstanding; later ones look inside the finished sections too.
+    pass: 1,
     deferred: new Map(),
     blocked: 0,
     chapters: new Map(),
@@ -1938,6 +2030,7 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       const settled = picks.filter((pick) => pick.fromLearned).length;
       log(`Answered ${picks.length} question(s) blind` +
         (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
+      reportUnmatchedLearned(picks);
     }
     state.examsFilled++;
 
@@ -2063,6 +2156,7 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       const settled = picks.filter((pick) => pick.fromLearned).length;
       log(`Attempt ${attempt} at "${quizName || item.title}": cleared ${cleared} rejected answer(s), ` +
         `kept ${settled} confirmed one(s), guessed the rest around what the last grade refused.`);
+      reportUnmatchedLearned(picks);
     }
 
     recordResult(state, item, {
@@ -2704,9 +2798,17 @@ async function walkContainer(listPage, container, state, depth = 0) {
     }
     // A container's completion badge counts only the items it requires, so a
     // collection can read as done while optional modules under it have never
-    // been opened. Walking in costs one page load and every finished module
-    // inside is still skipped by its own check, so the walk always descends —
-    // once. What it finds decides whether it is worth descending again.
+    // been opened. It is still worth opening — but not before everything that
+    // is visibly unfinished, which is why the first pass notes it and moves on.
+    // The section stays counted as unfinished, so a later pass comes back and
+    // descends it.
+    if (child.completed && state.pass === 1) {
+      state.deferredCompleted.add(child.id);
+      unfinished++;
+      noteContainer(state, child, container.title, "deferred-completed");
+      log(`${indent}  "${child.title}" reads as completed; leaving it until the unfinished work is done.`);
+      continue;
+    }
     if (child.completed) log(`${indent}  "${child.title}" reads as completed; looking inside anyway.`);
     // The tab is left inside the child, which does not matter: the next
     // sibling is opened by its own URL rather than by going back.
@@ -2738,15 +2840,24 @@ export async function processAcademy({ skipCompleted = true, limit = 0, onProgre
 
   for (let pass = 1; pass <= ACADEMY_MAX_PASSES; pass++) {
     const processedBefore = state.modulesProcessed;
+    state.pass = pass;
     state.visitedContainers = new Set();
     state.deferred = new Map();
+    state.deferredCompleted = new Set();
     state.blocked = 0;
     if (pass > 1) log(`Pass ${pass}: re-walking the Academy to pick up anything that unlocked.`);
 
     await walkContainer(listPage, root, state, 0);
 
     const gained = state.modulesProcessed - processedBefore;
-    const stillShut = state.deferred.size + state.blocked;
+    // Sections passed over because they read as completed are work this run has
+    // not done yet, so they hold the run open for another pass the same way a
+    // locked row does. Without this a first pass that found nothing outstanding
+    // would stop before ever looking inside them.
+    const stillShut = state.deferred.size + state.blocked + state.deferredCompleted.size;
+    if (state.deferredCompleted.size) {
+      log(`${state.deferredCompleted.size} section(s) that read as completed were left for the next pass.`);
+    }
     if (state.exhaustedContainers.size) {
       log(`${state.exhaustedContainers.size} section(s) have nothing left in them; a later pass will not open them again.`);
     }
@@ -2761,7 +2872,7 @@ export async function processAcademy({ skipCompleted = true, limit = 0, onProgre
     }
     // Another pass is only worth making if this one finished something that
     // could have opened one of those locks.
-    if (!gained) {
+    if (!gained && !state.deferredCompleted.size) {
       log(`${stillShut} item(s) are still locked and this pass opened nothing; stopping.`);
       break;
     }
@@ -3199,8 +3310,10 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
   for (let pass = 1; pass <= SITE_MAX_PASSES; pass++) {
     const processedBefore = state.modulesProcessed;
     const learnedBefore = state.answersLearned;
+    state.pass = pass;
     state.visitedContainers = new Set();
     state.deferred = new Map();
+    state.deferredCompleted = new Set();
     state.blocked = 0;
 
     // A quiz that did not pass, and a module that broke, are walked again: by
@@ -3236,7 +3349,14 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
     if (state.exhaustedContainers.size) {
       log(`${state.exhaustedContainers.size} section(s) have nothing left in them; a later pass will not open them again.`);
     }
-    const stillShut = state.deferred.size + state.blocked;
+    // Sections passed over because they read as completed are work this run has
+    // not done yet, so they hold the run open for another pass the same way a
+    // locked row does. Without this a first pass that found nothing outstanding
+    // would stop before ever looking inside them.
+    const stillShut = state.deferred.size + state.blocked + state.deferredCompleted.size;
+    if (state.deferredCompleted.size) {
+      log(`${state.deferredCompleted.size} section(s) that read as completed were left for the next pass.`);
+    }
     const toRetry = [...state.retryable.keys()].filter((id) =>
       (state.attempts.get(id) || 0) < MAX_MODULE_ATTEMPTS).length;
 
@@ -3264,7 +3384,9 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
     }
     // Another pass is only worth making if this one moved something: it opened
     // a lock, or it settled answers that a failed quiz can now be retried with.
-    if (!gained && !settled) {
+    // A first pass that deliberately skipped every finished section has more to
+    // do even if it completed nothing, so it is not "a pass that moved nothing".
+    if (!gained && !settled && !state.deferredCompleted.size) {
       log(`${stillShut} locked and ${toRetry} unpassed item(s) remain, and this pass moved nothing; stopping.`);
       break;
     }
