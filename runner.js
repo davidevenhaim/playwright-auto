@@ -924,6 +924,7 @@ async function fillUntilAnswered(targetPage, frame, { rounds = 3 } = {}) {
       Object.fromEntries(rejectedAnswers)
     );
     reportUnmatchedLearned(filled);
+    await fillMatchingQuestions(frame).catch(() => {});
     const now = await unansweredCount(frame);
     if (now === null || now >= previous) {
       previous = now;
@@ -1465,10 +1466,18 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
         // Matching questions are bijections — the same option list in every
         // dropdown, one option per row — so permutations are tried first and
         // the general case falls back to counting through the combinations.
-        const choicesFor = (select) => Array.from(select.options)
-          .map((option, index) => ({ index, text: tidy(option.textContent) }))
-          // A leading blank or "choose one" row is a placeholder, not an answer.
-          .filter((option) => option.index > 0 || (option.text && !/^(select|choose|בחר|בחרו)\b/i.test(option.text)));
+        // A placeholder is the row that carries no value of its own — "בחר
+        // תשובה" with an empty value is the prompt, not an answer, and leaving
+        // a dropdown on it is exactly what the player counts as unanswered.
+        // Matching it by its wording was worse than useless: \b is defined on
+        // A-Za-z0-9_, so it never matches after a Hebrew word, and every Hebrew
+        // placeholder was being offered as a real choice.
+        const choicesFor = (select) => {
+          const all = Array.from(select.options)
+            .map((option, index) => ({ index, text: tidy(option.textContent), value: option.value }));
+          const real = all.filter((option) => String(option.value ?? "").trim() !== "");
+          return real.length ? real : all.slice(1);
+        };
 
         // Anything already chosen was put there by a stored key or by an
         // answer this run confirmed, and must not be overwritten by a guess;
@@ -1480,17 +1489,20 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
 
         let assignment = null;
         const first = pools[0] || [];
-        const bijection = pools.length > 1 && pools.length <= 8 &&
+        // A matching question gives every blank the same list of candidates and
+        // expects each to be used at most once, whether or not there are exactly
+        // as many candidates as blanks. Assignments that reuse an option are
+        // almost never what it wants, so injective ones are tried first.
+        const sharedPool = pools.length > 1 && pools.length <= 8 &&
           pools.every((pool) => pool.length === first.length) &&
-          first.length === pools.length;
+          first.length >= pools.length;
 
-        if (bijection) {
-          // Every ordering of the shared option list, generated in one fixed
-          // sequence so successive attempts walk through it rather than
-          // re-rolling.
+        if (sharedPool) {
+          // Distinct options for the blanks, generated in one fixed sequence so
+          // successive attempts walk through them rather than re-rolling.
           const walk = (remaining, sofar) => {
             if (assignment) return;
-            if (!remaining.length) {
+            if (sofar.length === pools.length) {
               if (!tried.includes(asText(sofar))) assignment = [...sofar];
               return;
             }
@@ -1528,7 +1540,11 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
           chooseOption(select, option.index);
         });
         for (const select of selects) {
-          if (select.selectedIndex <= 0 && select.options.length > 1) chooseOption(select, 1);
+          // Anything still sitting on a valueless row is still unanswered.
+          if (String(select.value ?? "").trim() === "") {
+            const fallback = choicesFor(select)[0];
+            if (fallback) chooseOption(select, fallback.index);
+          }
           chosen.push(tidy(select.options[select.selectedIndex]?.textContent || ""));
         }
       } else if (boxes.length) {
@@ -2218,7 +2234,10 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         Object.fromEntries(rejectedAnswers)
       );
       const picks = filled.picked;
-      if (!picks.length) throw new Error("Nothing on this quiz could be answered blind.");
+      // Matching questions are answered through the browser rather than in the
+      // page, so they are filled here rather than by the blind pass above.
+      const dropdowns = await fillMatchingQuestions(ready.frame).catch(() => 0);
+      if (!picks.length && !dropdowns) throw new Error("Nothing on this quiz could be answered blind.");
       const settled = picks.filter((pick) => pick.fromLearned).length;
       log(`Answered ${picks.length} question(s) blind` +
         (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
@@ -3640,6 +3659,202 @@ export async function processSite({ skipCompleted = true, limit = 0, onProgress 
 // is only ever the way in to the Academy.
 export async function processForYou(options = {}) {
   return processAcademy(options);
+}
+
+// Which option each dropdown on the page should end on. Deciding that in the
+// page and applying it from outside is the whole point: the content player
+// resets a dropdown that is changed by assignment — the selected attribute
+// stays but the selection does not — so the choice has to be made by the
+// browser itself, through a real interaction, the way a keyboard user would
+// make it. The planner only reads; nothing here changes the page.
+async function planSelectAnswers(frame, known = {}, rejected = {}) {
+  return frame.evaluate(([knownAnswers, rejectedAnswersByKey]) => {
+    const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+    const keyOf = (text) => tidy(String(text).normalize("NFKC"))
+      .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, " ")
+      .replace(/^\d+[\s.)]*/, "")
+      .replace(/(?:יש לבחור|select)\s+(?:one|two|three|four|five|\d+).*$/i, "")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim().toLowerCase().slice(0, 64);
+    const MIN_KEY_OVERLAP = 24;
+    const lookup = (table, text) => {
+      const key = keyOf(text || "");
+      if (!key) return null;
+      if (table[key]) return table[key];
+      let best = null;
+      for (const candidate of Object.keys(table)) {
+        const overlap = Math.min(candidate.length, key.length);
+        if (overlap < MIN_KEY_OVERLAP) continue;
+        if (!candidate.startsWith(key) && !key.startsWith(candidate)) continue;
+        if (!best || overlap > best.overlap) best = { value: table[candidate], overlap };
+      }
+      return best?.value || null;
+    };
+    const isPrefixAnswer = (labelText, answer) => {
+      if (!labelText || !answer || labelText.length < 2) return false;
+      const [longer, shorter] = answer.length >= labelText.length ? [answer, labelText] : [labelText, answer];
+      return longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
+    };
+    const headingOf = (question) => question.querySelector(
+      ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
+    );
+
+    const everySelect = Array.from(document.querySelectorAll("select"));
+    const plan = [];
+
+    for (const question of document.querySelectorAll(".question")) {
+      const selects = Array.from(question.querySelectorAll("select"));
+      if (!selects.length) continue;
+      const heading = headingOf(question);
+      const settled = lookup(knownAnswers, heading?.innerText) || lookup(knownAnswers, question.innerText);
+      const refused = lookup(rejectedAnswersByKey, heading?.innerText) ||
+        lookup(rejectedAnswersByKey, question.innerText) || { orders: [] };
+
+      // A dropdown's real choices are the ones carrying a value; the valueless
+      // row is the "choose an answer" prompt and settling on it is exactly what
+      // leaves the question unanswered.
+      const choicesFor = (select) => {
+        const all = Array.from(select.options).map((option) => ({
+          value: option.value,
+          text: tidy(option.textContent)
+        }));
+        const real = all.filter((option) => String(option.value ?? "").trim() !== "");
+        return real.length ? real : all.slice(1);
+      };
+      const pools = selects.map(choicesFor);
+
+      let assignment = null;
+
+      // An answer the server has already confirmed, in dropdown order.
+      if (settled?.length) {
+        const wanted = selects.map((select, position) => {
+          const answer = settled[position];
+          if (!answer) return null;
+          return pools[position].find((option) =>
+            option.text === answer || isPrefixAnswer(option.text, answer)) || null;
+        });
+        if (wanted.every(Boolean)) assignment = wanted;
+      }
+
+      if (!assignment) {
+        const tried = (refused.orders || []).map((order) => order.join("\u0000"));
+        const asText = (candidate) => candidate.map((option) => option.text).join("\u0000");
+        const first = pools[0] || [];
+        // A matching question offers every blank the same candidates and wants
+        // each used at most once, so distinct assignments are tried first.
+        const shared = pools.length > 1 && pools.length <= 8 &&
+          pools.every((pool) => pool.length === first.length) && first.length >= pools.length;
+        if (shared) {
+          const walk = (remaining, sofar) => {
+            if (assignment) return;
+            if (sofar.length === pools.length) {
+              if (!tried.includes(asText(sofar))) assignment = [...sofar];
+              return;
+            }
+            for (let index = 0; index < remaining.length && !assignment; index++) {
+              sofar.push(remaining[index]);
+              walk(remaining.filter((_, at) => at !== index), sofar);
+              sofar.pop();
+            }
+          };
+          walk(first, []);
+        }
+        if (!assignment) {
+          const total = pools.reduce((count, pool) => count * Math.max(pool.length, 1), 1);
+          for (let n = 0; n < Math.min(total, 5000); n++) {
+            let rest = n;
+            const candidate = pools.map((pool) => {
+              if (!pool.length) return null;
+              const option = pool[rest % pool.length];
+              rest = Math.floor(rest / pool.length);
+              return option;
+            });
+            if (candidate.every(Boolean) && !tried.includes(asText(candidate))) {
+              assignment = candidate;
+              break;
+            }
+          }
+        }
+      }
+
+      if (!assignment) continue;
+      selects.forEach((select, position) => {
+        const option = assignment[position];
+        if (!option) return;
+        plan.push({
+          select: everySelect.indexOf(select),
+          value: option.value,
+          text: option.text,
+          fromLearned: Boolean(settled?.length)
+        });
+      });
+    }
+
+    return plan;
+  }, [known, rejected]);
+}
+
+// Apply that plan the way a person would: through the browser's own select
+// interaction, which produces trusted events the player does not undo.
+async function applySelectPlan(frame, plan) {
+  let applied = 0;
+  for (const step of plan) {
+    if (step.select < 0) continue;
+    try {
+      await frame.locator("select").nth(step.select).selectOption(step.value, { timeout: 5000 });
+      applied++;
+    } catch {
+      // A dropdown that went away between planning and applying is not worth
+      // failing the whole quiz over.
+    }
+  }
+  return applied;
+}
+
+// Fill every matching question on the quiz. Kept separate from the blind fill
+// because it has to reach out of the page to do its work.
+async function fillMatchingQuestions(frame) {
+  const plan = await planSelectAnswers(
+    frame,
+    Object.fromEntries(learnedAnswers),
+    Object.fromEntries(rejectedAnswers)
+  ).catch(() => []);
+  if (!plan.length) return 0;
+  const applied = await applySelectPlan(frame, plan);
+  if (applied) {
+    const settled = plan.filter((step) => step.fromLearned).length;
+    log(`Filled ${applied} dropdown(s) across the matching question(s)` +
+      (settled ? `, ${settled} of them from confirmed answers.` : "."));
+  }
+  return applied;
+}
+
+// Run one blind fill against the quiz on the connected tab and report what the
+// player counts as unanswered before and after. A fill can look right in the
+// DOM and still leave the player unsatisfied, and this is the shortest way to
+// find out which.
+export async function fillCurrentQuizBlind() {
+  const targetPage = await connectedPage();
+  const ready = await waitForModuleReady(targetPage);
+  if (!ready?.hasAssessments) throw new Error("There is no quiz on this page.");
+
+  const before = await unansweredCount(ready.frame);
+  const filled = await fillBlindly(
+    ready.frame,
+    Object.fromEntries(learnedAnswers),
+    Object.fromEntries(rejectedAnswers)
+  );
+  const dropdowns = await fillMatchingQuestions(ready.frame).catch(() => 0);
+  const after = await unansweredCount(ready.frame);
+  return {
+    unansweredBefore: before,
+    unansweredAfter: after,
+    dropdownsFilled: dropdowns,
+    answered: filled.picked.length,
+    picks: filled.picked.map((pick) => ({ question: pick.question.slice(0, 80), chosen: pick.chosen })),
+    unmatched: filled.unmatched,
+    unresolved: filled.unresolved
+  };
 }
 
 // The markup of whatever the player is refusing to accept. A quiz that will not

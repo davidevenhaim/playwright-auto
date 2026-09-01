@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, runExam, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -465,6 +465,17 @@ app.get("/api/screenshot", async (req, res) => {
 app.get("/api/probe", async (req, res) => {
   try {
     res.json(await withSession(sessionOf(req), () => probeUnanswered()));
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+// Fill whatever quiz is on the connected tab the way a blind run would, and
+// report what the player makes of it. This is how a fill that the player will
+// not accept gets diagnosed without waiting for a whole walk to reach it again.
+app.post("/api/fill-blind", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => fillCurrentQuizBlind()));
   } catch (error) {
     res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
   }
