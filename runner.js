@@ -365,7 +365,20 @@ export async function collectNodes(targetPage) {
         // anywhere in the opening of the card rather than only at the start.
         if (/(^|\s)(collection|course|chapter|program|series|path|module)\b/i.test(text.slice(0, 60))) reasons.push("kind-label");
         if (/\d+\s*(?:\/\s*\d+)?\s*(?:completed|required)/i.test(text)) reasons.push("counter");
-        if (/\/home\/(collection|course|chapter|program|curriculum|journey|learningplan|learning-plan|path|plan|series|topic)\//i.test(anchor.href)) {
+        // A listing URL is a "<kind>/<id>" pair anywhere in the path, not only
+        // directly under /home/. The Explore tab files its curricula under
+        // /home/explore/curriculum/<id>, and anchoring this to /home/ meant the
+        // nine curricula that hold most of the site's content were not
+        // recognised as sections at all — a whole-site run would walk the
+        // Academy, find everything in it finished, and stop with the catalogue
+        // untouched.
+        if (/\/(collection|course|chapter|program|curriculum|journey|learningplan|learning-plan|path|plan|series|topic)\/\d+/i.test(anchor.href)) {
+          reasons.push("container-url");
+        }
+        // The "See All" pages carry no id: /home/explore/collections is a
+        // listing in its own right and the only way into everything the rails
+        // on the tab do not show.
+        if (/\/home\/[a-z-]+\/(collections|curriculums|curricula|courses|programs)\/?$/i.test(anchor.href)) {
           reasons.push("container-url");
         }
         return reasons;
@@ -1016,13 +1029,48 @@ function loadAnswerMemory() {
 function saveAnswerMemory() {
   answerMemoryDirty = false;
   try {
+    // Merge with whatever is on disk rather than overwriting it. Another run,
+    // or the capture importer, may have added answers since this process read
+    // the file, and a plain write would throw them away — the memory is only
+    // worth keeping if it never goes backwards.
+    const learned = { ...(readAnswerMemoryFile().learned || {}), ...Object.fromEntries(learnedAnswers) };
+    const rejected = { ...(readAnswerMemoryFile().rejected || {}) };
+    for (const [key, mine] of rejectedAnswers) {
+      const theirs = rejected[key] || { options: [], sets: [], orders: [] };
+      rejected[key] = {
+        options: [...new Set([...(theirs.options || []), ...mine.options])],
+        sets: dedupeLists([...(theirs.sets || []), ...mine.sets]),
+        orders: dedupeLists([...(theirs.orders || []), ...(mine.orders || [])])
+      };
+    }
     fs.writeFileSync(ANSWER_MEMORY_PATH, `${JSON.stringify({
       savedAt: new Date().toISOString(),
-      learned: Object.fromEntries(learnedAnswers),
-      rejected: Object.fromEntries(rejectedAnswers)
+      learned,
+      rejected
     }, null, 2)}\n`);
   } catch (error) {
     console.log(`Could not save the answer memory: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+function dedupeLists(lists) {
+  const seen = new Set();
+  const out = [];
+  for (const list of lists) {
+    if (!Array.isArray(list)) continue;
+    const signature = list.join("\u0000");
+    if (seen.has(signature)) continue;
+    seen.add(signature);
+    out.push(list);
+  }
+  return out;
+}
+
+function readAnswerMemoryFile() {
+  try {
+    return JSON.parse(fs.readFileSync(ANSWER_MEMORY_PATH, "utf8"));
+  } catch {
+    return {};
   }
 }
 
@@ -1046,7 +1094,7 @@ for (const signal of ["exit", "SIGINT", "SIGTERM"]) {
   });
 }
 
-function answerKeyOf(questionText) {
+export function answerKeyOf(questionText) {
   return clean(questionText).normalize("NFKC")
     .replace(/^\d+[\s.)]*/, "")
     .replace(/(?:יש לבחור|select)\s+(?:one|two|three|four|five|\d+).*$/i, "")
@@ -1119,6 +1167,43 @@ export function clearLearnedAnswers() {
 
 // How much the run already knows before it starts, so the log says whether a
 // pass is guessing from nothing or building on what earlier runs settled.
+// Fold answers established outside a run — a capture file that carries the
+// player's own graded responses — into the same memory a run builds. Each entry
+// is { question, type, chose, correct }: what was asked, what was picked, and
+// whether the server scored it.
+export function rememberExternalAnswers(entries = []) {
+  let confirmed = 0;
+  let ruledOut = 0;
+  for (const entry of entries) {
+    const key = answerKeyOf(entry.question || "");
+    if (!key || !entry.chose?.length) continue;
+    if (entry.correct) {
+      if (!learnedAnswers.has(key)) confirmed++;
+      learnedAnswers.set(key, entry.chose);
+      continue;
+    }
+    const rejected = rejectionsFor(key);
+    const combination = [...entry.chose].sort();
+    if (!rejected.sets.some((set) => set.join("\u0000") === combination.join("\u0000"))) {
+      rejected.sets.push(combination);
+      ruledOut++;
+    }
+    if (entry.type === "single") {
+      for (const chosen of entry.chose) {
+        if (!rejected.options.includes(chosen)) rejected.options.push(chosen);
+      }
+    }
+    if (entry.type === "selects") {
+      const order = [...entry.chose];
+      if (!rejected.orders.some((tried) => tried.join("\u0000") === order.join("\u0000"))) {
+        rejected.orders.push(order);
+      }
+    }
+  }
+  saveAnswerMemory();
+  return { confirmed, ruledOut };
+}
+
 export function answerMemoryStats() {
   return { confirmed: learnedAnswers.size, narrowed: rejectedAnswers.size };
 }
