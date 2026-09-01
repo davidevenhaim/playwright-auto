@@ -1640,6 +1640,70 @@ const authored = {
       { type: "single", match: "השבב M5 Max הוא השבב המתקדם ביותר של Apple שנבנה אי פעם", answer: "נכון" }
     ]
   },
+  // Confirmed by Sales Coach grading in the 2026-09-01 learned-answer export.
+  "iphone-17-מבט-ראשון": {
+    name: "iPhone 17 – מבט ראשון",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "single", match: "ל‐iPhone 17 יש צג שפועל תמיד עם ProMotion", answer: "נכון" },
+      { type: "multiple", match: "אילו מהמשפטים על העיצוב של iPhone 17 נכונים", answers: ["הוא מגיע בצבעים שחור, לבן, מרווה, כחול-ערפל ולבנדר.", "יש לו צג גדול יותר בגודל 6.3 אינץ' עם גבולות דקים יותר."] }
+    ]
+  },
+  "iphone-17e-מבט-ראשון": {
+    name: "iPhone 17e – מבט ראשון",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "multiple", match: "מה עליכם לומר ללקוחות על העמידות של iPhone 17e", answers: ["\"המסך עמיד פי שלושה יותר בפני שריטות לעומת iPhone 16e.\"", "\"חזית ה-Ceramic Shield 2 קשיחה יותר מכל זכוכית אחרת בטלפונים חכמים.\""] },
+      { type: "single", match: "לקוחות מקבלים חיי סוללה שמספיקים לכל היום", answer: "נכון" }
+    ]
+  },
+  "iphone-air-מבט-ראשון": {
+    name: "iPhone Air – מבט ראשון",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "single", match: "iPhone Air מופעל באמצעות שבב A19", answer: "לא נכון" },
+      { type: "multiple", match: "מה עליכם לומר ללקוחות על העיצוב של iPhone Air", answers: ["\"זה ה‐iPhone הדק ביותר אי‐פעם, כך שהוא נראה ומרגיש נהדר בידיים שלכם.\"", "\"יש לו Ceramic Shield 2 בחזית ו-Ceramic Shield מאחור, כך שהוא עמיד יותר מכל iPhone קודם.\"", "\"הוא עשוי מטיטניום בדרגה 5, כך שהוא חזק וקל.\""] }
+    ]
+  },
+  "בוחן-התחילו-למכור-מכשירי-iphone": {
+    name: "בוחן – התחילו למכור מכשירי iPhone",
+    section: "התחילו למכור iPhone",
+    questions: [
+      { type: "multiple", match: "אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud", answers: ["לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם", "לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד"] },
+      { type: "multiple", match: "במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17", answers: ["מטען אלחוטי בתקן Qi2", "מטען MagSafe", "מתאם מתח וכבל בחיבור USB-C"] },
+      { type: "single", match: "כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'", answer: "\"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\"" }
+    ]
+  },
+  "מידע-על-המחויבות-של-apple-לכדור-הארץ": {
+    name: "מידע על המחויבות של Apple לכדור הארץ",
+    section: "Apple",
+    questions: [
+      { type: "multiple", match: "לאילו מחויבויות סביבתיות התחייבה Apple", answers: ["להשקיע בפתרונות שמבוססים על הטבע", "שימוש בחומרים ממוחזרים", "הסרת פלסטיק מהאריזה"] }
+    ]
+  },
+  "שתפו-את-הסיבות-האלו-לרכישת-iphone-17e-עוד-היום": {
+    name: "שתפו את הסיבות האלו לרכישת iPhone 17e עוד היום",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "selects", match: "התאימו את המאפיינים הבאים של iPhone 17e לצורך של לקוחות", answers: ["שבב A19", "חזית Ceramic Shield 2", "מצלמת Fusion ברזולוציה של 48MP", "תמיכה ב-MagSafe"] }
+    ]
+  },
+  "iphone-17-pro-מבט-ראשון": {
+    name: "iPhone 17 Pro – מבט ראשון",
+    section: "התכונות הבסיסיות של iPhone",
+    questions: [
+      { type: "single", match: "כמה מצלמות Fusion ברזולוציה של 48MP יש בדגמי iPhone 17 Pro", answer: "שלושה" }
+    ]
+  },
+  "כמה-ידוע-לכם-על-הערכים-של-apple": {
+    name: "כמה ידוע לכם על הערכים של Apple?",
+    section: "הערכים של Apple",
+    questions: [
+      { type: "single", match: "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם", answer: "כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם." },
+      // The attached run explicitly graded "נכון" incorrect.
+      { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות", answer: "לא נכון" }
+    ]
+  },
 };
 
 // Two questions are the same question when one of their stored match texts is a
