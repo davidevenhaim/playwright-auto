@@ -1162,12 +1162,34 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
       const [longer, shorter] = answer.length >= labelText.length ? [answer, labelText] : [labelText, answer];
       return longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
     };
+    // A key is the first 64 characters of the normalised question, and the two
+    // sides of this do not always see the same 64. The graded page appends the
+    // player's feedback to a short question and the fresh attempt does not, and
+    // a question can be renumbered between attempts, so an exact key match
+    // silently loses answers the server confirmed seconds earlier. Fall back to
+    // the longest stored key that is a prefix of this one, or the other way
+    // round, with enough characters that it can only be the same question.
+    const MIN_KEY_OVERLAP = 24;
+    const lookup = (table, text) => {
+      const key = keyOf(text || "");
+      if (!key) return null;
+      if (table[key]) return table[key];
+      let best = null;
+      for (const candidate of Object.keys(table)) {
+        const overlap = Math.min(candidate.length, key.length);
+        if (overlap < MIN_KEY_OVERLAP) continue;
+        if (!candidate.startsWith(key) && !key.startsWith(candidate)) continue;
+        if (!best || overlap > best.overlap) best = { value: table[candidate], overlap };
+      }
+      return best?.value || null;
+    };
+
     const rejectedFor = (question) => {
       const heading = question.querySelector(
         ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
       );
       for (const source of [heading?.innerText, question.innerText]) {
-        const hit = rejectedAnswersByKey[keyOf(source || "")];
+        const hit = lookup(rejectedAnswersByKey, source);
         if (hit) return hit;
       }
       return { options: [], sets: [], orders: [] };
@@ -1178,7 +1200,7 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
         ".questionText, .question_text, .question-title, .question_title, legend, h1, h2, h3, h4"
       );
       for (const source of [heading?.innerText, question.innerText]) {
-        const hit = knownAnswers[keyOf(source || "")];
+        const hit = lookup(knownAnswers, source);
         if (hit?.length) return hit;
       }
       return null;
