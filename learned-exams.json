@@ -217,21 +217,6 @@
       }
     ]
   },
-  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
-    "name": "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
-    "examId": null,
-    "section": "הכירו את Apple",
-    "url": "https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956",
-    "questions": [],
-    "unsolved": [
-      {
-        "match": "התאימו כל משפט של לקוח ליתרון של Apple.",
-        "type": "single",
-        "remaining": [],
-        "ruledOut": 0
-      }
-    ]
-  },
   "הכירו-את-הערכים-של-apple": {
     "name": "הכירו את הערכים של Apple",
     "examId": null,
@@ -550,7 +535,7 @@
         "match": "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.",
         "type": "selects",
         "remaining": [],
-        "ruledOut": 12
+        "ruledOut": 14
       }
     ]
   }

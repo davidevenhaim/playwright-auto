@@ -2382,6 +2382,11 @@ const MODULE_WATCHDOG_MS = 25 * 60 * 1000;
 // that puts the confirmed answers together.
 const MAX_QUIZ_ATTEMPTS_IN_PLACE = 6;
 
+// How many attempts a quiz gets to confirm its first answer before the run
+// leaves it. Three wrong goes at a four-option question rule out three of them,
+// which is enough for elimination to settle it without a fourth.
+const ATTEMPTS_BEFORE_GIVING_UP = 3;
+
 function withTimeout(promise, ms, message) {
   let timer = null;
   return Promise.race([
@@ -2590,6 +2595,9 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     let passed = null;
     let learned = null;
     let attempt = 1;
+    // The most questions any attempt at this quiz has had confirmed. Zero after
+    // several attempts means the quiz is not giving anything up.
+    let bestSolved = 0;
 
     const budget = await readAttemptState(ready.frame);
     if (budget) {
@@ -2628,6 +2636,7 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         matchingFill
       });
       if (fromThisAttempt) {
+        bestSolved = Math.max(bestSolved, fromThisAttempt.questions.filter((question) => question.confirmedAnswers).length);
         // One entry per quiz, not one per attempt: the latest grade knows
         // everything the earlier ones did.
         if (learned) state.learned.splice(state.learned.indexOf(learned), 1);
@@ -2652,6 +2661,17 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       if (passed !== false) break;
       if (attempt >= MAX_QUIZ_ATTEMPTS_IN_PLACE) {
         log(`Stopping after ${attempt} attempt(s) at this quiz; the rest is left to a later pass.`);
+        break;
+      }
+      // A quiz that has confirmed nothing at all after several goes is not
+      // converging, and the attempts after that are worth much less than they
+      // look. A single-answer question has had every wrong option but one ruled
+      // out by now, so elimination will answer it without another attempt; a
+      // matching question has a space far too large to be walked through, and
+      // six goes at it on every pass is time the run could spend on modules it
+      // can actually finish. What has been ruled out is kept either way.
+      if (bestSolved === 0 && attempt >= ATTEMPTS_BEFORE_GIVING_UP) {
+        log(`${attempt} attempt(s) at this quiz have confirmed nothing; leaving it rather than spending the rest here.`);
         break;
       }
       // A run that was told not to spend attempts on guesses does not spend

@@ -5,7 +5,7 @@
 // hand-maintained bank is exams.js, which merges this in: a question confirmed
 // here replaces the stored answer for that question, and a quiz that was not in
 // the bank at all is added whole.
-// 14 exam(s), last written 2026-09-01T06:04:54.360Z.
+// 13 exam(s), last written 2026-09-01T06:08:10.588Z.
 export const learnedExams = {
   // https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368
   //   NOT SOLVED (single): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
@@ -76,15 +76,6 @@ export const learnedExams = {
       { type: "multiple", match: "אילו שלוש שאלות עיקריות צריכות לסייע לשיקולים שלכם בבחירת פת", answers: ["כמה מכשירים ינוהלו?", "האם תנהלו רק מכשירים חדשים או רק מכשירים מדור קודם, או את שני הסוגים?", "מהן היכולות של המכשירים שברצונכם לנהל?"] },
       { type: "single", match: "איזה מהמשפטים הבאים לגבי בחירת פתרון MDM הוא נכון?", answer: "ספקי MDM נבדלים אלה מאלה בהתייחסותם לארכיטקטורה מארחת, לקונסולות ניהול, לתהליכי עבודה ולדיווח." },
       { type: "multiple", match: "אילו שלוש יכולות יש לפתרונות MDM?", answers: ["בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.", "הפצת יישומים וספרים למכשירים או למשתמשים.", "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."] },
-    ]
-  },
-  // https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956
-  //   NOT SOLVED (single): התאימו כל משפט של לקוח ליתרון של Apple.
-  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
-    name: "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
-    section: "הכירו את Apple",
-    questions: [
-
     ]
   },
   // https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872
@@ -192,7 +183,7 @@ export const learnedExams = {
   },
   // https://salescoach.apple.com/home/content/view/532276?backTo=%2Fhome%2Fcollection%2F292368
   //   NOT SOLVED (selects): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
-  //     12 attempt(s) already ruled out.
+  //     14 attempt(s) already ruled out.
   "שיתוף-המאפיינים-החדשים-לבטיחות-ילדים": {
     name: "שיתוף המאפיינים החדשים לבטיחות ילדים",
     section: "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
