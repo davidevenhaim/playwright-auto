@@ -913,7 +913,12 @@ async function unansweredCount(frame) {
 // controls did not exist yet — and one unfilled question makes the player
 // refuse the whole submission, taking every other answer on the quiz with it.
 // Fill again while the number the player is unhappy about is still falling.
+// What the most recent top-up left in the matching questions, so the grade that
+// follows it can be told what it will not report itself.
+let lastMatchingFill = null;
+
 async function fillUntilAnswered(targetPage, frame, { rounds = 3 } = {}) {
+  lastMatchingFill = null;
   let previous = await unansweredCount(frame);
   for (let round = 1; round <= rounds && previous > 0; round++) {
     log(`The player still counts ${previous} question(s) as unanswered; filling again (round ${round} of ${rounds}).`);
@@ -924,7 +929,8 @@ async function fillUntilAnswered(targetPage, frame, { rounds = 3 } = {}) {
       Object.fromEntries(rejectedAnswers)
     );
     reportUnmatchedLearned(filled);
-    await fillMatchingQuestions(frame).catch(() => {});
+    const topped = await fillMatchingQuestions(frame).catch(() => null);
+    if (topped?.byQuestion?.size) lastMatchingFill = topped.byQuestion;
     const now = await unansweredCount(frame);
     if (now === null || now >= previous) {
       previous = now;
@@ -1667,9 +1673,25 @@ function reportUnmatchedLearned(filled) {
 // A question the server marked correct is a confirmed answer: whatever was
 // selected in it is right. That is the whole point of a blind run — one attempt
 // converts guesses into a key that exams.js can keep.
-function learnFromGrading(graded, { exam, module, chapter, url, percentage, threshold }) {
+function learnFromGrading(graded, { exam, module, chapter, url, percentage, threshold, matchingFill = null }) {
   const questions = (graded.gradedQuestions || []).filter((question) => question.state !== "ungraded");
   if (!questions.length) return null;
+
+  // A matching question is rebuilt without its dropdowns once it has been
+  // graded, so the grade reports nothing about what was in it. Put back what
+  // the fill left there, or the assignment the server just refused is never
+  // written down and the next attempt sends it again.
+  if (matchingFill?.size) {
+    const byKey = new Map();
+    for (const [text, chosen] of matchingFill) byKey.set(answerKeyOf(text), chosen);
+    for (const question of questions) {
+      if (question.selectedAnswers?.length) continue;
+      const chosen = byKey.get(answerKeyOf(question.question));
+      if (!chosen?.length) continue;
+      question.selectedAnswers = chosen;
+      question.type = "selects";
+    }
+  }
 
   return {
     exam,
@@ -2173,6 +2195,10 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
 
     let run = { success: 0, failed: 0, total: 0, unverified: [] };
     let answeredBlind = false;
+    // What the fill last left in this quiz's matching questions. The grade does
+    // not report it — the player rebuilds those questions without their
+    // dropdowns — so it is carried here and handed to the grading.
+    let matchingFill = null;
 
     if (detected?.matchedQuestions) {
       quizName = detected.name;
@@ -2242,8 +2268,9 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       const picks = filled.picked;
       // Matching questions are answered through the browser rather than in the
       // page, so they are filled here rather than by the blind pass above.
-      const dropdowns = await fillMatchingQuestions(ready.frame).catch(() => 0);
-      if (!picks.length && !dropdowns) throw new Error("Nothing on this quiz could be answered blind.");
+      const dropdowns = await fillMatchingQuestions(ready.frame).catch(() => ({ applied: 0, byQuestion: new Map() }));
+      matchingFill = dropdowns.byQuestion;
+      if (!picks.length && !dropdowns.applied) throw new Error("Nothing on this quiz could be answered blind.");
       const settled = picks.filter((pick) => pick.fromLearned).length;
       log(`Answered ${picks.length} question(s) blind` +
         (settled ? `, ${settled} of them from answers this run already confirmed.` : "."));
@@ -2296,6 +2323,7 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     while (true) {
       await waitRandom(itemPage, 3, 8, `Before submitting the quiz${attempt > 1 ? ` (attempt ${attempt})` : ""}`);
       await fillUntilAnswered(itemPage, ready.frame).catch(() => {});
+      if (lastMatchingFill?.size) matchingFill = lastMatchingFill;
       graded = await submitAssessment(itemPage, ready.frame);
       state.examsSubmitted++;
       // Sales Coach quizzes pass on a threshold (completionScore, 80 on the
@@ -2316,7 +2344,8 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         chapter: item.chapter || null,
         url: item.url,
         percentage,
-        threshold
+        threshold,
+        matchingFill
       });
       if (fromThisAttempt) {
         // One entry per quiz, not one per attempt: the latest grade knows
@@ -2389,7 +2418,8 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       // player counts it as answered and the top-up before the next submission
       // never looks at it — the same rejected assignment would go back a second
       // time. Re-plan it here, where the last grade's rejections are known.
-      await fillMatchingQuestions(ready.frame).catch(() => {});
+      const replanned = await fillMatchingQuestions(ready.frame).catch(() => null);
+      if (replanned?.byQuestion?.size) matchingFill = replanned.byQuestion;
       answeredBlind = true;
       attempt++;
       const settled = picks.filter((pick) => pick.fromLearned).length;
@@ -3796,6 +3826,7 @@ async function planSelectAnswers(frame, known = {}, rejected = {}) {
           select: everySelect.indexOf(select),
           value: option.value,
           text: option.text,
+          question: tidy(heading?.innerText || question.innerText).slice(0, 1000),
           fromLearned: Boolean(settled?.length)
         });
       });
@@ -3830,14 +3861,25 @@ async function fillMatchingQuestions(frame) {
     Object.fromEntries(learnedAnswers),
     Object.fromEntries(rejectedAnswers)
   ).catch(() => []);
-  if (!plan.length) return 0;
+  if (!plan.length) return { applied: 0, byQuestion: new Map() };
   const applied = await applySelectPlan(frame, plan);
   if (applied) {
     const settled = plan.filter((step) => step.fromLearned).length;
     log(`Filled ${applied} dropdown(s) across the matching question(s)` +
       (settled ? `, ${settled} of them from confirmed answers.` : "."));
   }
-  return applied;
+  // What was left in each matching question, in dropdown order. The grade will
+  // not say: the player rebuilds the question without its dropdowns once it has
+  // been marked, so `chose` comes back empty and neither the assignment nor the
+  // fact that it was refused would ever be recorded. Remembering it here is what
+  // lets the next attempt pick a different one.
+  const byQuestion = new Map();
+  for (const step of plan) {
+    if (!step.question) continue;
+    if (!byQuestion.has(step.question)) byQuestion.set(step.question, []);
+    byQuestion.get(step.question).push(step.text);
+  }
+  return { applied, byQuestion };
 }
 
 // Run one blind fill against the quiz on the connected tab and report what the
@@ -3855,12 +3897,12 @@ export async function fillCurrentQuizBlind() {
     Object.fromEntries(learnedAnswers),
     Object.fromEntries(rejectedAnswers)
   );
-  const dropdowns = await fillMatchingQuestions(ready.frame).catch(() => 0);
+  const dropdowns = await fillMatchingQuestions(ready.frame).catch(() => ({ applied: 0 }));
   const after = await unansweredCount(ready.frame);
   return {
     unansweredBefore: before,
     unansweredAfter: after,
-    dropdownsFilled: dropdowns,
+    dropdownsFilled: dropdowns.applied,
     answered: filled.picked.length,
     picks: filled.picked.map((pick) => ({ question: pick.question.slice(0, 80), chosen: pick.chosen })),
     unmatched: filled.unmatched,
