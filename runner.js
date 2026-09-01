@@ -1204,6 +1204,25 @@ function rememberLearned(learned) {
           if (!rejected.options.includes(chosen)) rejected.options.push(chosen);
         }
       }
+
+      // The server has just rejected this, so anything held as a confirmed
+      // answer for the same question that it rejected is not a confirmed answer
+      // — two questions can normalise to the same key, and a key that holds a
+      // wrong answer is worse than one that holds none: it is applied with
+      // confidence on every attempt and the quiz can never pass. The newest
+      // grade wins.
+      const held = learnedAnswers.get(key);
+      if (held) {
+        const rejectedSet = combination.join("\u0000");
+        const heldSet = [...held].sort().join("\u0000");
+        const heldRejectedOutright = heldSet === rejectedSet;
+        const heldOptionRejected = question.type === "single" &&
+          held.some((answer) => question.chose.some((wrong) => sameAnswerText(wrong, answer)));
+        if (heldRejectedOutright || heldOptionRejected) {
+          learnedAnswers.delete(key);
+          log(`The server rejected an answer this run had recorded as confirmed for "${clean(question.question).slice(0, 45)}"; dropping it rather than sending it again.`);
+        }
+      }
     }
 
     if (!question.confirmedAnswers?.length) continue;

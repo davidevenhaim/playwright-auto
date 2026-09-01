@@ -39,7 +39,7 @@
         "match": "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.",
         "type": "single",
         "remaining": [],
-        "ruledOut": 12
+        "ruledOut": 14
       }
     ]
   },
@@ -214,6 +214,21 @@
           "הפצת יישומים וספרים למכשירים או למשתמשים.",
           "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."
         ]
+      }
+    ]
+  },
+  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
+    "name": "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+    "examId": null,
+    "section": "הכירו את Apple",
+    "url": "https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956",
+    "questions": [],
+    "unsolved": [
+      {
+        "match": "התאימו כל משפט של לקוח ליתרון של Apple.",
+        "type": "single",
+        "remaining": [],
+        "ruledOut": 0
       }
     ]
   },
@@ -425,7 +440,7 @@
         "match": "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'",
         "type": "selects",
         "remaining": [],
-        "ruledOut": 7
+        "ruledOut": 10
       },
       {
         "match": "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל",
@@ -529,13 +544,17 @@
     "examId": null,
     "section": "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
     "url": "https://salescoach.apple.com/home/content/view/532276?backTo=%2Fhome%2Fcollection%2F292368",
-    "questions": [],
-    "unsolved": [
+    "questions": [
       {
-        "match": "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.",
         "type": "selects",
-        "remaining": [],
-        "ruledOut": 14
+        "match": "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.",
+        "answers": [
+          "בקשת אישור לרכישה",
+          "Ask to Browse",
+          "בטיחות בתקשורת",
+          "הקצבות זמן",
+          "זמן מסך"
+        ]
       }
     ]
   }

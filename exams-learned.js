@@ -5,11 +5,11 @@
 // hand-maintained bank is exams.js, which merges this in: a question confirmed
 // here replaces the stored answer for that question, and a quiz that was not in
 // the bank at all is added whole.
-// 13 exam(s), last written 2026-09-01T06:08:10.588Z.
+// 14 exam(s), last written 2026-09-01T06:15:54.879Z.
 export const learnedExams = {
   // https://salescoach.apple.com/home/content/view/532342?backTo=%2Fhome%2Fcollection%2F292368
   //   NOT SOLVED (single): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
-  //     12 attempt(s) already ruled out.
+  //     14 attempt(s) already ruled out.
   "apple-intelligence": {
     name: "Apple Intelligence",
     section: "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
@@ -78,6 +78,15 @@ export const learnedExams = {
       { type: "multiple", match: "אילו שלוש יכולות יש לפתרונות MDM?", answers: ["בדיקת מכשירים לגבי תאימות וסטטוס מול מדיניות.", "הפצת יישומים וספרים למכשירים או למשתמשים.", "קביעה ועדכון של ההגדרות וההגבלות של המכשיר."] },
     ]
   },
+  // https://salescoach.apple.com/home/content/view/406756?backTo=%2Fhome%2Fcollection%2F124956
+  //   NOT SOLVED (single): התאימו כל משפט של לקוח ליתרון של Apple.
+  "גלו-את-החדשנות-של-apple-ביצירת-מוצרים-נהדרים": {
+    name: "גלו את החדשנות של Apple ביצירת מוצרים נהדרים",
+    section: "הכירו את Apple",
+    questions: [
+
+    ]
+  },
   // https://salescoach.apple.com/home/content/view/291863?backTo=%2Fhome%2Fcollection%2F188872
   "הכירו-את-הערכים-של-apple": {
     name: "הכירו את הערכים של Apple",
@@ -139,7 +148,7 @@ export const learnedExams = {
   //     still in play: הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. | סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. | התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. | הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.
   //     4 attempt(s) already ruled out.
   //   NOT SOLVED (selects): השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'
-  //     7 attempt(s) already ruled out.
+  //     10 attempt(s) already ruled out.
   //   NOT SOLVED (multiple): אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש ל
   //     still in play: Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. | היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם. | המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.
   //     3 attempt(s) already ruled out.
@@ -182,13 +191,11 @@ export const learnedExams = {
     ]
   },
   // https://salescoach.apple.com/home/content/view/532276?backTo=%2Fhome%2Fcollection%2F292368
-  //   NOT SOLVED (selects): התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.
-  //     14 attempt(s) already ruled out.
   "שיתוף-המאפיינים-החדשים-לבטיחות-ילדים": {
     name: "שיתוף המאפיינים החדשים לבטיחות ילדים",
     section: "תצוגות מקדימות של מערכות ההפעלה בכנס WWDC26",
     questions: [
-
+      { type: "selects", match: "התאימו כל מאפיין של בטיחות ילדים לתיאור שלו.", answers: ["בקשת אישור לרכישה", "Ask to Browse", "בטיחות בתקשורת", "הקצבות זמן", "זמן מסך"] },
     ]
   },
 };
