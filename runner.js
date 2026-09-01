@@ -939,7 +939,13 @@ async function quizIsAnswerable(frame) {
   return frame.evaluate(() => {
     const button = document.querySelector(".submitAssessmentButton");
     if (!button || button.classList.contains("disabled")) return false;
-    const inputs = Array.from(document.querySelectorAll('.question input[type="radio"], .question input[type="checkbox"]'));
+    // A matching question is built from dropdowns and holds no radio or
+    // checkbox at all. Looking only for those meant a quiz made entirely of
+    // matching questions always read as "not answerable", so the run took the
+    // retry the player was offering and then threw it away — one attempt, ever.
+    const inputs = Array.from(document.querySelectorAll(
+      '.question input[type="radio"], .question input[type="checkbox"], .question select'
+    ));
     if (!inputs.length) return false;
     return inputs.some((input) => !input.disabled);
   }).catch(() => false);
@@ -2379,6 +2385,11 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         log("Nothing could be filled in for another attempt.");
         break;
       }
+      // A matching question keeps the values the last attempt left in it, so the
+      // player counts it as answered and the top-up before the next submission
+      // never looks at it — the same rejected assignment would go back a second
+      // time. Re-plan it here, where the last grade's rejections are known.
+      await fillMatchingQuestions(ready.frame).catch(() => {});
       answeredBlind = true;
       attempt++;
       const settled = picks.filter((pick) => pick.fromLearned).length;
