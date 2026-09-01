@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 import { AsyncLocalStorage } from "node:async_hooks";
 import fs from "node:fs";
+import { execFileSync } from "node:child_process";
 import { exams } from "./exams.js";
 
 // Every run belongs to a session, and a session is a whole browser of its own:
@@ -1258,11 +1259,185 @@ export function rememberExternalAnswers(entries = []) {
   return { confirmed, ruledOut };
 }
 
+// The other half of what a run learns. The answer memory is keyed by question
+// and drives the blind fill; this keeps whole exams in the shape exams.js uses,
+// so the next run identifies the quiz and fills it outright instead of guessing
+// its way back to the same answers.
+const LEARNED_EXAMS_JSON = new URL("./learned-exams.json", import.meta.url);
+const LEARNED_EXAMS_JS = new URL("./exams-learned.js", import.meta.url);
+const learnedExamBank = new Map();
+
+function loadLearnedExamBank() {
+  try {
+    const saved = JSON.parse(fs.readFileSync(LEARNED_EXAMS_JSON, "utf8"));
+    for (const [id, exam] of Object.entries(saved)) {
+      if (exam?.questions?.length) learnedExamBank.set(id, exam);
+    }
+    if (learnedExamBank.size) {
+      console.log(`Learned exam bank: ${learnedExamBank.size} exam(s) written by earlier runs.`);
+    }
+  } catch {
+    // Nothing learned yet.
+  }
+}
+
+function examIdFrom(title) {
+  return clean(title || "").toLowerCase()
+    .replace(/\s*\|.*$/, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") || "learned-exam";
+}
+
+// The opening of the question, which is what exams.js matches on. The leading
+// number is dropped: the player renumbers questions between attempts, and a
+// match that carries one would stop matching.
+// The player reveals a graded option as the option itself followed by its own
+// verdict and an explanation — "רישום מכשירים אוטומטי נכון. המאפיין…". Only the
+// first part is the answer. The cut is only made when it leaves something
+// substantial, and matching is tolerant of a stored answer that is longer or
+// shorter than the option anyway, so a cut in the wrong place costs nothing.
+const FEEDBACK_MARKER = /\s+(?:תשובה נכונה|תשובה שגויה|נכון מאוד|לא נכון|נכון|That's right|Correct|Incorrect)\s*[.!]/;
+
+function withoutFeedback(answer) {
+  const text = clean(answer);
+  const found = text.match(FEEDBACK_MARKER);
+  if (!found || found.index === undefined) return text;
+  const head = text.slice(0, found.index).trim();
+  return head.length >= 2 ? head : text;
+}
+
+function matchTextFor(question) {
+  return clean(question).replace(/^\d+[\s.)]*/, "").slice(0, 60).trim();
+}
+
+// Fold one graded quiz into the bank. Only questions the server marked correct
+// are kept — a guess that has not been confirmed has no business in an answer
+// bank — and a question already there is overwritten, because the newest
+// confirmation is the one the site just agreed with.
+function rememberLearnedExam(learned, examId = null) {
+  const confirmed = (learned.questions || []).filter((question) => question.confirmedAnswers?.length);
+  if (!confirmed.length) return false;
+
+  const id = examId || examIdFrom(learned.exam || learned.module);
+  const existing = learnedExamBank.get(id) || {
+    name: clean(learned.exam || learned.module || id).replace(/\s*\|.*$/, ""),
+    examId,
+    section: learned.chapter || undefined,
+    url: learned.url || undefined,
+    questions: []
+  };
+  if (examId && !existing.examId) existing.examId = examId;
+
+  let changed = false;
+  for (const question of confirmed) {
+    const match = matchTextFor(question.question);
+    if (!match) continue;
+    const answers = question.confirmedAnswers.map(withoutFeedback).filter(Boolean);
+    if (!answers.length) continue;
+    const entry = question.type === "single"
+      ? { type: "single", match, answer: answers[0] }
+      : { type: question.type === "selects" ? "selects" : "multiple", match, answers };
+
+    const at = existing.questions.findIndex((candidate) => candidate.match === match);
+    const before = at >= 0 ? JSON.stringify(existing.questions[at]) : null;
+    if (at >= 0) existing.questions[at] = entry;
+    else existing.questions.push(entry);
+    if (before !== JSON.stringify(entry)) changed = true;
+  }
+
+  if (!changed) return false;
+  learnedExamBank.set(id, existing);
+  saveLearnedExamBank();
+  return true;
+}
+
+function saveLearnedExamBank() {
+  const bank = Object.fromEntries([...learnedExamBank.entries()].sort(([a], [b]) => a.localeCompare(b)));
+  try {
+    fs.writeFileSync(LEARNED_EXAMS_JSON, `${JSON.stringify(bank, null, 2)}\n`);
+  } catch (error) {
+    log(`Could not save the learned exam bank: ${error instanceof Error ? error.message : String(error)}`);
+    return;
+  }
+  writeLearnedExamsModule(bank);
+}
+
+function quote(value) {
+  return JSON.stringify(String(value ?? ""));
+}
+
+// exams.js imports this, so a broken write would stop the whole runner from
+// starting. It is built to one side, parsed, and only then moved into place.
+function writeLearnedExamsModule(bank) {
+  const entries = Object.entries(bank).map(([id, exam]) => {
+    const lines = exam.questions.map((question) => (question.type === "single"
+      ? `      { type: "single", match: ${quote(question.match)}, answer: ${quote(question.answer)} },`
+      : `      { type: ${quote(question.type)}, match: ${quote(question.match)}, answers: [${question.answers.map(quote).join(", ")}] },`));
+    return [
+      exam.url ? `  // ${exam.url}` : null,
+      `  ${quote(id)}: {`,
+      `    name: ${quote(exam.name)},`,
+      exam.examId ? `    examId: ${quote(exam.examId)},` : null,
+      exam.section ? `    section: ${quote(exam.section)},` : null,
+      "    questions: [",
+      lines.join("\n"),
+      "    ]",
+      "  },"
+    ].filter((line) => line !== null).join("\n");
+  });
+
+  const body = [
+    "// Answers the site's own grading confirmed during a run.",
+    "//",
+    "// GENERATED — the runner rewrites this file whenever a quiz is graded, so do",
+    "// not edit it by hand; anything typed in here is lost on the next run. The",
+    "// hand-maintained bank is exams.js, which merges this in: a question confirmed",
+    "// here replaces the stored answer for that question, and a quiz that was not in",
+    "// the bank at all is added whole.",
+    `// ${Object.keys(bank).length} exam(s), last written ${new Date().toISOString()}.`,
+    "export const learnedExams = {",
+    entries.join("\n"),
+    "};",
+    ""
+  ].join("\n");
+
+  // .mjs, not .tmp: `node --check` works out how to parse a file from its
+  // extension and refuses one it does not recognise.
+  const draft = `${LEARNED_EXAMS_JS.pathname}.draft.mjs`;
+  try {
+    fs.writeFileSync(draft, body);
+    execFileSync(process.execPath, ["--check", draft], { stdio: "pipe" });
+    fs.renameSync(draft, LEARNED_EXAMS_JS.pathname);
+  } catch (error) {
+    log(`Could not write exams-learned.js, leaving the previous one in place: ${error instanceof Error ? error.message : String(error)}`);
+    try {
+      fs.unlinkSync(draft);
+    } catch {
+      // Nothing to clean up.
+    }
+  }
+}
+
+// The same fold, for a graded record read back out of a run's report rather
+// than seen live. Reports do not say which exams.js entry the quiz was
+// identified as, so the merge in exams.js falls back to matching on the
+// questions themselves.
+export function rememberLearnedExamFromReport(learned) {
+  return rememberLearnedExam(learned, null);
+}
+
+export function learnedExamStats() {
+  let questions = 0;
+  for (const exam of learnedExamBank.values()) questions += exam.questions.length;
+  return { exams: learnedExamBank.size, questions };
+}
+
 export function answerMemoryStats() {
   return { confirmed: learnedAnswers.size, narrowed: rejectedAnswers.size };
 }
 
 loadAnswerMemory();
+loadLearnedExamBank();
 
 async function fillBlindly(frame, known = {}, rejected = {}) {
   return frame.evaluate(([knownAnswers, rejectedAnswersByKey]) => {
@@ -2375,6 +2550,15 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
         state.answersLearned = (state.answersLearned || 0) + fresh;
         log(`Learned ${solved} of ${learned.questions.length} answer(s) for "${learned.exam}"` +
           (fresh ? `, ${fresh} of them new to this run.` : "."));
+        // Written to the answer bank as the run goes rather than at the end, so
+        // a run that is stopped half way still leaves the next one better off.
+        // A quiz that was identified is filed under the entry it was identified
+        // as, which is what lets a confirmed answer correct a stored one that
+        // the server has just rejected rather than sit beside it.
+        if (rememberLearnedExam(learned, detected?.id || null)) {
+          const bank = learnedExamStats();
+          log(`Answer bank updated: ${bank.questions} confirmed answer(s) across ${bank.exams} exam(s) are now in exams-learned.js.`);
+        }
       }
 
       if (passed !== false) break;
@@ -4413,10 +4597,24 @@ async function applyAnswers(block, answers, { exclusive = false, delayMs = 200 }
 
   const matched = new Set();
   const exact = (row, answer) => row.text === answer || (row.value && row.value === answer);
+  // A stored answer and the option on the page are the same answer when one is
+  // a whole-word prefix of the other. An answer learned from a grade carries the
+  // player's feedback stuck on the end of the option it revealed, and a
+  // hand-written one is often only the opening of a long option; neither is an
+  // exact match, and refusing both used to fail the whole quiz over an answer
+  // that was in fact right. The boundary check is what keeps "iPhone 15" from
+  // swallowing "iPhone 15 Pro".
+  const prefix = (row, answer) => {
+    const text = row.text || "";
+    if (!text || !answer || text.length < 2) return false;
+    const [longer, shorter] = answer.length >= text.length ? [answer, text] : [text, answer];
+    return longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
+  };
+  const unclaimed = (answer) => !rows.some((candidate) => exact(candidate, answer));
   const plan = rows.map((row) => {
     const hit = wanted.find((answer) => exact(row, answer)) ||
-      wanted.find((answer) => !rows.some((candidate) => exact(candidate, answer)) &&
-        row.text && row.text.includes(answer));
+      wanted.find((answer) => unclaimed(answer) && row.text && row.text.includes(answer)) ||
+      wanted.find((answer) => unclaimed(answer) && prefix(row, answer));
     if (hit) matched.add(hit);
     return { row, shouldSelect: Boolean(hit) };
   });

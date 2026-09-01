@@ -1,4 +1,10 @@
-export const exams = {
+import { learnedExams } from "./exams-learned.js";
+
+// The hand-maintained answer bank. Everything below is written by a person; the
+// answers a run's grading confirms are kept separately, in exams-learned.js,
+// and merged in at the bottom of this file. Keeping them apart means a run can
+// record what it learned without ever rewriting the entries below it.
+const authored = {
   "apple-at-work-basics": {
     name: "Apple at Work Basics",
     questions: [
@@ -1635,3 +1641,53 @@ export const exams = {
     ]
   },
 };
+
+// Two questions are the same question when one of their stored match texts is a
+// prefix of the other: a match is only the opening of the question, and the
+// runner records a slightly different length from the one a person typed.
+function sameQuestion(one, other) {
+  const tidy = (value = "") => String(value).normalize("NFKC")
+    .replace(/[^\p{L}\p{N}]+/gu, " ").trim().toLocaleLowerCase();
+  const a = tidy(one);
+  const b = tidy(other);
+  if (!a || !b) return false;
+  const overlap = Math.min(a.length, b.length);
+  return overlap >= 20 && (a.startsWith(b) || b.startsWith(a));
+}
+
+// An exam the run learned about belongs to the entry it was identified as, when
+// it was identified at all; otherwise to whichever authored entry it shares a
+// question with. Only if it matches nothing is it a new exam.
+function hostFor(authoredExams, learned, id) {
+  if (learned.examId && authoredExams[learned.examId]) return learned.examId;
+  if (authoredExams[id]) return id;
+  for (const [candidateId, exam] of Object.entries(authoredExams)) {
+    const shared = exam.questions.some((question) =>
+      learned.questions.some((mine) => sameQuestion(question.match, mine.match)));
+    if (shared) return candidateId;
+  }
+  return null;
+}
+
+// A confirmed answer replaces the stored one for that question — that is the
+// whole point, since a stored answer the server has rejected is worse than none
+// — and a question nobody had written down yet is appended.
+export const exams = (() => {
+  const merged = { ...authored };
+  for (const [id, learned] of Object.entries(learnedExams)) {
+    if (!learned?.questions?.length) continue;
+    const host = hostFor(authored, learned, id);
+    if (!host) {
+      merged[id] = { name: learned.name || id, section: learned.section, questions: learned.questions };
+      continue;
+    }
+    const questions = [...merged[host].questions];
+    for (const question of learned.questions) {
+      const at = questions.findIndex((candidate) => sameQuestion(candidate.match, question.match));
+      if (at >= 0) questions[at] = question;
+      else questions.push(question);
+    }
+    merged[host] = { ...merged[host], questions };
+  }
+  return merged;
+})();
