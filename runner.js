@@ -2952,11 +2952,30 @@ async function startVisibleVideoControls(targetPage) {
 
 // A video that never reports a duration is given a flat cap rather than the
 // rest of the day, and any video whose playhead stops moving for this long is
-// abandoned: playback is not what records completion, so nothing is lost by
-// walking away from one that has stalled.
+// abandoned.
 const VIDEO_UNKNOWN_DURATION_MAX_MS = 15 * 60 * 1000;
 const VIDEO_STALL_MS = 90000;
-const VIDEO_PLAYBACK_RATE = 16;
+
+// How fast a video is played through.
+//
+// This was 16x, on the reasoning that playback is not what records completion.
+// That is true of a SEED package, which completes on scroll, and false of the
+// video modules the site plays itself: those report progress as they play, and
+// a run that tears through a ten-minute clip in forty seconds gives the site a
+// handful of progress calls where it wanted a couple of hundred, so the module
+// is watched and still not marked complete. A modest speed-up keeps that
+// reporting plausible and still halves the walk. Set VIDEO_PLAYBACK_RATE=1 for
+// real time, or raise it again for a run whose modules are all packages.
+const VIDEO_PLAYBACK_RATE = (() => {
+  const asked = Number(process.env.VIDEO_PLAYBACK_RATE);
+  if (!Number.isFinite(asked) || asked <= 0) return 2;
+  return Math.min(16, Math.max(1, asked));
+})();
+
+// The site posts its progress from the page, and the last of those calls goes
+// out after the media element has already ended. Closing the tab on the ended
+// event is what loses it.
+const VIDEO_SETTLE_MS = 4000;
 
 async function playAllVideos(targetPage) {
   const initialVideoCount = (await Promise.all(targetPage.frames().map((frame) =>
@@ -2964,6 +2983,7 @@ async function playAllVideos(targetPage) {
   ))).reduce((total, count) => total + count, 0);
   if (!initialVideoCount) await startVisibleVideoControls(targetPage);
   let played = 0;
+  let finished = 0;
 
   for (const frame of targetPage.frames()) {
     const videos = frame.locator("video");
@@ -2972,13 +2992,13 @@ async function playAllVideos(targetPage) {
     for (let index = 0; index < count; index++) {
       const video = videos.nth(index);
       await video.scrollIntoViewIfNeeded().catch(() => {});
-      const initial = await video.evaluate(async (element) => {
+      const initial = await video.evaluate(async (element, rate) => {
         if (element.ended) element.currentTime = 0;
-        // Keep the media lifecycle genuine (including its `ended` event), but
-        // do not make a whole-site automation sit through every clip in real
-        // time. Chromium supports 16x playback and the loop below reapplies it
-        // if a package resets the rate while playing.
-        element.playbackRate = 16;
+        // Keep the media lifecycle genuine (including its `ended` event) and
+        // its progress reporting believable, but do not make a whole-site
+        // automation sit through every clip in real time. The loop below
+        // reapplies the rate if a package resets it while playing.
+        element.playbackRate = rate;
         try {
           await element.play();
         } catch {
@@ -2986,7 +3006,7 @@ async function playAllVideos(targetPage) {
           await element.play();
         }
         return { duration: element.duration, currentTime: element.currentTime };
-      }).catch(() => null);
+      }, VIDEO_PLAYBACK_RATE).catch(() => null);
       if (!initial) {
         log(`Video ${index + 1} could not be started; continuing without it.`);
         continue;
@@ -2994,7 +3014,7 @@ async function playAllVideos(targetPage) {
 
       played++;
       const durationText = Number.isFinite(initial.duration) ? `${Math.ceil(initial.duration)} seconds` : "unknown duration";
-      log(`Playing video ${played} (${durationText}) and waiting for it to end.`);
+      log(`Playing video ${played} (${durationText}) at ${VIDEO_PLAYBACK_RATE}x and waiting for it to end.`);
       const maximumWait = Number.isFinite(initial.duration)
         ? Math.max(30000, ((initial.duration - initial.currentTime) / VIDEO_PLAYBACK_RATE + 30) * 1000)
         : VIDEO_UNKNOWN_DURATION_MAX_MS;
@@ -3008,11 +3028,11 @@ async function playAllVideos(targetPage) {
       let movedAt = Date.now();
 
       while (Date.now() < deadline) {
-        const state = await video.evaluate(async (element) => {
-          if (element.playbackRate !== 16) element.playbackRate = 16;
+        const state = await video.evaluate(async (element, rate) => {
+          if (element.playbackRate !== rate) element.playbackRate = rate;
           if (element.paused && !element.ended) await element.play().catch(() => {});
           return { ended: element.ended, currentTime: element.currentTime, duration: element.duration };
-        }).catch(() => null);
+        }, VIDEO_PLAYBACK_RATE).catch(() => null);
         if (!state) break;
         if (state.ended || (Number.isFinite(state.duration) && state.currentTime >= state.duration - 0.25)) break;
         if (state.currentTime > furthest + 0.25) {
@@ -3027,14 +3047,24 @@ async function playAllVideos(targetPage) {
 
       const ended = await video.evaluate((element) => element.ended ||
         (Number.isFinite(element.duration) && element.currentTime >= element.duration - 0.25)).catch(() => false);
-      // Videos are not what registers completion, so a video that stalls or is
-      // torn down by the page must not take the whole module down with it.
-      log(ended ? `Video ${played} finished.` : `Video ${played} did not finish; continuing anyway.`);
+      // A video that stalls or is torn down by the page must not take the whole
+      // module down with it — but on a module that is nothing but the video, it
+      // is the difference between complete and not, so it is reported rather
+      // than swallowed.
+      if (ended) {
+        finished++;
+        // The progress call for the end of the video is made after the element
+        // has ended; leaving immediately is what loses it.
+        await targetPage.waitForTimeout(VIDEO_SETTLE_MS);
+        log(`Video ${played} finished.`);
+      } else {
+        log(`Video ${played} did not finish; continuing anyway.`);
+      }
     }
   }
 
   if (!played) log("No videos found on this reading page.");
-  return played;
+  return { played, finished, allFinished: played > 0 && finished === played };
 }
 
 // One run's tally, shared by the flat chapter runner and the Academy walk so
@@ -3256,11 +3286,13 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
   // questions, and waiting out every video to its end would add the whole
   // Academy's running time for nothing.
   await openAllAccordions(itemPage).catch(() => {});
+  let videos = null;
   if (state.mode === "capture") {
     log("Capture mode: not playing this module's videos.");
   } else {
-    await playAllVideos(itemPage).catch((error) => {
+    videos = await playAllVideos(itemPage).catch((error) => {
       log(`Video playback skipped: ${error instanceof Error ? error.message : String(error)}`);
+      return null;
     });
   }
 
@@ -3703,6 +3735,16 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     let finished;
     if (deck) {
       finished = deck.finished;
+    } else if (ready.native) {
+      // A module the site plays itself is the video and nothing else: there is
+      // no package to scroll and no deck to press through, so whether it counts
+      // as done is whether the video actually reached its end. Scrolling one of
+      // these to "100%" and calling it read is what reported a module complete
+      // that the site had not marked at all.
+      finished = Boolean(videos?.allFinished);
+      log(finished
+        ? "Video module played to the end."
+        : "Video module did not play to the end; the site will not have marked it complete.");
     } else {
       log("Module is reading material; scrolling it to the player's completion threshold.");
       finished = await completeReadingResource(itemPage, ready.frame);
@@ -3721,13 +3763,17 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       markRetryable(state, item);
       log(deck
         ? `This deck stopped at ${deck.percent}%; a later pass will try it again.`
-        : "This reading module did not reach the completion threshold; a later pass will try it again.");
+        : ready.native
+          ? "This video did not play through; a later pass will try it again."
+          : "This reading module did not reach the completion threshold; a later pass will try it again.");
     }
   }
 
   // Completion is reported to the server from the page; give that call time to
-  // leave before the tab goes away.
-  await itemPage.waitForTimeout(1500);
+  // leave before the tab goes away. A module that played video needs longer:
+  // the site batches its progress calls, and closing the tab on the last one is
+  // what leaves a watched video unmarked.
+  await itemPage.waitForTimeout(videos?.played ? 6000 : 1500);
   await itemPage.close();
   itemPage = null;
   held.page = null;
@@ -5593,7 +5639,7 @@ export async function captureCurrentExam() {
   return result;
 }
 
-async function findQuestionBlock(questionText) {
+async function findQuestionBlock(questionText, { prefer = "inputs" } = {}) {
   const targetPage = await connectedPage();
   const wanted = clean(questionText);
   let questionNode = null;
@@ -5627,12 +5673,24 @@ async function findQuestionBlock(questionText) {
   }
   const exactText = questionNode.locator;
 
-  const xpaths = [
-    "xpath=ancestor::*[.//input[@type='checkbox' or @type='radio']][1]",
+  // The tightest ancestor that holds the controls this question is answered
+  // with. Order matters, and it has to follow the question rather than be
+  // fixed: a dropdown question's own container holds no checkbox, so leading
+  // with the checkbox ancestor climbed clean past it to whatever wrapper holds
+  // the checkboxes of every *other* question on the page. The block is then the
+  // whole quiz, `block.locator("select")` is every dropdown on it, and the
+  // answers land in the first matching question's blanks instead of this one's
+  // — which is exactly how question 9 of the Apple values quiz ended up trying
+  // to put "שוויון בשכר" into question 4's first dropdown, failing, and leaving
+  // itself on the previous attempt's answer.
+  const inputAncestor = "xpath=ancestor::*[.//input[@type='checkbox' or @type='radio']][1]";
+  const selectAncestors = [
     "xpath=ancestor::*[.//select][1]",
-    "xpath=ancestor::*[.//*[@role='combobox']][1]",
-    "xpath=ancestor::*[self::div or self::section][1]"
+    "xpath=ancestor::*[.//*[@role='combobox']][1]"
   ];
+  const xpaths = prefer === "selects"
+    ? [...selectAncestors, inputAncestor, "xpath=ancestor::*[self::div or self::section][1]"]
+    : [inputAncestor, ...selectAncestors, "xpath=ancestor::*[self::div or self::section][1]"];
 
   for (const xpath of xpaths) {
     const candidate = exactText.locator(xpath);
@@ -5813,7 +5871,9 @@ async function answerSelectQuestion(block, frame, answers, delayMs = 200) {
 }
 
 async function fillQuestion(question, dryRun = false, { immediate = false } = {}) {
-  const { block, frame } = await findQuestionBlock(question.match);
+  const { block, frame } = await findQuestionBlock(question.match, {
+    prefer: question.type === "selects" ? "selects" : "inputs"
+  });
   await block.scrollIntoViewIfNeeded();
   const delayMs = immediate ? 0 : 200;
 

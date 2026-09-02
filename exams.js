@@ -1695,42 +1695,110 @@ const authored = {
       { type: "single", match: "כמה מצלמות Fusion ברזולוציה של 48MP יש בדגמי iPhone 17 Pro", answer: "שלושה" }
     ]
   },
+  // Sales Coach › הערכים של Apple › כמה ידוע לכם על הערכים של Apple?
+  // https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872
+  // Fourteen questions, and the threshold is 100%: every one of them has to
+  // land. A 71% attempt (10 of 14) lost questions 1, 3, 4, 9 and 14; the
+  // answers reasoned out for them took the next attempt to 93%, and the graded
+  // response confirms 1, 3, 4 and 14. Thirteen of the fourteen are now answers
+  // the server has marked right. The last one is question 9, and it was never
+  // actually tried: findQuestionBlock handed the fill the whole quiz instead of
+  // that question, so its answer was aimed at question 4's dropdowns, failed to
+  // match, and left the blanks on the previous attempt. That is fixed in
+  // runner.js, and the attempt after it filled question 9 properly and still
+  // came back 93%: the fill is right, the answer was not. See the note on that
+  // question for what the server has ruled out and what moved.
   "כמה-ידוע-לכם-על-הערכים-של-apple": {
     name: "כמה ידוע לכם על הערכים של Apple?",
     section: "הערכים של Apple",
     questions: [
-      { type: "single", match: "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם", answer: "כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם." },
-      // The attached run explicitly graded "נכון" incorrect.
-      { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות", answer: "לא נכון" },
-      // The five categories Apple's own accessibility pages are organised by.
-      // The sixth option on the page splits mobility in two — "תנועה" and
-      // "מוטוריקה" — and Apple names that category מוטוריקה.
-      { type: "multiple", match: "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן", answers: ["ראייה", "שמיעה", "דיבור", "מוטוריקה", "קוגניציה"] },
-      // Accepting every volunteer who asks to beta test is the one option that
-      // is not something Apple says it does; the other three are.
-      { type: "multiple", match: "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע", answers: ["עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.", "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.", "העסקת אנשים בעלי מוגבלויות."] },
+      // Six options, and the question itself says five of them are categories,
+      // so exactly one is the odd one out. The set that dropped "תנועה" and
+      // kept "מוטוריקה" was graded wrong, which left only the other reading —
+      // and the server has since confirmed it: this package's five categories
+      // are ראייה, שמיעה, תנועה, דיבור and קוגניציה, and "מוטוריקה" is the
+      // distractor.
+      { type: "multiple", match: "המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן", answers: ["ראייה", "שמיעה", "תנועה", "דיבור", "קוגניציה"] },
+      { type: "single", match: "איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את ה", answer: "קול אישי" },
+      // "Select all that apply" over four options, and the obvious reading —
+      // the three that are plainly Apple initiatives, with the open beta
+      // programme left out as the decoy — was graded wrong. Question 7 below is
+      // the same shape and its answer is all four, and the beta statement is
+      // not actually false of Apple: its beta programme is open to anyone who
+      // signs up and Feedback Assistant is how that feedback comes back. All
+      // four, and the server has confirmed it.
+      { type: "multiple", match: "אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו ע", answers: ["שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.", "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.", "העסקת אנשים בעלי מוגבלויות.", "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב."] },
+      // Four sentences, four initiatives, in the order the dropdowns appear:
+      //   1 "משאבי למידה מקצועיים כמו ___"            → Apple Education Community,
+      //     which is exactly what that is: Apple's professional-learning hub.
+      //   2 "___ מציעה תוכניות שיעזרו לאנשי מקצוע לרכוש מיומנויות חדשות כדי
+      //     שיוכלו לחפש הזדמנויות קריירה אחרות"       → Apple Developer Academy,
+      //     the programme that teaches app skills for a career change.
+      //   3 "___ ... לקהילות שסובלות מתת-ייצוג בתחום הטכנולוגיה"
+      //                                               → Community Education
+      //     Initiative, whose own description is coding, creativity and career
+      //     opportunity for communities underrepresented in tech.
+      //   4 "תוכניות כמו ___ נועדו לזהות את האנשים המובילים בשילוב טכנולוגיה
+      //     בהוראה"                                   → Apple Distinguished Educators.
+      // Sentences 3 and 4 are near-verbatim Apple copy, sentence 1 names the
+      // resource outright, and 2 is what is left. Confirmed by the server on
+      // the 93% attempt — which also settles what the answer memory was saying:
+      // it had all 24 orderings of these four recorded as rejected, including
+      // this one. The player tears a drag-and-drop question down to plain text
+      // once it is graded, so what gets filed against one is what the fill
+      // *intended* rather than what was submitted, and for this question that
+      // record is worthless. Those entries have been dropped from
+      // answer-memory.json so the blind fill cannot rule this out again.
+      { type: "selects", match: "Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה", answers: ["Apple Education Community", "Apple Developer Academy", "Community Education Initiative", "Apple Distinguished Educators"] },
       // Apple 2030 is net zero across the supply chain and product life, and
       // Apple's own corporate operations have been carbon neutral since 2020.
-      // The page's own feedback rules out the "50% against 2015" option (the
-      // figure is 75%), and no product line is yet made only of recycled and
-      // renewable material — that is the goal, not the state of things.
+      // The 50%-against-2015 figure is wrong (it is 75%), and no product is yet
+      // made only of recycled and renewable material — that is the goal.
       { type: "multiple", match: "אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סבי", answers: ["החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.", "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן."] },
-      // Four options, four things Apple reports doing; the question asks for
-      // all that apply and four separate attempts at subsets were rejected.
+      { type: "single", match: "Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם", answer: "כימיה חכמה יותר" },
+      // Four options, four things Apple reports doing; graded right as a set.
       { type: "multiple", match: "אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיו", answers: ["התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.", "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.", "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.", "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג."] },
-      // The three pillars of the Racial Equity and Justice Initiative;
-      // engineering is not one of them.
-      { type: "multiple", match: "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם", answers: ["חינוך", "העצמה כלכלית", "רפורמה בצדק הפלילי"] },
-      // How Apple supports the people in its supply chain: the health and
-      // safety standards it holds suppliers to, and the education and
-      // leadership opportunities it offers their staff. Carbon neutrality is a
-      // commitment to the planet rather than to those people, and Apple does
-      // not brief them on its product line-up.
-      { type: "multiple", match: "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה", answers: ["Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.", "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים."] },
+      { type: "single", match: "Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס", answer: "נכון" },
+      // Three blanks, six options, so three of them are decoys — and they come
+      // in pairs, each answer shadowed by a near-miss. Apple's own inclusion
+      // pages write these two sentences almost word for word: "Since 2017,
+      // Apple has achieved and maintained gender pay equity globally", and the
+      // Diversity Network Associations are the employee-led groups it says have
+      // offered community and connection for more than 35 years. So:
+      //   1 "מאז 2017, Apple השיגה ___"                    → שוויון שכר מגדרי
+      //     (not the bare "שוויון בשכר": the claim Apple makes worldwide is the
+      //     gender one, and the bare version was submitted and graded wrong)
+      //   2 "...והיא שומרת עליו עבור ___ שלה ברחבי העולם"  → העובדים (not מנהלים:
+      //     Apple maintains it for its people, and only "employees" reads)
+      //   3 "עובדי Apple מוצאים להם קהילה וקשרים באיגודי ___ של Apple"
+      //     → Diversity Network Association, which is the actual name of those
+      //     employee groups; "תוכניות 'הכללה וגיוון'" is the shadow of it.
+      // Two assignments are ruled out by the server itself rather than by the
+      // unreliable drag-and-drop log: "שוויון בשכר / שוויון שכר מגדרי / תוכניות"
+      // and "שוויון בשכר / העובדים / Diversity Network Association". Blanks 2
+      // and 3 survive both, so blank 1 is what moves. If this is still wrong,
+      // blank 3 is the next thing to doubt — "העובדים" there ("באיגודי העובדים
+      // של Apple") with "שוויון בשכר" back in blank 1.
+      { type: "selects", match: "השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון'", answers: ["שוויון שכר מגדרי", "העובדים", "Diversity Network Association"] },
       // Privacy as a fundamental human right, features built not to need the
       // data, and the user deciding what is shared: all three are Apple's own
       // wording of its privacy approach.
-      { type: "multiple", match: "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות", answers: ["Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.", "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.", "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף."] }
+      { type: "multiple", match: "אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות", answers: ["Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.", "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.", "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף."] },
+      // Apple states the reason for the collection in the app, at the moment it
+      // asks; it does not email the Apple ID about it.
+      { type: "single", match: "כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות", answer: "לא נכון" },
+      // The three pillars of the Racial Equity and Justice Initiative;
+      // engineering is not one of them.
+      { type: "multiple", match: "Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם", answers: ["חינוך", "העצמה כלכלית", "רפורמה בצדק הפלילי"] },
+      { type: "single", match: "Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק", answer: "נכון" },
+      // The leadership and learning opportunities and the health and safety
+      // standards were graded wrong as a pair, so the set is larger. The
+      // remaining candidate is the supplier work on carbon neutrality — Apple's
+      // clean energy and materials programmes are run with the people in the
+      // supply chain, not around them — while the option about inviting
+      // suppliers to briefings on Apple's product line-up is invented, and that
+      // is the one left out. Confirmed.
+      { type: "multiple", match: "אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת ה", answers: ["Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.", "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.", "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030."] }
     ]
   },
   "התחברות-ל-mdm": {

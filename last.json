@@ -1,0 +1,2640 @@
+[
+  {
+    "title": "For You |  Sales Coach",
+    "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872&backTo=%2Fhome%2Fcurriculum%2F74230&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+    "capturedAt": "2026-09-02T06:01:06.654Z",
+    "questions": [
+      {
+        "number": 1,
+        "text": "1 המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן 5 הקטגוריות של מוגבלות שמאפייני הנגישות של Apple מכסים? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577078",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "מוטוריקה",
+            "value": "1389245",
+            "checked": false
+          },
+          {
+            "label": "שמיעה",
+            "value": "1389242",
+            "checked": true
+          },
+          {
+            "label": "ראייה",
+            "value": "1389244",
+            "checked": true
+          },
+          {
+            "label": "תנועה",
+            "value": "1389243",
+            "checked": true
+          },
+          {
+            "label": "דיבור",
+            "value": "1389246",
+            "checked": true
+          },
+          {
+            "label": "קוגניציה",
+            "value": "1389247",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 2,
+        "text": "2 איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את הקול שלהם? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "577079",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "MyVoice",
+            "value": "1389249",
+            "checked": false
+          },
+          {
+            "label": "הקראה בזמן אמת",
+            "value": "1389251",
+            "checked": false
+          },
+          {
+            "label": "קול אישי",
+            "value": "1389250",
+            "checked": true
+          },
+          {
+            "label": "VoiceOver",
+            "value": "1389248",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 3,
+        "text": "3 אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו על צורכי קהלים מגוונים של משתמשים? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577080",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
+            "value": "1389253",
+            "checked": true
+          },
+          {
+            "label": "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.",
+            "value": "1389255",
+            "checked": true
+          },
+          {
+            "label": "העסקת אנשים בעלי מוגבלויות.",
+            "value": "1389254",
+            "checked": true
+          },
+          {
+            "label": "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
+            "value": "1389252",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 4,
+        "text": "4 Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה. השלימו את המשפטים הבאים ביוזמות החינוך הנכונות ש-Apple מובילה. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "Apple Education Community",
+            "Community Education Initiative",
+            "Apple Developer Academy",
+            "Apple Distinguished Educators"
+          ],
+          [
+            "בחר תשובה",
+            "Apple Education Community",
+            "Community Education Initiative",
+            "Apple Developer Academy",
+            "Apple Distinguished Educators"
+          ],
+          [
+            "בחר תשובה",
+            "Apple Education Community",
+            "Community Education Initiative",
+            "Apple Developer Academy",
+            "Apple Distinguished Educators"
+          ],
+          [
+            "בחר תשובה",
+            "Apple Education Community",
+            "Community Education Initiative",
+            "Apple Developer Academy",
+            "Apple Distinguished Educators"
+          ]
+        ]
+      },
+      {
+        "number": 5,
+        "text": "5 אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סביבתיות? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577083",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.",
+            "value": "1389263",
+            "checked": true
+          },
+          {
+            "label": "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
+            "value": "1389262",
+            "checked": true
+          },
+          {
+            "label": "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015.",
+            "value": "1389261",
+            "checked": false
+          },
+          {
+            "label": "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
+            "value": "1389260",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 6,
+        "text": "6 Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת הסביבה. שני התחומים הראשונים שבהם יש להתמקד הם 'שינויי אקלים' ו'משאבים'. מהו השלישי? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "577084",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם.",
+            "value": "1389266",
+            "checked": true
+          },
+          {
+            "label": "חיסכון באנרגיה",
+            "value": "1389265",
+            "checked": false
+          },
+          {
+            "label": "חשמל נקי",
+            "value": "1389264",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 7,
+        "text": "7 אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיוון? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577085",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
+            "value": "1389267",
+            "checked": true
+          },
+          {
+            "label": "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
+            "value": "1389269",
+            "checked": true
+          },
+          {
+            "label": "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
+            "value": "1389268",
+            "checked": true
+          },
+          {
+            "label": "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.",
+            "value": "1389270",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 8,
+        "text": "8 Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון או לא נכון?",
+        "type": "single",
+        "questionId": "577086",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "נכון",
+            "value": "1389272",
+            "checked": true
+          },
+          {
+            "label": "לא נכון",
+            "value": "1389271",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 9,
+        "text": "9 השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון' שנוקטת Apple. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "שוויון בשכר",
+            "שוויון שכר מגדרי",
+            "תוכניות 'הכללה וגיוון'",
+            "Diversity Network Association",
+            "מנהלים",
+            "העובדים"
+          ],
+          [
+            "בחר תשובה",
+            "שוויון בשכר",
+            "שוויון שכר מגדרי",
+            "תוכניות 'הכללה וגיוון'",
+            "Diversity Network Association",
+            "מנהלים",
+            "העובדים"
+          ],
+          [
+            "בחר תשובה",
+            "שוויון בשכר",
+            "שוויון שכר מגדרי",
+            "תוכניות 'הכללה וגיוון'",
+            "Diversity Network Association",
+            "מנהלים",
+            "העובדים"
+          ]
+        ]
+      },
+      {
+        "number": 10,
+        "text": "10 אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577089",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.",
+            "value": "1389281",
+            "checked": true
+          },
+          {
+            "label": "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
+            "value": "1389280",
+            "checked": true
+          },
+          {
+            "label": "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.",
+            "value": "1389279",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 11,
+        "text": "11 כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח על כך הודעת דוא\"ל המקושרת ל-Apple ID עם מידע ברור על הסיבות לנחיצות הנתונים. נכון או לא נכון?",
+        "type": "single",
+        "questionId": "577090",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "נכון",
+            "value": "1389282",
+            "checked": false
+          },
+          {
+            "label": "לא נכון למשתמשים מוצג מידע ברור ובולט לגבי הסיבות לאיסוף הנתונים.",
+            "value": "1389283",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 12,
+        "text": "12 Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם נצפו השפעות היסטוריות בלתי פרופורציונליות על קהילות עם משאבים מוגבלים. מהם שלושת התחומים האלו? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577091",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "חינוך",
+            "value": "1389286",
+            "checked": true
+          },
+          {
+            "label": "הנדסה",
+            "value": "1389284",
+            "checked": false
+          },
+          {
+            "label": "רפורמה בצדק הפלילי",
+            "value": "1389285",
+            "checked": true
+          },
+          {
+            "label": "העצמה כלכלית",
+            "value": "1389287",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 13,
+        "text": "13 Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק משרשרת האספקה של Apple ולכן הזכויות שלו זהות. נכון או לא נכון?",
+        "type": "single",
+        "questionId": "577092",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "נכון",
+            "value": "1389288",
+            "checked": true
+          },
+          {
+            "label": "לא נכון",
+            "value": "1389289",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 14,
+        "text": "14 אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת האספקה שלה? יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "577093",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
+            "value": "1389290",
+            "checked": true
+          },
+          {
+            "label": "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple.",
+            "value": "1389292",
+            "checked": false
+          },
+          {
+            "label": "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
+            "value": "1389291",
+            "checked": true
+          },
+          {
+            "label": "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.",
+            "value": "1389293",
+            "checked": true
+          }
+        ],
+        "selects": []
+      }
+    ],
+    "answerKey": {
+      "available": true,
+      "completionScore": 100,
+      "assessments": [
+        {
+          "id": "157521",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "htmlTemplate",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState",
+            "feedbackDetails",
+            "hasSubmitted"
+          ]
+        },
+        {
+          "id": "157521",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "htmlTemplate",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState",
+            "feedbackDetails",
+            "hasSubmitted"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "id": "157521",
+          "questions": [
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577093,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389290,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389293,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577090,
+              "questionType": "TRUE_FALSE",
+              "options": [
+                {
+                  "questionOptionId": 1389283,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577088,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1389273,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389275,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1389276,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577086,
+              "questionType": "TRUE_FALSE",
+              "options": [
+                {
+                  "questionOptionId": 1389272,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577078,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389242,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1389246,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1389247,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 5,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 5
+                },
+                {
+                  "questionOptionId": 1389244,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389245,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577092,
+              "questionType": "TRUE_FALSE",
+              "options": [
+                {
+                  "questionOptionId": 1389288,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577085,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389267,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389270,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1389268,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389269,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577089,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389280,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1389281,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389279,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577080,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389252,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389253,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389254,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577082,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1389257,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1389256,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389258,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389259,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577083,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389263,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389262,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577079,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389250,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577091,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389286,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389287,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389285,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577084,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389266,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "157521",
+          "questions": [
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577093,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389290,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389293,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577090,
+              "questionType": "TRUE_FALSE",
+              "options": [
+                {
+                  "questionOptionId": 1389283,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577088,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1389273,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389275,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1389276,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577086,
+              "questionType": "TRUE_FALSE",
+              "options": [
+                {
+                  "questionOptionId": 1389272,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577078,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389242,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1389246,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1389247,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 5,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 5
+                },
+                {
+                  "questionOptionId": 1389244,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389245,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577092,
+              "questionType": "TRUE_FALSE",
+              "options": [
+                {
+                  "questionOptionId": 1389288,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577085,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389267,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389270,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1389268,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389269,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577089,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389280,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1389281,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389279,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577080,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389252,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389253,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389254,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577082,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1389257,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1389256,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389258,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389259,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577083,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389263,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389262,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577079,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389250,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577091,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389286,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1389287,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1389285,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788283471697,
+              "updatedDate": 1788283471697,
+              "questionId": 577084,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1389266,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.0.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.1.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.2.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.3.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.4.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.5.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.6.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.7.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.8.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.9.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.10.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.11.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.12.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.submittedResponse.0.questionObjects.13.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.157521.assessment.feedbackDetails.score",
+          "value": 13
+        },
+        {
+          "path": "QSP.assessments.157521.assessmentMetadata.score",
+          "value": 10
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.0.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.1.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.2.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.3.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.4.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.5.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.6.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.7.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.8.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.9.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.10.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.11.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.12.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.submittedResponse.0.questionObjects.13.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.157423.assessmentMetadata.score",
+          "value": 10
+        }
+      ],
+      "shape": {
+        "DELAY_FEEDBACK_UNTIL_SERVER_RESPONSE": "boolean",
+        "queuedGetAWSUploadURLCalls": "array(0)",
+        "queuedAWSUploadCalls": "array(0)",
+        "queuedUploadResponseCalls": "array(0)",
+        "assessments": {
+          "157521": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": {},
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "firstAssessment": {},
+        "originalAssessments": {
+          "157423": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": {},
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "shouldShowSimpleScore": "boolean",
+        "simulateServer": "boolean",
+        "workingState": {},
+        "showImmediateFeedbackFunctions": {},
+        "onSubmitAssessmentSuccessFunctions": {},
+        "completionScore": "number",
+        "debounceTimeouts": {
+          "postAnswer-577078": "object",
+          "postAnswer-577080": "object",
+          "postAnswer-577081": "object",
+          "postAnswer-577093": "object",
+          "postAnswer-577091": "object",
+          "postAnswer-577083": "object",
+          "postAnswer-577079": "object"
+        },
+        "pendingAnswers": {
+          "postAnswer-577078": "array(4)",
+          "postAnswer-577080": "array(1)",
+          "postAnswer-577081": "array(4)",
+          "postAnswer-577093": "array(7)",
+          "postAnswer-577091": "array(2)",
+          "postAnswer-577083": "array(6)",
+          "postAnswer-577079": "array(2)"
+        },
+        "submitAssessmentInFlight": "boolean"
+      }
+    },
+    "examsJsDraft": "  // Options to choose from:\n  // 1. 1 המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן 5 הקטגוריות של מוגבלות שמאפי\n  //      - מוטוריקה\n  //      - שמיעה\n  //      - ראייה\n  //      - תנועה\n  //      - דיבור\n  //      - קוגניציה\n  // 2. 2 איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את הקול שלהם? יש לבחור אפשרות אחת.\n  //      - MyVoice\n  //      - הקראה בזמן אמת\n  //      - קול אישי\n  //      - VoiceOver\n  // 3. 3 אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו על צורכי קהלים מגוונים של משת\n  //      - שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.\n  //      - מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.\n  //      - העסקת אנשים בעלי מוגבלויות.\n  //      - עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.\n  // 4. 4 Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה. השלימו את המשפטים הבאים ביוז\n  //      select 1: בחר תשובה | Apple Education Community | Community Education Initiative | Apple Developer Academy | Apple Distinguished Educators\n  //      select 2: בחר תשובה | Apple Education Community | Community Education Initiative | Apple Developer Academy | Apple Distinguished Educators\n  //      select 3: בחר תשובה | Apple Education Community | Community Education Initiative | Apple Developer Academy | Apple Distinguished Educators\n  //      select 4: בחר תשובה | Apple Education Community | Community Education Initiative | Apple Developer Academy | Apple Distinguished Educators\n  // 5. 5 אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סביבתיות? יש לבחור את כל האפשרו\n  //      - הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.\n  //      - החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.\n  //      - Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015.\n  //      - כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.\n  // 6. 6 Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת הסביבה. שני התחומים הראשונים \n  //      - כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם.\n  //      - חיסכון באנרגיה\n  //      - חשמל נקי\n  // 7. 7 אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיוון? יש לבחור את כל האפשרויות\n  //      - הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.\n  //      - התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.\n  //      - סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.\n  //      - הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.\n  // 8. 8 Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון או לא נכון?\n  //      - נכון\n  //      - לא נכון\n  // 9. 9 השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון' שנוקטת Apple. יש להשלים את \n  //      select 1: בחר תשובה | שוויון בשכר | שוויון שכר מגדרי | תוכניות 'הכללה וגיוון' | Diversity Network Association | מנהלים | העובדים\n  //      select 2: בחר תשובה | שוויון בשכר | שוויון שכר מגדרי | תוכניות 'הכללה וגיוון' | Diversity Network Association | מנהלים | העובדים\n  //      select 3: בחר תשובה | שוויון בשכר | שוויון שכר מגדרי | תוכניות 'הכללה וגיוון' | Diversity Network Association | מנהלים | העובדים\n  // 10. 10 אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש לבחור את כל האפשרויות המתאימ\n  //      - היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.\n  //      - Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.\n  //      - המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.\n  // 11. 11 כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח על כך הודעת דוא\"ל המקושרת \n  //      - נכון\n  //      - לא נכון למשתמשים מוצג מידע ברור ובולט לגבי הסיבות לאיסוף הנתונים.\n  // 12. 12 Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם נצפו השפעות היסטוריות בלתי\n  //      - חינוך\n  //      - הנדסה\n  //      - רפורמה בצדק הפלילי\n  //      - העצמה כלכלית\n  // 13. 13 Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק משרשרת האספקה של Apple ולכן\n  //      - נכון\n  //      - לא נכון\n  // 14. 14 אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת האספקה שלה? יש לבחור את כל ה\n  //      - Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.\n  //      - Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple.\n  //      - Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.\n  //      - Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.\n  \"for-you\": {\n    name: \"For You\",\n    questions: [\n      { type: \"multiple\", match: \"1 המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מה\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"2 איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את ה\", answer: \"\" },\n      { type: \"multiple\", match: \"3 אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו\", answers: [\"\", \"\"] },\n      { type: \"selects\", match: \"4 Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה\", answers: [\"\", \"\", \"\", \"\"] },\n      { type: \"multiple\", match: \"5 אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות ס\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"6 Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת\", answer: \"\" },\n      { type: \"multiple\", match: \"7 אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וג\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"8 Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון \", answer: \"\" },\n      { type: \"selects\", match: \"9 השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוו\", answers: [\"\", \"\", \"\"] },\n      { type: \"multiple\", match: \"10 אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? י\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"11 כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תי\", answer: \"\" },\n      { type: \"multiple\", match: \"12 Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות ש\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"13 Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כח\", answer: \"\" },\n      { type: \"multiple\", match: \"14 אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשר\", answers: [\"\", \"\"] },\n    ]\n  },",
+    "frames": [
+      {
+        "name": "",
+        "url": "https://salescoach.apple.com/home/content/view/424608?backTo=%2Fhome%2Fcollection%2F188872&backTo=%2Fhome%2Fcurriculum%2F74230&backTo=%2Fhome%2Fprogram%2F7047%2F2487286&backTo=%2Fhome%2Ffor-you",
+        "text": "􀣺 Sales Coach 􀲳 Explore 􀥴 For You 1 unread alerts Manage 􀉞 Saved Content 􀓣 Profile 􀆉 כמה ידוע לכם על הערכים של Apple? 􀍠",
+        "controls": []
+      },
+      {
+        "name": "main-frame",
+        "url": "https://seeddownload.cdn-apple.com/s3/prod/SEED/package/T054119A-he_IL/a4625f7d-6d55-41f4-83a4-eaf4020c6228/1.0/T054119A-he_IL_How_much_do_you_know_about_Apple_values/index.html?userToken=AaTWiIjNKDqflmwKI8HoGyBRQ9hiz-xPY3yMI29PeKq5LzANwpIGMdo_HrGJzz5Bc3WOOgAbIBYb60McIYFxqvMQu9REE2Bo0-MuZ6p-rxRHyrkNTLckEXWsr_BKbtr0J8gt&certificate=Zm5PZW5UQ3NrZlJUbmpSNTN1ZHBVQUNlcThrPQ==&serverToken=1788448380_5b041026560a283f4151665738464e5d&sitename=SEED#assetStateObj={%22user%22:2687165,%22assetId%22:424608,%22webapp%22:true}",
+        "text": "כמה ידוע לכם על הערכים של Apple? עכשיו, לאחר שצפיתם בסרטונים וגיליתם פרטים נוספים על הערכים של Apple, ענו על השאלות הבאות כדי לראות מה למדתם. לרשותכם מספר ניסיונות בלתי מוגבל להשגת ציון של 100%! בהצלחה! 93 בדקו את התשובות שלכם ונסו שוב. 1 המוצרים והשירותים של Apple כוללים תכונות נגישות מובנות. מהן 5 הקטגוריות של מוגבלות שמאפייני הנגישות של Apple מכסים? יש לבחור את כל האפשרויות המתאימות. מוטוריקה שמיעה ראייה תנועה דיבור קוגניציה 2 איזו תכונת נגישות של iPhone מאפשרת ללקוחות ליצור מחדש את הקול שלהם? יש לבחור אפשרות אחת. MyVoice הקראה בזמן אמת קול אישי VoiceOver 3 אילו יוזמות נוקטת Apple כדי להבטיח שמוצרים תוכננו כך שיענו על צורכי קהלים מגוונים של משתמשים? יש לבחור את כל האפשרויות המתאימות. שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות. מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב. העסקת אנשים בעלי מוגבלויות. עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים. 4 Apple מחויבת לספק לאנשים ברחבי העולם יותר הזדמנויות ללמידה. השלימו את המשפטים הבאים ביוזמות החינוך הנכונות ש-Apple מובילה. יש להשלים את החסר. משאבי למידה מקצועיים כמו Apple Education Community בחר תשובה Apple Education Community Community Education Initiative Apple Developer Academy Apple Distinguished Educators תוכננו כך שהלמידה תהיה אישית, יצירתית ומעוררת השראה. Apple Developer Academy בחר תשובה Apple Education Community Community Education Initiative Apple Developer Academy Apple Distinguished Educators מציעה תוכניות שיעזרו לאנשי מקצוע לרכוש מיומנויות חדשות כדי שיוכלו לחפש הזדמנויות קריירה אחרות. Community Education Initiative בחר תשובה Apple Education Community Community Education Initiative Apple Developer Academy Apple Distinguished Educators מציעה הזדמנויות ללמידת תכנות, להפגנת יצירתיות ולהצטרפות אל כוח עבודה לקהילות שסובלות מתת-ייצוג בתחום הטכנולוגיה. תוכניות כמו Apple Distinguished Educators בחר תשובה Apple Education Community Community Education Initiative Apple Developer Academy Apple Distinguished Educators , נועדו לזהות את האנשים המובילים בשילוב טכנולוגיה בהוראה. Apple Education Community Community Education Initiative Apple Developer Academy Apple Distinguished Educators 5 אילו מהמשפטים הבאים נכונים לגבי המחויבות של Apple למטרות סביבתיות? יש לבחור את כל האפשרויות המתאימות. הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן. החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple. Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015. כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד. 6 Apple קבעה שלושה עמודי תווך אסטרטגיים שיש להתמקד בהם לטובת הסביבה. שני התחומים הראשונים שבהם יש להתמקד הם 'שינויי אקלים' ו'משאבים'. מהו השלישי? יש לבחור אפשרות אחת. כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם. חיסכון באנרגיה חשמל נקי 7 אילו פעולות נוקטת Apple, המעידות על המחויבות שלה להכללה וגיוון? יש לבחור את כל האפשרויות המתאימות. הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג. התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה. סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים. הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים. 8 Apple לא שואלת על היסטוריית השכר במסגרת תהליך הגיוס. נכון או לא נכון? נכון לא נכון 9 השלימו את המשפטים הבאים בפעולות הנכונות בנושא 'הכללה וגיוון' שנוקטת Apple. יש להשלים את החסר. מאז 2017, Apple השיגה שוויון בשכר בחר תשובה שוויון בשכר שוויון שכר מגדרי תוכניות 'הכללה וגיוון' Diversity Network Association מנהלים העובדים והיא שומרת עליו עבור שוויון שכר מגדרי בחר תשובה שוויון בשכר שוויון שכר מגדרי תוכניות 'הכללה וגיוון' Diversity Network Association מנהלים העובדים שלה ברחבי העולם. במשך יותר מ-35 שנים, עובדי Apple מוצאים להם קהילה וקשרים באיגודי תוכניות 'הכללה וגיוון' בחר תשובה שוויון בשכר שוויון שכר מגדרי תוכניות 'הכללה וגיוון' Diversity Network Association מנהלים העובדים של Apple. שוויון בשכר שוויון שכר מגדרי תוכניות 'הכללה וגיוון' Diversity Network Association מנהלים העובדים 10 אילו מהמשפטים הבאים נכונים לגבי הגישה של Apple לפרטיות? יש לבחור את כל האפשרויות המתאימות. היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם. Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם. המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף. 11 כאשר Apple צריכה לאסוף נתונים אישיים כדי להפעיל שירות, תישלח על כך הודעת דוא\"ל המקושרת ל-Apple ID עם מידע ברור על הסיבות לנחיצות הנתונים. נכון או לא נכון? נכון לא נכון למשתמשים מוצג מידע ברור ובולט לגבי הסיבות לאיסוף הנתונים. 12 Apple התחייבה לתמוך בפרויקטים בשלושה תחומים בעלי עדיפות שבהם נצפו השפעות היסטוריות בלתי פרופורציונליות על קהילות עם משאבים מוגבלים. מהם שלושת התחומים האלו? יש לבחור את כל האפשרויות המתאימות. חינוך הנדסה רפורמה בצדק הפלילי העצמה כלכלית 13 Apple רואה בכל גורם שמספק לה מוצרים, שירותים או עבודה, כחלק משרשרת האספקה של Apple ולכן הזכויות שלו זהות. נכון או לא נכון? נכון לא נכון 14 אילו מהמשפטים הבאים מתארים כיצד Apple תומכת באנשים שבשרשרת האספקה שלה? יש לבחור את כל האפשרויות המתאימות. Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים. Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple. Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030. Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים. שלח",
+        "controls": [
+          {
+            "index": 0,
+            "type": "checkbox",
+            "label": "מוטוריקה",
+            "name": "577078",
+            "value": "1389245",
+            "options": []
+          },
+          {
+            "index": 1,
+            "type": "checkbox",
+            "label": "שמיעה",
+            "name": "577078",
+            "value": "1389242",
+            "options": []
+          },
+          {
+            "index": 2,
+            "type": "checkbox",
+            "label": "ראייה",
+            "name": "577078",
+            "value": "1389244",
+            "options": []
+          },
+          {
+            "index": 3,
+            "type": "checkbox",
+            "label": "תנועה",
+            "name": "577078",
+            "value": "1389243",
+            "options": []
+          },
+          {
+            "index": 4,
+            "type": "checkbox",
+            "label": "דיבור",
+            "name": "577078",
+            "value": "1389246",
+            "options": []
+          },
+          {
+            "index": 5,
+            "type": "checkbox",
+            "label": "קוגניציה",
+            "name": "577078",
+            "value": "1389247",
+            "options": []
+          },
+          {
+            "index": 6,
+            "type": "radio",
+            "label": "MyVoice",
+            "name": "577079",
+            "value": "1389249",
+            "options": []
+          },
+          {
+            "index": 7,
+            "type": "radio",
+            "label": "הקראה בזמן אמת",
+            "name": "577079",
+            "value": "1389251",
+            "options": []
+          },
+          {
+            "index": 8,
+            "type": "radio",
+            "label": "קול אישי",
+            "name": "577079",
+            "value": "1389250",
+            "options": []
+          },
+          {
+            "index": 9,
+            "type": "radio",
+            "label": "VoiceOver",
+            "name": "577079",
+            "value": "1389248",
+            "options": []
+          },
+          {
+            "index": 10,
+            "type": "checkbox",
+            "label": "שיתוף פעולה עם אנשים ממגוון קהילות רחב של בעלי מוגבלויות.",
+            "name": "577080",
+            "value": "1389253",
+            "options": []
+          },
+          {
+            "index": 11,
+            "type": "checkbox",
+            "label": "מקבלת את כל המשתמשים המבקשים להשתתף בבדיקות בטא ולספק משוב.",
+            "name": "577080",
+            "value": "1389255",
+            "options": []
+          },
+          {
+            "index": 12,
+            "type": "checkbox",
+            "label": "העסקת אנשים בעלי מוגבלויות.",
+            "name": "577080",
+            "value": "1389254",
+            "options": []
+          },
+          {
+            "index": 13,
+            "type": "checkbox",
+            "label": "עבודה עם עמותות, ארגונים קהילתיים וארגוני תקנים בינלאומיים.",
+            "name": "577080",
+            "value": "1389252",
+            "options": []
+          },
+          {
+            "index": 14,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "Apple Education Community",
+              "Community Education Initiative",
+              "Apple Developer Academy",
+              "Apple Distinguished Educators"
+            ]
+          },
+          {
+            "index": 15,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "Apple Education Community",
+              "Community Education Initiative",
+              "Apple Developer Academy",
+              "Apple Distinguished Educators"
+            ]
+          },
+          {
+            "index": 16,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "Apple Education Community",
+              "Community Education Initiative",
+              "Apple Developer Academy",
+              "Apple Distinguished Educators"
+            ]
+          },
+          {
+            "index": 17,
+            "type": "select",
+            "label": "בחירת מילים 4",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "Apple Education Community",
+              "Community Education Initiative",
+              "Apple Developer Academy",
+              "Apple Distinguished Educators"
+            ]
+          },
+          {
+            "index": 18,
+            "type": "checkbox",
+            "label": "הפעילות הארגונית הגלובלית של Apple כבר מתאפיינת באפס פליטות נטו של פחמן.",
+            "name": "577083",
+            "value": "1389263",
+            "options": []
+          },
+          {
+            "index": 19,
+            "type": "checkbox",
+            "label": "החזון של Apple לשנת 2030 הוא להוריד את פליטות הנטו של פחמן לאפס בכל שרשרת האספקה שלה ובכל תקופת השימוש במכשירי Apple.",
+            "name": "577083",
+            "value": "1389262",
+            "options": []
+          },
+          {
+            "index": 20,
+            "type": "checkbox",
+            "label": "Apple מתכננת להשיג את היעד שלה על ידי הפחתת הפליטות שלה ב-50% בהשוואה לפליטות שלה ב-2015.",
+            "name": "577083",
+            "value": "1389261",
+            "options": []
+          },
+          {
+            "index": 21,
+            "type": "checkbox",
+            "label": "כל מוצרי Apple כבר כוללים שימוש בחומרים ממוחזרים ומתחדשים בלבד.",
+            "name": "577083",
+            "value": "1389260",
+            "options": []
+          },
+          {
+            "index": 22,
+            "type": "radio",
+            "label": "כימיה חכמה יותר באמצעות חדשנות בתחום הכימיה ובעזרת בקרות קפדניות, Apple פועלת לעיצוב מוצריה כך שיהיו בטוחים לכל מי שמייצר אותם, משתמש בהם וממחזר אותם.",
+            "name": "577084",
+            "value": "1389266",
+            "options": []
+          },
+          {
+            "index": 23,
+            "type": "radio",
+            "label": "חיסכון באנרגיה",
+            "name": "577084",
+            "value": "1389265",
+            "options": []
+          },
+          {
+            "index": 24,
+            "type": "radio",
+            "label": "חשמל נקי",
+            "name": "577084",
+            "value": "1389264",
+            "options": []
+          },
+          {
+            "index": 25,
+            "type": "checkbox",
+            "label": "הגדלת מספר המנהלים מקהילות הסובלות מתת-ייצוג.",
+            "name": "577085",
+            "value": "1389267",
+            "options": []
+          },
+          {
+            "index": 26,
+            "type": "checkbox",
+            "label": "התחשבות במשוב של העובדים, הגברת קולות של אנשים הסובלים מתת-ייצוג ונקיטת פעולה.",
+            "name": "577085",
+            "value": "1389269",
+            "options": []
+          },
+          {
+            "index": 27,
+            "type": "checkbox",
+            "label": "סיוע למנהיגים לנקוט גישה שוויונית לזיהוי מנהיגים עתידיים.",
+            "name": "577085",
+            "value": "1389268",
+            "options": []
+          },
+          {
+            "index": 28,
+            "type": "checkbox",
+            "label": "הטמעת תוכניות, תהליכים ומשאבים שנועדו לתמוך בכל העובדים.",
+            "name": "577085",
+            "value": "1389270",
+            "options": []
+          },
+          {
+            "index": 29,
+            "type": "radio",
+            "label": "נכון",
+            "name": "577086",
+            "value": "1389272",
+            "options": []
+          },
+          {
+            "index": 30,
+            "type": "radio",
+            "label": "לא נכון",
+            "name": "577086",
+            "value": "1389271",
+            "options": []
+          },
+          {
+            "index": 31,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "שוויון בשכר",
+              "שוויון שכר מגדרי",
+              "תוכניות 'הכללה וגיוון'",
+              "Diversity Network Association",
+              "מנהלים",
+              "העובדים"
+            ]
+          },
+          {
+            "index": 32,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "שוויון בשכר",
+              "שוויון שכר מגדרי",
+              "תוכניות 'הכללה וגיוון'",
+              "Diversity Network Association",
+              "מנהלים",
+              "העובדים"
+            ]
+          },
+          {
+            "index": 33,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "שוויון בשכר",
+              "שוויון שכר מגדרי",
+              "תוכניות 'הכללה וגיוון'",
+              "Diversity Network Association",
+              "מנהלים",
+              "העובדים"
+            ]
+          },
+          {
+            "index": 34,
+            "type": "checkbox",
+            "label": "היישומים 'מפות' ו'בריאות' נועדו לספק תכונות ליבה בלי לאסוף נתונים אישיים או להשתמש בהם.",
+            "name": "577089",
+            "value": "1389281",
+            "options": []
+          },
+          {
+            "index": 35,
+            "type": "checkbox",
+            "label": "Apple מאמינה שפרטיות היא אחת מזכויות היסוד של בני אדם.",
+            "name": "577089",
+            "value": "1389280",
+            "options": []
+          },
+          {
+            "index": 36,
+            "type": "checkbox",
+            "label": "המשתמשים יכולים לקבוע ב'הגדרות' איזה מידע ישותף ואיפה הוא ישותף.",
+            "name": "577089",
+            "value": "1389279",
+            "options": []
+          },
+          {
+            "index": 37,
+            "type": "radio",
+            "label": "נכון",
+            "name": "577090",
+            "value": "1389282",
+            "options": []
+          },
+          {
+            "index": 38,
+            "type": "radio",
+            "label": "לא נכון למשתמשים מוצג מידע ברור ובולט לגבי הסיבות לאיסוף הנתונים.",
+            "name": "577090",
+            "value": "1389283",
+            "options": []
+          },
+          {
+            "index": 39,
+            "type": "checkbox",
+            "label": "חינוך",
+            "name": "577091",
+            "value": "1389286",
+            "options": []
+          },
+          {
+            "index": 40,
+            "type": "checkbox",
+            "label": "הנדסה",
+            "name": "577091",
+            "value": "1389284",
+            "options": []
+          },
+          {
+            "index": 41,
+            "type": "checkbox",
+            "label": "רפורמה בצדק הפלילי",
+            "name": "577091",
+            "value": "1389285",
+            "options": []
+          },
+          {
+            "index": 42,
+            "type": "checkbox",
+            "label": "העצמה כלכלית",
+            "name": "577091",
+            "value": "1389287",
+            "options": []
+          },
+          {
+            "index": 43,
+            "type": "radio",
+            "label": "נכון",
+            "name": "577092",
+            "value": "1389288",
+            "options": []
+          },
+          {
+            "index": 44,
+            "type": "radio",
+            "label": "לא נכון",
+            "name": "577092",
+            "value": "1389289",
+            "options": []
+          },
+          {
+            "index": 45,
+            "type": "checkbox",
+            "label": "Apple מציעה להם הזדמנויות להיות מנהיגים וללמוד מהמומחיות של אחרים.",
+            "name": "577093",
+            "value": "1389290",
+            "options": []
+          },
+          {
+            "index": 46,
+            "type": "checkbox",
+            "label": "Apple מזמינה אותם לפגישות שוטפות כדי שהם יוכלו להיות מעודכנים בנושא מערכת השירותים והמוצרים של Apple.",
+            "name": "577093",
+            "value": "1389292",
+            "options": []
+          },
+          {
+            "index": 47,
+            "type": "checkbox",
+            "label": "Apple עובדת בשיתוף פעולה הדוק עם שרשרת האספקה שלה כדי להשיג את היעד שלה לניטרליות פחמנית עד 2030.",
+            "name": "577093",
+            "value": "1389291",
+            "options": []
+          },
+          {
+            "index": 48,
+            "type": "checkbox",
+            "label": "Apple מתעדפת בריאות ובטיחות בשרשרת האספקה שלה באמצעות תקנים מחמירים.",
+            "name": "577093",
+            "value": "1389293",
+            "options": []
+          }
+        ]
+      }
+    ]
+  }
+]
