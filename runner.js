@@ -1045,19 +1045,63 @@ function watchAssessmentAnswers(targetPage) {
   targetPage.on("response", (response) => {
     if (!ASSESSMENT_KEY_URL.test(response.url())) return;
     response.json().then((body) => {
-      for (const entry of Object.values(body?.assessments || {})) {
-        for (const category of entry?.assessment?.categories || []) {
-          for (const question of category?.questions || []) {
-            const right = (question.options || []).filter((option) => option.correctAnswer === true);
-            if (!right.length) continue;
-            key.questions++;
-            for (const option of right) key.correct.add(String(option.questionOptionId));
-          }
+      // `assessment.categories[].questions[]` is the quick challenge's shape.
+      // A quiz serves its questions somewhere else again — and the shape has
+      // changed before — so rather than hunt for the path, look for what is
+      // actually wanted: an option that says it is a right answer. Anything
+      // carrying `correctAnswer: true` alongside an option id is the key,
+      // wherever the payload keeps it.
+      const seen = new Set();
+      const walk = (node, depth) => {
+        if (!node || typeof node !== "object" || depth > 12 || seen.size > 20000) return;
+        if (seen.has(node)) return;
+        seen.add(node);
+        if (Array.isArray(node)) {
+          for (const item of node) walk(item, depth + 1);
+          return;
         }
-      }
+        if (node.correctAnswer === true && node.questionOptionId != null) {
+          key.correct.add(String(node.questionOptionId));
+        }
+        // A question is a node whose options carry the flags; counting them is
+        // only for the log line, so a miscount costs nothing.
+        if (Array.isArray(node.options) && node.options.some((option) => option?.correctAnswer === true)) {
+          key.questions++;
+        }
+        for (const value of Object.values(node)) walk(value, depth + 1);
+      };
+      walk(body, 0);
     }).catch(() => {});
   });
   return key;
+}
+
+// Apple's own key, applied. Where the module was served the `correctAnswer`
+// flags, guessing is beside the point: the right options are named, and the
+// option ids on the flags are the values the inputs already carry. Only
+// questions the key actually covers are touched, so a partial key corrects what
+// it knows and leaves the rest to the fill.
+async function applyServedAnswerKey(frame, key) {
+  if (!key?.correct?.size) return 0;
+  return frame.evaluate((correctIds) => {
+    const right = new Set(correctIds);
+    let corrected = 0;
+    for (const question of document.querySelectorAll(".question")) {
+      const inputs = Array.from(question.querySelectorAll('input[type="checkbox"], input[type="radio"]'));
+      if (!inputs.length) continue;
+      const known = inputs.filter((input) => right.has(String(input.value)));
+      if (!known.length) continue;
+      let changed = false;
+      for (const input of inputs) {
+        const wanted = right.has(String(input.value));
+        if (input.checked === wanted) continue;
+        input.click();
+        changed = true;
+      }
+      if (changed) corrected++;
+    }
+    return corrected;
+  }, [...key.correct]).catch(() => 0);
 }
 
 // The same answer key, read out of the page instead of off the wire. The
@@ -1067,9 +1111,13 @@ function watchAssessmentAnswers(targetPage) {
 // belongs in. Reasoning an answer out and spending an attempt to test it is
 // what this replaces.
 export async function readAssessmentKey() {
-  const targetPage = await connectedPage();
+  const connected = await connectedPage();
+  // A run opens each module in its own tab, so the quiz is almost never on the
+  // tab this session calls "connected". Every page in the context is fair game.
+  const pages = [connected, ...connected.context().pages().filter((page) => page !== connected)]
+    .filter((page) => !page.isClosed());
 
-  for (const frame of targetPage.frames()) {
+  for (const frame of pages.flatMap((page) => page.frames())) {
     const key = await frame.evaluate(() => {
       if (typeof SeedInterface === "undefined" || !SeedInterface.QSP) return null;
       const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
@@ -1864,6 +1912,24 @@ export function answerKeyOf(questionText) {
 // that combination. Without this, every retry re-picked the same first option
 // and a question with no stored answer could never be solved by trying again.
 const rejectedAnswers = new Map();
+
+// What the server has already refused for a question, found from the opening
+// text exams.js matches on. Keys are the normalised first 64 characters, and a
+// hand-written `match` is usually shorter than that, so the lookup is the same
+// prefix-tolerant one the blind fill uses.
+function rejectionsForMatch(matchText) {
+  const key = answerKeyOf(matchText || "");
+  if (!key) return null;
+  if (rejectedAnswers.has(key)) return rejectedAnswers.get(key);
+  let best = null;
+  for (const [candidate, entry] of rejectedAnswers) {
+    const overlap = Math.min(candidate.length, key.length);
+    if (overlap < 24) continue;
+    if (!candidate.startsWith(key) && !key.startsWith(candidate)) continue;
+    if (!best || overlap > best.overlap) best = { entry, overlap };
+  }
+  return best?.entry || null;
+}
 
 function rejectionsFor(key) {
   if (!rejectedAnswers.has(key)) rejectedAnswers.set(key, { options: [], sets: [], orders: [] });
@@ -3648,6 +3714,13 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
 
     while (true) {
       await waitRandom(itemPage, 3, 8, `Before submitting the quiz${attempt > 1 ? ` (attempt ${attempt})` : ""}`);
+      // If the module was served an answer key, it outranks everything the run
+      // reasoned or guessed, so it goes on last-but-one — after the fill, before
+      // the top-up that catches whatever is still empty.
+      const corrected = await applyServedAnswerKey(ready.frame, assessmentKey);
+      if (corrected) {
+        log(`Applied the answer key the module was served to ${corrected} question(s).`);
+      }
       await fillUntilAnswered(itemPage, ready.frame).catch(() => {});
       if (lastMatchingFill?.size) matchingFill = lastMatchingFill;
       graded = await submitAssessment(itemPage, ready.frame);
@@ -5459,7 +5532,9 @@ export async function inspectQuizDom() {
   const targetPage = await connectedPage();
   const frames = [];
 
-  for (const frame of targetPage.frames()) {
+  const pages = [targetPage, ...targetPage.context().pages().filter((page) => page !== targetPage)]
+    .filter((page) => !page.isClosed());
+  for (const frame of pages.flatMap((page) => page.frames())) {
     const dump = await frame.evaluate(() => {
       const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
       const describe = (element) => {
@@ -6170,6 +6245,28 @@ async function fillQuestion(question, dryRun = false, { immediate = false } = {}
   if (dryRun) {
     log(`DRY RUN matched: ${question.match}`);
     return;
+  }
+
+  // A guess the server has already refused is worse than no answer at all: it
+  // is applied with confidence at the start of every visit, and the attempt it
+  // costs tells the run nothing it did not already know. Leaving the question
+  // empty hands it to the blind fill, which picks around everything that has
+  // been ruled out. Only guesses are dropped this way — an answer that is not
+  // marked `unverified` stands, because a stored answer disagreeing with the
+  // memory is a conflict for a person to look at, not for a fill to resolve.
+  if (question.unverified) {
+    const refused = rejectionsForMatch(question.match);
+    const wanted = question.type === "single" ? [question.answer] : (question.answers || []);
+    const asSet = [...wanted].sort().join("\u0000");
+    const ruledOut = refused && (
+      (refused.options || []).some((wrong) => wanted.some((answer) => sameAnswerText(wrong, answer))) ||
+      (refused.sets || []).some((set) => [...set].sort().join("\u0000") === asSet) ||
+      (question.type === "selects" && (refused.orders || []).some((order) => order.join("\u0000") === wanted.join("\u0000")))
+    );
+    if (ruledOut) {
+      log(`↷ ${question.match}: this guess has already been graded wrong; leaving it for the blind fill.`);
+      return;
+    }
   }
 
   if (question.type === "single") {
