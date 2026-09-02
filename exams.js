@@ -1665,13 +1665,125 @@ const authored = {
       { type: "multiple", match: "מה עליכם לומר ללקוחות על העיצוב של iPhone Air", answers: ["\"זה ה‐iPhone הדק ביותר אי‐פעם, כך שהוא נראה ומרגיש נהדר בידיים שלכם.\"", "\"יש לו Ceramic Shield 2 בחזית ו-Ceramic Shield מאחור, כך שהוא עמיד יותר מכל iPhone קודם.\"", "\"הוא עשוי מטיטניום בדרגה 5, כך שהוא חזק וקל.\""] }
     ]
   },
+  // Sales Coach › התחילו למכור מכשירי iPad › בוחן – התחילו למכור מכשירי iPad
+  // https://salescoach.apple.com/home/content/view/521862?backTo=%2Fhome%2Fcollection%2F211852
+  // Ten questions. The attempt captured on 2026-09-02 lost four: all three
+  // matching questions, which nothing had ever answered, and the Magic Keyboard
+  // one. The other six are answers the server has marked right.
+  "בוחן-התחילו-למכור-מכשירי-ipad": {
+    name: "בוחן – התחילו למכור מכשירי iPad",
+    section: "התחילו למכור מכשירי iPad",
+    questions: [
+      // Widgets on the Home and Lock Screen; Stage Manager for multitasking with
+      // recent apps down the side of the screen (the right, in a mirrored
+      // right-to-left layout); Control Center for brightness, text size,
+      // accessibility and the wireless network. The menu bar and the Dock are
+      // the decoys — and if this comes back wrong, the Dock is what to try in
+      // blank 2, since Apple describes recent apps as sitting on the right of
+      // the Dock itself.
+      { type: "selects", match: "איך כדאי לתאר ללקוחות כל אחד מהמאפיינים של iPadOS? יש להשל", answers: ["וידג'טים", "מנהל התצוגה", "מרכז הבקרה"] },
+      { type: "multiple", match: "מה צריך לספר ללקוחות על ההגדרה של תוכנית נתונים סלולריים ב", answers: ["\"אפשר לרכוש תוכנית ישירות ב-iPad.\"", "\"אפשר לשלם בהתאם לצורך, כך שלא תצטרכו להתחייב לחוזה ארוך טווח.\"", "\"אפשר לבחור תוכניות לפי כמות הנתונים הדרושה לך.\""] },
+      { type: "single", match: "אילו דגמי Apple Pencil תואמים ל-iPad Air? יש לבחור אפשרות", answer: "Apple Pencil Pro ו-Apple Pencil ‏(USB-C)" },
+      // The Magic Keyboard is made for iPad Pro and iPad Air. The base iPad takes
+      // the Magic Keyboard Folio instead — which is what the option says when it
+      // is graded — and the mini takes neither. Confirmed by the server.
+      { type: "multiple", match: "אילו דגמי iPad תואמים ל-Magic Keyboard? נבחרו 2 מתוך 2.", answers: ["iPad Pro", "iPad Air"] },
+      { type: "multiple", match: "מה עליכם לומר על השבבים מסדרה M ב-iPad? נבחרו 3 מתוך 3.", answers: ["\"תבחינו בכך שהכול מהיר וזורם הודות לזיכרון האחיד.\"", "\"תקבלו גרפיקה מהירה, כך שהם מצוינים עבור משחקים ומשימות יצירתיות.\"", "\"תיהנו מאותה רמת ביצועים, לא משנה אם ה-iPad מחובר לחשמל או אם הוא פועל באמצעות סוללה.\""] },
+      { type: "single", match: "מה כדאי לומר ללקוחות על ה-iPad Air? יש לבחור אפשרות אחת.", answer: "\"עם המצלמה הקדמית הממוקמת בקצה הרחב ו'מרכז הבמה', ועם 'הפרדת קול' במיקרופונים, תיראו ותישמעו נהדר בשיחות וידאו.\"" },
+      { type: "single", match: "על מה עליכם להמליץ ללקוחות שזקוקים למתאם מתח וכבל נוספים כ", answer: "מתאם מתח USB-C בהספק 20 ואט של Apple וכבל טעינה USB-C של Apple" },
+      // Notes is what marks up PDFs, fills forms and scans documents; Freeform is
+      // the real-time collaborative canvas; window tiling is what puts two apps
+      // on screen at once. The Lock Screen and the contact poster are decoys.
+      { type: "selects", match: "התאימו את צורכי הלקוחות למאפיין של iPadOS שכדאי לספר להם ע", answers: ["פתקים", "Freeform", "סידור חלונות"] },
+      { type: "multiple", match: "מה כדאי לומר על ה-iPad Pro? נבחרו 3 מתוך 3.", answers: ["\"עם מערכת המצלמות המקצועית, תוכלו לצלם תמונות יפות וסרטוני ProRes מפורטים באיכות 4K.\"", "\"יש לו צג Ultra Retina XDR, כך שתקבלו צג בהיר, תמונות מפורטות וגוני שחור נאמנים יותר למציאות.\"", "\"תקבלו זיכרון רב יותר שיאפשר ריבוי משימות ועוצמה שתספיק ליישומים ולמשחקים תובעניים.\""] },
+      // Touch ID with two sizes and four finishes is the Air; the 11-inch with
+      // the 12MP landscape Center Stage camera is the plain iPad; M5 with Face
+      // ID, Thunderbolt and LiDAR is the Pro; 8.3 inches with the Pencil on the
+      // side is the mini.
+      { type: "selects", match: "התאימו בין כל דגם iPad לבין המאפיינים שלו. יש להשלים את הח", answers: ["iPad Air", "iPad", "iPad Pro", "iPad mini"] },
+    ]
+  },
+  // Sales Coach › התחילו למכור iPhone › בוחן – התחילו למכור מכשירי iPhone
+  // https://salescoach.apple.com/home/content/view/521884?backTo=%2Fhome%2Fcollection%2F208920
+  // Scored 80% on 2026-09-02; the two it lost are the matching questions below,
+  // which had never been answered. Everything else here the server has marked
+  // right, the model-matching question included.
   "בוחן-התחילו-למכור-מכשירי-iphone": {
     name: "בוחן – התחילו למכור מכשירי iPhone",
     section: "התחילו למכור iPhone",
     questions: [
-      { type: "multiple", match: "אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud", answers: ["לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם", "לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד"] },
-      { type: "multiple", match: "במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17", answers: ["מטען אלחוטי בתקן Qi2", "מטען MagSafe", "מתאם מתח וכבל בחיבור USB-C"] },
-      { type: "single", match: "כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'", answer: "\"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\"" }
+      // Lock Screen customisation (widgets, wallpaper, text colour and font),
+      // iMessage for end-to-end encrypted messages with backgrounds and polls,
+      // VoiceOver for hearing what is on screen, and Detection Mode — the
+      // Magnifier feature that uses the LiDAR scanner. Home Screen and Dictation
+      // are the decoys.
+      { type: "selects", match: "התאימו כל מאפיין של iOS לתיאור שלו. יש להשלים את החסר.", answers: ["מסך הנעילה", "iMessage", "VoiceOver", "מצב זיהוי"] },
+      { type: "multiple", match: "אילו אמירות נכונות לגבי מצלמת Center Stage הקדמית? נבחרו 2", answers: ["הלקוחות יכולים להשתמש במאפיין 'צילום כפול' כדי להקליט בו-זמנית את עצמם ואת העולם שסביבם.", "היא מעולה למסגור של תמונות סלפי קבוצתיות ושל סרטונים."] },
+      { type: "multiple", match: "אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud? נבחרו 2 מ", answers: ["לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם", "לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד"] },
+      { type: "multiple", match: "במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17 ו-iPh", answers: ["מטען אלחוטי בתקן Qi2", "מטען MagSafe", "מתאם מתח וכבל בחיבור USB-C"] },
+      { type: "single", match: "כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'? יש לבחור אפשרות", answer: "\"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\"" },
+      { type: "multiple", match: "מה עליכם לומר ללקוחות על ה-iPhone 17 Pro? נבחרו 2 מתוך 2.", answers: ["\"העיצוב שלו עשוי גוף אלומיניום אחיד (unibody) שממקסם את הביצועים, את קיבולת הסוללה ואת העמידות.\"", "\"השבב A19 Pro מספק מהירות ויעילות יוצאות מהכלל, וזה מושלם למשחקים מתקדמים ולמשימות תובעניות.\""] },
+      { type: "multiple", match: "מה עליכם לומר על המצלמות ב-iPhone 17? נבחרו 2 מתוך 2.", answers: ["\"הודות למערכת המצלמות Dual Fusion ברזולוציה של 48MP, תהיה לך אפשרות לצלם תמונות מדהימות עם פרטים מהממים.\"", "\"יש לו מצלמת Center Stage קדמית ברזולוציה של 18MP לצילום וידאו יציב במיוחד.\""] },
+      // The four Continuity features, each by what it does: AirDrop sends files
+      // to nearby devices, Handoff carries a task to another device, Universal
+      // Clipboard copies between two devices, Continuity Camera makes the iPhone
+      // a webcam for the Mac. AirPlay is the decoy.
+      { type: "selects", match: "התאימו כל מאפיין של iPhone לתיאור שלו. יש להשלים את החסר.", answers: ["AirDrop", "Handoff", "לוח אוניברסלי", "המשכיות במצלמה"] },
+      // Confirmed: 6.3" aluminium in five colours with A19 is the 17; 6.5"
+      // titanium and the thinnest ever is the Air; 6.3" unibody with A19 Pro is
+      // the 17 Pro; 6.1" with A19 is the 17e.
+      { type: "selects", match: "התאימו כל דגם של iPhone למאפיינים שלו. יש להשלים את החסר.", answers: ["iPhone 17", "iPhone Air", "iPhone 17 Pro", "iPhone 17e"] },
+      { type: "single", match: "איזה מאפיין יכול ליידע את שירותי החירום ואת אנשי הקשר לשעת", answer: "זיהוי תאונת דרכים" },
+    ]
+  },
+  // Sales Coach › ה-Ecosystem של Apple › מה אתם יודעים על ה-Ecosystem של Apple?
+  // https://salescoach.apple.com/home/content/view/488387
+  // Scored 40% on 2026-09-02. The product knowledge all landed — Universal
+  // Clipboard, Universal Control, the Watch Live Activity, and Double Tap —
+  // and every episode-detail question missed, which is what `unverified` was
+  // saying. Each of those is now one option lighter: the grade ruled out the
+  // first guess, so what is written below is the second, and they are still
+  // guesses. Anyone who watches the four episodes can settle all five in a
+  // couple of minutes and save the attempts.
+  //
+  // The step-ordering question is a different matter: its answer looks right
+  // and the fill was what broke, putting the steps back almost exactly
+  // reversed. Ordering dropdowns move each other, so runner.js now reads the
+  // fill back and repairs it until it stands.
+  "מה-אתם-יודעים-על-ה-ecosystem-של-apple": {
+    name: "מה אתם יודעים על ה-Ecosystem של Apple?",
+    section: "ה-Ecosystem של Apple",
+    questions: [
+      // iMessage was the reading — Announce Notifications reads a message out and
+      // takes a hands-free reply — and the grade rejected it. Mail is next: the
+      // notification is about her promotion, which is the kind of news that
+      // arrives by email.
+      { type: "single", match: "Siri יכולה לקרוא את העדכונים הנכנסים והמשתמשים יכולים להגי", answer: "דואר", unverified: true },
+      // Universal Control is a Mac-and-iPad feature; it does not reach iPhone or Watch.
+      { type: "multiple", match: "בין אילו מכשירי Apple 'שליטה אוניברסלית’ פועלת? יש לבחור א", answers: ["iPad", "Mac"] },
+      // The Apple Support app was rejected; the website is the next likeliest
+      // place Riley would send him to read about Sidecar.
+      { type: "single", match: "‘התמיכה של Apple מעניקה למשתמשים את העזרה שהם צריכים בנוגע", answer: "אתר", unverified: true },
+      // Scanning a recipe in Notes, in order: open Notes, make a new note, tap the
+      // paperclip, hold the page in front of the camera, scan it, save. The rows
+      // are in the order the page lists them, so each one is given its place.
+      // Unchanged after the 40% attempt: the answer was never really tried,
+      // because setting one row's position reorders the rest and the fill left
+      // the steps almost exactly reversed.
+      { type: "selects", match: "סבתא משתמשת ב-iPad כדי לסרוק את המתכון ולשלוח אותו לריילי.", answers: ["מיקום ההזמנה: 4 מתוך 6", "מיקום ההזמנה: 5 מתוך 6", "מיקום ההזמנה: 1 מתוך 6", "מיקום ההזמנה: 3 מתוך 6", "מיקום ההזמנה: 6 מתוך 6", "מיקום ההזמנה: 2 מתוך 6"] },
+      // Hearts was rejected. The call is about a promotion, so of what is left
+      // — balloons, confetti, fireworks — confetti is the celebration one.
+      { type: "single", match: "‘תגובות’ מאפשרות למשתמשים להביע את מה שהם מרגישים בשיחות ו", answer: "קונפטי", unverified: true },
+      // Three was rejected; 2, 4 and 5 remain, and only the episode says which.
+      { type: "single", match: "כמה אוכמניות יש בבסיס של העוגה של סבתא? יש לבחור אפשרות אח", answer: "4", unverified: true },
+      // Guinevere was rejected; Genevieve, Gwendolyn and Gwyneth remain.
+      { type: "single", match: "איך קוראים לסבתא של ריילי? יש לבחור אפשרות אחת.", answer: "גוונדולין", unverified: true },
+      // Double Tap, the Apple Watch gesture the episodes are there to show off.
+      // Confirmed by the grade.
+      { type: "single", match: "איך איליי השתיק את הספירה לאחור לבישול שהגדיר אצלו ב-iPhon", answer: "במחוות ההצמדה הכפולה ב-Apple Watch" },
+      // Starting a workout on the Watch does put a Live Activity on the iPhone.
+      { type: "single", match: "כשמתחילים אימון אופניים ב-Apple Watch, אפשר גם לראות את מד", answer: "נכון" },
+      { type: "single", match: "איזו תכונה מאפשרת למשתמשים להעתיק ולהדביק פריטים כמו תמונו", answer: "לוח אוניברסלי" },
     ]
   },
   "מידע-על-המחויבות-של-apple-לכדור-הארץ": {

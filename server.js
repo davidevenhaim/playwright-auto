@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exams } from "./exams.js";
-import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, examErrorReport, runExam, runQuickChallengeHere, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
+import { captureCurrentExam, connectBrowser, browserStatus, detectCurrentExam, examsJsFromLearned, getLogs, inspectPage, inspectQuizDom, readAssessmentKey, listSessions, openSalesCoachUrl, processAcademy, processCurrentChapter, processSite, examErrorReport, runExam, runQuickChallengeHere, fillCurrentQuizBlind, probeUnanswered, screenshotPage, sessionId, withSession } from "./runner.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -114,6 +114,10 @@ function writeExamResults(scope, run, session) {
     // Per-question grading for every quiz this run submitted: what was chosen,
     // what the server said about it, and which answers are now settled.
     learned: run.learned || [],
+    // The quizzes this run took all the way to a pass, each with the answers
+    // that got it there and an exams.js entry ready to paste. This is the part
+    // worth reading after a run: everything else is what is still open.
+    passedExams: run.passedExams || [],
     processingErrors: (run.results || []).filter((item) => item.status === "failed" && item.type !== "quiz")
   };
   const target = examResultsPathFor(run.startedAt, session);
@@ -128,6 +132,13 @@ function writeExamResults(scope, run, session) {
 // quiz names immediately instead of making the user wait for the request to
 // finish and download its JSON.
 function liveRunSummary(scope, run, active = true) {
+  const passedExams = (run.passedExams || []).map((exam) => ({
+    title: exam.exam,
+    percentage: exam.percentage ?? null,
+    attempts: exam.attempts ?? null,
+    confirmed: exam.confirmed ?? null,
+    questions: exam.questions ?? null
+  }));
   const failedExams = (run.results || [])
     .filter((item) => item.type === "quiz" && item.passed === false)
     .map((item) => ({
@@ -143,6 +154,7 @@ function liveRunSummary(scope, run, active = true) {
     modulesProcessed: run.modulesProcessed || 0,
     examsSubmitted: run.examsSubmitted || 0,
     resourcesRead: run.resourcesRead || 0,
+    passedExams,
     failedExams,
     captures: (run.captures || []).map((capture) => capture.title || capture.module).filter(Boolean)
   };
@@ -291,6 +303,26 @@ app.get("/api/status", async (req, res) => {
 app.get("/api/logs", (req, res) => {
   const session = sessionOf(req);
   res.json({ session, logs: withSession(session, () => getLogs()), run: liveRuns.get(session) || null });
+});
+
+// Apple's own answer key for the quiz on the connected tab, where the player
+// was served one. Beats reasoning an answer out and spending an attempt on it.
+app.get("/api/answer-key", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => readAssessmentKey()));
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
+});
+
+// The DOM of a quiz the runner does not recognise, so a handler can be written
+// for it. Open the module in the connected tab, then fetch this.
+app.get("/api/quiz-dom", async (req, res) => {
+  try {
+    res.json(await withSession(sessionOf(req), () => inspectQuizDom()));
+  } catch (error) {
+    res.status(500).json({ error: error instanceof Error ? error.message : String(error) });
+  }
 });
 
 app.get("/api/detect", async (req, res) => {

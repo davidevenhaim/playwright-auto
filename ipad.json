@@ -1,0 +1,1965 @@
+[
+  {
+    "title": "בוחן – התחילו למכור מכשירי iPad |  Sales Coach",
+    "url": "https://salescoach.apple.com/home/content/view/521862?backTo=%2Fhome%2Fcollection%2F211852&backTo=%2Fhome%2Fcollection%2F57451&backTo=%2Fhome%2Fexplore%2Fcollections%2Fcurriculum%2F74200&backTo=%2Fhome%2Fexplore%2Fcollections&backTo=%2Fhome%2Fexplore",
+    "capturedAt": "2026-09-02T07:28:14.621Z",
+    "questions": [
+      {
+        "number": 1,
+        "text": "1 איך כדאי לתאר ללקוחות כל אחד מהמאפיינים של iPadOS? יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "מנהל התצוגה",
+            "Dock",
+            "שורת התפריטים",
+            "וידג'טים",
+            "מרכז הבקרה"
+          ],
+          [
+            "בחר תשובה",
+            "מנהל התצוגה",
+            "Dock",
+            "שורת התפריטים",
+            "וידג'טים",
+            "מרכז הבקרה"
+          ],
+          [
+            "בחר תשובה",
+            "מנהל התצוגה",
+            "Dock",
+            "שורת התפריטים",
+            "וידג'טים",
+            "מרכז הבקרה"
+          ]
+        ]
+      },
+      {
+        "number": 2,
+        "text": "2 מה צריך לספר ללקוחות על ההגדרה של תוכנית נתונים סלולריים ב-iPad? נבחרו 3 מתוך 3.",
+        "type": "multiple",
+        "questionId": "613019",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "\"אפשר לרכוש תוכנית ישירות ב-iPad.\"",
+            "value": "1487519",
+            "checked": true
+          },
+          {
+            "label": "\"אפשר לשלם בהתאם לצורך, כך שלא תצטרכו להתחייב לחוזה ארוך טווח.\"",
+            "value": "1487521",
+            "checked": true
+          },
+          {
+            "label": "\"אפשר לבחור תוכניות לפי כמות הנתונים הדרושה לך.\"",
+            "value": "1487518",
+            "checked": true
+          },
+          {
+            "label": "\"אפשר להגדיר תוכנית נתונים ב-iPad אפילו למשך שעה-שעתיים בלבד.\"",
+            "value": "1487520",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 3,
+        "text": "3 אילו דגמי Apple Pencil תואמים ל-iPad Air? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "613027",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "Apple Pencil Pro ו-Apple Pencil ‏(USB-C)",
+            "value": "1487543",
+            "checked": true
+          },
+          {
+            "label": "Apple Pencil ‏(USB-C) ו-Apple Pencil (דור שני)",
+            "value": "1487542",
+            "checked": false
+          },
+          {
+            "label": "Apple Pencil Pro ו-Apple Pencil (דור שני)",
+            "value": "1487544",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 4,
+        "text": "4 אילו דגמי iPad תואמים ל-Magic Keyboard? נבחרו 2 מתוך 2.",
+        "type": "multiple",
+        "questionId": "613024",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "iPad",
+            "value": "1487534",
+            "checked": true
+          },
+          {
+            "label": "iPad Pro",
+            "value": "1487535",
+            "checked": true
+          },
+          {
+            "label": "iPad mini",
+            "value": "1487537",
+            "checked": false
+          },
+          {
+            "label": "iPad Air",
+            "value": "1487536",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 5,
+        "text": "5 מה עליכם לומר על השבבים מסדרה M ב-iPad? נבחרו 3 מתוך 3.",
+        "type": "multiple",
+        "questionId": "613020",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "\"תבחינו בכך שהכול מהיר וזורם הודות לזיכרון האחיד.\"",
+            "value": "1487524",
+            "checked": true
+          },
+          {
+            "label": "\"תקבלו חישת עומק מיידית לחוויות של מציאות רבודה.\"",
+            "value": "1487525",
+            "checked": false
+          },
+          {
+            "label": "\"תקבלו גרפיקה מהירה, כך שהם מצוינים עבור משחקים ומשימות יצירתיות.\"",
+            "value": "1487522",
+            "checked": true
+          },
+          {
+            "label": "\"תיהנו מאותה רמת ביצועים, לא משנה אם ה-iPad מחובר לחשמל או אם הוא פועל באמצעות סוללה.\"",
+            "value": "1487523",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 6,
+        "text": "6 מה כדאי לומר ללקוחות על ה-iPad Air? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "613018",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "\"תקבלו ביצועים חזקים, גרפיקה נהדרת וקישוריות Wi-Fi 6 מהירה בעיצוב הקומפקטי ביותר של iPad.\"",
+            "value": "1487516",
+            "checked": false
+          },
+          {
+            "label": "\"עם המצלמה הקדמית הממוקמת בקצה הרחב ו'מרכז הבמה', ועם 'הפרדת קול' במיקרופונים, תיראו ותישמעו נהדר בשיחות וידאו.\"",
+            "value": "1487515",
+            "checked": true
+          },
+          {
+            "label": "\"עם סורק LiDAR, תקבלו חוויות מהירות וסוחפות יותר של מציאות רבודה.\"",
+            "value": "1487517",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 7,
+        "text": "7 על מה עליכם להמליץ ללקוחות שזקוקים למתאם מתח וכבל נוספים כדי לטעון את ה-iPad כשהם נמצאים בתנועה? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "613023",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "מתאם מתח USB בהספק 12 ואט של Apple וכבל טעינה USB-C של Apple",
+            "value": "1487531",
+            "checked": false
+          },
+          {
+            "label": "מתאם מתח USB-C בהספק 20 ואט של Apple וכבל USB-C ל-Lightning של Apple",
+            "value": "1487533",
+            "checked": false
+          },
+          {
+            "label": "מתאם מתח USB-C בהספק 20 ואט של Apple וכבל טעינה USB-C של Apple",
+            "value": "1487532",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 8,
+        "text": "8 התאימו את צורכי הלקוחות למאפיין של iPadOS שכדאי לספר להם עליו. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "מסך הנעילה",
+            "פתקים",
+            "כרזת איש קשר",
+            "סידור חלונות",
+            "Freeform"
+          ],
+          [
+            "בחר תשובה",
+            "מסך הנעילה",
+            "פתקים",
+            "כרזת איש קשר",
+            "סידור חלונות",
+            "Freeform"
+          ],
+          [
+            "בחר תשובה",
+            "מסך הנעילה",
+            "פתקים",
+            "כרזת איש קשר",
+            "סידור חלונות",
+            "Freeform"
+          ]
+        ]
+      },
+      {
+        "number": 9,
+        "text": "9 מה כדאי לומר על ה-iPad Pro? נבחרו 3 מתוך 3.",
+        "type": "multiple",
+        "questionId": "613017",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "\"עם מערכת המצלמות המקצועית, תוכלו לצלם תמונות יפות וסרטוני ProRes מפורטים באיכות 4K.\"",
+            "value": "1487512",
+            "checked": true
+          },
+          {
+            "label": "\"יש לו צג Ultra Retina XDR, כך שתקבלו צג בהיר, תמונות מפורטות וגוני שחור נאמנים יותר למציאות.\"",
+            "value": "1487514",
+            "checked": true
+          },
+          {
+            "label": "\"תקבלו זיכרון רב יותר שיאפשר ריבוי משימות ועוצמה שתספיק ליישומים ולמשחקים תובעניים.\"",
+            "value": "1487511",
+            "checked": true
+          },
+          {
+            "label": "\"עם יציאת Lightning, תוכלו לחבר דברים כמו התקני אחסון חיצוניים, מצלמות ומקלדות.\"",
+            "value": "1487513",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 10,
+        "text": "10 התאימו בין כל דגם iPad לבין המאפיינים שלו. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "iPad Pro",
+            "iPad mini",
+            "iPad Air",
+            "iPad"
+          ],
+          [
+            "בחר תשובה",
+            "iPad Pro",
+            "iPad mini",
+            "iPad Air",
+            "iPad"
+          ],
+          [
+            "בחר תשובה",
+            "iPad Pro",
+            "iPad mini",
+            "iPad Air",
+            "iPad"
+          ],
+          [
+            "בחר תשובה",
+            "iPad Pro",
+            "iPad mini",
+            "iPad Air",
+            "iPad"
+          ]
+        ]
+      }
+    ],
+    "answerKey": {
+      "available": true,
+      "completionScore": 100,
+      "assessments": [
+        {
+          "id": "184168",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState",
+            "feedbackDetails"
+          ]
+        },
+        {
+          "id": "184168",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState",
+            "feedbackDetails"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "id": "184168",
+          "questions": [
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613017,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487514,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487511,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487512,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613026,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487539,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487541,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487538,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487540,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613029,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487546,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487547,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487548,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613018,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487515,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613020,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487524,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487522,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487523,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613027,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487543,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613024,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487534,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487535,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613022,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487528,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487526,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487530,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613019,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487521,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487519,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487518,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613023,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487532,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "184168",
+          "questions": [
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613017,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487514,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487511,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487512,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613026,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487539,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487541,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487538,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487540,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613029,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487546,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487547,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487548,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613018,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487515,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613020,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487524,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487522,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487523,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613027,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487543,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613024,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487534,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487535,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613022,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487528,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487526,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487530,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613019,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487521,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487519,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487518,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788269746100,
+              "updatedDate": 1788269746100,
+              "questionId": 613023,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487532,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.0.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.1.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.2.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.3.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.4.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.5.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.6.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.7.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.8.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184168.submittedResponse.0.questionObjects.9.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184168.assessment.feedbackDetails.score",
+          "value": 7
+        },
+        {
+          "path": "QSP.assessments.184168.assessmentMetadata.score",
+          "value": 7
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.0.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.1.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.2.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.3.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.4.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.5.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.6.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.7.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.8.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183636.submittedResponse.0.questionObjects.9.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183636.assessmentMetadata.score",
+          "value": 7
+        }
+      ],
+      "shape": {
+        "DELAY_FEEDBACK_UNTIL_SERVER_RESPONSE": "boolean",
+        "queuedGetAWSUploadURLCalls": "array(0)",
+        "queuedAWSUploadCalls": "array(0)",
+        "queuedUploadResponseCalls": "array(0)",
+        "assessments": {
+          "184168": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": {},
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "firstAssessment": {},
+        "originalAssessments": {
+          "183636": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": {},
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "shouldShowSimpleScore": "boolean",
+        "simulateServer": "boolean",
+        "workingState": {},
+        "showImmediateFeedbackFunctions": {},
+        "onSubmitAssessmentSuccessFunctions": {},
+        "completionScore": "number",
+        "debounceTimeouts": {
+          "postAnswer-613024": "object"
+        },
+        "pendingAnswers": {
+          "postAnswer-613024": "array(1)"
+        }
+      }
+    },
+    "examsJsDraft": "  // Options to choose from:\n  // 1. 1 איך כדאי לתאר ללקוחות כל אחד מהמאפיינים של iPadOS? יש להשלים את החסר.\n  //      select 1: בחר תשובה | מנהל התצוגה | Dock | שורת התפריטים | וידג'טים | מרכז הבקרה\n  //      select 2: בחר תשובה | מנהל התצוגה | Dock | שורת התפריטים | וידג'טים | מרכז הבקרה\n  //      select 3: בחר תשובה | מנהל התצוגה | Dock | שורת התפריטים | וידג'טים | מרכז הבקרה\n  // 2. 2 מה צריך לספר ללקוחות על ההגדרה של תוכנית נתונים סלולריים ב-iPad? נבחרו 3 מתוך 3.\n  //      - \"אפשר לרכוש תוכנית ישירות ב-iPad.\"\n  //      - \"אפשר לשלם בהתאם לצורך, כך שלא תצטרכו להתחייב לחוזה ארוך טווח.\"\n  //      - \"אפשר לבחור תוכניות לפי כמות הנתונים הדרושה לך.\"\n  //      - \"אפשר להגדיר תוכנית נתונים ב-iPad אפילו למשך שעה-שעתיים בלבד.\"\n  // 3. 3 אילו דגמי Apple Pencil תואמים ל-iPad Air? יש לבחור אפשרות אחת.\n  //      - Apple Pencil Pro ו-Apple Pencil ‏(USB-C)\n  //      - Apple Pencil ‏(USB-C) ו-Apple Pencil (דור שני)\n  //      - Apple Pencil Pro ו-Apple Pencil (דור שני)\n  // 4. 4 אילו דגמי iPad תואמים ל-Magic Keyboard? נבחרו 2 מתוך 2.\n  //      - iPad\n  //      - iPad Pro\n  //      - iPad mini\n  //      - iPad Air\n  // 5. 5 מה עליכם לומר על השבבים מסדרה M ב-iPad? נבחרו 3 מתוך 3.\n  //      - \"תבחינו בכך שהכול מהיר וזורם הודות לזיכרון האחיד.\"\n  //      - \"תקבלו חישת עומק מיידית לחוויות של מציאות רבודה.\"\n  //      - \"תקבלו גרפיקה מהירה, כך שהם מצוינים עבור משחקים ומשימות יצירתיות.\"\n  //      - \"תיהנו מאותה רמת ביצועים, לא משנה אם ה-iPad מחובר לחשמל או אם הוא פועל באמצעות סוללה.\"\n  // 6. 6 מה כדאי לומר ללקוחות על ה-iPad Air? יש לבחור אפשרות אחת.\n  //      - \"תקבלו ביצועים חזקים, גרפיקה נהדרת וקישוריות Wi-Fi 6 מהירה בעיצוב הקומפקטי ביותר של iPad.\"\n  //      - \"עם המצלמה הקדמית הממוקמת בקצה הרחב ו'מרכז הבמה', ועם 'הפרדת קול' במיקרופונים, תיראו ותישמעו נהדר בשיחות וידאו.\"\n  //      - \"עם סורק LiDAR, תקבלו חוויות מהירות וסוחפות יותר של מציאות רבודה.\"\n  // 7. 7 על מה עליכם להמליץ ללקוחות שזקוקים למתאם מתח וכבל נוספים כדי לטעון את ה-iPad כשהם נמצאים\n  //      - מתאם מתח USB בהספק 12 ואט של Apple וכבל טעינה USB-C של Apple\n  //      - מתאם מתח USB-C בהספק 20 ואט של Apple וכבל USB-C ל-Lightning של Apple\n  //      - מתאם מתח USB-C בהספק 20 ואט של Apple וכבל טעינה USB-C של Apple\n  // 8. 8 התאימו את צורכי הלקוחות למאפיין של iPadOS שכדאי לספר להם עליו. יש להשלים את החסר.\n  //      select 1: בחר תשובה | מסך הנעילה | פתקים | כרזת איש קשר | סידור חלונות | Freeform\n  //      select 2: בחר תשובה | מסך הנעילה | פתקים | כרזת איש קשר | סידור חלונות | Freeform\n  //      select 3: בחר תשובה | מסך הנעילה | פתקים | כרזת איש קשר | סידור חלונות | Freeform\n  // 9. 9 מה כדאי לומר על ה-iPad Pro? נבחרו 3 מתוך 3.\n  //      - \"עם מערכת המצלמות המקצועית, תוכלו לצלם תמונות יפות וסרטוני ProRes מפורטים באיכות 4K.\"\n  //      - \"יש לו צג Ultra Retina XDR, כך שתקבלו צג בהיר, תמונות מפורטות וגוני שחור נאמנים יותר למציאות.\"\n  //      - \"תקבלו זיכרון רב יותר שיאפשר ריבוי משימות ועוצמה שתספיק ליישומים ולמשחקים תובעניים.\"\n  //      - \"עם יציאת Lightning, תוכלו לחבר דברים כמו התקני אחסון חיצוניים, מצלמות ומקלדות.\"\n  // 10. 10 התאימו בין כל דגם iPad לבין המאפיינים שלו. יש להשלים את החסר.\n  //      select 1: בחר תשובה | iPad Pro | iPad mini | iPad Air | iPad\n  //      select 2: בחר תשובה | iPad Pro | iPad mini | iPad Air | iPad\n  //      select 3: בחר תשובה | iPad Pro | iPad mini | iPad Air | iPad\n  //      select 4: בחר תשובה | iPad Pro | iPad mini | iPad Air | iPad\n  \"ipad\": {\n    name: \"בוחן – התחילו למכור מכשירי iPad\",\n    questions: [\n      { type: \"selects\", match: \"1 איך כדאי לתאר ללקוחות כל אחד מהמאפיינים של iPadOS? יש להשל\", answers: [\"\", \"\", \"\"] },\n      { type: \"multiple\", match: \"2 מה צריך לספר ללקוחות על ההגדרה של תוכנית נתונים סלולריים ב\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"3 אילו דגמי Apple Pencil תואמים ל-iPad Air? יש לבחור אפשרות \", answer: \"\" },\n      { type: \"multiple\", match: \"4 אילו דגמי iPad תואמים ל-Magic Keyboard? נבחרו 2 מתוך 2.\", answers: [\"\", \"\"] },\n      { type: \"multiple\", match: \"5 מה עליכם לומר על השבבים מסדרה M ב-iPad? נבחרו 3 מתוך 3.\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"6 מה כדאי לומר ללקוחות על ה-iPad Air? יש לבחור אפשרות אחת.\", answer: \"\" },\n      { type: \"single\", match: \"7 על מה עליכם להמליץ ללקוחות שזקוקים למתאם מתח וכבל נוספים כ\", answer: \"\" },\n      { type: \"selects\", match: \"8 התאימו את צורכי הלקוחות למאפיין של iPadOS שכדאי לספר להם ע\", answers: [\"\", \"\", \"\"] },\n      { type: \"multiple\", match: \"9 מה כדאי לומר על ה-iPad Pro? נבחרו 3 מתוך 3.\", answers: [\"\", \"\"] },\n      { type: \"selects\", match: \"10 התאימו בין כל דגם iPad לבין המאפיינים שלו. יש להשלים את ה\", answers: [\"\", \"\", \"\", \"\"] },\n    ]\n  },",
+    "frames": [
+      {
+        "name": "",
+        "url": "https://salescoach.apple.com/home/content/view/521862?backTo=%2Fhome%2Fcollection%2F211852&backTo=%2Fhome%2Fcollection%2F57451&backTo=%2Fhome%2Fexplore%2Fcollections%2Fcurriculum%2F74200&backTo=%2Fhome%2Fexplore%2Fcollections&backTo=%2Fhome%2Fexplore",
+        "text": "􀣺 Sales Coach 􀲳 Explore 􀥴 For You Manage 􀉞 Saved Content 􀓣 Profile 􀆉 בוחן – התחילו למכור מכשירי iPad 􀍠",
+        "controls": []
+      },
+      {
+        "name": "main-frame",
+        "url": "https://seeddownload.cdn-apple.com/s3/prod/SEED/package/T056685A-he_IL/66b3eb9f-0016-4c0a-a711-866feaa9fe12/1.0/T056685A-he_IL-Quiz_Get_started_selling_iPad/index.html?userToken=ARpwthtpNnmqN-TUmSdZDdoBO4fF7sirFa0e_nQuFsIgD0iCv9pNwMLBKuvMr3cmqkF4u6EiBAlVj0zMFFN2R-kmeGbZc3fnKFbOzsjL7Hu6stekz-g9qLzs8rMKsI0cvAb6&certificate=QXZ6T1RFNHF3WmVaNkMxVm1WTDhQR0hJQWlVPQ==&serverToken=1788454066_323a0c8ef564a4c9cc16c6398b2ff58e&sitename=SEED#assetStateObj={%22user%22:2687770,%22assetId%22:521862,%22webapp%22:true}",
+        "text": "בוחן – התחילו למכור מכשירי iPad ענו על השאלות הבאות כדי לבדוק את רמת הידע שלכם לגבי מערך המוצרים הנוכחי של ה-iPad ולזכות בתג. אין צורך למהר, כי אם לא תשלימו בהצלחה את הבוחן בניסיון השני, תצטרכו להמתין שעה אחת עד שתוכלו לנסות להשלים אותו פעם נוספת. נצלו את הזמן הזה כדי לעיין באוסף 'התחילו למכור מכשירי iPad' על מנת ללמוד את החומר הנדרש. לאחר מכן, חזרו לבוחן הזה ונסו שוב. 70 עדיין לא עברת. נסה שוב. 1 איך כדאי לתאר ללקוחות כל אחד מהמאפיינים של iPadOS? יש להשלים את החסר. בחר תשובה מנהל התצוגה Dock שורת התפריטים וידג'טים מרכז הבקרה \"במסך הבית או במסך הנעילה, תוכלו לבדוק בקלות מידע, למשל תוצאות ספורט, את תחזית מזג האוויר או את מועד הפגישה הבאה שלכם.\" בחר תשובה מנהל התצוגה Dock שורת התפריטים וידג'טים מרכז הבקרה \"תוכלו לבצע ריבוי משימות בין יישומים ולהציג יישומים אחרונים בצד ימין של המסך.\" מנהל התצוגה בחר תשובה מנהל התצוגה Dock שורת התפריטים וידג'טים מרכז הבקרה \"תוכלו להתאים דברים כמו בהירות, גודל מלל והגדרות נגישות, ולהפעיל רשת אלחוטית.\" מנהל התצוגה Dock שורת התפריטים וידג'טים מרכז הבקרה 2 מה צריך לספר ללקוחות על ההגדרה של תוכנית נתונים סלולריים ב-iPad? נבחרו 3 מתוך 3. \"אפשר לרכוש תוכנית ישירות ב-iPad.\" \"אפשר לשלם בהתאם לצורך, כך שלא תצטרכו להתחייב לחוזה ארוך טווח.\" \"אפשר לבחור תוכניות לפי כמות הנתונים הדרושה לך.\" \"אפשר להגדיר תוכנית נתונים ב-iPad אפילו למשך שעה-שעתיים בלבד.\" 3 אילו דגמי Apple Pencil תואמים ל-iPad Air? יש לבחור אפשרות אחת. Apple Pencil Pro ו-Apple Pencil ‏(USB-C) Apple Pencil ‏(USB-C) ו-Apple Pencil (דור שני) Apple Pencil Pro ו-Apple Pencil (דור שני) 4 אילו דגמי iPad תואמים ל-Magic Keyboard? נבחרו 2 מתוך 2. iPad iPad Pro iPad mini iPad Air 5 מה עליכם לומר על השבבים מסדרה M ב-iPad? נבחרו 3 מתוך 3. \"תבחינו בכך שהכול מהיר וזורם הודות לזיכרון האחיד.\" \"תקבלו חישת עומק מיידית לחוויות של מציאות רבודה.\" \"תקבלו גרפיקה מהירה, כך שהם מצוינים עבור משחקים ומשימות יצירתיות.\" \"תיהנו מאותה רמת ביצועים, לא משנה אם ה-iPad מחובר לחשמל או אם הוא פועל באמצעות סוללה.\" 6 מה כדאי לומר ללקוחות על ה-iPad Air? יש לבחור אפשרות אחת. \"תקבלו ביצועים חזקים, גרפיקה נהדרת וקישוריות Wi-Fi 6 מהירה בעיצוב הקומפקטי ביותר של iPad.\" \"עם המצלמה הקדמית הממוקמת בקצה הרחב ו'מרכז הבמה', ועם 'הפרדת קול' במיקרופונים, תיראו ותישמעו נהדר בשיחות וידאו.\" \"עם סורק LiDAR, תקבלו חוויות מהירות וסוחפות יותר של מציאות רבודה.\" 7 על מה עליכם להמליץ ללקוחות שזקוקים למתאם מתח וכבל נוספים כדי לטעון את ה-iPad כשהם נמצאים בתנועה? יש לבחור אפשרות אחת. מתאם מתח USB בהספק 12 ואט של Apple וכבל טעינה USB-C של Apple מתאם מתח USB-C בהספק 20 ואט של Apple וכבל USB-C ל-Lightning של Apple מתאם מתח USB-C בהספק 20 ואט של Apple וכבל טעינה USB-C של Apple 8 התאימו את צורכי הלקוחות למאפיין של iPadOS שכדאי לספר להם עליו. יש להשלים את החסר. פתקים בחר תשובה מסך הנעילה פתקים כרזת איש קשר סידור חלונות Freeform \"עליי לסקור קובצי PDF ולהוסיף להם סימונים, למלא טפסים ולסרוק מסמכים.\" Freeform בחר תשובה מסך הנעילה פתקים כרזת איש קשר סידור חלונות Freeform \"אני רוצה לשתף פעולה ולעבוד על עיצובים בזמן אמת עם הצוות הווירטואלי שלי.\" סידור חלונות בחר תשובה מסך הנעילה פתקים כרזת איש קשר סידור חלונות Freeform \"אני רוצה שתהיה לי אפשרות להשתמש בכמה יישומים בו-זמנית כדי שאוכל לרשום פתקים בקלות בזמן שאני חוקר באינטרנט.\" מסך הנעילה פתקים כרזת איש קשר סידור חלונות Freeform 9 מה כדאי לומר על ה-iPad Pro? נבחרו 3 מתוך 3. \"עם מערכת המצלמות המקצועית, תוכלו לצלם תמונות יפות וסרטוני ProRes מפורטים באיכות 4K.\" \"יש לו צג Ultra Retina XDR, כך שתקבלו צג בהיר, תמונות מפורטות וגוני שחור נאמנים יותר למציאות.\" \"תקבלו זיכרון רב יותר שיאפשר ריבוי משימות ועוצמה שתספיק ליישומים ולמשחקים תובעניים.\" \"עם יציאת Lightning, תוכלו לחבר דברים כמו התקני אחסון חיצוניים, מצלמות ומקלדות.\" 10 התאימו בין כל דגם iPad לבין המאפיינים שלו. יש להשלים את החסר. iPad Air בחר תשובה iPad Pro iPad mini iPad Air iPad כולל Touch ID והוא מופעל באמצעות שבב M4. הוא מגיע בשני גדלים ובארבעה גימורים. בחר תשובה iPad Pro iPad mini iPad Air iPad כולל מצלמת Center Stage קדמית לרוחב ברזולוציה של 12MP, תומך בצילום וידאו באיכות 4K ומגיע עם צג Liquid Retina בגודל 11 אינץ'. iPad Pro בחר תשובה iPad Pro iPad mini iPad Air iPad מופעל באמצעות שבב M5. יש לו Face ID, יציאת Thunderbolt וסורק LiDAR. iPad mini בחר תשובה iPad Pro iPad mini iPad Air iPad כולל צג Liquid Retina בגודל 8.3 אינץ' עם טווח צבעים רחב P3 ו-True Tone. יש לו Touch ID, וה-Apple Pencil נצמד באופן מגנטי לצד של המכשיר. iPad Pro iPad mini iPad Air iPad שלח יש 2 שאלות שבהן ביקשת תשובה. השאלות מסומנות באדום.",
+        "controls": [
+          {
+            "index": 0,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "מנהל התצוגה",
+              "Dock",
+              "שורת התפריטים",
+              "וידג'טים",
+              "מרכז הבקרה"
+            ]
+          },
+          {
+            "index": 1,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "מנהל התצוגה",
+              "Dock",
+              "שורת התפריטים",
+              "וידג'טים",
+              "מרכז הבקרה"
+            ]
+          },
+          {
+            "index": 2,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "מנהל התצוגה",
+              "Dock",
+              "שורת התפריטים",
+              "וידג'טים",
+              "מרכז הבקרה"
+            ]
+          },
+          {
+            "index": 3,
+            "type": "checkbox",
+            "label": "\"אפשר לרכוש תוכנית ישירות ב-iPad.\"",
+            "name": "613019",
+            "value": "1487519",
+            "options": []
+          },
+          {
+            "index": 4,
+            "type": "checkbox",
+            "label": "\"אפשר לשלם בהתאם לצורך, כך שלא תצטרכו להתחייב לחוזה ארוך טווח.\"",
+            "name": "613019",
+            "value": "1487521",
+            "options": []
+          },
+          {
+            "index": 5,
+            "type": "checkbox",
+            "label": "\"אפשר לבחור תוכניות לפי כמות הנתונים הדרושה לך.\"",
+            "name": "613019",
+            "value": "1487518",
+            "options": []
+          },
+          {
+            "index": 6,
+            "type": "checkbox",
+            "label": "\"אפשר להגדיר תוכנית נתונים ב-iPad אפילו למשך שעה-שעתיים בלבד.\"",
+            "name": "613019",
+            "value": "1487520",
+            "options": []
+          },
+          {
+            "index": 7,
+            "type": "radio",
+            "label": "Apple Pencil Pro ו-Apple Pencil ‏(USB-C)",
+            "name": "613027",
+            "value": "1487543",
+            "options": []
+          },
+          {
+            "index": 8,
+            "type": "radio",
+            "label": "Apple Pencil ‏(USB-C) ו-Apple Pencil (דור שני)",
+            "name": "613027",
+            "value": "1487542",
+            "options": []
+          },
+          {
+            "index": 9,
+            "type": "radio",
+            "label": "Apple Pencil Pro ו-Apple Pencil (דור שני)",
+            "name": "613027",
+            "value": "1487544",
+            "options": []
+          },
+          {
+            "index": 10,
+            "type": "checkbox",
+            "label": "iPad",
+            "name": "613024",
+            "value": "1487534",
+            "options": []
+          },
+          {
+            "index": 11,
+            "type": "checkbox",
+            "label": "iPad Pro",
+            "name": "613024",
+            "value": "1487535",
+            "options": []
+          },
+          {
+            "index": 12,
+            "type": "checkbox",
+            "label": "iPad mini",
+            "name": "613024",
+            "value": "1487537",
+            "options": []
+          },
+          {
+            "index": 13,
+            "type": "checkbox",
+            "label": "iPad Air",
+            "name": "613024",
+            "value": "1487536",
+            "options": []
+          },
+          {
+            "index": 14,
+            "type": "checkbox",
+            "label": "\"תבחינו בכך שהכול מהיר וזורם הודות לזיכרון האחיד.\"",
+            "name": "613020",
+            "value": "1487524",
+            "options": []
+          },
+          {
+            "index": 15,
+            "type": "checkbox",
+            "label": "\"תקבלו חישת עומק מיידית לחוויות של מציאות רבודה.\"",
+            "name": "613020",
+            "value": "1487525",
+            "options": []
+          },
+          {
+            "index": 16,
+            "type": "checkbox",
+            "label": "\"תקבלו גרפיקה מהירה, כך שהם מצוינים עבור משחקים ומשימות יצירתיות.\"",
+            "name": "613020",
+            "value": "1487522",
+            "options": []
+          },
+          {
+            "index": 17,
+            "type": "checkbox",
+            "label": "\"תיהנו מאותה רמת ביצועים, לא משנה אם ה-iPad מחובר לחשמל או אם הוא פועל באמצעות סוללה.\"",
+            "name": "613020",
+            "value": "1487523",
+            "options": []
+          },
+          {
+            "index": 18,
+            "type": "radio",
+            "label": "\"תקבלו ביצועים חזקים, גרפיקה נהדרת וקישוריות Wi-Fi 6 מהירה בעיצוב הקומפקטי ביותר של iPad.\"",
+            "name": "613018",
+            "value": "1487516",
+            "options": []
+          },
+          {
+            "index": 19,
+            "type": "radio",
+            "label": "\"עם המצלמה הקדמית הממוקמת בקצה הרחב ו'מרכז הבמה', ועם 'הפרדת קול' במיקרופונים, תיראו ותישמעו נהדר בשיחות וידאו.\"",
+            "name": "613018",
+            "value": "1487515",
+            "options": []
+          },
+          {
+            "index": 20,
+            "type": "radio",
+            "label": "\"עם סורק LiDAR, תקבלו חוויות מהירות וסוחפות יותר של מציאות רבודה.\"",
+            "name": "613018",
+            "value": "1487517",
+            "options": []
+          },
+          {
+            "index": 21,
+            "type": "radio",
+            "label": "מתאם מתח USB בהספק 12 ואט של Apple וכבל טעינה USB-C של Apple",
+            "name": "613023",
+            "value": "1487531",
+            "options": []
+          },
+          {
+            "index": 22,
+            "type": "radio",
+            "label": "מתאם מתח USB-C בהספק 20 ואט של Apple וכבל USB-C ל-Lightning של Apple",
+            "name": "613023",
+            "value": "1487533",
+            "options": []
+          },
+          {
+            "index": 23,
+            "type": "radio",
+            "label": "מתאם מתח USB-C בהספק 20 ואט של Apple וכבל טעינה USB-C של Apple",
+            "name": "613023",
+            "value": "1487532",
+            "options": []
+          },
+          {
+            "index": 24,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "מסך הנעילה",
+              "פתקים",
+              "כרזת איש קשר",
+              "סידור חלונות",
+              "Freeform"
+            ]
+          },
+          {
+            "index": 25,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "מסך הנעילה",
+              "פתקים",
+              "כרזת איש קשר",
+              "סידור חלונות",
+              "Freeform"
+            ]
+          },
+          {
+            "index": 26,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "מסך הנעילה",
+              "פתקים",
+              "כרזת איש קשר",
+              "סידור חלונות",
+              "Freeform"
+            ]
+          },
+          {
+            "index": 27,
+            "type": "checkbox",
+            "label": "\"עם מערכת המצלמות המקצועית, תוכלו לצלם תמונות יפות וסרטוני ProRes מפורטים באיכות 4K.\"",
+            "name": "613017",
+            "value": "1487512",
+            "options": []
+          },
+          {
+            "index": 28,
+            "type": "checkbox",
+            "label": "\"יש לו צג Ultra Retina XDR, כך שתקבלו צג בהיר, תמונות מפורטות וגוני שחור נאמנים יותר למציאות.\"",
+            "name": "613017",
+            "value": "1487514",
+            "options": []
+          },
+          {
+            "index": 29,
+            "type": "checkbox",
+            "label": "\"תקבלו זיכרון רב יותר שיאפשר ריבוי משימות ועוצמה שתספיק ליישומים ולמשחקים תובעניים.\"",
+            "name": "613017",
+            "value": "1487511",
+            "options": []
+          },
+          {
+            "index": 30,
+            "type": "checkbox",
+            "label": "\"עם יציאת Lightning, תוכלו לחבר דברים כמו התקני אחסון חיצוניים, מצלמות ומקלדות.\"",
+            "name": "613017",
+            "value": "1487513",
+            "options": []
+          },
+          {
+            "index": 31,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPad Pro",
+              "iPad mini",
+              "iPad Air",
+              "iPad"
+            ]
+          },
+          {
+            "index": 32,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPad Pro",
+              "iPad mini",
+              "iPad Air",
+              "iPad"
+            ]
+          },
+          {
+            "index": 33,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPad Pro",
+              "iPad mini",
+              "iPad Air",
+              "iPad"
+            ]
+          },
+          {
+            "index": 34,
+            "type": "select",
+            "label": "בחירת מילים 4",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPad Pro",
+              "iPad mini",
+              "iPad Air",
+              "iPad"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

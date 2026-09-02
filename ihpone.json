@@ -1,0 +1,2087 @@
+[
+  {
+    "title": "בוחן – התחילו למכור מכשירי iPhone |  Sales Coach",
+    "url": "https://salescoach.apple.com/home/content/view/521884?backTo=%2Fhome%2Fcollection%2F208920&backTo=%2Fhome%2Fcollection%2F57450&backTo=%2Fhome%2Fexplore%2Fcollections%2Fcurriculum%2F74200&backTo=%2Fhome%2Fexplore%2Fcollections&backTo=%2Fhome%2Fexplore",
+    "capturedAt": "2026-09-02T07:27:27.277Z",
+    "questions": [
+      {
+        "number": 1,
+        "text": "1 התאימו כל מאפיין של iOS לתיאור שלו. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "iMessage",
+            "מסך הנעילה",
+            "VoiceOver",
+            "מסך הבית",
+            "מצב זיהוי",
+            "הכתבה"
+          ],
+          [
+            "בחר תשובה",
+            "iMessage",
+            "מסך הנעילה",
+            "VoiceOver",
+            "מסך הבית",
+            "מצב זיהוי",
+            "הכתבה"
+          ],
+          [
+            "בחר תשובה",
+            "iMessage",
+            "מסך הנעילה",
+            "VoiceOver",
+            "מסך הבית",
+            "מצב זיהוי",
+            "הכתבה"
+          ],
+          [
+            "בחר תשובה",
+            "iMessage",
+            "מסך הנעילה",
+            "VoiceOver",
+            "מסך הבית",
+            "מצב זיהוי",
+            "הכתבה"
+          ]
+        ]
+      },
+      {
+        "number": 2,
+        "text": "2 אילו אמירות נכונות לגבי מצלמת Center Stage הקדמית? נבחרו 2 מתוך 2.",
+        "type": "multiple",
+        "questionId": "613126",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "היא זמינה רק בדגמי iPhone 17 Pro.",
+            "value": "1487734",
+            "checked": false
+          },
+          {
+            "label": "הלקוחות יכולים להשתמש במאפיין 'צילום כפול' כדי להקליט בו-זמנית את עצמם ואת העולם שסביבם.",
+            "value": "1487732",
+            "checked": true
+          },
+          {
+            "label": "הלקוחות יכולים להשתמש בה כדי לצלם תמונות מאקרו ממוקדות מאוד.",
+            "value": "1487733",
+            "checked": false
+          },
+          {
+            "label": "היא מעולה למסגור של תמונות סלפי קבוצתיות ושל סרטונים.",
+            "value": "1487735",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 3,
+        "text": "3 אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud? נבחרו 2 מתוך 2.",
+        "type": "multiple",
+        "questionId": "613125",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "להשתמש בעכבר אחד או במקלדת אחת כדי לעבוד באופן חלק בין ה-Mac ל-iPad",
+            "value": "1487728",
+            "checked": false
+          },
+          {
+            "label": "לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם",
+            "value": "1487730",
+            "checked": true
+          },
+          {
+            "label": "להזרים סרטים ותוכניות טלוויזיה למכשירי Apple שלהם",
+            "value": "1487731",
+            "checked": false
+          },
+          {
+            "label": "לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד",
+            "value": "1487729",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 4,
+        "text": "4 במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17 ו-iPhone 17 Pro? נבחרו 3 מתוך 3.",
+        "type": "multiple",
+        "questionId": "613123",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "מתאם מתח וכבל בחיבור Lightning",
+            "value": "1487723",
+            "checked": false
+          },
+          {
+            "label": "מטען אלחוטי בתקן Qi2",
+            "value": "1487720",
+            "checked": true
+          },
+          {
+            "label": "מטען MagSafe",
+            "value": "1487721",
+            "checked": true
+          },
+          {
+            "label": "מתאם מתח וכבל בחיבור USB-C",
+            "value": "1487722",
+            "checked": true
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 5,
+        "text": "5 כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "613124",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "\"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\"",
+            "value": "1487724",
+            "checked": true
+          },
+          {
+            "label": "\"תהיה לך אפשרות לצלם פורטרטים עם צבעים נאמנים למציאות, עם אפס זמן השהיה של התריס ועם ביצועים טובים יותר בתאורה חלשה.\"",
+            "value": "1487725",
+            "checked": false
+          },
+          {
+            "label": "\"ניתן ליהנות מצילום חלק של סרטונים כאשר המכשיר מוחזק ביד, גם אם זזים הרבה.\"",
+            "value": "1487727",
+            "checked": false
+          },
+          {
+            "label": "\"ניתן לצלם תמונות עם מיקוד חד בנושא ורקע מטושטש.\"",
+            "value": "1487726",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 6,
+        "text": "6 מה עליכם לומר ללקוחות על ה-iPhone 17 Pro? נבחרו 2 מתוך 2.",
+        "type": "multiple",
+        "questionId": "613127",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "\"העיצוב שלו עשוי גוף אלומיניום אחיד (unibody) שממקסם את הביצועים, את קיבולת הסוללה ואת העמידות.\"",
+            "value": "1487736",
+            "checked": true
+          },
+          {
+            "label": "\"הוא כולל מחבר Lightning ותומך בטעינת MagSafe.\"",
+            "value": "1487738",
+            "checked": false
+          },
+          {
+            "label": "\"השבב A19 Pro מספק מהירות ויעילות יוצאות מהכלל, וזה מושלם למשחקים מתקדמים ולמשימות תובעניות.\"",
+            "value": "1487737",
+            "checked": true
+          },
+          {
+            "label": "\"בעזרת מצלמת ה-Telephoto, תהיה לך אפשרות לצלם תמונות עם זום אופטי של עד פי 4.\"",
+            "value": "1487739",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 7,
+        "text": "7 מה עליכם לומר על המצלמות ב-iPhone 17? נבחרו 2 מתוך 2.",
+        "type": "multiple",
+        "questionId": "613128",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "\"הודות למערכת המצלמות Dual Fusion ברזולוציה של 48MP, תהיה לך אפשרות לצלם תמונות מדהימות עם פרטים מהממים.\"",
+            "value": "1487741",
+            "checked": true
+          },
+          {
+            "label": "\"יש לו מצלמת Center Stage קדמית ברזולוציה של 18MP לצילום וידאו יציב במיוחד.\"",
+            "value": "1487740",
+            "checked": true
+          },
+          {
+            "label": "\"ה-iPhone 17 תומך בפורמטים של וידאו באיכות גבוהה, כמו ProRAW ו-ProRes RAW.\"",
+            "value": "1487743",
+            "checked": false
+          },
+          {
+            "label": "\"הוא כולל סורק LiDAR, כך שאפשר לצלם פורטרטים יפהפיים ב'מצב לילה'.\"",
+            "value": "1487742",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 8,
+        "text": "8 התאימו כל מאפיין של iPhone לתיאור שלו. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "המשכיות במצלמה",
+            "AirDrop",
+            "Handoff",
+            "AirPlay",
+            "לוח אוניברסלי"
+          ],
+          [
+            "בחר תשובה",
+            "המשכיות במצלמה",
+            "AirDrop",
+            "Handoff",
+            "AirPlay",
+            "לוח אוניברסלי"
+          ],
+          [
+            "בחר תשובה",
+            "המשכיות במצלמה",
+            "AirDrop",
+            "Handoff",
+            "AirPlay",
+            "לוח אוניברסלי"
+          ],
+          [
+            "בחר תשובה",
+            "המשכיות במצלמה",
+            "AirDrop",
+            "Handoff",
+            "AirPlay",
+            "לוח אוניברסלי"
+          ]
+        ]
+      },
+      {
+        "number": 9,
+        "text": "9 התאימו כל דגם של iPhone למאפיינים שלו. יש להשלים את החסר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחר תשובה",
+            "iPhone 17e",
+            "iPhone 17",
+            "iPhone 17 Pro",
+            "iPhone Air"
+          ],
+          [
+            "בחר תשובה",
+            "iPhone 17e",
+            "iPhone 17",
+            "iPhone 17 Pro",
+            "iPhone Air"
+          ],
+          [
+            "בחר תשובה",
+            "iPhone 17e",
+            "iPhone 17",
+            "iPhone 17 Pro",
+            "iPhone Air"
+          ],
+          [
+            "בחר תשובה",
+            "iPhone 17e",
+            "iPhone 17",
+            "iPhone 17 Pro",
+            "iPhone Air"
+          ]
+        ]
+      },
+      {
+        "number": 10,
+        "text": "10 איזה מאפיין יכול ליידע את שירותי החירום ואת אנשי הקשר לשעת חירום באופן אוטומטי כאשר מזוהה תאונת דרכים קשה? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "613129",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "כרטיס רפואי",
+            "value": "1487744",
+            "checked": false
+          },
+          {
+            "label": "מעקף חירום",
+            "value": "1487746",
+            "checked": false
+          },
+          {
+            "label": "זיהוי תאונת דרכים",
+            "value": "1487747",
+            "checked": true
+          },
+          {
+            "label": "חירום SOS",
+            "value": "1487745",
+            "checked": false
+          }
+        ],
+        "selects": []
+      }
+    ],
+    "answerKey": {
+      "available": true,
+      "completionScore": 100,
+      "assessments": [
+        {
+          "id": "184146",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState",
+            "feedbackDetails"
+          ]
+        },
+        {
+          "id": "184146",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState",
+            "feedbackDetails"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "id": "184146",
+          "questions": [
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613122,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487719,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487717,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487718,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1487715,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613129,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487747,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613120,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487711,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487713,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487710,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487709,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613131,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487751,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487749,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487750,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487748,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613124,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487724,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613123,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487722,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487720,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487721,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613125,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487730,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487729,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613128,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487740,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487741,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613127,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487736,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487737,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613126,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487735,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487732,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "184146",
+          "questions": [
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613122,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487719,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487717,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487718,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                },
+                {
+                  "questionOptionId": 1487715,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613129,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487747,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 0,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613120,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487711,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487713,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487710,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487709,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613131,
+              "questionType": "DRAG_AND_DROP_FILL_IN_THE_BLANK",
+              "options": [
+                {
+                  "questionOptionId": 1487751,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487749,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487750,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                },
+                {
+                  "questionOptionId": 1487748,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 4,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 4
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613124,
+              "questionType": "SINGLE_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487724,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613123,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487722,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                },
+                {
+                  "questionOptionId": 1487720,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487721,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 3,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 3
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613125,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487730,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487729,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613128,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487740,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487741,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613127,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487736,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487737,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            },
+            {
+              "score": 1,
+              "freeTextAnswer": "",
+              "likertValue": "",
+              "createdDate": 1788264524359,
+              "updatedDate": 1788264524359,
+              "questionId": 613126,
+              "questionType": "MULTI_SELECT",
+              "options": [
+                {
+                  "questionOptionId": 1487735,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 1,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 1
+                },
+                {
+                  "questionOptionId": 1487732,
+                  "score": null,
+                  "correctAnswer": null,
+                  "exclusive": null,
+                  "sortOrder": 2,
+                  "displayKey": null,
+                  "createdDate": null,
+                  "updatedDate": null,
+                  "branchedQuestions": null,
+                  "referenceId": null,
+                  "text": null,
+                  "comment": null,
+                  "count": null,
+                  "image": null,
+                  "userSortOrder": 2
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.0.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.1.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.2.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.3.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.4.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.5.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.6.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.7.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.8.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.submittedResponse.0.questionObjects.9.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.assessments.184146.assessment.feedbackDetails.score",
+          "value": 8
+        },
+        {
+          "path": "QSP.assessments.184146.assessmentMetadata.score",
+          "value": 8
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.0.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.1.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.2.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.3.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.4.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.5.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.6.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.7.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.8.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.submittedResponse.0.questionObjects.9.score",
+          "value": 1
+        },
+        {
+          "path": "QSP.originalAssessments.183705.assessmentMetadata.score",
+          "value": 8
+        }
+      ],
+      "shape": {
+        "DELAY_FEEDBACK_UNTIL_SERVER_RESPONSE": "boolean",
+        "queuedGetAWSUploadURLCalls": "array(0)",
+        "queuedAWSUploadCalls": "array(0)",
+        "queuedUploadResponseCalls": "array(0)",
+        "assessments": {
+          "184146": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": {},
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "firstAssessment": {},
+        "originalAssessments": {
+          "183705": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": {},
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "shouldShowSimpleScore": "boolean",
+        "simulateServer": "boolean",
+        "workingState": {},
+        "showImmediateFeedbackFunctions": {},
+        "onSubmitAssessmentSuccessFunctions": {},
+        "completionScore": "number",
+        "debounceTimeouts": {}
+      }
+    },
+    "examsJsDraft": "  // Options to choose from:\n  // 1. 1 התאימו כל מאפיין של iOS לתיאור שלו. יש להשלים את החסר.\n  //      select 1: בחר תשובה | iMessage | מסך הנעילה | VoiceOver | מסך הבית | מצב זיהוי | הכתבה\n  //      select 2: בחר תשובה | iMessage | מסך הנעילה | VoiceOver | מסך הבית | מצב זיהוי | הכתבה\n  //      select 3: בחר תשובה | iMessage | מסך הנעילה | VoiceOver | מסך הבית | מצב זיהוי | הכתבה\n  //      select 4: בחר תשובה | iMessage | מסך הנעילה | VoiceOver | מסך הבית | מצב זיהוי | הכתבה\n  // 2. 2 אילו אמירות נכונות לגבי מצלמת Center Stage הקדמית? נבחרו 2 מתוך 2.\n  //      - היא זמינה רק בדגמי iPhone 17 Pro.\n  //      - הלקוחות יכולים להשתמש במאפיין 'צילום כפול' כדי להקליט בו-זמנית את עצמם ואת העולם שסביבם.\n  //      - הלקוחות יכולים להשתמש בה כדי לצלם תמונות מאקרו ממוקדות מאוד.\n  //      - היא מעולה למסגור של תמונות סלפי קבוצתיות ושל סרטונים.\n  // 3. 3 אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud? נבחרו 2 מתוך 2.\n  //      - להשתמש בעכבר אחד או במקלדת אחת כדי לעבוד באופן חלק בין ה-Mac ל-iPad\n  //      - לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם\n  //      - להזרים סרטים ותוכניות טלוויזיה למכשירי Apple שלהם\n  //      - לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד\n  // 4. 4 במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17 ו-iPhone 17 Pro? נבחרו 3 מתוך 3.\n  //      - מתאם מתח וכבל בחיבור Lightning\n  //      - מטען אלחוטי בתקן Qi2\n  //      - מטען MagSafe\n  //      - מתאם מתח וכבל בחיבור USB-C\n  // 5. 5 כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'? יש לבחור אפשרות אחת.\n  //      - \"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\"\n  //      - \"תהיה לך אפשרות לצלם פורטרטים עם צבעים נאמנים למציאות, עם אפס זמן השהיה של התריס ועם ביצועים טובים יותר בתאורה חלשה.\"\n  //      - \"ניתן ליהנות מצילום חלק של סרטונים כאשר המכשיר מוחזק ביד, גם אם זזים הרבה.\"\n  //      - \"ניתן לצלם תמונות עם מיקוד חד בנושא ורקע מטושטש.\"\n  // 6. 6 מה עליכם לומר ללקוחות על ה-iPhone 17 Pro? נבחרו 2 מתוך 2.\n  //      - \"העיצוב שלו עשוי גוף אלומיניום אחיד (unibody) שממקסם את הביצועים, את קיבולת הסוללה ואת העמידות.\"\n  //      - \"הוא כולל מחבר Lightning ותומך בטעינת MagSafe.\"\n  //      - \"השבב A19 Pro מספק מהירות ויעילות יוצאות מהכלל, וזה מושלם למשחקים מתקדמים ולמשימות תובעניות.\"\n  //      - \"בעזרת מצלמת ה-Telephoto, תהיה לך אפשרות לצלם תמונות עם זום אופטי של עד פי 4.\"\n  // 7. 7 מה עליכם לומר על המצלמות ב-iPhone 17? נבחרו 2 מתוך 2.\n  //      - \"הודות למערכת המצלמות Dual Fusion ברזולוציה של 48MP, תהיה לך אפשרות לצלם תמונות מדהימות עם פרטים מהממים.\"\n  //      - \"יש לו מצלמת Center Stage קדמית ברזולוציה של 18MP לצילום וידאו יציב במיוחד.\"\n  //      - \"ה-iPhone 17 תומך בפורמטים של וידאו באיכות גבוהה, כמו ProRAW ו-ProRes RAW.\"\n  //      - \"הוא כולל סורק LiDAR, כך שאפשר לצלם פורטרטים יפהפיים ב'מצב לילה'.\"\n  // 8. 8 התאימו כל מאפיין של iPhone לתיאור שלו. יש להשלים את החסר.\n  //      select 1: בחר תשובה | המשכיות במצלמה | AirDrop | Handoff | AirPlay | לוח אוניברסלי\n  //      select 2: בחר תשובה | המשכיות במצלמה | AirDrop | Handoff | AirPlay | לוח אוניברסלי\n  //      select 3: בחר תשובה | המשכיות במצלמה | AirDrop | Handoff | AirPlay | לוח אוניברסלי\n  //      select 4: בחר תשובה | המשכיות במצלמה | AirDrop | Handoff | AirPlay | לוח אוניברסלי\n  // 9. 9 התאימו כל דגם של iPhone למאפיינים שלו. יש להשלים את החסר.\n  //      select 1: בחר תשובה | iPhone 17e | iPhone 17 | iPhone 17 Pro | iPhone Air\n  //      select 2: בחר תשובה | iPhone 17e | iPhone 17 | iPhone 17 Pro | iPhone Air\n  //      select 3: בחר תשובה | iPhone 17e | iPhone 17 | iPhone 17 Pro | iPhone Air\n  //      select 4: בחר תשובה | iPhone 17e | iPhone 17 | iPhone 17 Pro | iPhone Air\n  // 10. 10 איזה מאפיין יכול ליידע את שירותי החירום ואת אנשי הקשר לשעת חירום באופן אוטומטי כאשר מזו\n  //      - כרטיס רפואי\n  //      - מעקף חירום\n  //      - זיהוי תאונת דרכים\n  //      - חירום SOS\n  \"iphone\": {\n    name: \"בוחן – התחילו למכור מכשירי iPhone\",\n    questions: [\n      { type: \"selects\", match: \"1 התאימו כל מאפיין של iOS לתיאור שלו. יש להשלים את החסר.\", answers: [\"\", \"\", \"\", \"\"] },\n      { type: \"multiple\", match: \"2 אילו אמירות נכונות לגבי מצלמת Center Stage הקדמית? נבחרו 2\", answers: [\"\", \"\"] },\n      { type: \"multiple\", match: \"3 אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud? נבחרו 2 מ\", answers: [\"\", \"\"] },\n      { type: \"multiple\", match: \"4 במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17 ו-iPh\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"5 כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'? יש לבחור אפשרות \", answer: \"\" },\n      { type: \"multiple\", match: \"6 מה עליכם לומר ללקוחות על ה-iPhone 17 Pro? נבחרו 2 מתוך 2.\", answers: [\"\", \"\"] },\n      { type: \"multiple\", match: \"7 מה עליכם לומר על המצלמות ב-iPhone 17? נבחרו 2 מתוך 2.\", answers: [\"\", \"\"] },\n      { type: \"selects\", match: \"8 התאימו כל מאפיין של iPhone לתיאור שלו. יש להשלים את החסר.\", answers: [\"\", \"\", \"\", \"\"] },\n      { type: \"selects\", match: \"9 התאימו כל דגם של iPhone למאפיינים שלו. יש להשלים את החסר.\", answers: [\"\", \"\", \"\", \"\"] },\n      { type: \"single\", match: \"10 איזה מאפיין יכול ליידע את שירותי החירום ואת אנשי הקשר לשע\", answer: \"\" },\n    ]\n  },",
+    "frames": [
+      {
+        "name": "",
+        "url": "https://salescoach.apple.com/home/content/view/521884?backTo=%2Fhome%2Fcollection%2F208920&backTo=%2Fhome%2Fcollection%2F57450&backTo=%2Fhome%2Fexplore%2Fcollections%2Fcurriculum%2F74200&backTo=%2Fhome%2Fexplore%2Fcollections&backTo=%2Fhome%2Fexplore",
+        "text": "􀣺 Sales Coach 􀲳 Explore 􀥴 For You Manage 􀉞 Saved Content 􀓣 Profile 􀆉 בוחן – התחילו למכור מכשירי iPhone 􀍠",
+        "controls": []
+      },
+      {
+        "name": "main-frame",
+        "url": "https://seeddownload.cdn-apple.com/s3/prod/SEED/package/T056684A-he_IL/9570f8d5-1380-4282-958c-3408308acd1c/1.0/T056684A-he_IL-Quiz_Get_started_selling_iPhone/index.html?userToken=AS4Ut1MtkTB7-Ld66O-lUFjjn76uYXJYROf0kgMles9fk20HCX_GboRvhAtLQ3quB6-ELmzx59MQAF-AzZF1FfKETSn1IsF1ii_8YZQD56UWWQFzI7ks4WlbX0nWSHw9gaBP&certificate=K1lJV1VUVEV6eDYzb2NDQ2t4cTQ3UnUrYzlvPQ==&serverToken=1788454038_19899edebdec94a8f51742e78215476c&sitename=SEED#assetStateObj={%22user%22:2687770,%22assetId%22:521884,%22webapp%22:true}",
+        "text": "בוחן – התחילו למכור מכשירי iPhone ענו על השאלות הבאות כדי לבדוק את רמת הידע שלכם לגבי מערך המוצרים הנוכחי של ה-iPhone ולזכות בתג. עליכם לקבל ציון של 100 אחוז כדי לעבור, ויש לכם אפשרות לבצע את הבוחן כמה פעמים שצריך. מומלץ להקדיש את כל הזמן הנדרש מאחר שאחרי הניסיון השני, צריך להמתין שעה על מנת לנסות שוב. נצלו את הזמן הזה כדי לעיין באוסף התחילו למכור מכשירי iPhone על מנת ללמוד את מה שעליכם לדעת. לאחר מכן, חזרו לבוחן הזה ונסו שוב. 80 עדיין לא עברת. נסה שוב. 1 התאימו כל מאפיין של iOS לתיאור שלו. יש להשלים את החסר. iMessage בחר תשובה iMessage מסך הנעילה VoiceOver מסך הבית מצב זיהוי הכתבה הלקוחות יכולים להוסיף ווידג'טים או לשנות את תמונת הרקע, את צבע המלל או את הגופן. מסך הנעילה בחר תשובה iMessage מסך הנעילה VoiceOver מסך הבית מצב זיהוי הכתבה הלקוחות יכולים לשלוח ולקבל הודעות בצורה מאובטחת עם הצפנה מקצה לקצה, להתאים אישית את הרקעים שלהם ולשתף סקרים עם חברים. VoiceOver בחר תשובה iMessage מסך הנעילה VoiceOver מסך הבית מצב זיהוי הכתבה הלקוחות יכולים לשמוע תיאורים של מה שמוצג במסך. מסך הבית בחר תשובה iMessage מסך הנעילה VoiceOver מסך הבית מצב זיהוי הכתבה בדגמים הכוללים סורק LiDAR, הלקוחות יכולים להשתמש ב-iPhone כדי לקבל מידע נוסף על הסובב אותם. iMessage מסך הנעילה VoiceOver מסך הבית מצב זיהוי הכתבה 2 אילו אמירות נכונות לגבי מצלמת Center Stage הקדמית? נבחרו 2 מתוך 2. היא זמינה רק בדגמי iPhone 17 Pro. הלקוחות יכולים להשתמש במאפיין 'צילום כפול' כדי להקליט בו-זמנית את עצמם ואת העולם שסביבם. הלקוחות יכולים להשתמש בה כדי לצלם תמונות מאקרו ממוקדות מאוד. היא מעולה למסגור של תמונות סלפי קבוצתיות ושל סרטונים. 3 אילו סוגי פעולות יכולים הלקוחות לעשות עם iCloud? נבחרו 2 מתוך 2. להשתמש בעכבר אחד או במקלדת אחת כדי לעבוד באופן חלק בין ה-Mac ל-iPad לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם להזרים סרטים ותוכניות טלוויזיה למכשירי Apple שלהם לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד 4 במה יכולים הלקוחות להשתמש כדי לטעון מכשירי iPhone 17 ו-iPhone 17 Pro? נבחרו 3 מתוך 3. מתאם מתח וכבל בחיבור Lightning מטען אלחוטי בתקן Qi2 מטען MagSafe מתאם מתח וכבל בחיבור USB-C 5 כיצד עליכם לתאר ללקוחות את מצב 'קולנועי'? יש לבחור אפשרות אחת. \"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\" \"תהיה לך אפשרות לצלם פורטרטים עם צבעים נאמנים למציאות, עם אפס זמן השהיה של התריס ועם ביצועים טובים יותר בתאורה חלשה.\" \"ניתן ליהנות מצילום חלק של סרטונים כאשר המכשיר מוחזק ביד, גם אם זזים הרבה.\" \"ניתן לצלם תמונות עם מיקוד חד בנושא ורקע מטושטש.\" 6 מה עליכם לומר ללקוחות על ה-iPhone 17 Pro? נבחרו 2 מתוך 2. \"העיצוב שלו עשוי גוף אלומיניום אחיד (unibody) שממקסם את הביצועים, את קיבולת הסוללה ואת העמידות.\" \"הוא כולל מחבר Lightning ותומך בטעינת MagSafe.\" \"השבב A19 Pro מספק מהירות ויעילות יוצאות מהכלל, וזה מושלם למשחקים מתקדמים ולמשימות תובעניות.\" \"בעזרת מצלמת ה-Telephoto, תהיה לך אפשרות לצלם תמונות עם זום אופטי של עד פי 4.\" 7 מה עליכם לומר על המצלמות ב-iPhone 17? נבחרו 2 מתוך 2. \"הודות למערכת המצלמות Dual Fusion ברזולוציה של 48MP, תהיה לך אפשרות לצלם תמונות מדהימות עם פרטים מהממים.\" \"יש לו מצלמת Center Stage קדמית ברזולוציה של 18MP לצילום וידאו יציב במיוחד.\" \"ה-iPhone 17 תומך בפורמטים של וידאו באיכות גבוהה, כמו ProRAW ו-ProRes RAW.\" \"הוא כולל סורק LiDAR, כך שאפשר לצלם פורטרטים יפהפיים ב'מצב לילה'.\" 8 התאימו כל מאפיין של iPhone לתיאור שלו. יש להשלים את החסר. בחר תשובה המשכיות במצלמה AirDrop Handoff AirPlay לוח אוניברסלי הלקוחות יכולים לשלוח קבצים באופן אלחוטי למכשירי Apple שנמצאים בקרבת מקום. AirDrop בחר תשובה המשכיות במצלמה AirDrop Handoff AirPlay לוח אוניברסלי הלקוחות יכולים להתחיל משימה ב-iPhone ולהמשיך אותה במכשיר אחר. Handoff בחר תשובה המשכיות במצלמה AirDrop Handoff AirPlay לוח אוניברסלי הלקוחות יכולים להעתיק מלל, תמונות וסרטונים בין שני מכשירי Apple. המשכיות במצלמה בחר תשובה המשכיות במצלמה AirDrop Handoff AirPlay לוח אוניברסלי הלקוחות יכולים להשתמש במערכת המצלמות המתקדמת של ה-iPhone כמצלמת אינטרנט ל-Mac. המשכיות במצלמה AirDrop Handoff AirPlay לוח אוניברסלי 9 התאימו כל דגם של iPhone למאפיינים שלו. יש להשלים את החסר. ל- בחר תשובה iPhone 17e iPhone 17 iPhone 17 Pro iPhone Air יש צג בגודל 6.3 אינץ' ומסגרת אלומיניום בחמישה צבעים מלאי חיים, והוא מופעל באמצעות השבב A19. ל- iPhone Air בחר תשובה iPhone 17e iPhone 17 iPhone 17 Pro iPhone Air יש צג בגודל 6.5 אינץ', מסגרת טיטניום דרגה 5 וגב עשוי Ceramic Shield, והוא ה-iPhone הדק ביותר אי פעם. ל- iPhone 17 בחר תשובה iPhone 17e iPhone 17 iPhone 17 Pro iPhone Air יש צג בגודל 6.3 אינץ' וגוף אלומיניום אחיד (unibody), והוא מופעל באמצעות השבב A19 Pro. ל- iPhone 17e בחר תשובה iPhone 17e iPhone 17 iPhone 17 Pro iPhone Air יש צג בגודל 6.1 אינץ' והוא מופעל באמצעות השבב A19 שמספק ביצועים מהירים וחלקים. iPhone 17e iPhone 17 iPhone 17 Pro iPhone Air 10 איזה מאפיין יכול ליידע את שירותי החירום ואת אנשי הקשר לשעת חירום באופן אוטומטי כאשר מזוהה תאונת דרכים קשה? יש לבחור אפשרות אחת. כרטיס רפואי מעקף חירום זיהוי תאונת דרכים חירום SOS שלח",
+        "controls": [
+          {
+            "index": 0,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iMessage",
+              "מסך הנעילה",
+              "VoiceOver",
+              "מסך הבית",
+              "מצב זיהוי",
+              "הכתבה"
+            ]
+          },
+          {
+            "index": 1,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iMessage",
+              "מסך הנעילה",
+              "VoiceOver",
+              "מסך הבית",
+              "מצב זיהוי",
+              "הכתבה"
+            ]
+          },
+          {
+            "index": 2,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iMessage",
+              "מסך הנעילה",
+              "VoiceOver",
+              "מסך הבית",
+              "מצב זיהוי",
+              "הכתבה"
+            ]
+          },
+          {
+            "index": 3,
+            "type": "select",
+            "label": "בחירת מילים 4",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iMessage",
+              "מסך הנעילה",
+              "VoiceOver",
+              "מסך הבית",
+              "מצב זיהוי",
+              "הכתבה"
+            ]
+          },
+          {
+            "index": 4,
+            "type": "checkbox",
+            "label": "היא זמינה רק בדגמי iPhone 17 Pro.",
+            "name": "613126",
+            "value": "1487734",
+            "options": []
+          },
+          {
+            "index": 5,
+            "type": "checkbox",
+            "label": "הלקוחות יכולים להשתמש במאפיין 'צילום כפול' כדי להקליט בו-זמנית את עצמם ואת העולם שסביבם.",
+            "name": "613126",
+            "value": "1487732",
+            "options": []
+          },
+          {
+            "index": 6,
+            "type": "checkbox",
+            "label": "הלקוחות יכולים להשתמש בה כדי לצלם תמונות מאקרו ממוקדות מאוד.",
+            "name": "613126",
+            "value": "1487733",
+            "options": []
+          },
+          {
+            "index": 7,
+            "type": "checkbox",
+            "label": "היא מעולה למסגור של תמונות סלפי קבוצתיות ושל סרטונים.",
+            "name": "613126",
+            "value": "1487735",
+            "options": []
+          },
+          {
+            "index": 8,
+            "type": "checkbox",
+            "label": "להשתמש בעכבר אחד או במקלדת אחת כדי לעבוד באופן חלק בין ה-Mac ל-iPad",
+            "name": "613125",
+            "value": "1487728",
+            "options": []
+          },
+          {
+            "index": 9,
+            "type": "checkbox",
+            "label": "לשמור את התכנים והנתונים שלהם במצב עדכני בכל המכשירים שלהם",
+            "name": "613125",
+            "value": "1487730",
+            "options": []
+          },
+          {
+            "index": 10,
+            "type": "checkbox",
+            "label": "להזרים סרטים ותוכניות טלוויזיה למכשירי Apple שלהם",
+            "name": "613125",
+            "value": "1487731",
+            "options": []
+          },
+          {
+            "index": 11,
+            "type": "checkbox",
+            "label": "לשמור מצגת Keynote ולהזמין משתמשים אחרים לערוך אותה ביחד",
+            "name": "613125",
+            "value": "1487729",
+            "options": []
+          },
+          {
+            "index": 12,
+            "type": "checkbox",
+            "label": "מתאם מתח וכבל בחיבור Lightning",
+            "name": "613123",
+            "value": "1487723",
+            "options": []
+          },
+          {
+            "index": 13,
+            "type": "checkbox",
+            "label": "מטען אלחוטי בתקן Qi2",
+            "name": "613123",
+            "value": "1487720",
+            "options": []
+          },
+          {
+            "index": 14,
+            "type": "checkbox",
+            "label": "מטען MagSafe",
+            "name": "613123",
+            "value": "1487721",
+            "options": []
+          },
+          {
+            "index": 15,
+            "type": "checkbox",
+            "label": "מתאם מתח וכבל בחיבור USB-C",
+            "name": "613123",
+            "value": "1487722",
+            "options": []
+          },
+          {
+            "index": 16,
+            "type": "radio",
+            "label": "\"מצב זה יוצר באופן אוטומטי מעברי מיקוד ואפקטים של עומק שדה.\"",
+            "name": "613124",
+            "value": "1487724",
+            "options": []
+          },
+          {
+            "index": 17,
+            "type": "radio",
+            "label": "\"תהיה לך אפשרות לצלם פורטרטים עם צבעים נאמנים למציאות, עם אפס זמן השהיה של התריס ועם ביצועים טובים יותר בתאורה חלשה.\"",
+            "name": "613124",
+            "value": "1487725",
+            "options": []
+          },
+          {
+            "index": 18,
+            "type": "radio",
+            "label": "\"ניתן ליהנות מצילום חלק של סרטונים כאשר המכשיר מוחזק ביד, גם אם זזים הרבה.\"",
+            "name": "613124",
+            "value": "1487727",
+            "options": []
+          },
+          {
+            "index": 19,
+            "type": "radio",
+            "label": "\"ניתן לצלם תמונות עם מיקוד חד בנושא ורקע מטושטש.\"",
+            "name": "613124",
+            "value": "1487726",
+            "options": []
+          },
+          {
+            "index": 20,
+            "type": "checkbox",
+            "label": "\"העיצוב שלו עשוי גוף אלומיניום אחיד (unibody) שממקסם את הביצועים, את קיבולת הסוללה ואת העמידות.\"",
+            "name": "613127",
+            "value": "1487736",
+            "options": []
+          },
+          {
+            "index": 21,
+            "type": "checkbox",
+            "label": "\"הוא כולל מחבר Lightning ותומך בטעינת MagSafe.\"",
+            "name": "613127",
+            "value": "1487738",
+            "options": []
+          },
+          {
+            "index": 22,
+            "type": "checkbox",
+            "label": "\"השבב A19 Pro מספק מהירות ויעילות יוצאות מהכלל, וזה מושלם למשחקים מתקדמים ולמשימות תובעניות.\"",
+            "name": "613127",
+            "value": "1487737",
+            "options": []
+          },
+          {
+            "index": 23,
+            "type": "checkbox",
+            "label": "\"בעזרת מצלמת ה-Telephoto, תהיה לך אפשרות לצלם תמונות עם זום אופטי של עד פי 4.\"",
+            "name": "613127",
+            "value": "1487739",
+            "options": []
+          },
+          {
+            "index": 24,
+            "type": "checkbox",
+            "label": "\"הודות למערכת המצלמות Dual Fusion ברזולוציה של 48MP, תהיה לך אפשרות לצלם תמונות מדהימות עם פרטים מהממים.\"",
+            "name": "613128",
+            "value": "1487741",
+            "options": []
+          },
+          {
+            "index": 25,
+            "type": "checkbox",
+            "label": "\"יש לו מצלמת Center Stage קדמית ברזולוציה של 18MP לצילום וידאו יציב במיוחד.\"",
+            "name": "613128",
+            "value": "1487740",
+            "options": []
+          },
+          {
+            "index": 26,
+            "type": "checkbox",
+            "label": "\"ה-iPhone 17 תומך בפורמטים של וידאו באיכות גבוהה, כמו ProRAW ו-ProRes RAW.\"",
+            "name": "613128",
+            "value": "1487743",
+            "options": []
+          },
+          {
+            "index": 27,
+            "type": "checkbox",
+            "label": "\"הוא כולל סורק LiDAR, כך שאפשר לצלם פורטרטים יפהפיים ב'מצב לילה'.\"",
+            "name": "613128",
+            "value": "1487742",
+            "options": []
+          },
+          {
+            "index": 28,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "המשכיות במצלמה",
+              "AirDrop",
+              "Handoff",
+              "AirPlay",
+              "לוח אוניברסלי"
+            ]
+          },
+          {
+            "index": 29,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "המשכיות במצלמה",
+              "AirDrop",
+              "Handoff",
+              "AirPlay",
+              "לוח אוניברסלי"
+            ]
+          },
+          {
+            "index": 30,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "המשכיות במצלמה",
+              "AirDrop",
+              "Handoff",
+              "AirPlay",
+              "לוח אוניברסלי"
+            ]
+          },
+          {
+            "index": 31,
+            "type": "select",
+            "label": "בחירת מילים 4",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "המשכיות במצלמה",
+              "AirDrop",
+              "Handoff",
+              "AirPlay",
+              "לוח אוניברסלי"
+            ]
+          },
+          {
+            "index": 32,
+            "type": "select",
+            "label": "בחירת מילים 1",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPhone 17e",
+              "iPhone 17",
+              "iPhone 17 Pro",
+              "iPhone Air"
+            ]
+          },
+          {
+            "index": 33,
+            "type": "select",
+            "label": "בחירת מילים 2",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPhone 17e",
+              "iPhone 17",
+              "iPhone 17 Pro",
+              "iPhone Air"
+            ]
+          },
+          {
+            "index": 34,
+            "type": "select",
+            "label": "בחירת מילים 3",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPhone 17e",
+              "iPhone 17",
+              "iPhone 17 Pro",
+              "iPhone Air"
+            ]
+          },
+          {
+            "index": 35,
+            "type": "select",
+            "label": "בחירת מילים 4",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחר תשובה",
+              "iPhone 17e",
+              "iPhone 17",
+              "iPhone 17 Pro",
+              "iPhone Air"
+            ]
+          },
+          {
+            "index": 36,
+            "type": "radio",
+            "label": "כרטיס רפואי",
+            "name": "613129",
+            "value": "1487744",
+            "options": []
+          },
+          {
+            "index": 37,
+            "type": "radio",
+            "label": "מעקף חירום",
+            "name": "613129",
+            "value": "1487746",
+            "options": []
+          },
+          {
+            "index": 38,
+            "type": "radio",
+            "label": "זיהוי תאונת דרכים",
+            "name": "613129",
+            "value": "1487747",
+            "options": []
+          },
+          {
+            "index": 39,
+            "type": "radio",
+            "label": "חירום SOS",
+            "name": "613129",
+            "value": "1487745",
+            "options": []
+          }
+        ]
+      }
+    ]
+  }
+]

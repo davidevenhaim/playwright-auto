@@ -1,0 +1,881 @@
+[
+  {
+    "title": "מה אתם יודעים על ה-Ecosystem של Apple? |  Sales Coach",
+    "url": "https://salescoach.apple.com/home/content/view/488387?backTo=%2Fhome%2Fcollection%2F250254&backTo=%2Fhome%2Fexplore%2Fcollections%2Fcurriculum%2F74200&backTo=%2Fhome%2Fexplore%2Fcollections&backTo=%2Fhome%2Fexplore",
+    "capturedAt": "2026-09-02T07:26:46.730Z",
+    "questions": [
+      {
+        "number": 1,
+        "text": "1 Siri יכולה לקרוא את העדכונים הנכנסים והמשתמשים יכולים להגיב בלי להשתמש בידיים. איזה יישום הפעיל את העדכון על הקידום שלה? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596284",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "iMessage",
+            "value": "1448484",
+            "checked": false
+          },
+          {
+            "label": "דואר",
+            "value": "1448485",
+            "checked": false
+          },
+          {
+            "label": "FaceTime",
+            "value": "1448486",
+            "checked": false
+          },
+          {
+            "label": "שיחת טלפון",
+            "value": "1448487",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 2,
+        "text": "2 בין אילו מכשירי Apple 'שליטה אוניברסלית’ פועלת? יש לבחור את כל האפשרויות המתאימות. יש לבחור את כל האפשרויות המתאימות.",
+        "type": "multiple",
+        "questionId": "596289",
+        "expectedAnswers": null,
+        "options": [
+          {
+            "label": "Apple Watch",
+            "value": "1448500",
+            "checked": false
+          },
+          {
+            "label": "iPad",
+            "value": "1448501",
+            "checked": false
+          },
+          {
+            "label": "iPhone",
+            "value": "1448502",
+            "checked": false
+          },
+          {
+            "label": "Mac",
+            "value": "1448503",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 3,
+        "text": "3 ‘התמיכה של Apple מעניקה למשתמשים את העזרה שהם צריכים בנוגע למוצרים ולתכונות של Apple. על איזו אפשרות תמיכה ריילי סיפרה לאיליי כדי לקבל מידע על Sidecar? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596286",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "אתר",
+            "value": "1448492",
+            "checked": false
+          },
+          {
+            "label": "יישום",
+            "value": "1448493",
+            "checked": false
+          },
+          {
+            "label": "צ'אט",
+            "value": "1448494",
+            "checked": false
+          },
+          {
+            "label": "טלפון",
+            "value": "1448495",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 4,
+        "text": "4 סבתא משתמשת ב-iPad כדי לסרוק את המתכון ולשלוח אותו לריילי. סדרו את השלבים הבאים בסדר הנכון. יש לגרור כדי לשנות את הסדר.",
+        "type": "selects",
+        "questionId": "",
+        "expectedAnswers": null,
+        "options": [],
+        "selects": [
+          [
+            "בחרו 'מיקום הזמנה'",
+            "מיקום ההזמנה: 1 מתוך 6",
+            "מיקום ההזמנה: 2 מתוך 6",
+            "מיקום ההזמנה: 3 מתוך 6",
+            "מיקום ההזמנה: 4 מתוך 6",
+            "מיקום ההזמנה: 5 מתוך 6",
+            "מיקום ההזמנה: 6 מתוך 6"
+          ],
+          [
+            "בחרו 'מיקום הזמנה'",
+            "מיקום ההזמנה: 1 מתוך 6",
+            "מיקום ההזמנה: 2 מתוך 6",
+            "מיקום ההזמנה: 3 מתוך 6",
+            "מיקום ההזמנה: 4 מתוך 6",
+            "מיקום ההזמנה: 5 מתוך 6",
+            "מיקום ההזמנה: 6 מתוך 6"
+          ],
+          [
+            "בחרו 'מיקום הזמנה'",
+            "מיקום ההזמנה: 1 מתוך 6",
+            "מיקום ההזמנה: 2 מתוך 6",
+            "מיקום ההזמנה: 3 מתוך 6",
+            "מיקום ההזמנה: 4 מתוך 6",
+            "מיקום ההזמנה: 5 מתוך 6",
+            "מיקום ההזמנה: 6 מתוך 6"
+          ],
+          [
+            "בחרו 'מיקום הזמנה'",
+            "מיקום ההזמנה: 1 מתוך 6",
+            "מיקום ההזמנה: 2 מתוך 6",
+            "מיקום ההזמנה: 3 מתוך 6",
+            "מיקום ההזמנה: 4 מתוך 6",
+            "מיקום ההזמנה: 5 מתוך 6",
+            "מיקום ההזמנה: 6 מתוך 6"
+          ],
+          [
+            "בחרו 'מיקום הזמנה'",
+            "מיקום ההזמנה: 1 מתוך 6",
+            "מיקום ההזמנה: 2 מתוך 6",
+            "מיקום ההזמנה: 3 מתוך 6",
+            "מיקום ההזמנה: 4 מתוך 6",
+            "מיקום ההזמנה: 5 מתוך 6",
+            "מיקום ההזמנה: 6 מתוך 6"
+          ],
+          [
+            "בחרו 'מיקום הזמנה'",
+            "מיקום ההזמנה: 1 מתוך 6",
+            "מיקום ההזמנה: 2 מתוך 6",
+            "מיקום ההזמנה: 3 מתוך 6",
+            "מיקום ההזמנה: 4 מתוך 6",
+            "מיקום ההזמנה: 5 מתוך 6",
+            "מיקום ההזמנה: 6 מתוך 6"
+          ]
+        ]
+      },
+      {
+        "number": 5,
+        "text": "5 ‘תגובות’ מאפשרות למשתמשים להביע את מה שהם מרגישים בשיחות וידאו ב-iPad, ב-iPhone וב-Mac. איזו תגובה זוזנה הפעילה בשיחת הווידאו שלה עם ריילי? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596285",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "לבבות",
+            "value": "1448488",
+            "checked": false
+          },
+          {
+            "label": "בלונים",
+            "value": "1448489",
+            "checked": false
+          },
+          {
+            "label": "קונפטי",
+            "value": "1448490",
+            "checked": false
+          },
+          {
+            "label": "זיקוקים",
+            "value": "1448491",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 6,
+        "text": "6 כמה אוכמניות יש בבסיס של העוגה של סבתא? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596292",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "2",
+            "value": "1448514",
+            "checked": false
+          },
+          {
+            "label": "3",
+            "value": "1448515",
+            "checked": false
+          },
+          {
+            "label": "4",
+            "value": "1448516",
+            "checked": false
+          },
+          {
+            "label": "5",
+            "value": "1448517",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 7,
+        "text": "7 איך קוראים לסבתא של ריילי? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596290",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "ג'נביב",
+            "value": "1448504",
+            "checked": false
+          },
+          {
+            "label": "גוונדולין",
+            "value": "1448505",
+            "checked": false
+          },
+          {
+            "label": "גווינביר",
+            "value": "1448506",
+            "checked": false
+          },
+          {
+            "label": "גווינת",
+            "value": "1448507",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 8,
+        "text": "8 איך איליי השתיק את הספירה לאחור לבישול שהגדיר אצלו ב-iPhone? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596288",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "במחוות ההצמדה הכפולה ב-Apple Watch",
+            "value": "1448496",
+            "checked": false
+          },
+          {
+            "label": "לחץ על כפתור הנמכת עוצמת השמע",
+            "value": "1448497",
+            "checked": false
+          },
+          {
+            "label": "ביקש מ-Siri לעצור את הספירה לאחור",
+            "value": "1448498",
+            "checked": false
+          },
+          {
+            "label": "סגר את העדכון ב-iPhone",
+            "value": "1448499",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 9,
+        "text": "9 כשמתחילים אימון אופניים ב-Apple Watch, אפשר גם לראות את מדדי האימון בהקשה על 'פעילות בזמן אמת’ ב-iPhone.",
+        "type": "single",
+        "questionId": "596287",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "נכון",
+            "value": "-7",
+            "checked": false
+          },
+          {
+            "label": "לא נכון",
+            "value": "-8",
+            "checked": false
+          }
+        ],
+        "selects": []
+      },
+      {
+        "number": 10,
+        "text": "10 איזו תכונה מאפשרת למשתמשים להעתיק ולהדביק פריטים כמו תמונות ומלל בין מכשירי Apple? יש לבחור אפשרות אחת.",
+        "type": "single",
+        "questionId": "596293",
+        "expectedAnswers": 1,
+        "options": [
+          {
+            "label": "שליטה אוניברסלית",
+            "value": "1448518",
+            "checked": false
+          },
+          {
+            "label": "לוח אוניברסלי",
+            "value": "1448519",
+            "checked": false
+          },
+          {
+            "label": "Handoff",
+            "value": "1448520",
+            "checked": false
+          },
+          {
+            "label": "Sidecar",
+            "value": "1448521",
+            "checked": false
+          }
+        ],
+        "selects": []
+      }
+    ],
+    "answerKey": {
+      "available": true,
+      "completionScore": 100,
+      "assessments": [
+        {
+          "id": "175201",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState"
+          ]
+        },
+        {
+          "id": "175201",
+          "keys": [
+            "auditId",
+            "createdDate",
+            "createdBy",
+            "createdUserName",
+            "updatedDate",
+            "updatedBy",
+            "updatedUserName",
+            "title",
+            "scoreType",
+            "passingCriteria",
+            "percentage",
+            "numberOfQuestions",
+            "randomNumberOfQuestions",
+            "workingTitle",
+            "startDate",
+            "endDate",
+            "randomizeQuestions",
+            "randomizeAnswers",
+            "numberOfAttempts",
+            "locale",
+            "status",
+            "publishedDate",
+            "publishedBy",
+            "publishedUserName",
+            "parentAuditId",
+            "type",
+            "weightage",
+            "consumer",
+            "challengeTags",
+            "timeIntervals",
+            "evaluateSubmittedQuestions",
+            "isApolloFinalQuiz",
+            "remainingAttempts",
+            "limitedAttempts",
+            "multipleAttemptsAllowed",
+            "oneAttemptRemaining",
+            "allAttemptsRemaining",
+            "finalAttemptSummary",
+            "previousAttemptSummary",
+            "lockedOut",
+            "tryAgainEnabled",
+            "reviewingFeedback",
+            "oneAtATime",
+            "submittedInPreviousSession",
+            "hasUserResponse",
+            "questionsFromAllCategories",
+            "userState"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "id": "175201",
+          "questions": []
+        },
+        {
+          "id": "175201",
+          "questions": []
+        }
+      ],
+      "candidates": [
+        {
+          "path": "QSP.assessments.175201.assessmentMetadata.score",
+          "value": 0
+        },
+        {
+          "path": "QSP.originalAssessments.174223.assessmentMetadata.score",
+          "value": 0
+        }
+      ],
+      "shape": {
+        "DELAY_FEEDBACK_UNTIL_SERVER_RESPONSE": "boolean",
+        "queuedGetAWSUploadURLCalls": "array(0)",
+        "queuedAWSUploadCalls": "array(0)",
+        "queuedUploadResponseCalls": "array(0)",
+        "assessments": {
+          "175201": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": "object",
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "firstAssessment": {},
+        "originalAssessments": {
+          "174223": {
+            "userResponse": "array(1)",
+            "submittedResponse": "array(1)",
+            "userState": "object",
+            "pollResults": "object",
+            "assessment": {},
+            "assessmentMetadata": {}
+          }
+        },
+        "shouldShowSimpleScore": "boolean",
+        "simulateServer": "boolean",
+        "workingState": {},
+        "showImmediateFeedbackFunctions": {},
+        "onSubmitAssessmentSuccessFunctions": {},
+        "completionScore": "number",
+        "debounceTimeouts": {}
+      }
+    },
+    "examsJsDraft": "  // Options to choose from:\n  // 1. 1 Siri יכולה לקרוא את העדכונים הנכנסים והמשתמשים יכולים להגיב בלי להשתמש בידיים. איזה יישו\n  //      - iMessage\n  //      - דואר\n  //      - FaceTime\n  //      - שיחת טלפון\n  // 2. 2 בין אילו מכשירי Apple 'שליטה אוניברסלית’ פועלת? יש לבחור את כל האפשרויות המתאימות. יש לב\n  //      - Apple Watch\n  //      - iPad\n  //      - iPhone\n  //      - Mac\n  // 3. 3 ‘התמיכה של Apple מעניקה למשתמשים את העזרה שהם צריכים בנוגע למוצרים ולתכונות של Apple. על\n  //      - אתר\n  //      - יישום\n  //      - צ'אט\n  //      - טלפון\n  // 4. 4 סבתא משתמשת ב-iPad כדי לסרוק את המתכון ולשלוח אותו לריילי. סדרו את השלבים הבאים בסדר הנכ\n  //      select 1: בחרו 'מיקום הזמנה' | מיקום ההזמנה: 1 מתוך 6 | מיקום ההזמנה: 2 מתוך 6 | מיקום ההזמנה: 3 מתוך 6 | מיקום ההזמנה: 4 מתוך 6 | מיקום ההזמנה: 5 מתוך 6 | מיקום ההזמנה: 6 מתוך 6\n  //      select 2: בחרו 'מיקום הזמנה' | מיקום ההזמנה: 1 מתוך 6 | מיקום ההזמנה: 2 מתוך 6 | מיקום ההזמנה: 3 מתוך 6 | מיקום ההזמנה: 4 מתוך 6 | מיקום ההזמנה: 5 מתוך 6 | מיקום ההזמנה: 6 מתוך 6\n  //      select 3: בחרו 'מיקום הזמנה' | מיקום ההזמנה: 1 מתוך 6 | מיקום ההזמנה: 2 מתוך 6 | מיקום ההזמנה: 3 מתוך 6 | מיקום ההזמנה: 4 מתוך 6 | מיקום ההזמנה: 5 מתוך 6 | מיקום ההזמנה: 6 מתוך 6\n  //      select 4: בחרו 'מיקום הזמנה' | מיקום ההזמנה: 1 מתוך 6 | מיקום ההזמנה: 2 מתוך 6 | מיקום ההזמנה: 3 מתוך 6 | מיקום ההזמנה: 4 מתוך 6 | מיקום ההזמנה: 5 מתוך 6 | מיקום ההזמנה: 6 מתוך 6\n  //      select 5: בחרו 'מיקום הזמנה' | מיקום ההזמנה: 1 מתוך 6 | מיקום ההזמנה: 2 מתוך 6 | מיקום ההזמנה: 3 מתוך 6 | מיקום ההזמנה: 4 מתוך 6 | מיקום ההזמנה: 5 מתוך 6 | מיקום ההזמנה: 6 מתוך 6\n  //      select 6: בחרו 'מיקום הזמנה' | מיקום ההזמנה: 1 מתוך 6 | מיקום ההזמנה: 2 מתוך 6 | מיקום ההזמנה: 3 מתוך 6 | מיקום ההזמנה: 4 מתוך 6 | מיקום ההזמנה: 5 מתוך 6 | מיקום ההזמנה: 6 מתוך 6\n  // 5. 5 ‘תגובות’ מאפשרות למשתמשים להביע את מה שהם מרגישים בשיחות וידאו ב-iPad, ב-iPhone וב-Mac. \n  //      - לבבות\n  //      - בלונים\n  //      - קונפטי\n  //      - זיקוקים\n  // 6. 6 כמה אוכמניות יש בבסיס של העוגה של סבתא? יש לבחור אפשרות אחת.\n  //      - 2\n  //      - 3\n  //      - 4\n  //      - 5\n  // 7. 7 איך קוראים לסבתא של ריילי? יש לבחור אפשרות אחת.\n  //      - ג'נביב\n  //      - גוונדולין\n  //      - גווינביר\n  //      - גווינת\n  // 8. 8 איך איליי השתיק את הספירה לאחור לבישול שהגדיר אצלו ב-iPhone? יש לבחור אפשרות אחת.\n  //      - במחוות ההצמדה הכפולה ב-Apple Watch\n  //      - לחץ על כפתור הנמכת עוצמת השמע\n  //      - ביקש מ-Siri לעצור את הספירה לאחור\n  //      - סגר את העדכון ב-iPhone\n  // 9. 9 כשמתחילים אימון אופניים ב-Apple Watch, אפשר גם לראות את מדדי האימון בהקשה על 'פעילות בזמ\n  //      - נכון\n  //      - לא נכון\n  // 10. 10 איזו תכונה מאפשרת למשתמשים להעתיק ולהדביק פריטים כמו תמונות ומלל בין מכשירי Apple? יש ל\n  //      - שליטה אוניברסלית\n  //      - לוח אוניברסלי\n  //      - Handoff\n  //      - Sidecar\n  \"ecosystem-apple\": {\n    name: \"מה אתם יודעים על ה-Ecosystem של Apple?\",\n    questions: [\n      { type: \"single\", match: \"1 Siri יכולה לקרוא את העדכונים הנכנסים והמשתמשים יכולים להגי\", answer: \"\" },\n      { type: \"multiple\", match: \"2 בין אילו מכשירי Apple 'שליטה אוניברסלית’ פועלת? יש לבחור א\", answers: [\"\", \"\"] },\n      { type: \"single\", match: \"3 ‘התמיכה של Apple מעניקה למשתמשים את העזרה שהם צריכים בנוגע\", answer: \"\" },\n      { type: \"selects\", match: \"4 סבתא משתמשת ב-iPad כדי לסרוק את המתכון ולשלוח אותו לריילי.\", answers: [\"\", \"\", \"\", \"\", \"\", \"\"] },\n      { type: \"single\", match: \"5 ‘תגובות’ מאפשרות למשתמשים להביע את מה שהם מרגישים בשיחות ו\", answer: \"\" },\n      { type: \"single\", match: \"6 כמה אוכמניות יש בבסיס של העוגה של סבתא? יש לבחור אפשרות אח\", answer: \"\" },\n      { type: \"single\", match: \"7 איך קוראים לסבתא של ריילי? יש לבחור אפשרות אחת.\", answer: \"\" },\n      { type: \"single\", match: \"8 איך איליי השתיק את הספירה לאחור לבישול שהגדיר אצלו ב-iPhon\", answer: \"\" },\n      { type: \"single\", match: \"9 כשמתחילים אימון אופניים ב-Apple Watch, אפשר גם לראות את מד\", answer: \"\" },\n      { type: \"single\", match: \"10 איזו תכונה מאפשרת למשתמשים להעתיק ולהדביק פריטים כמו תמונ\", answer: \"\" },\n    ]\n  },",
+    "frames": [
+      {
+        "name": "",
+        "url": "https://salescoach.apple.com/home/content/view/488387?backTo=%2Fhome%2Fcollection%2F250254&backTo=%2Fhome%2Fexplore%2Fcollections%2Fcurriculum%2F74200&backTo=%2Fhome%2Fexplore%2Fcollections&backTo=%2Fhome%2Fexplore",
+        "text": "􀣺 Sales Coach 􀲳 Explore 􀥴 For You Manage 􀉞 Saved Content 􀓣 Profile 􀆉 מה אתם יודעים על ה-Ecosystem של Apple? 􀍠",
+        "controls": []
+      },
+      {
+        "name": "main-frame",
+        "url": "https://seeddownload.cdn-apple.com/s3/prod/SEED/package/T059006A-he_IL/684ad2fa-e0e3-4a5b-bf9a-43280dfd002e/1.0/T059006A-he_IL_How_much_do_you_know_about_the_Apple_ecosystem/index.html?userToken=AbVQNIF_07JD0GhOFMTlbq3VHPtvj96we6mkG-6UNfBwFgg8BAdI8qwB1P-oYhxqtWuQtXcb78kKPsILNrk4KrMuHUDNB85qKlteB9W0ZXl48qjRwQ1iki20ByABfROGkaP7&certificate=Y1N4OG1nNms1WVpGSzdGU0lNWFJLNjlRdy9NPQ==&serverToken=1788453990_42faa0096144416b2b0e5843ea90a166&sitename=SEED#assetStateObj={%22user%22:2687770,%22assetId%22:488387,%22webapp%22:true}",
+        "text": "בוחן מה אתם יודעים על ה-Ecosystem של Apple? כל הכבוד! אחרי שצפיתם בכל הפרקים, בואו נבדוק כמה אתם זוכרים בעזרת הבוחן הבא. אם תעברו את הבוחן, תקבלו תג 'טעים'! אם לא עניתם אל שאלה נכון, אין מה לדאוג: צפו שוב בפרק כדי לגלות את התשובה הנכונה ונסו שוב. בהצלחה! 🎂 1 Siri יכולה לקרוא את העדכונים הנכנסים והמשתמשים יכולים להגיב בלי להשתמש בידיים. איזה יישום הפעיל את העדכון על הקידום שלה? יש לבחור אפשרות אחת. iMessage דואר FaceTime שיחת טלפון 2 בין אילו מכשירי Apple 'שליטה אוניברסלית’ פועלת? יש לבחור את כל האפשרויות המתאימות. יש לבחור את כל האפשרויות המתאימות. Apple Watch iPad iPhone Mac 3 ‘התמיכה של Apple מעניקה למשתמשים את העזרה שהם צריכים בנוגע למוצרים ולתכונות של Apple. על איזו אפשרות תמיכה ריילי סיפרה לאיליי כדי לקבל מידע על Sidecar? יש לבחור אפשרות אחת. אתר יישום צ'אט טלפון 4 סבתא משתמשת ב-iPad כדי לסרוק את המתכון ולשלוח אותו לריילי. סדרו את השלבים הבאים בסדר הנכון. יש לגרור כדי לשנות את הסדר. בחרו 'מיקום הזמנה' מיקום ההזמנה: 1 מתוך 6 מיקום ההזמנה: 2 מתוך 6 מיקום ההזמנה: 3 מתוך 6 מיקום ההזמנה: 4 מתוך 6 מיקום ההזמנה: 5 מתוך 6 מיקום ההזמנה: 6 מתוך 6 מציבה את המסמך מול המצלמה 1 בחרו 'מיקום הזמנה' מיקום ההזמנה: 1 מתוך 6 מיקום ההזמנה: 2 מתוך 6 מיקום ההזמנה: 3 מתוך 6 מיקום ההזמנה: 4 מתוך 6 מיקום ההזמנה: 5 מתוך 6 מיקום ההזמנה: 6 מתוך 6 סורקת את המסמך 2 בחרו 'מיקום הזמנה' מיקום ההזמנה: 1 מתוך 6 מיקום ההזמנה: 2 מתוך 6 מיקום ההזמנה: 3 מתוך 6 מיקום ההזמנה: 4 מתוך 6 מיקום ההזמנה: 5 מתוך 6 מיקום ההזמנה: 6 מתוך 6 פותחת את 'פתקים' 3 בחרו 'מיקום הזמנה' מיקום ההזמנה: 1 מתוך 6 מיקום ההזמנה: 2 מתוך 6 מיקום ההזמנה: 3 מתוך 6 מיקום ההזמנה: 4 מתוך 6 מיקום ההזמנה: 5 מתוך 6 מיקום ההזמנה: 6 מתוך 6 מקישה על סמל 'קובץ מצורף’ (מהדק נייר) 4 בחרו 'מיקום הזמנה' מיקום ההזמנה: 1 מתוך 6 מיקום ההזמנה: 2 מתוך 6 מיקום ההזמנה: 3 מתוך 6 מיקום ההזמנה: 4 מתוך 6 מיקום ההזמנה: 5 מתוך 6 מיקום ההזמנה: 6 מתוך 6 מקישה על 'שמירה' 5 בחרו 'מיקום הזמנה' מיקום ההזמנה: 1 מתוך 6 מיקום ההזמנה: 2 מתוך 6 מיקום ההזמנה: 3 מתוך 6 מיקום ההזמנה: 4 מתוך 6 מיקום ההזמנה: 5 מתוך 6 מיקום ההזמנה: 6 מתוך 6 יוצרת פתק חדש 6 5 ‘תגובות’ מאפשרות למשתמשים להביע את מה שהם מרגישים בשיחות וידאו ב-iPad, ב-iPhone וב-Mac. איזו תגובה זוזנה הפעילה בשיחת הווידאו שלה עם ריילי? יש לבחור אפשרות אחת. לבבות בלונים קונפטי זיקוקים 6 כמה אוכמניות יש בבסיס של העוגה של סבתא? יש לבחור אפשרות אחת. 2 3 4 5 7 איך קוראים לסבתא של ריילי? יש לבחור אפשרות אחת. ג'נביב גוונדולין גווינביר גווינת 8 איך איליי השתיק את הספירה לאחור לבישול שהגדיר אצלו ב-iPhone? יש לבחור אפשרות אחת. במחוות ההצמדה הכפולה ב-Apple Watch לחץ על כפתור הנמכת עוצמת השמע ביקש מ-Siri לעצור את הספירה לאחור סגר את העדכון ב-iPhone 9 כשמתחילים אימון אופניים ב-Apple Watch, אפשר גם לראות את מדדי האימון בהקשה על 'פעילות בזמן אמת’ ב-iPhone. נכון לא נכון 10 איזו תכונה מאפשרת למשתמשים להעתיק ולהדביק פריטים כמו תמונות ומלל בין מכשירי Apple? יש לבחור אפשרות אחת. שליטה אוניברסלית לוח אוניברסלי Handoff Sidecar שלח",
+        "controls": [
+          {
+            "index": 0,
+            "type": "radio",
+            "label": "iMessage",
+            "name": "596284",
+            "value": "1448484",
+            "options": []
+          },
+          {
+            "index": 1,
+            "type": "radio",
+            "label": "דואר",
+            "name": "596284",
+            "value": "1448485",
+            "options": []
+          },
+          {
+            "index": 2,
+            "type": "radio",
+            "label": "FaceTime",
+            "name": "596284",
+            "value": "1448486",
+            "options": []
+          },
+          {
+            "index": 3,
+            "type": "radio",
+            "label": "שיחת טלפון",
+            "name": "596284",
+            "value": "1448487",
+            "options": []
+          },
+          {
+            "index": 4,
+            "type": "checkbox",
+            "label": "Apple Watch",
+            "name": "596289",
+            "value": "1448500",
+            "options": []
+          },
+          {
+            "index": 5,
+            "type": "checkbox",
+            "label": "iPad",
+            "name": "596289",
+            "value": "1448501",
+            "options": []
+          },
+          {
+            "index": 6,
+            "type": "checkbox",
+            "label": "iPhone",
+            "name": "596289",
+            "value": "1448502",
+            "options": []
+          },
+          {
+            "index": 7,
+            "type": "checkbox",
+            "label": "Mac",
+            "name": "596289",
+            "value": "1448503",
+            "options": []
+          },
+          {
+            "index": 8,
+            "type": "radio",
+            "label": "אתר",
+            "name": "596286",
+            "value": "1448492",
+            "options": []
+          },
+          {
+            "index": 9,
+            "type": "radio",
+            "label": "יישום",
+            "name": "596286",
+            "value": "1448493",
+            "options": []
+          },
+          {
+            "index": 10,
+            "type": "radio",
+            "label": "צ'אט",
+            "name": "596286",
+            "value": "1448494",
+            "options": []
+          },
+          {
+            "index": 11,
+            "type": "radio",
+            "label": "טלפון",
+            "name": "596286",
+            "value": "1448495",
+            "options": []
+          },
+          {
+            "index": 12,
+            "type": "select",
+            "label": "Step 1, Press to select a new position",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחרו 'מיקום הזמנה'",
+              "מיקום ההזמנה: 1 מתוך 6",
+              "מיקום ההזמנה: 2 מתוך 6",
+              "מיקום ההזמנה: 3 מתוך 6",
+              "מיקום ההזמנה: 4 מתוך 6",
+              "מיקום ההזמנה: 5 מתוך 6",
+              "מיקום ההזמנה: 6 מתוך 6"
+            ]
+          },
+          {
+            "index": 13,
+            "type": "select",
+            "label": "Step 2, Press to select a new position",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחרו 'מיקום הזמנה'",
+              "מיקום ההזמנה: 1 מתוך 6",
+              "מיקום ההזמנה: 2 מתוך 6",
+              "מיקום ההזמנה: 3 מתוך 6",
+              "מיקום ההזמנה: 4 מתוך 6",
+              "מיקום ההזמנה: 5 מתוך 6",
+              "מיקום ההזמנה: 6 מתוך 6"
+            ]
+          },
+          {
+            "index": 14,
+            "type": "select",
+            "label": "Step 3, Press to select a new position",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחרו 'מיקום הזמנה'",
+              "מיקום ההזמנה: 1 מתוך 6",
+              "מיקום ההזמנה: 2 מתוך 6",
+              "מיקום ההזמנה: 3 מתוך 6",
+              "מיקום ההזמנה: 4 מתוך 6",
+              "מיקום ההזמנה: 5 מתוך 6",
+              "מיקום ההזמנה: 6 מתוך 6"
+            ]
+          },
+          {
+            "index": 15,
+            "type": "select",
+            "label": "Step 4, Press to select a new position",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחרו 'מיקום הזמנה'",
+              "מיקום ההזמנה: 1 מתוך 6",
+              "מיקום ההזמנה: 2 מתוך 6",
+              "מיקום ההזמנה: 3 מתוך 6",
+              "מיקום ההזמנה: 4 מתוך 6",
+              "מיקום ההזמנה: 5 מתוך 6",
+              "מיקום ההזמנה: 6 מתוך 6"
+            ]
+          },
+          {
+            "index": 16,
+            "type": "select",
+            "label": "Step 5, Press to select a new position",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחרו 'מיקום הזמנה'",
+              "מיקום ההזמנה: 1 מתוך 6",
+              "מיקום ההזמנה: 2 מתוך 6",
+              "מיקום ההזמנה: 3 מתוך 6",
+              "מיקום ההזמנה: 4 מתוך 6",
+              "מיקום ההזמנה: 5 מתוך 6",
+              "מיקום ההזמנה: 6 מתוך 6"
+            ]
+          },
+          {
+            "index": 17,
+            "type": "select",
+            "label": "Step 6, Press to select a new position",
+            "name": "",
+            "value": "",
+            "options": [
+              "בחרו 'מיקום הזמנה'",
+              "מיקום ההזמנה: 1 מתוך 6",
+              "מיקום ההזמנה: 2 מתוך 6",
+              "מיקום ההזמנה: 3 מתוך 6",
+              "מיקום ההזמנה: 4 מתוך 6",
+              "מיקום ההזמנה: 5 מתוך 6",
+              "מיקום ההזמנה: 6 מתוך 6"
+            ]
+          },
+          {
+            "index": 18,
+            "type": "radio",
+            "label": "לבבות",
+            "name": "596285",
+            "value": "1448488",
+            "options": []
+          },
+          {
+            "index": 19,
+            "type": "radio",
+            "label": "בלונים",
+            "name": "596285",
+            "value": "1448489",
+            "options": []
+          },
+          {
+            "index": 20,
+            "type": "radio",
+            "label": "קונפטי",
+            "name": "596285",
+            "value": "1448490",
+            "options": []
+          },
+          {
+            "index": 21,
+            "type": "radio",
+            "label": "זיקוקים",
+            "name": "596285",
+            "value": "1448491",
+            "options": []
+          },
+          {
+            "index": 22,
+            "type": "radio",
+            "label": "2",
+            "name": "596292",
+            "value": "1448514",
+            "options": []
+          },
+          {
+            "index": 23,
+            "type": "radio",
+            "label": "3",
+            "name": "596292",
+            "value": "1448515",
+            "options": []
+          },
+          {
+            "index": 24,
+            "type": "radio",
+            "label": "4",
+            "name": "596292",
+            "value": "1448516",
+            "options": []
+          },
+          {
+            "index": 25,
+            "type": "radio",
+            "label": "5",
+            "name": "596292",
+            "value": "1448517",
+            "options": []
+          },
+          {
+            "index": 26,
+            "type": "radio",
+            "label": "ג'נביב",
+            "name": "596290",
+            "value": "1448504",
+            "options": []
+          },
+          {
+            "index": 27,
+            "type": "radio",
+            "label": "גוונדולין",
+            "name": "596290",
+            "value": "1448505",
+            "options": []
+          },
+          {
+            "index": 28,
+            "type": "radio",
+            "label": "גווינביר",
+            "name": "596290",
+            "value": "1448506",
+            "options": []
+          },
+          {
+            "index": 29,
+            "type": "radio",
+            "label": "גווינת",
+            "name": "596290",
+            "value": "1448507",
+            "options": []
+          },
+          {
+            "index": 30,
+            "type": "radio",
+            "label": "במחוות ההצמדה הכפולה ב-Apple Watch",
+            "name": "596288",
+            "value": "1448496",
+            "options": []
+          },
+          {
+            "index": 31,
+            "type": "radio",
+            "label": "לחץ על כפתור הנמכת עוצמת השמע",
+            "name": "596288",
+            "value": "1448497",
+            "options": []
+          },
+          {
+            "index": 32,
+            "type": "radio",
+            "label": "ביקש מ-Siri לעצור את הספירה לאחור",
+            "name": "596288",
+            "value": "1448498",
+            "options": []
+          },
+          {
+            "index": 33,
+            "type": "radio",
+            "label": "סגר את העדכון ב-iPhone",
+            "name": "596288",
+            "value": "1448499",
+            "options": []
+          },
+          {
+            "index": 34,
+            "type": "radio",
+            "label": "נכון",
+            "name": "596287",
+            "value": "-7",
+            "options": []
+          },
+          {
+            "index": 35,
+            "type": "radio",
+            "label": "לא נכון",
+            "name": "596287",
+            "value": "-8",
+            "options": []
+          },
+          {
+            "index": 36,
+            "type": "radio",
+            "label": "שליטה אוניברסלית",
+            "name": "596293",
+            "value": "1448518",
+            "options": []
+          },
+          {
+            "index": 37,
+            "type": "radio",
+            "label": "לוח אוניברסלי",
+            "name": "596293",
+            "value": "1448519",
+            "options": []
+          },
+          {
+            "index": 38,
+            "type": "radio",
+            "label": "Handoff",
+            "name": "596293",
+            "value": "1448520",
+            "options": []
+          },
+          {
+            "index": 39,
+            "type": "radio",
+            "label": "Sidecar",
+            "name": "596293",
+            "value": "1448521",
+            "options": []
+          }
+        ]
+      }
+    ]
+  }
+]

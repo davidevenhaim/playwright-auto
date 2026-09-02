@@ -1020,7 +1020,12 @@ async function completeInteractiveDeck(targetPage, frame) {
 // `showanswers` header, and the reply says which option of each pair is the
 // correct one, so a run that was listening while the module loaded answers the
 // whole thing without spending an attempt on guesses.
-const QC_MAX_ATTEMPTS = 3;
+// A quick challenge teaches itself: every card it gets wrong reveals its own
+// answer, so the attempt after a failure is not another guess. Three was enough
+// for a deck whose cards each give themselves away at once and not for one that
+// only settles a card or two per pass, so the ceiling is higher and the loop
+// stops when an attempt learns nothing new instead.
+const QC_MAX_ATTEMPTS = 6;
 // Four steps per card — the answer, the flip, the step to the next one and a
 // spare — over a challenge longer than any of these has been seen to be.
 const QC_STEP_LIMIT = 80;
@@ -1053,6 +1058,67 @@ function watchAssessmentAnswers(targetPage) {
     }).catch(() => {});
   });
   return key;
+}
+
+// The same answer key, read out of the page instead of off the wire. The
+// player keeps the assessment it was served on `SeedInterface.QSP`, and where
+// Apple ships the `correctAnswer` flags with it, that is the answer key to the
+// whole quiz — every option, and for a matching question the blank each one
+// belongs in. Reasoning an answer out and spending an attempt to test it is
+// what this replaces.
+export async function readAssessmentKey() {
+  const targetPage = await connectedPage();
+
+  for (const frame of targetPage.frames()) {
+    const key = await frame.evaluate(() => {
+      if (typeof SeedInterface === "undefined" || !SeedInterface.QSP) return null;
+      const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+      const strip = (value = "") => tidy(String(value).replace(/<[^>]*>/g, " "));
+
+      const out = [];
+      const walk = (bundle, source) => {
+        for (const [id, entry] of Object.entries(bundle || {})) {
+          for (const category of entry?.assessment?.categories || []) {
+            for (const question of category?.questions || []) {
+              const options = (question.options || []).map((option) => ({
+                id: String(option.questionOptionId ?? ""),
+                text: strip(option.text).slice(0, 200),
+                correct: option.correctAnswer === true,
+                // A matching question says where an option belongs rather than
+                // whether it is right; whichever of these carries it, it is
+                // here rather than guessed at.
+                sortOrder: option.sortOrder ?? null,
+                displayKey: option.displayKey ?? null
+              }));
+              out.push({
+                source,
+                assessmentId: String(id),
+                questionId: String(question.questionId ?? question.id ?? ""),
+                type: question.questionType || question.type || "",
+                text: strip(question.text || question.title).slice(0, 300),
+                answered: options.some((option) => option.correct),
+                options
+              });
+            }
+          }
+        }
+      };
+      walk(SeedInterface.QSP.assessments, "assessments");
+      walk(SeedInterface.QSP.originalAssessments, "originalAssessments");
+      return out.length ? out : null;
+    }).catch(() => null);
+
+    if (key) {
+      return {
+        url: frame.url(),
+        questions: key.length,
+        withAnswers: key.filter((question) => question.answered).length,
+        key
+      };
+    }
+  }
+
+  throw new Error("No assessment is loaded on the connected tab.");
 }
 
 // The key is fetched while the module builds itself, but the site serves it
@@ -1211,6 +1277,7 @@ async function completeQuickChallenge(targetPage, frame, key = { correct: new Se
   const learned = new Map();
   let result = null;
 
+  let knownCards = learned.size;
   for (let attempt = 1; attempt <= QC_MAX_ATTEMPTS; attempt++) {
     let answered = 0;
     let correct = 0;
@@ -1274,6 +1341,13 @@ async function completeQuickChallenge(targetPage, frame, key = { correct: new Se
     log(`Quick challenge attempt ${attempt}: ${board.tally || `${correct} of ${answered}`}${board.passed ? " — passed." : " — not passed."}`);
     if (board.passed) break;
     if (attempt >= QC_MAX_ATTEMPTS || !board.tryAgain) break;
+    // An attempt that came away knowing no more cards than it went in with is
+    // one the next attempt would repeat exactly.
+    if (learned.size === knownCards) {
+      log("This attempt learned nothing new about the cards; another one would be the same guesses.");
+      break;
+    }
+    knownCards = learned.size;
 
     // Every card that was wrong has just named its right answer, so the next
     // attempt is not another guess: it is the same challenge answered from what
@@ -1949,7 +2023,7 @@ function examIdFrom(title) {
 // first part is the answer. The cut is only made when it leaves something
 // substantial, and matching is tolerant of a stored answer that is longer or
 // shorter than the option anyway, so a cut in the wrong place costs nothing.
-const FEEDBACK_MARKER = /\s+(?:תשובה נכונה|תשובה שגויה|נכון מאוד|לא נכון|נכון|That's right|Correct|Incorrect)\s*[.!]/;
+const FEEDBACK_MARKER = /\s+(?:תשובה נכונה|תשובה שגויה|נכון מאוד|יפה מאוד|טוב מאוד|כל הכבוד|מצוין|מעולה|לא נכון|נכון|That's right|Correct|Incorrect|Nice work|Well done)\s*[.!]/;
 
 function withoutFeedback(answer) {
   const text = clean(answer);
@@ -2537,8 +2611,13 @@ async function fillBlindly(frame, known = {}, rejected = {}) {
         const rows = inputs.map((input) => ({ input, text: labelOf(input, question) }));
         const wanted = new Set();
         for (const answer of settled) {
+          // The most specific row that fits, not the first one that does: a
+          // stored answer carrying the player's feedback ("iPad Pro יפה מאוד.")
+          // is a whole-word prefix match for the row "iPad" as well as for
+          // "iPad Pro", and taking the first of those ticks the wrong option.
           const row = rows.find((candidate) => candidate.text === answer) ||
-            rows.find((candidate) => isPrefixAnswer(candidate.text, answer));
+            rows.filter((candidate) => !wanted.has(candidate.input) && isPrefixAnswer(candidate.text, answer))
+              .sort((a, b) => (b.text || "").length - (a.text || "").length)[0];
           if (row) wanted.add(row.input);
         }
         if (wanted.size === settled.length) {
@@ -3105,6 +3184,9 @@ function createRunState({ onProgress = null, skipCompleted = true, limit = 0, mo
     attempts: new Map(),
     retryable: new Map(),
     answersLearned: 0,
+    // Quizzes this run took all the way to a pass, with the answers that got
+    // them there. Reported at the end as well as when each one lands.
+    passedExams: [],
     visitedContainers: new Set(),
     // Sections a pass has been all the way through and found nothing left in:
     // no locked row, no unfinished module, nothing to retry. Unlike
@@ -3190,6 +3272,7 @@ function snapshotOf(state, extra = {}) {
     containersSeen: [...state.containersSeen.values()],
     mode: state.mode,
     answersLearned: state.answersLearned || 0,
+    passedExams: [...(state.passedExams || [])],
     captures: [...state.captures],
     learned: [...state.learned],
     ...extra
@@ -3247,10 +3330,33 @@ const MODULE_WATCHDOG_MS = 25 * 60 * 1000;
 // that puts the confirmed answers together.
 const MAX_QUIZ_ATTEMPTS_IN_PLACE = 6;
 
+// A run that is allowed to spend attempts stays on a quiz until it passes
+// rather than until a counter runs out. Six was a guess at "enough", and it is
+// not: a quiz with two unsolved four-option questions needs more goes than that
+// before elimination has both, and leaving at six meant the next pass started
+// the same quiz from the top. What stops the loop now is a real signal — the
+// player locking the quiz, running out of attempts, refusing another go, or an
+// attempt that neither confirmed nor ruled out anything, which is a quiz that
+// is no longer converging. These two are the backstop for none of that
+// happening.
+const QUIZ_ATTEMPTS_UNTIL_PASSED = 20;
+const QUIZ_ATTEMPT_BUDGET_MS = 15 * 60 * 1000;
+
 // How many attempts a quiz gets to confirm its first answer before the run
 // leaves it. Three wrong goes at a four-option question rule out three of them,
 // which is enough for elimination to settle it without a fourth.
 const ATTEMPTS_BEFORE_GIVING_UP = 3;
+
+// Everything the run has ruled out so far, counted. An attempt that adds
+// nothing to this and confirms nothing has learned nothing, and another one
+// just like it will do the same.
+function rejectionTally() {
+  let sets = 0;
+  for (const entry of rejectedAnswers.values()) {
+    sets += (entry.sets?.length || 0) + (entry.orders?.length || 0);
+  }
+  return sets;
+}
 
 function withTimeout(promise, ms, message) {
   let timer = null;
@@ -3523,6 +3629,13 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
     // The most questions any attempt at this quiz has had confirmed. Zero after
     // several attempts means the quiz is not giving anything up.
     let bestSolved = 0;
+    // A run told to spend attempts stays until the quiz passes; one that was
+    // not keeps the old ceiling, because every attempt it takes is a guess it
+    // was not authorised to make.
+    const spendsAttempts = Boolean(state.blind || state.submitUnverified);
+    const attemptCap = spendsAttempts ? QUIZ_ATTEMPTS_UNTIL_PASSED : MAX_QUIZ_ATTEMPTS_IN_PLACE;
+    const attemptsUntil = Date.now() + QUIZ_ATTEMPT_BUDGET_MS;
+    let knownBefore = rejectionTally();
 
     const budget = await readAttemptState(ready.frame);
     if (budget) {
@@ -3592,21 +3705,29 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       }
 
       if (passed !== false) break;
-      if (attempt >= MAX_QUIZ_ATTEMPTS_IN_PLACE) {
+      if (attempt >= attemptCap) {
         log(`Stopping after ${attempt} attempt(s) at this quiz; the rest is left to a later pass.`);
         break;
       }
-      // A quiz that has confirmed nothing at all after several goes is not
-      // converging, and the attempts after that are worth much less than they
-      // look. A single-answer question has had every wrong option but one ruled
-      // out by now, so elimination will answer it without another attempt; a
-      // matching question has a space far too large to be walked through, and
-      // six goes at it on every pass is time the run could spend on modules it
-      // can actually finish. What has been ruled out is kept either way.
-      if (bestSolved === 0 && attempt >= ATTEMPTS_BEFORE_GIVING_UP) {
-        log(`${attempt} attempt(s) at this quiz have confirmed nothing; leaving it rather than spending the rest here.`);
+      if (spendsAttempts && Date.now() > attemptsUntil) {
+        log(`${Math.round(QUIZ_ATTEMPT_BUDGET_MS / 60000)} minutes on this quiz without passing it; leaving the rest to a later pass.`);
         break;
       }
+      // An attempt that confirmed nothing and ruled nothing out has told the run
+      // nothing, so the next one would be the same guess again. This replaces
+      // giving up on a fixed count: a quiz that is still narrowing keeps its
+      // attempts however many it takes.
+      const knownAfter = rejectionTally();
+      const learnedSomething = (fromThisAttempt && bestSolved > 0) || knownAfter > knownBefore;
+      if (!learnedSomething && attempt >= ATTEMPTS_BEFORE_GIVING_UP) {
+        log(`Attempt ${attempt} neither confirmed nor ruled out anything; this quiz has stopped converging, so the run moves on.`);
+        break;
+      }
+      knownBefore = knownAfter;
+      // A quiz that confirms nothing at all is still worth staying on while it
+      // is ruling options out — that is what elimination runs on — so the old
+      // "nothing confirmed by attempt three" rule is folded into the
+      // convergence check above rather than kept as a second ceiling.
       // A run that was told not to spend attempts on guesses does not spend
       // them here either.
       if (!state.blind && !state.submitUnverified) break;
@@ -3668,6 +3789,43 @@ async function runModule(item, state, { label = "", listPage = null } = {}, held
       log(`Attempt ${attempt} at "${quizName || item.title}": cleared ${cleared} rejected answer(s), ` +
         `kept ${settled} confirmed one(s), guessed the rest around what the last grade refused.`);
       reportUnmatchedLearned(filled);
+    }
+
+    // A pass is the moment the quiz's answers are worth the most: every one of
+    // them has just been graded, and the run is about to walk away from the
+    // page that proved them. Report them here rather than leaving them in the
+    // bank for someone to go and read — including the block exams.js wants, so
+    // a quiz the run solved can be pasted into the hand-written bank as it is.
+    if (passed === true && learned) {
+      const solved = learned.questions.filter((question) => question.confirmedAnswers);
+      log(`PASSED "${quizName || item.title}" at ${percentage}% (threshold ${threshold}%) after ${attempt} attempt(s).`);
+      log(`Confirmed ${solved.length} of ${learned.questions.length} answer(s) on the way:`);
+      for (const question of solved) {
+        log(`  • ${clean(question.question).slice(0, 70)} → ${question.confirmedAnswers.map(withoutFeedback).join(" | ").slice(0, 120)}`);
+      }
+      const unsolved = learned.questions.length - solved.length;
+      if (unsolved) {
+        log(`  (${unsolved} question(s) passed without ever being confirmed individually; the quiz's threshold did not need them.)`);
+      }
+      const entry = examsJsFromLearned(learned);
+      log(`exams.js entry for "${quizName || item.title}":\n${entry}`);
+      state.passedExams.push({
+        exam: quizName || item.title,
+        module: item.title,
+        chapter: item.chapter || null,
+        url: item.url,
+        percentage,
+        threshold,
+        attempts: attempt,
+        confirmed: solved.length,
+        questions: learned.questions.length,
+        answers: solved.map((question) => ({
+          question: clean(question.question).slice(0, 200),
+          type: question.type,
+          answers: question.confirmedAnswers.map(withoutFeedback)
+        })),
+        examsJs: entry
+      });
     }
 
     recordResult(state, item, {
@@ -3786,10 +3944,15 @@ async function processModule(item, state, { label = "", listPage = null } = {}) 
   if (item?.id) state.attempts.set(item.id, (state.attempts.get(item.id) || 0) + 1);
 
   try {
+    // A run that stays on a quiz until it passes needs longer than one that
+    // takes six goes at it, or the watchdog abandons the module mid-attempt.
+    const watchdog = (state.blind || state.submitUnverified)
+      ? MODULE_WATCHDOG_MS + QUIZ_ATTEMPT_BUDGET_MS
+      : MODULE_WATCHDOG_MS;
     await withTimeout(
       runModule(item, state, { label, listPage }, held),
-      MODULE_WATCHDOG_MS,
-      `This module was still going after ${Math.round(MODULE_WATCHDOG_MS / 60000)} minutes and was abandoned so the run could carry on.`
+      watchdog,
+      `This module was still going after ${Math.round(watchdog / 60000)} minutes and was abandoned so the run could carry on.`
     );
   } catch (error) {
     if (error?.signedOut) {
@@ -5286,6 +5449,73 @@ export async function probeUnanswered() {
 // A structural dump of whatever the connected tab is showing. When the walk
 // misses a row, this is what says why: it reports every same-origin link the
 // page offers, how the collector classified it, and what evidence it used.
+// The shape of whatever quiz is on the connected tab, in enough detail to write
+// a handler for a player nobody has met yet. The two the runner knows are found
+// by one selector each — `.question` for a SEED form, `.app-quick-challenge` for
+// the flipcard deck — and a module that is neither dies reporting that its
+// questions never rendered. This is what tells us what the third one is called:
+// its container classes, its buttons, and anything draggable or option-shaped.
+export async function inspectQuizDom() {
+  const targetPage = await connectedPage();
+  const frames = [];
+
+  for (const frame of targetPage.frames()) {
+    const dump = await frame.evaluate(() => {
+      const tidy = (value = "") => String(value).replace(/\s+/g, " ").trim();
+      const describe = (element) => {
+        const attributes = {};
+        for (const attribute of element.attributes || []) {
+          if (/^(class|id|role|aria-|data-|draggable|optionid|disabled|type|name|value|tabindex)/.test(attribute.name)) {
+            attributes[attribute.name] = tidy(attribute.value).slice(0, 120);
+          }
+        }
+        return {
+          tag: element.tagName.toLowerCase(),
+          attributes,
+          text: tidy(element.innerText || element.textContent).slice(0, 120)
+        };
+      };
+
+      // The outermost element that looks like a quiz of any kind, so the
+      // skeleton below is the quiz rather than the whole page.
+      const root = document.querySelector(
+        ".app-quick-challenge, .qc-slider, [class*='challenge' i], [class*='quiz' i], [class*='question' i], main, body"
+      );
+      if (!root) return null;
+
+      // A depth-limited walk: every element, but only its tag and the
+      // attributes that identify it, so a long page stays readable.
+      const skeleton = [];
+      const walk = (element, depth) => {
+        if (skeleton.length >= 400 || depth > 8) return;
+        skeleton.push({ depth, ...describe(element) });
+        for (const child of element.children) walk(child, depth + 1);
+      };
+      walk(root, 0);
+
+      const collect = (selector) => Array.from(document.querySelectorAll(selector)).slice(0, 60).map(describe);
+
+      return {
+        url: location.href,
+        rootClass: tidy(root.className).slice(0, 200),
+        seed: typeof SeedInterface !== "undefined"
+          ? { hasAssessments: SeedInterface.hasAssessments, questions: document.querySelectorAll(".question").length }
+          : null,
+        buttons: collect("button, [role='button'], a[role='button']"),
+        draggables: collect("[draggable='true'], [class*='drag' i], [class*='drop' i], [aria-grabbed], [aria-dropeffect]"),
+        options: collect("[optionid], [role='option'], [role='listitem'], li[class], input"),
+        progress: collect("[role='progressbar'], [class*='progress' i]"),
+        skeleton
+      };
+    }).catch(() => null);
+
+    if (dump) frames.push({ name: frame.name(), ...dump });
+  }
+
+  if (!frames.length) throw new Error("Nothing quiz-shaped is on the connected tab.");
+  return { url: targetPage.url(), title: await targetPage.title().catch(() => ""), frames };
+}
+
 export async function inspectPage() {
   const targetPage = await connectedPage();
   await openAllAccordions(targetPage).catch(() => {});
@@ -5752,13 +5982,40 @@ async function applyAnswers(block, answers, { exclusive = false, delayMs = 200 }
     return longer.startsWith(shorter) && /[\s.,:;!?]/.test(longer.charAt(shorter.length));
   };
   const unclaimed = (answer) => !rows.some((candidate) => exact(candidate, answer));
-  const plan = rows.map((row) => {
-    const hit = wanted.find((answer) => exact(row, answer)) ||
-      wanted.find((answer) => unclaimed(answer) && row.text && row.text.includes(answer)) ||
-      wanted.find((answer) => unclaimed(answer) && prefix(row, answer));
-    if (hit) matched.add(hit);
-    return { row, shouldSelect: Boolean(hit) };
-  });
+  // How well a row answers an answer, not merely whether it does. Walking the
+  // rows in page order and taking the first that fits let a short option claim
+  // an answer meant for a longer one that had not been reached yet: asked for
+  // "iPad Pro יפה מאוד." on a question offering iPad mini, iPad, iPad Pro and
+  // iPad Air, the row "iPad" is a whole-word prefix of it, so the fill ticked
+  // iPad and left iPad Pro alone — an answer the server had confirmed, sent
+  // back wrong on every attempt. Scoring the pairs and giving each answer to
+  // its most specific row is what stops that.
+  const affinity = (row, answer) => {
+    if (exact(row, answer)) return 1e6;
+    const text = row.text || "";
+    if (unclaimed(answer) && text && text.includes(answer)) return 1e3 + answer.length;
+    if (unclaimed(answer) && prefix(row, answer)) return Math.min(text.length, answer.length);
+    return 0;
+  };
+
+  // Every pair that fits at all, best first, each row and each answer taken
+  // once. Greedy on a handful of options is exact enough and keeps the order
+  // the page uses for everything else.
+  const pairs = [];
+  for (const row of rows) {
+    for (const answer of wanted) {
+      const score = affinity(row, answer);
+      if (score > 0) pairs.push({ row, answer, score });
+    }
+  }
+  pairs.sort((a, b) => b.score - a.score);
+  const claimedRows = new Set();
+  for (const pair of pairs) {
+    if (claimedRows.has(pair.row) || matched.has(pair.answer)) continue;
+    claimedRows.add(pair.row);
+    matched.add(pair.answer);
+  }
+  const plan = rows.map((row) => ({ row, shouldSelect: claimedRows.has(row) }));
 
   const missing = wanted.filter((answer) => !matched.has(answer));
   if (missing.length) throw new Error(`Option not found: ${missing.join(" | ")}`);
@@ -5832,6 +6089,13 @@ async function chooseSelect(select, answer) {
   return false;
 }
 
+// What a dropdown is left showing, so a fill can be checked rather than assumed.
+async function selectedLabel(select) {
+  return select.evaluate((element) =>
+    String(element.options[element.selectedIndex]?.textContent || "").replace(/\s+/g, " ").trim()
+  ).catch(() => "");
+}
+
 async function answerSelectQuestion(block, frame, answers, delayMs = 200) {
   const nativeSelects = block.locator("select");
   if ((await nativeSelects.count()) >= answers.length) {
@@ -5840,6 +6104,32 @@ async function answerSelectQuestion(block, frame, answers, delayMs = 200) {
       if (!ok) throw new Error(`Could not select "${answers[i]}"`);
       log(`Dropdown ${i + 1}: ${answers[i]}`);
     }
+
+    // Setting each dropdown once is only enough when they are independent, and
+    // an ordering question's are not: its rows carry "position 3 of 6", and
+    // giving one row a position moves every other row to make room, so the
+    // writes that came before are shifted out from under the ones that come
+    // after. The Ecosystem quiz's recipe steps came back in almost exactly the
+    // reverse of what was asked for. A matching question whose player takes an
+    // option away from the other dropdowns once it is used moves the same way.
+    // So the fill is read back and repaired until the whole question stands
+    // where it was put.
+    const settles = answers.length * 2 + 2;
+    for (let pass = 0; pass < settles; pass++) {
+      const current = await Promise.all(
+        answers.map((_, index) => selectedLabel(nativeSelects.nth(index)))
+      );
+      const wrong = current.findIndex((label, index) => !sameAnswerText(label, answers[index]));
+      if (wrong === -1) {
+        if (pass) log(`Dropdowns settled after ${pass} repair pass(es).`);
+        return;
+      }
+      await chooseSelect(nativeSelects.nth(wrong), answers[wrong]);
+      if (delayMs > 0) await frame.page().waitForTimeout(delayMs);
+    }
+
+    const left = await Promise.all(answers.map((_, index) => selectedLabel(nativeSelects.nth(index))));
+    log(`Dropdowns would not settle; left as ${left.map((label) => label || "—").join(" | ")}`);
     return;
   }
 
